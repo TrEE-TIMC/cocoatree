@@ -1,4 +1,5 @@
 from typing import Tuple, List
+from numpy.typing import ArrayLike
 import numpy as np
 class Alignment:
     """
@@ -68,7 +69,7 @@ class Alignment:
 
     _lbda = 0.03
 
-    def __init__(self, alignment_sequence_list) -> None:
+    def __init__(self, alignment_sequence_list: List[str]) -> None:
         """
 
         Parameters
@@ -85,7 +86,7 @@ class Alignment:
         for k in Alignment._code_tonum.keys():
             self._num_rep[self._text_rep == k] = self._code_tonum[k]
 
-    def gap_frequency(self, threshold=0.2) -> Tuple[np.ndarray, float]:
+    def gap_frequency(self, threshold=0.2) -> Tuple[ArrayLike, float]:
         """Computes the gap frequency for a MSA
 
         Parameters
@@ -167,7 +168,7 @@ class Alignment:
         return res
 
     @staticmethod
-    def aa_freq_at_pos(algnt_col, lbda = 0.03, aa_count=21, weights=None) -> np.ndarray:
+    def aa_freq_at_pos(algnt_col: np.ndarray, lbda = 0.03, aa_count=21, weights=None) -> np.ndarray:
         """Computes frequencies of aminoacids at a specific position
 
         Parameters
@@ -248,16 +249,17 @@ class Alignment:
             rel_entropy.append(currt_rel_entropy)
         return np.array(rel_entropy)
 
-    def similarity_weights(self, similarity, threshold) -> float:
+    def similarity_weights(self, similarity: np.ndarray, threshold=0.2) -> float:
         """Get the effective number of sequences after applying weights
 
         Parameters
         ----------
         similarity: numpy 2D array
             A similarity matrix of shape (n_seq,n_seq).
-        threshold: float
+        threshold: float or None
             The "width" (delta) of an effective sequence: defines the threshold
             at which sequences are regrouped as an effective sequence.
+            Defaults to 0.2.
 
         Returns
         -------
@@ -385,7 +387,7 @@ class Alignment:
         return Cijab, Cij
 
     def aminoacid_joint_frequencies(
-        self, weights, threshold=.2, aa_count=21
+        self, weights: np.ndarray, threshold=.2, aa_count=21
     ) -> Tuple[np.ndarray, np.ndarray]:
         """Computes the joint frequencies for every amino acid at every position
 

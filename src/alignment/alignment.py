@@ -1,6 +1,8 @@
 from typing import Tuple, List
 from numpy.typing import ArrayLike
 import numpy as np
+
+
 class Alignment:
     """
     Represents a Multiple Sequence Alignment
@@ -12,28 +14,28 @@ class Alignment:
     """
     # Used to translate AAs to Ints to make use of Numpy vectorization
     _code_tonum = {
-        '-':0,
-        'X':0, # Consider unknown AAs as gaps
-        'A':1,
-        'C':2,
-        'D':3,
-        'E':4,
-        'F':5,
-        'G':6,
-        'H':7,
-        'I':8,
-        'K':9,
-        'L':10,
-        'M':11,
-        'N':12,
-        'P':13,
-        'Q':14,
-        'R':15,
-        'S':16,
-        'T':17,
-        'V':18,
-        'W':19,
-        'Y':20
+        '-': 0,
+        'X': 0,  # Consider unknown AAs as gaps
+        'A': 1,
+        'C': 2,
+        'D': 3,
+        'E': 4,
+        'F': 5,
+        'G': 6,
+        'H': 7,
+        'I': 8,
+        'K': 9,
+        'L': 10,
+        'M': 11,
+        'N': 12,
+        'P': 13,
+        'Q': 14,
+        'R': 15,
+        'S': 16,
+        'T': 17,
+        'V': 18,
+        'W': 19,
+        'Y': 20
     }
 
     _kws = {
@@ -108,7 +110,10 @@ class Alignment:
 
         # per position
         for residue in range(self._text_rep.shape[1]):
-            currt_freq = np.count_nonzero(self._text_rep[:,residue] == '-') / self._text_rep.shape[0]
+            currt_freq = np.count_nonzero(
+                self._text_rep[:, residue] == '-'
+            ) / self._text_rep.shape[0]
+
             gap_frequency.append(currt_freq)
 
         gap_frequency = np.array(gap_frequency)
@@ -116,7 +121,7 @@ class Alignment:
         working_pos = gap_frequency < threshold
         working_pos = working_pos.reshape(working_pos.shape[0], -1)
 
-        mask = np.ones((self._text_rep.shape[0],1), dtype="bool").dot(working_pos.T)
+        mask = np.ones((self._text_rep.shape[0], 1), dtype="bool").dot(working_pos.T)
         bg_gap_frequency = self._text_rep[mask]
 
         return gap_frequency, float(np.mean(bg_gap_frequency == '-'))
@@ -136,7 +141,7 @@ class Alignment:
             The filtered alignment with overly-gapped positions removed.
         """
         gap_frequency, _ = self.gap_frequency(threshold)
-        return self._num_rep[:,gap_frequency < threshold].copy()
+        return self._num_rep[:, gap_frequency < threshold].copy()
 
     def similarity(self, use_filtered=True, threshold=0.2) -> np.ndarray:
         """Computes the similarity between sequences in a MSA
@@ -162,13 +167,15 @@ class Alignment:
             seq_1 = src[seq_1_i]
             for seq_2_i in range(seq_1_i, n_seqs):
                 seq_2 = src[seq_2_i]
-                dist = np.mean(np.array([seq_1[i]==seq_2[i] for i in range(len(seq_1))]))
-                res[seq_1_i,seq_2_i]=dist
-                res[seq_2_i,seq_1_i]=dist
+                dist = np.mean(np.array([seq_1[i] == seq_2[i] for i in range(len(seq_1))]))
+                res[seq_1_i, seq_2_i] = dist
+                res[seq_2_i, seq_1_i] = dist
         return res
 
     @staticmethod
-    def aa_freq_at_pos(algnt_col: np.ndarray, lbda = 0.03, aa_count=21, weights=None) -> np.ndarray:
+    def aa_freq_at_pos(
+        algnt_col: np.ndarray, lbda=0.03, aa_count=21, weights=None
+    ) -> np.ndarray:
         """Computes frequencies of aminoacids at a specific position
 
         Parameters
@@ -244,7 +251,7 @@ class Alignment:
 
         rel_entropy = []
         for position in range(working_alignment.shape[1]):
-            freqs = Alignment.aa_freq_at_pos(working_alignment[:,position], weights=weights)
+            freqs = Alignment.aa_freq_at_pos(working_alignment[:, position], weights=weights)
             currt_rel_entropy = np.sum(freqs * np.log(freqs / freq0g))
             rel_entropy.append(currt_rel_entropy)
         return np.array(rel_entropy)
@@ -346,9 +353,11 @@ class Alignment:
         """
         most_freq_aa = []
         most_freq_aa_freq = []
-        working_alignment = self.filtered_alignment(threshold=threshold) if filtered else self._num_rep
+        working_alignment = (
+            self.filtered_alignment(threshold=threshold) if filtered else self._num_rep
+        )
         for i in range(working_alignment.shape[1]):
-            currt_col = working_alignment[:,i]
+            currt_col = working_alignment[:, i]
             currt_bins = np.bincount(currt_col)
             currt_max_i = np.argmax(currt_bins)
             most_freq_aa.append(currt_max_i)
@@ -379,11 +388,11 @@ class Alignment:
             for j in range(i, seq_size):
                 for a in range(aa_count):
                     for b in range(aa_count):
-                        fia, fjb, fijab = self._frequency(algnt[:,i], algnt[:,j], a, b, weights)
+                        fia, fjb, fijab = self._frequency(algnt[:, i], algnt[:, j], a, b, weights)
                         Cijab[i, j, a, b] = fijab - fia * fjb
-                val = np.sqrt(np.sum(Cijab[i,j,:,:] ** 2))
-                Cij[i,j] = val
-                Cij[j,i] = val
+                val = np.sqrt(np.sum(Cijab[i, j, :, :] ** 2))
+                Cij[i, j] = val
+                Cij[j, i] = val
         return Cijab, Cij
 
     def aminoacid_joint_frequencies(
@@ -427,7 +436,7 @@ class Alignment:
         binary_array = np.array([algnt == aa for aa in range(aa_count)])
 
         # Adding weights
-        weighted_binary_array = binary_array * weights[np.newaxis,:,np.newaxis]
+        weighted_binary_array = binary_array * weights[np.newaxis, :, np.newaxis]
 
         m_eff = np.sum(weights)
         simple_freq = weighted_binary_array / m_eff
@@ -436,15 +445,17 @@ class Alignment:
         for i in range(seq_size):
             for j in range(i, seq_size):
                 for a in range(aa_count):
-                    afreq = simple_freq[a,i]
+                    afreq = simple_freq[a, i]
                     for b in range(aa_count):
-                        bfreq = simple_freq[b,j]
-                        joint_freq = np.sum(weighted_binary_array[a,:,i] * binary_array[b,:,j]) / m_eff
+                        bfreq = simple_freq[b, j]
+                        joint_freq = (
+                            np.sum(weighted_binary_array[a, :, i] * binary_array[b, :, j]) / m_eff
+                        )
 
-                        joint_freqs[i,j,a,b] = joint_freq
-                        joint_freqs[j,i,b,a] = joint_freq
+                        joint_freqs[i, j, a, b] = joint_freq
+                        joint_freqs[j, i, b, a] = joint_freq
 
-                        joint_freqs_ind[i,j,a,b] = afreq*bfreq
-                        joint_freqs_ind[j,i,b,a] = afreq*bfreq
+                        joint_freqs_ind[i, j, a, b] = afreq*bfreq
+                        joint_freqs_ind[j, i, b, a] = afreq*bfreq
 
         return joint_freqs, joint_freqs_ind

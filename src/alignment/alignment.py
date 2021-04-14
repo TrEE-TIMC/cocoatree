@@ -1,6 +1,14 @@
+from typing import Tuple, List
 import numpy as np
-
 class Alignment:
+    """
+    Represents a Multiple Sequence Alignment
+
+    Attributes
+    ----------
+
+
+    """
     # Used to translate AAs to Ints to make use of Numpy vectorization
     _code_tonum = {
         '-':0,
@@ -60,31 +68,40 @@ class Alignment:
 
     _lbda = 0.03
 
-    def __init__(self, alignment_array) -> None:
+    def __init__(self, alignment_sequence_list) -> None:
         """
-        alignment_array: list of strings corresponding to one string per sequence
+
+        Parameters
+        ----------
+        alignment_sequence_list: list of str
+            list of strings corresponding to one string per sequence
         """
-        self._raw = alignment_array
+        self._raw = alignment_sequence_list
         # Split characters so that one element in each row represents one aminoacid
-        self._text_rep = np.array([np.array([char for char in row]) for row in alignment_array])
+        self._text_rep = np.array(
+            [np.array([char for char in row]) for row in alignment_sequence_list]
+        )
         self._num_rep = np.zeros(self._text_rep.shape, dtype=np.int64)
         for k in Alignment._code_tonum.keys():
             self._num_rep[self._text_rep == k] = self._code_tonum[k]
 
-    def gap_frequency(self, threshold=0.2):
+    def gap_frequency(self, threshold=0.2) -> Tuple[np.ndarray, float]:
         """Computes the gap frequency for a MSA
 
-        Keyword arguments:
-        threshold: a floating point number. Positions will be considered overly-gapped if their gap ratio is above this value
+        Parameters
+        ----------
+        threshold: float
+            Positions will be considered overly-gapped if their gap ratio is
+            above this value.
 
-        Returns:
-        (gap_frequency, background_gap_frequency): a tuple consisting of:
-        - gap_frequency: a numpy 1D array of length n_pos with each value
-                         set to the gap frequency at the position
-                         corresponding to the index
-        - background_gap_frequency: a floating point number containing the gap
-                                    frequency accross all positions which are
-                                    below the desired threshold
+        Returns
+        -------
+        gap_frequency: numpy 1D array
+            An array of length n_pos with each value set to the gap frequency at
+            the position corresponding to the index.
+        background_gap_frequency: float
+            Containing the gap frequency accross all positions which are below
+            the desired threshold.
         """
         gap_frequency = []
 
@@ -99,27 +116,45 @@ class Alignment:
         working_pos = working_pos.reshape(working_pos.shape[0], -1)
 
         mask = np.ones((self._text_rep.shape[0],1), dtype="bool").dot(working_pos.T)
-        bg_freq_proportion = self._text_rep[mask]
+        bg_gap_frequency = self._text_rep[mask]
 
-        return gap_frequency, np.mean(bg_freq_proportion == '-')
+        return gap_frequency, float(np.mean(bg_gap_frequency == '-'))
 
-    def get_filtered_alignment(self, threshold=0.2):
+    def filtered_alignment(self, threshold=0.2) -> np.ndarray:
         """Returns the filtered alignment
-        """
-        gf, _ = self.gap_frequency(threshold)
-        return self._num_rep[:,gf < threshold].copy()
 
-    def similarity(self, use_filtered=True, threshold=0.2):
+        Parameters
+        ----------
+        threshold: float or None
+            The threshold to discriminate positions to keep versus overly-gapped
+            positions.
+
+        Returns
+        -------
+        alignment: numpy array of int
+            The filtered alignment with overly-gapped positions removed.
+        """
+        gap_frequency, _ = self.gap_frequency(threshold)
+        return self._num_rep[:,gap_frequency < threshold].copy()
+
+    def similarity(self, use_filtered=True, threshold=0.2) -> np.ndarray:
         """Computes the similarity between sequences in a MSA
 
-        Keyword arguments:
-        use_filtered: make use of the filtered MSA, according to the gap frequency threshold (default True)
-        threshold: the threshold to filter overly-gapped positions, unused if use_filtered is False (default 0.2)
+        Parameters
+        ----------
+        use_filtered: bool or None
+            Make use of the filtered MSA, according to the gap frequency
+            threshold (defaults to True).
+        threshold: float or None
+            The threshold to filter overly-gapped positions, unused if
+            use_filtered is False (default 0.2).
 
-        Returns:
-        A numpy 2D square matrix of size n_seq * n_seq (with n_seq representing the number of sequences in the alignment)
+        Returns
+        -------
+        similarity_matrix: numpy 2D matrix of shape (n_seq,n_seq)
+            The similarity matrix between sequences: a symmetric square matrix.
         """
-        src = self.get_filtered_alignment(threshold) if use_filtered else self._num_rep
+        src = self.filtered_alignment(threshold) if use_filtered else self._num_rep
         n_seqs = src.shape[0]
         res = np.zeros(shape=(n_seqs, n_seqs))
         for seq_1_i in range(n_seqs):
@@ -131,103 +166,283 @@ class Alignment:
                 res[seq_2_i,seq_1_i]=dist
         return res
 
-    def compute_actual_frequency(algnt_col, lbda = 0.03, aa_count=21, weights=None):
+    @staticmethod
+    def aa_freq_at_pos(algnt_col, lbda = 0.03, aa_count=21, weights=None) -> np.ndarray:
+        """Computes frequencies of aminoacids at a specific position
+
+        Parameters
+        ----------
+        algnt_col: numpy series
+            The column for which frequency should be computed.
+        lbda: float or None
+            A regularization parameter. Defaults to 0.03
+        aa_count: int or None
+            The number of amino acids to consider for the shape of the return
+            value. Defaults to 21 to account for unknown (X) amino acids which
+            are considered as gaps for the lack of a better category.
+        weights: numpy 1D array or None
+            Gives more or less importance to certain sequences.
+            If provided, the length of this array should be equal to the length
+            of algnt_col
+
+        Returns
+        -------
+        freqs: numpy 1D array
+            A numpy array of length aa_count, containing regularized frequencies
+            for each amino acid. A mapping from amino-acid to indices in this
+            result can be found in _code_tonum.
+        """
         # AA proportion
         bins = np.bincount(algnt_col, weights=weights)
 
         # Pad with zeroes for AAs not present at currt position
-        res = np.pad(bins, (0, aa_count - bins.shape[0]))
-        res = np.array(res)
+        freqs = np.pad(bins, (0, aa_count - bins.shape[0]))
+        freqs = np.array(freqs)
 
         # Frequency
         if weights is None:
             weights = np.ones(algnt_col.shape)
 
-        res = res / weights.sum()
+        freqs = freqs / weights.sum()
 
         # Regularization
-        res = (1 - lbda) * res + lbda / aa_count
-        return res
+        freqs = (1 - lbda) * freqs + lbda / aa_count
+        return freqs
 
-    def sca_entropy(self, aa_count=21, weights=None, threshold=0.2):
+    def sca_entropy(self, aa_count=21, weights=None, threshold=0.2) -> np.ndarray:
         """Computes entropy as per SCA guidelines
 
-        Keyword arguments:
-        aa_count: the number of aminoacids to consider
-        weights: to be applied to the different sequences in the MSA
-        threshold: the gap frequency low-pass threshold
+        Parameters
+        ----------
+        aa_count: int
+            The number of amino acids to consider for the shape of the return
+            value. Defaults to 21 to account for unknown (X) amino acids which
+            are considered as gaps for the lack of a better category.
+        weights: numpy 1D array
+            Gives more or less importance to certain sequences in the MSA.
+        threshold: float
+            The gap frequency low-pass threshold.
 
-        Returns:
-        float: the entropy considered for each of the positions in the filtered alignment
+        Returns
+        -------
+        entropy: numpy 1D array
+            The entropy for each of the positions in the filtered alignment.
         """
         _, gap_bg_freq = self.gap_frequency(threshold)
-        working_alignment = self.get_filtered_alignment(threshold)
+        working_alignment = self.filtered_alignment(threshold)
 
         mult_fact = 1 - gap_bg_freq
         freq0 = Alignment._freq0 * mult_fact
         freq0g = np.insert(freq0, 0, gap_bg_freq)
 
-        # Prevent MSA without gaps & regularize background frequencies the same way data is regularized
+        # Prevent MSA without gaps & regularize background frequencies
+        # the same way data is regularized
 
         # freq0g_n = (1 - Alignment._lbda) * freq0g + Alignment._lbda / aa_count
         assert freq0g.sum() == 1
 
         rel_entropy = []
         for position in range(working_alignment.shape[1]):
-            freqs = Alignment.compute_actual_frequency(working_alignment[:,position], weights=weights)
+            freqs = Alignment.aa_freq_at_pos(working_alignment[:,position], weights=weights)
             currt_rel_entropy = np.sum(freqs * np.log(freqs / freq0g))
             rel_entropy.append(currt_rel_entropy)
-        return rel_entropy
+        return np.array(rel_entropy)
 
-    def get_similarity_weights(self, similarity, threshold):
+    def similarity_weights(self, similarity, threshold) -> float:
         """Get the effective number of sequences after applying weights
 
-        Keyword arguments:
-        similarity: a similarity matrix
-        threshold: the "width" (delta) of an effective sequence
+        Parameters
+        ----------
+        similarity: numpy 2D array
+            A similarity matrix of shape (n_seq,n_seq).
+        threshold: float
+            The "width" (delta) of an effective sequence: defines the threshold
+            at which sequences are regrouped as an effective sequence.
+
+        Returns
+        -------
+        weight: float
+            Weights
         """
         return (1 / np.sum(similarity >= threshold, axis=0))
 
-    def weight_bins(self, threshold_increment=.001, low_bin_count=100, weight_vector_count=5, use_filtered=True, threshold=0.2):
-        """Computes weight bins using a similarity matrix, in order to regroup "similar-enough" sequences in bins
+    def weight_bins(
+        self, threshold_increment=.001, low_bin_count=100, weight_vector_count=5,
+        use_filtered=True, threshold=0.2
+    ) -> Tuple[List[float], List[List[float]]]:
+        """Computes weight bins using a similarity matrix, in order to regroup
+           "similar-enough" sequences in bins
 
-        Keyword arguments:
-        threshold_increment: the rate at which delta should be decremented when trying to build bins
-        low_bin_count: the target effective sequence count for the smallest bin
-        weight_vector_count: the number of bins to create
-        use_filtered: use a filtered version of the alignment according to gap cutoffs
-        threshold: the threshold over which positions are considered overly-gapped
+        Parameters
+        ----------
+        threshold_increment: float or None
+            The rate at which delta should be decremented when trying to build
+            bins, defaults to 0.001.
+        low_bin_count: int or None
+            The target effective sequence count for the smallest bin.
+        weight_vector_count: int or None
+            The number of bins to create. Defaults to 5.
+        use_filtered: bool or None
+            Use a filtered version of the alignment according to gap cutoffs.
+            Defaults to True.
+        threshold: float or None
+            The threshold over which positions are considered overly-gapped.
+
+        Returns
+        -------
+        delta_list: list of float
+            A list of the used deltas: the width of effective sequences groups.
+        weight_list: list of list of float
+            A list of list of weights: for each position in this list, there are
+            n_seq weights, grouped using the corresponding delta found in
+            delta_list.
         """
         similarity_matrix = self.similarity(use_filtered=use_filtered, threshold=threshold)
-        bin_sizes = np.logspace(np.log10(low_bin_count),np.log10(similarity_matrix.shape[0]),weight_vector_count).tolist()
+        bin_sizes = np.logspace(
+            np.log10(low_bin_count),
+            np.log10(similarity_matrix.shape[0]),
+            weight_vector_count
+        ).tolist()
+
         delta_list = []
         weight_list = []
         currt_delta = np.max(similarity_matrix)
         fnd_values = len(delta_list)
-        it = 0
         while fnd_values != weight_vector_count:
-            sim_wt = self.get_similarity_weights(similarity_matrix, currt_delta)
-            eff_seqs = sum(sim_wt)
-            # If the tree is very well structured, there is no point in trying to find values very close to the generated bin sizes
+            sim_wt = self.similarity_weights(similarity_matrix, currt_delta)
+            eff_seqs = np.sum(sim_wt)
+            # If the tree is very well structured, there is no point in trying
+            # to find values very close to the generated bin sizes
             if eff_seqs < bin_sizes[-1 - fnd_values]:
                 delta_list.append(currt_delta)
                 weight_list.append(sim_wt)
                 fnd_values += 1
             currt_delta -= threshold_increment
-            it += 1
         return delta_list, weight_list
 
-    def get_sequence_count(self):
+    def get_sequence_count(self) -> int:
+        """Computes the number of sequences in the current instance
+
+        Returns
+        -------
+        n_seq: int
+            Number of sequences
+        """
         return self._num_rep.shape[0]
 
-    def compute_most_frequent_aa(self, filtered=True, threshold=.2):
+    def most_frequent_aa(self, filtered=True, threshold=.2) -> Tuple[np.ndarray, np.ndarray]:
+        """Computes the most frequent amino acid at each position
+
+        Parameters
+        ----------
+        filtered: bool or None
+            Whether overly-gapped positions should be excluded. Defaults to
+            True.
+        threshold: float or None
+            The threshold over which positions are considered overly-gapped.
+            Useless if filtered is False. Defaults to 0.2.
+        """
         most_freq_aa = []
         most_freq_aa_freq = []
-        src = self.get_filtered_alignment()
-        for i in range(src.shape[1]):
-            currt_col = src[:,i]
+        working_alignment = self.filtered_alignment(threshold=threshold) if filtered else self._num_rep
+        for i in range(working_alignment.shape[1]):
+            currt_col = working_alignment[:,i]
             currt_bins = np.bincount(currt_col)
             currt_max_i = np.argmax(currt_bins)
             most_freq_aa.append(currt_max_i)
             most_freq_aa_freq.append(currt_bins[currt_max_i] / np.sum(currt_bins))
         return np.array(most_freq_aa), np.array(most_freq_aa_freq)
+
+    def _frequency(self, algnt_col1, algnt_col2, aa1, aa2, weights) -> Tuple[float, float, float]:
+        """FOR LEARNING PURPOSES ONLY: prefer the optimized version
+        Computes frequencies for amino acids to build a coevolution matrix
+        """
+        a_i = algnt_col1 == aa1
+        b_j = algnt_col2 == aa2
+        fia = np.sum(a_i * weights) / np.sum(weights)
+        fjb = np.sum(b_j * weights) / np.sum(weights)
+        fijab = np.sum((a_i & b_j) * weights) / np.sum(weights)
+        return fia, fjb, fijab
+
+    def _slow_coevolution_matrix(
+        self, weights, threshold=.2, aa_count=21
+    ) -> Tuple[np.ndarray, np.ndarray]:
+        """FOR LEARNING PURPOSES ONLY: prefer the optimized version
+        """
+        algnt = self.filtered_alignment(threshold=threshold)
+        seq_size = algnt.shape[1]
+        Cijab = np.zeros((seq_size, seq_size, aa_count, aa_count))
+        Cij = np.zeros((seq_size, seq_size))
+        for i in range(seq_size):
+            for j in range(i, seq_size):
+                for a in range(aa_count):
+                    for b in range(aa_count):
+                        fia, fjb, fijab = self._frequency(algnt[:,i], algnt[:,j], a, b, weights)
+                        Cijab[i, j, a, b] = fijab - fia * fjb
+                val = np.sqrt(np.sum(Cijab[i,j,:,:] ** 2))
+                Cij[i,j] = val
+                Cij[j,i] = val
+        return Cijab, Cij
+
+    def aminoacid_joint_frequencies(
+        self, weights, threshold=.2, aa_count=21
+    ) -> Tuple[np.ndarray, np.ndarray]:
+        """Computes the joint frequencies for every amino acid at every position
+
+        Parameters
+        ----------
+        weights: numpy 1D array of float
+            Gives more or less importance to certain sequences in the MSA.
+        threshold: float or None
+            The threshold over which positions are considered overly-gapped and
+            are thus filtered out.
+        aa_count: int or None
+            The number of amino acids to consider for the shape of the return
+            value. Defaults to 21 to account for unknown (X) amino acids which
+            are considered as gaps for the lack of a better category.
+
+        Returns
+        -------
+        joint_freqs: numpy 4D matrix of shape (n_pos, n_pos, aa_count, aa_count)
+            For joint_freqs[i,j,a,b], the joint frequencies for of amino acids
+            a and b at positions i and j respectively.
+
+        joint_freqs_ind: numpy 4D matrix of shape (n_pos, n_pos, aa_count, aa_count)
+            For joint_freqs[i,j,a,b], the joint frequencies for of amino acids
+            a and b at positions i and j respectively, if a at position i and j
+            at position b are independent random variables.
+        """
+        algnt = self.filtered_alignment(threshold=threshold)
+        seq_size = algnt.shape[1]
+
+        # Joint frequencies
+        joint_freqs = np.zeros((seq_size, seq_size, aa_count, aa_count))
+
+        # Frequencies IF AAs are present independently as positions i & j
+        joint_freqs_ind = np.zeros((seq_size, seq_size, aa_count, aa_count))
+
+        # One-hot encoding (binary array)
+        binary_array = np.array([algnt == aa for aa in range(aa_count)])
+
+        # Adding weights
+        weighted_binary_array = binary_array * weights[np.newaxis,:,np.newaxis]
+
+        m_eff = np.sum(weights)
+        simple_freq = weighted_binary_array / m_eff
+        simple_freq = np.sum(simple_freq, axis=1)
+
+        for i in range(seq_size):
+            for j in range(i, seq_size):
+                for a in range(aa_count):
+                    afreq = simple_freq[a,i]
+                    for b in range(aa_count):
+                        bfreq = simple_freq[b,j]
+                        joint_freq = np.sum(weighted_binary_array[a,:,i] * binary_array[b,:,j]) / m_eff
+
+                        joint_freqs[i,j,a,b] = joint_freq
+                        joint_freqs[j,i,b,a] = joint_freq
+
+                        joint_freqs_ind[i,j,a,b] = afreq*bfreq
+                        joint_freqs_ind[j,i,b,a] = afreq*bfreq
+
+        return joint_freqs, joint_freqs_ind

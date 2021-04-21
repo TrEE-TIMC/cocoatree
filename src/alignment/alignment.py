@@ -1,7 +1,6 @@
 from typing import Tuple, List
 # from numpy.typing import ArrayLike
 import numpy as np
-import tensorflow as tf
 
 class Alignment:
     """
@@ -396,7 +395,7 @@ class Alignment:
         return Cijab, Cij
 
     def aminoacid_joint_frequencies(
-        self, weights: np.ndarray, threshold=.2, aa_count=21, use_tensor=False, use_tensorflow=False
+        self, weights: np.ndarray, threshold=.2, aa_count=21, use_tensorflow=False
     ) -> Tuple[np.ndarray, np.ndarray]:
         """Computes the joint frequencies for every amino acid at every position
 
@@ -444,37 +443,19 @@ class Alignment:
         simple_freq = weighted_binary_array / m_eff
         simple_freq = np.sum(simple_freq, axis=1)
 
-        if use_tensor:
+        if not use_tensorflow:
             joint_freq_aibj = np.tensordot(
                 weighted_binary_array, binary_array, axes=([1], [1])
             )/m_eff
             joint_freqs = joint_freq_aibj.transpose(1, 3, 0, 2)
-        elif use_tensorflow:
+        else:
+            import tensorflow as tf
             joint_freq_aibj = tf.tensordot(
                 weighted_binary_array, binary_array * 1.0, axes=[[1], [1]]
             ) / m_eff
             joint_freqs = tf.transpose(joint_freq_aibj, perm=[1, 3, 0, 2])
 
-        for i in range(seq_size):
-            for j in range(i, seq_size):
-                for a in range(aa_count):
-                    afreq = simple_freq[a, i]
-                    for b in range(aa_count):
-                        bfreq = simple_freq[b, j]
-
-                        if not use_tensor and not use_tensorflow:
-                            joint_freq = (
-                                np.sum(
-                                    weighted_binary_array[a, :, i] * binary_array[b, :, j]
-                                ) / m_eff
-                            )
-
-                            joint_freqs[i, j, a, b] = joint_freq
-                            joint_freqs[j, i, b, a] = joint_freq
-
-                        joint_freqs_ind[i, j, a, b] = afreq*bfreq
-                        joint_freqs_ind[j, i, b, a] = afreq*bfreq
+        joint_freqs_ind = np.multiply.outer(simple_freq, simple_freq)
 
         return joint_freqs, joint_freqs_ind
-
 

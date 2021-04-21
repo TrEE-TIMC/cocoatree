@@ -1,7 +1,7 @@
 from typing import Tuple, List
-from numpy.typing import ArrayLike
+# from numpy.typing import ArrayLike
 import numpy as np
-
+import tensorflow as tf
 
 class Alignment:
     """
@@ -13,7 +13,7 @@ class Alignment:
 
     """
     # Used to translate AAs to Ints to make use of Numpy vectorization
-    _code_tonum = {
+    __code_tonum = {
         '-': 0,
         'X': 0,  # Consider unknown AAs as gaps
         'A': 1,
@@ -39,9 +39,9 @@ class Alignment:
     }
 
     _kws = {
-        'text': '_text_rep',
-        'numerical': '_num_rep',
-        'num': '_num_rep'
+        'text': '__text_rep',
+        'numerical': '__num_rep',
+        'num': '__num_rep'
     }
 
     _freq0 = np.array(
@@ -79,16 +79,16 @@ class Alignment:
         alignment_sequence_list: list of str
             list of strings corresponding to one string per sequence
         """
-        self._raw = alignment_sequence_list
+        self.__raw = alignment_sequence_list
         # Split characters so that one element in each row represents one aminoacid
-        self._text_rep = np.array(
+        self.__text_rep = np.array(
             [np.array([char for char in row]) for row in alignment_sequence_list]
         )
-        self._num_rep = np.zeros(self._text_rep.shape, dtype=np.int64)
-        for k in Alignment._code_tonum.keys():
-            self._num_rep[self._text_rep == k] = self._code_tonum[k]
+        self.__num_rep = np.zeros(self.__text_rep.shape, dtype=np.int64)
+        for k in Alignment.__code_tonum.keys():
+            self.__num_rep[self.__text_rep == k] = self.__code_tonum[k]
 
-    def gap_frequency(self, threshold=0.2) -> Tuple[ArrayLike, float]:
+    def gap_frequency(self, threshold=0.2) -> Tuple[np.ndarray, float]:
         """Computes the gap frequency for a MSA
 
         Parameters
@@ -109,10 +109,10 @@ class Alignment:
         gap_frequency = []
 
         # per position
-        for residue in range(self._text_rep.shape[1]):
+        for residue in range(self.__text_rep.shape[1]):
             currt_freq = np.count_nonzero(
-                self._text_rep[:, residue] == '-'
-            ) / self._text_rep.shape[0]
+                self.__text_rep[:, residue] == '-'
+            ) / self.__text_rep.shape[0]
 
             gap_frequency.append(currt_freq)
 
@@ -121,8 +121,8 @@ class Alignment:
         working_pos = gap_frequency < threshold
         working_pos = working_pos.reshape(working_pos.shape[0], -1)
 
-        mask = np.ones((self._text_rep.shape[0], 1), dtype="bool").dot(working_pos.T)
-        bg_gap_frequency = self._text_rep[mask]
+        mask = np.ones((self.__text_rep.shape[0], 1), dtype="bool").dot(working_pos.T)
+        bg_gap_frequency = self.__text_rep[mask]
 
         return gap_frequency, float(np.mean(bg_gap_frequency == '-'))
 
@@ -141,7 +141,7 @@ class Alignment:
             The filtered alignment with overly-gapped positions removed.
         """
         gap_frequency, _ = self.gap_frequency(threshold)
-        return self._num_rep[:, gap_frequency < threshold].copy()
+        return self.__num_rep[:, gap_frequency < threshold].copy()
 
     def similarity(self, use_filtered=True, threshold=0.2) -> np.ndarray:
         """Computes the similarity between sequences in a MSA
@@ -160,7 +160,7 @@ class Alignment:
         similarity_matrix: numpy 2D matrix of shape (n_seq,n_seq)
             The similarity matrix between sequences: a symmetric square matrix.
         """
-        src = self.filtered_alignment(threshold) if use_filtered else self._num_rep
+        src = self.filtered_alignment(threshold) if use_filtered else self.__num_rep
         n_seqs = src.shape[0]
         res = np.zeros(shape=(n_seqs, n_seqs))
         for seq_1_i in range(n_seqs):
@@ -198,7 +198,7 @@ class Alignment:
         freqs: numpy 1D array
             A numpy array of length aa_count, containing regularized frequencies
             for each amino acid. A mapping from amino-acid to indices in this
-            result can be found in _code_tonum.
+            result can be found in __code_tonum.
         """
         # AA proportion
         bins = np.bincount(algnt_col, weights=weights)
@@ -337,7 +337,7 @@ class Alignment:
         n_seq: int
             Number of sequences
         """
-        return self._num_rep.shape[0]
+        return self.__num_rep.shape[0]
 
     def most_frequent_aa(self, filtered=True, threshold=.2) -> Tuple[np.ndarray, np.ndarray]:
         """Computes the most frequent amino acid at each position
@@ -354,7 +354,7 @@ class Alignment:
         most_freq_aa = []
         most_freq_aa_freq = []
         working_alignment = (
-            self.filtered_alignment(threshold=threshold) if filtered else self._num_rep
+            self.filtered_alignment(threshold=threshold) if filtered else self.__num_rep
         )
         for i in range(working_alignment.shape[1]):
             currt_col = working_alignment[:, i]
@@ -396,7 +396,7 @@ class Alignment:
         return Cijab, Cij
 
     def aminoacid_joint_frequencies(
-        self, weights: np.ndarray, threshold=.2, aa_count=21
+        self, weights: np.ndarray, threshold=.2, aa_count=21, use_tensor=False, use_tensorflow=False
     ) -> Tuple[np.ndarray, np.ndarray]:
         """Computes the joint frequencies for every amino acid at every position
 
@@ -411,6 +411,8 @@ class Alignment:
             The number of amino acids to consider for the shape of the return
             value. Defaults to 21 to account for unknown (X) amino acids which
             are considered as gaps for the lack of a better category.
+        use_tensor: bool or None
+            Whether to use tensordot to compute joint frequencies
 
         Returns
         -------
@@ -442,20 +444,37 @@ class Alignment:
         simple_freq = weighted_binary_array / m_eff
         simple_freq = np.sum(simple_freq, axis=1)
 
+        if use_tensor:
+            joint_freq_aibj = np.tensordot(
+                weighted_binary_array, binary_array, axes=([1], [1])
+            )/m_eff
+            joint_freqs = joint_freq_aibj.transpose(1, 3, 0, 2)
+        elif use_tensorflow:
+            joint_freq_aibj = tf.tensordot(
+                weighted_binary_array, binary_array * 1.0, axes=[[1], [1]]
+            ) / m_eff
+            joint_freqs = tf.transpose(joint_freq_aibj, perm=[1, 3, 0, 2])
+
         for i in range(seq_size):
             for j in range(i, seq_size):
                 for a in range(aa_count):
                     afreq = simple_freq[a, i]
                     for b in range(aa_count):
                         bfreq = simple_freq[b, j]
-                        joint_freq = (
-                            np.sum(weighted_binary_array[a, :, i] * binary_array[b, :, j]) / m_eff
-                        )
 
-                        joint_freqs[i, j, a, b] = joint_freq
-                        joint_freqs[j, i, b, a] = joint_freq
+                        if not use_tensor and not use_tensorflow:
+                            joint_freq = (
+                                np.sum(
+                                    weighted_binary_array[a, :, i] * binary_array[b, :, j]
+                                ) / m_eff
+                            )
+
+                            joint_freqs[i, j, a, b] = joint_freq
+                            joint_freqs[j, i, b, a] = joint_freq
 
                         joint_freqs_ind[i, j, a, b] = afreq*bfreq
                         joint_freqs_ind[j, i, b, a] = afreq*bfreq
 
         return joint_freqs, joint_freqs_ind
+
+

@@ -244,16 +244,20 @@ class Alignment:
 
         # Prevent MSA without gaps & regularize background frequencies
         # the same way data is regularized
+        freq0g_n = (1 - Alignment._lbda) * freq0g + Alignment._lbda / aa_count
 
-        # freq0g_n = (1 - Alignment._lbda) * freq0g + Alignment._lbda / aa_count
-        assert freq0g.sum() == 1
-
-        rel_entropy = []
-        for position in range(working_alignment.shape[1]):
-            freqs = Alignment.aa_freq_at_pos(working_alignment[:, position], weights=weights)
-            currt_rel_entropy = np.sum(freqs * np.log(freqs / freq0g))
-            rel_entropy.append(currt_rel_entropy)
-        return np.array(rel_entropy)
+        freqs = np.apply_along_axis(
+            Alignment.aa_freq_at_pos,
+            0,
+            working_alignment,
+            weights=weights
+        )
+        rel_entropy = np.apply_along_axis(
+            lambda pos: np.sum(pos * np.log(pos / freq0g_n)),
+            0,
+            freqs
+        )
+        return rel_entropy
 
     def similarity_weights(self, similarity: np.ndarray, threshold=0.2) -> float:
         """Get the effective number of sequences after applying weights

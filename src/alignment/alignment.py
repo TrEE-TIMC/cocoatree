@@ -449,6 +449,8 @@ class Alignment:
         simple_freq = weighted_binary_array / m_eff
         simple_freq = np.sum(simple_freq, axis=1)
 
+        simple_freq = (1 - self._lbda) * simple_freq + self._lbda / aa_count
+
         if not use_tensorflow:
             joint_freq_aibj = np.tensordot(
                 weighted_binary_array, binary_array, axes=([1], [1])
@@ -460,6 +462,8 @@ class Alignment:
                 weighted_binary_array, binary_array * 1.0, axes=[[1], [1]]
             ) / m_eff
             joint_freqs = tf.transpose(joint_freq_aibj, perm=[1, 3, 0, 2])
+
+        joint_freqs = (1 - self._lbda) * joint_freqs + self._lbda / aa_count
 
         joint_freqs_ind = np.multiply.outer(simple_freq, simple_freq)
 

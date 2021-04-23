@@ -463,5 +463,7 @@ class Alignment:
 
         joint_freqs_ind = np.multiply.outer(simple_freq, simple_freq)
 
+        joint_freqs_ind = np.moveaxis(joint_freqs_ind, [0, 1, 2, 3], [2, 0, 3, 1])
+
         return joint_freqs, joint_freqs_ind
 

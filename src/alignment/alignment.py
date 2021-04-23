@@ -92,16 +92,16 @@ class Alignment:
 
         Parameters
         ----------
-        threshold: float
+        threshold: float, optional
             Positions will be considered overly-gapped if their gap ratio is
-            above this value.
+            above this value, by default 0.2
 
         Returns
         -------
-        gap_frequency: numpy 1D array
+        np.ndarray of shape (n_pos)
             An array of length n_pos with each value set to the gap frequency at
             the position corresponding to the index.
-        background_gap_frequency: float
+        float
             Containing the gap frequency accross all positions which are below
             the desired threshold.
         """
@@ -130,13 +130,13 @@ class Alignment:
 
         Parameters
         ----------
-        threshold: float or None
+        threshold: float, optional
             The threshold to discriminate positions to keep versus overly-gapped
-            positions.
+            positions, by default 0.2
 
         Returns
         -------
-        alignment: numpy array of int
+        np.ndarray of int
             The filtered alignment with overly-gapped positions removed.
         """
         gap_frequency, _ = self.gap_frequency(threshold)
@@ -147,16 +147,16 @@ class Alignment:
 
         Parameters
         ----------
-        use_filtered: bool or None
+        use_filtered: bool, optional
             Make use of the filtered MSA, according to the gap frequency
-            threshold (defaults to True).
-        threshold: float or None
+            threshold, by default True
+        threshold: float, optional
             The threshold to filter overly-gapped positions, unused if
-            use_filtered is False (default 0.2).
+            use_filtered is False, by default 0.2
 
         Returns
         -------
-        similarity_matrix: numpy 2D matrix of shape (n_seq,n_seq)
+        np.ndarray of shape (n_seq,n_seq)
             The similarity matrix between sequences: a symmetric square matrix.
         """
         src = self.filtered_alignment(threshold) if use_filtered else self.__num_rep
@@ -179,22 +179,22 @@ class Alignment:
 
         Parameters
         ----------
-        algnt_col: numpy series
+        algnt_col: np.series
             The column for which frequency should be computed.
-        lbda: float or None
-            A regularization parameter. Defaults to 0.03
-        aa_count: int or None
+        lbda: float, optional
+            A regularization parameter, by default 0.03
+        aa_count: int, optional
             The number of amino acids to consider for the shape of the return
             value. Defaults to 21 to account for unknown (X) amino acids which
             are considered as gaps for the lack of a better category.
-        weights: numpy 1D array or None
+        weights: numpy 1D array, optional
             Gives more or less importance to certain sequences.
             If provided, the length of this array should be equal to the length
-            of algnt_col
+            of algnt_col, by default None
 
         Returns
         -------
-        freqs: numpy 1D array
+        np.ndarray of shape (aa_count)
             A numpy array of length aa_count, containing regularized frequencies
             for each amino acid. A mapping from amino-acid to indices in this
             result can be found in __code_tonum.
@@ -225,14 +225,14 @@ class Alignment:
             The number of amino acids to consider for the shape of the return
             value. Defaults to 21 to account for unknown (X) amino acids which
             are considered as gaps for the lack of a better category.
-        weights: numpy 1D array
+        weights: np.ndarray of shape (N_seq)
             Gives more or less importance to certain sequences in the MSA.
         threshold: float
             The gap frequency low-pass threshold.
 
         Returns
         -------
-        entropy: numpy 1D array
+        np.ndarray of shape (N_pos)
             The entropy for each of the positions in the filtered alignment.
         """
         _, gap_bg_freq = self.gap_frequency(threshold)
@@ -266,16 +266,16 @@ class Alignment:
 
         Parameters
         ----------
-        similarity: numpy 2D array
-            A similarity matrix of shape (n_seq,n_seq).
-        threshold: float or None
+        similarity: numpy 2D array of shape (N_seq, N_seq)
+            A similarity matrix
+        threshold: float, optional
             The "width" (delta) of an effective sequence: defines the threshold
             at which sequences are regrouped as an effective sequence.
             Defaults to 0.2.
 
         Returns
         -------
-        weight: float
+        float
             Weights
         """
         return (1 / np.sum(similarity >= threshold, axis=0))
@@ -289,17 +289,17 @@ class Alignment:
 
         Parameters
         ----------
-        threshold_increment: float or None
+        threshold_increment: float, optional
             The rate at which delta should be decremented when trying to build
             bins, defaults to 0.001.
-        low_bin_count: int or None
+        low_bin_count: int, optional
             The target effective sequence count for the smallest bin.
-        weight_vector_count: int or None
+        weight_vector_count: int, optional
             The number of bins to create. Defaults to 5.
-        use_filtered: bool or None
+        use_filtered: bool, optional
             Use a filtered version of the alignment according to gap cutoffs.
             Defaults to True.
-        threshold: float or None
+        threshold: float, optional
             The threshold over which positions are considered overly-gapped.
 
         Returns
@@ -339,7 +339,7 @@ class Alignment:
 
         Returns
         -------
-        n_seq: int
+        int
             Number of sequences
         """
         return self.__num_rep.shape[0]
@@ -349,12 +349,11 @@ class Alignment:
 
         Parameters
         ----------
-        filtered: bool or None
-            Whether overly-gapped positions should be excluded. Defaults to
-            True.
-        threshold: float or None
+        filtered: bool, optional
+            Whether overly-gapped positions should be excluded, by default True
+        threshold: float, optional
             The threshold over which positions are considered overly-gapped.
-            Useless if filtered is False. Defaults to 0.2.
+            Useless if filtered is False, by default 0.2
         """
         most_freq_aa = []
         most_freq_aa_freq = []
@@ -407,25 +406,25 @@ class Alignment:
 
         Parameters
         ----------
-        weights: numpy 1D array of float
+        weights: np.ndarray of float
             Gives more or less importance to certain sequences in the MSA.
-        threshold: float or None
+        threshold: float, optional
             The threshold over which positions are considered overly-gapped and
-            are thus filtered out.
-        aa_count: int or None
+            are thus filtered out, by default 0.2
+        aa_count: int, optional
             The number of amino acids to consider for the shape of the return
             value. Defaults to 21 to account for unknown (X) amino acids which
-            are considered as gaps for the lack of a better category.
-        use_tensor: bool or None
-            Whether to use tensordot to compute joint frequencies
+            are considered as gaps for the lack of a better category, by default 21
+        use_tensor: bool, optional
+            Whether to use tensordot to compute joint frequencies, by default False
 
         Returns
         -------
-        joint_freqs: numpy 4D matrix of shape (n_pos, n_pos, aa_count, aa_count)
+        np.ndarray of shape (n_pos, n_pos, aa_count, aa_count)
             For joint_freqs[i,j,a,b], the joint frequencies for of amino acids
             a and b at positions i and j respectively.
 
-        joint_freqs_ind: numpy 4D matrix of shape (n_pos, n_pos, aa_count, aa_count)
+        np.ndarray of shape (n_pos, n_pos, aa_count, aa_count)
             For joint_freqs[i,j,a,b], the joint frequencies for of amino acids
             a and b at positions i and j respectively, if a at position i and j
             at position b are independent random variables.
@@ -517,10 +516,11 @@ class Alignment:
             Number of aminoacids to consider, by default 21
         use_tensorflow : bool, optional
             Whether tensorflow should be used to compute frequency matrices, by default False
+
         Returns
         -------
-        np.ndarray
-            The weighted mutual information matrix of shape (N_pos, N_pos)
+        np.ndarray of shape (N_pos, N_pos)
+            The weighted mutual information matrix
         """
         jf, jfi = self.aminoacid_joint_frequencies(weights, threshold, aa_count, use_tensorflow)
         _, w = self.sca_entropy(aa_count, weights, threshold)

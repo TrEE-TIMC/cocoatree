@@ -498,3 +498,31 @@ class Alignment:
                    * w[:, np.newaxis, np.newaxis, np.newaxis])
         return np.sqrt(np.sum(cijab_w ** 2, axis=(2, 3)))
 
+    def mutual_information(
+        self, weights: np.ndarray, threshold=.2, aa_count=21, use_tensorflow=False
+    ) -> np.ndarray:
+        """Computes the mutual information matrix
+
+        Parameters
+        ----------
+        weights : np.ndarray
+            Sequence weights
+        threshold : float, optional
+            Gap-frequency low-pass value, by default .2
+        aa_count : int, optional
+            Number of aminoacids to consider, by default 21
+        use_tensorflow : bool, optional
+            Whether tensorflow should be used to compute frequency matrices, by default False
+        Returns
+        -------
+        np.ndarray
+            The weighted mutual information matrix of shape (N_pos, N_pos)
+        """
+        jf, jfi = self.aminoacid_joint_frequencies(weights, threshold, aa_count, use_tensorflow)
+        _, w = self.sca_entropy(aa_count, weights, threshold)
+        mat_ijab = (jf
+                    * np.log(jf / jfi)
+                    # Adding weights
+                    * w[np.newaxis, :, np.newaxis, np.newaxis]
+                    * w[:, np.newaxis, np.newaxis, np.newaxis])
+        return np.sum(mat_ijab, axis=(2, 3))

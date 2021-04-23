@@ -252,12 +252,14 @@ class Alignment:
             working_alignment,
             weights=weights
         )
-        rel_entropy = np.apply_along_axis(
-            lambda pos: np.sum(pos * np.log(pos / freq0g_n)),
+        rel_entropy = np.sum(freqs * np.log(freqs / freq0g_n[:,np.newaxis]), 0)
+
+        rel_entropy_derivative = np.apply_along_axis(
+            lambda x: abs(np.sum(np.log((x * (1 - freq0g_n)) / ((1 - x) * freq0g_n)))),
             0,
             freqs
         )
-        return rel_entropy
+        return rel_entropy, rel_entropy_derivative
 
     def similarity_weights(self, similarity: np.ndarray, threshold=0.2) -> float:
         """Get the effective number of sequences after applying weights

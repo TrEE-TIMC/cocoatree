@@ -467,3 +467,34 @@ class Alignment:
 
         return joint_freqs, joint_freqs_ind
 
+    def coevolution_matrix(
+        self, weights: np.ndarray, threshold=.2, aa_count=21, use_tensorflow=False
+    ) -> np.ndarray:
+        """Computes the coevolution matrix (the SCA-way)
+
+        Parameters
+        ----------
+        weights : np.ndarray
+            Sequence weights
+        threshold : float, optional
+            Gap-frequency low-pass value, by default .2
+        aa_count : int, optional
+            Number of aminoacids to consider, by default 21
+        use_tensorflow : bool, optional
+            Whether tensorflow should be used to compute frequency matrices, by default False
+
+        Returns
+        -------
+        np.ndarray
+            The weighted coevolution matrix of shape (N_pos, N_pos)
+        """
+        jf, jfi = self.aminoacid_joint_frequencies(
+            weights, threshold, aa_count, use_tensorflow
+        )
+        _, w = self.sca_entropy(aa_count, weights, threshold)
+        cijab = jf - jfi
+        cijab_w = (cijab
+                   * w[np.newaxis, :, np.newaxis, np.newaxis]
+                   * w[:, np.newaxis, np.newaxis, np.newaxis])
+        return np.sqrt(np.sum(cijab_w ** 2, axis=(2, 3)))
+

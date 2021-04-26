@@ -142,6 +142,42 @@ class Alignment:
         gap_frequency, _ = self.gap_frequency(threshold)
         return self.__num_rep[:, gap_frequency < threshold].copy()
 
+    def seq_len(self):
+        """Retrieves the length of the MSA
+
+        Returns
+        -------
+        int
+            Length of the MSA
+        """
+        return self.__num_rep.shape[1]
+
+    def seq_count(self):
+        """Retrieves the number of sequences in the MSA
+
+        Returns
+        -------
+        int
+            Number of sequences in the MSA
+        """
+        return self.__num_rep.shape[0]
+
+    def filtered_seq_len(self, threshold):
+        """Retrieves the length of the filtered MSA
+
+        Parameters
+        ----------
+        threshold : float
+            The threshold to discriminate positions to keep versus overly-gapped
+            positions.
+
+        Returns
+        -------
+        int
+            Length of the filtered MSA.
+        """
+        return self.filtered_alignment(threshold).shape[1]
+
     def similarity(self, use_filtered=True, threshold=0.2) -> np.ndarray:
         """Computes the similarity between sequences in a MSA
 
@@ -216,6 +252,31 @@ class Alignment:
         freqs = (1 - lbda) * freqs + lbda / aa_count
         return freqs
 
+    def regularized_background_frequencies(self, threshold=0.2, aa_count=21):
+        """Computes background frequencies for every amino acid in the current alignment
+
+        Parameters
+        ----------
+        threshold : float, optional
+            Low-pass gap frequency filter, by default 0.2
+        aa_count : int, optional
+            Number of amino acids to consider, by default 21
+
+        Returns
+        -------
+        np.ndarray of shape (aa_count)
+            The regularized frequencies for every amino acid.
+        """
+        _, gap_bg_freq = self.gap_frequency(threshold)
+        mult_fact = 1 - gap_bg_freq
+        freq0 = Alignment._freq0 * mult_fact
+        freq0g = np.insert(freq0, 0, gap_bg_freq)
+
+        # Prevent MSA without gaps & regularize background frequencies
+        # the same way data is regularized
+        freq0g_n = (1 - Alignment._lbda) * freq0g + Alignment._lbda / aa_count
+        return freq0g_n
+
     def sca_entropy(self, aa_count=21, weights=None, threshold=0.2) -> np.ndarray:
         """Computes entropy as per SCA guidelines
 
@@ -232,19 +293,12 @@ class Alignment:
 
         Returns
         -------
-        np.ndarray of shape (N_pos)
+        np.ndarray of shape (N_pos, N_aa)
             The entropy for each of the positions in the filtered alignment.
         """
-        _, gap_bg_freq = self.gap_frequency(threshold)
         working_alignment = self.filtered_alignment(threshold)
 
-        mult_fact = 1 - gap_bg_freq
-        freq0 = Alignment._freq0 * mult_fact
-        freq0g = np.insert(freq0, 0, gap_bg_freq)
-
-        # Prevent MSA without gaps & regularize background frequencies
-        # the same way data is regularized
-        freq0g_n = (1 - Alignment._lbda) * freq0g + Alignment._lbda / aa_count
+        freq0g_n = self.regularized_background_frequencies(threshold)
 
         freqs = np.apply_along_axis(
             Alignment.aa_freq_at_pos,
@@ -252,14 +306,47 @@ class Alignment:
             working_alignment,
             weights=weights
         )
-        rel_entropy = np.sum(freqs * np.log(freqs / freq0g_n[:,np.newaxis]), 0)
-
-        rel_entropy_derivative = np.apply_along_axis(
-            lambda x: abs(np.sum(np.log((x * (1 - freq0g_n)) / ((1 - x) * freq0g_n)))),
-            0,
-            freqs
+        rel_entropy = (
+            freqs * np.log(freqs / freq0g_n[:, np.newaxis])
+            + (1 - freqs) * np.log((1 - freqs)/(1 - freq0g_n[:, np.newaxis]))
         )
-        return rel_entropy, rel_entropy_derivative
+        return rel_entropy.transpose([1, 0])
+
+    def position_weights_sca(self, threshold=0.2, weights=None):
+        """Computes SCA weights positions
+
+        Parameters
+        ----------
+        threshold : float, optional
+            The gap frequency low-pass threshold, by default 0.2
+        weights : np.ndarray, optional
+            Gives more or less importance to certain sequences in the MSA, by default None
+
+        Returns
+        -------
+        np.ndarray of shape (N_pos, N_pos, aa_count, aa_count)
+            Weights as computed in SCA (using the derivative of the relative entropy)
+        """
+        working_alignment = self.filtered_alignment(threshold)
+
+        freq0g_n = self.regularized_background_frequencies(threshold)
+
+        freqs = np.apply_along_axis(
+            Alignment.aa_freq_at_pos,
+            0,
+            working_alignment,
+            weights=weights
+        )
+
+        rel_entropy_derivative = (
+            np.log(freqs * (1 - freq0g_n[:, np.newaxis]) / (1 - freqs) * freq0g_n[:, np.newaxis])
+            .transpose([1, 0])
+        )
+
+        return np.multiply.outer(
+            rel_entropy_derivative,
+            rel_entropy_derivative
+        ).transpose([0, 2, 1, 3])
 
     def similarity_weights(self, similarity: np.ndarray, threshold=0.2) -> float:
         """Get the effective number of sequences after applying weights
@@ -471,14 +558,16 @@ class Alignment:
         return joint_freqs, joint_freqs_ind
 
     def coevolution_matrix(
-        self, weights: np.ndarray, threshold=.2, aa_count=21, use_tensorflow=False
+        self, seq_weights=None, pos_weights=None, threshold=.2, aa_count=21, use_tensorflow=False
     ) -> np.ndarray:
         """Computes the coevolution matrix (the SCA-way)
 
         Parameters
         ----------
-        weights : np.ndarray
+        seq_weights : np.ndarray of float of shape (N_seq)
             Sequence weights
+        pos_weights : np.ndarray of float of shape (N_pos, N_pos, aa_count, aa_count)
+            Position weights
         threshold : float, optional
             Gap-frequency low-pass value, by default .2
         aa_count : int, optional
@@ -491,25 +580,36 @@ class Alignment:
         np.ndarray
             The weighted coevolution matrix of shape (N_pos, N_pos)
         """
+        seq_weights = seq_weights
+        if seq_weights is None:
+            seq_weights = np.ones(self.seq_count())
+        else:
+            assert seq_weights.shape[0] == self.seq_count()
+
+        pos_weights = pos_weights
+        if pos_weights is None:
+            filtered_seq_len = self.filtered_seq_len(threshold)
+            pos_weights = np.ones((filtered_seq_len, filtered_seq_len, aa_count, aa_count))
+
         jf, jfi = self.aminoacid_joint_frequencies(
-            weights, threshold, aa_count, use_tensorflow
+            seq_weights, threshold, aa_count, use_tensorflow
         )
-        _, w = self.sca_entropy(aa_count, weights, threshold)
+
         cijab = jf - jfi
-        cijab_w = (cijab
-                   * w[np.newaxis, :, np.newaxis, np.newaxis]
-                   * w[:, np.newaxis, np.newaxis, np.newaxis])
+        cijab_w = cijab * pos_weights
         return np.sqrt(np.sum(cijab_w ** 2, axis=(2, 3)))
 
     def mutual_information(
-        self, weights: np.ndarray, threshold=.2, aa_count=21, use_tensorflow=False
+        self, seq_weights=None, pos_weights=None, threshold=.2, aa_count=21, use_tensorflow=False
     ) -> np.ndarray:
-        """Computes the mutual information matrix
+        """Computes a mutual-information coevolution matrix
 
         Parameters
         ----------
-        weights : np.ndarray
+        seq_weights : np.ndarray
             Sequence weights
+        pos_weights : np.ndarray of float of shape (N_pos, N_pos, aa_count, aa_count)
+            Position weights
         threshold : float, optional
             Gap-frequency low-pass value, by default .2
         aa_count : int, optional
@@ -519,14 +619,30 @@ class Alignment:
 
         Returns
         -------
-        np.ndarray of shape (N_pos, N_pos)
-            The weighted mutual information matrix
+        np.ndarray
+            The weighted mutual-information coevolution matrix of shape (N_pos, N_pos)
         """
-        jf, jfi = self.aminoacid_joint_frequencies(weights, threshold, aa_count, use_tensorflow)
-        _, w = self.sca_entropy(aa_count, weights, threshold)
+
+        seq_weights = seq_weights
+        if seq_weights is None:
+            seq_weights = np.ones(self.seq_count())
+        else:
+            assert seq_weights.shape[0] == self.seq_count()
+
+        pos_weights = pos_weights
+        if pos_weights is None:
+            filtered_seq_len = self.filtered_seq_len(threshold)
+            pos_weights = np.ones((filtered_seq_len, filtered_seq_len, aa_count, aa_count))
+
+        jf, jfi = self.aminoacid_joint_frequencies(
+            seq_weights,
+            threshold,
+            aa_count,
+            use_tensorflow
+        )
+
         mat_ijab = (jf
                     * np.log(jf / jfi)
-                    # Adding weights
-                    * w[np.newaxis, :, np.newaxis, np.newaxis]
-                    * w[:, np.newaxis, np.newaxis, np.newaxis])
+                    * pos_weights)
+
         return np.sum(mat_ijab, axis=(2, 3))

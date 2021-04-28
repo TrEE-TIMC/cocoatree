@@ -37,13 +37,8 @@ class Alignment:
         'Y': 20
     }
 
-    _kws = {
-        'text': '__text_rep',
-        'numerical': '__num_rep',
-        'num': '__num_rep'
-    }
-
-    _freq0 = np.array(
+    # Values taken from pySCA
+    __freq0 = np.array(
         [
             0.073,
             0.025,
@@ -68,7 +63,7 @@ class Alignment:
         ]
     )
 
-    _lbda = 0.03
+    __lbda = 0.03
 
     def __init__(self, alignment_sequence_list: List[str]) -> None:
         """
@@ -209,7 +204,7 @@ class Alignment:
 
     @staticmethod
     def aa_freq_at_pos(
-        algnt_col: np.ndarray, lbda=0.03, aa_count=21, weights=None
+        algnt_col: np.ndarray, lbda=0.03, aa_count=21, weights=None, regularization=True
     ) -> np.ndarray:
         """Computes frequencies of aminoacids at a specific position
 
@@ -248,8 +243,8 @@ class Alignment:
 
         freqs = freqs / weights.sum()
 
-        # Regularization
-        freqs = (1 - lbda) * freqs + lbda / aa_count
+        if regularization:
+            freqs = (1 - lbda) * freqs + lbda / aa_count
         return freqs
 
     def regularized_background_frequencies(self, threshold=0.2, aa_count=21):
@@ -269,12 +264,12 @@ class Alignment:
         """
         _, gap_bg_freq = self.gap_frequency(threshold)
         mult_fact = 1 - gap_bg_freq
-        freq0 = Alignment._freq0 * mult_fact
+        freq0 = Alignment.__freq0 * mult_fact
         freq0g = np.insert(freq0, 0, gap_bg_freq)
 
         # Prevent MSA without gaps & regularize background frequencies
         # the same way data is regularized
-        freq0g_n = (1 - Alignment._lbda) * freq0g + Alignment._lbda / aa_count
+        freq0g_n = (1 - Alignment.__lbda) * freq0g + Alignment.__lbda / aa_count
         return freq0g_n
 
     def sca_entropy(self, aa_count=21, weights=None, threshold=0.2) -> np.ndarray:
@@ -421,16 +416,6 @@ class Alignment:
             currt_delta -= threshold_increment
         return delta_list, weight_list
 
-    def get_sequence_count(self) -> int:
-        """Computes the number of sequences in the current instance
-
-        Returns
-        -------
-        int
-            Number of sequences
-        """
-        return self.__num_rep.shape[0]
-
     def most_frequent_aa(self, filtered=True, threshold=.2) -> Tuple[np.ndarray, np.ndarray]:
         """Computes the most frequent amino acid at each position
 
@@ -535,7 +520,7 @@ class Alignment:
         simple_freq = weighted_binary_array / m_eff
         simple_freq = np.sum(simple_freq, axis=1)
 
-        simple_freq = (1 - self._lbda) * simple_freq + self._lbda / aa_count
+        simple_freq = (1 - self.__lbda) * simple_freq + self.__lbda / aa_count
 
         if not use_tensorflow:
             joint_freq_aibj = np.tensordot(
@@ -549,7 +534,7 @@ class Alignment:
             ) / m_eff
             joint_freqs = tf.transpose(joint_freq_aibj, perm=[1, 3, 0, 2])
 
-        joint_freqs = (1 - self._lbda) * joint_freqs + self._lbda / aa_count
+        joint_freqs = (1 - self.__lbda) * joint_freqs + self.__lbda / aa_count
 
         joint_freqs_ind = np.multiply.outer(simple_freq, simple_freq)
 
@@ -557,10 +542,10 @@ class Alignment:
 
         return joint_freqs, joint_freqs_ind
 
-    def coevolution_matrix(
+    def sca_coevolution(
         self, seq_weights=None, pos_weights=None, threshold=.2, aa_count=21, use_tensorflow=False
     ) -> np.ndarray:
-        """Computes the coevolution matrix (the SCA-way)
+        """Computes the SCA coevolution matrix
 
         Parameters
         ----------
@@ -578,7 +563,7 @@ class Alignment:
         Returns
         -------
         np.ndarray
-            The weighted coevolution matrix of shape (N_pos, N_pos)
+            The weighted SCA coevolution matrix of shape (N_pos, N_pos)
         """
         seq_weights = seq_weights
         if seq_weights is None:
@@ -646,3 +631,79 @@ class Alignment:
                     * pos_weights)
 
         return np.sum(mat_ijab, axis=(2, 3))
+
+    def vorberg_entropy(self, threshold=0.2):
+        """vorberg_entropy [summary]
+
+        Parameters
+        ----------
+        threshold : float, optional
+            Gap-frequency low-pass value, by default .2
+
+        Returns
+        -------
+        np.ndarray
+            Entropy values for each position in the filtered alignment
+        """
+        working_alignment = self.filtered_alignment(threshold)
+        f = np.apply_along_axis(
+            Alignment.aa_freq_at_pos,
+            0,
+            working_alignment
+        ).transpose(1, 0)
+        s = - np.sum(f * np.log(f), axis=1)
+        return s
+
+    @staticmethod
+    def basic_ICA(x, r, Niter):
+        """ Basic ICA algorithm, based on work by Bell & Sejnowski (infomax). The input data should preferentially be sphered, i.e., x.T.dot(x) = 1
+        Source: https://github.com/ranganathanlab/pySCA/
+
+        Parameters
+        ----------
+        -  `x` = LxM input matrix where L = # features and M = # samples
+        -  `r` = learning rate / relaxation parameter (e.g. r=.0001)
+        -  `Niter` =  number of iterations (e.g. 1000)
+
+        **Returns:**
+        -  `w` = unmixing matrix
+        -  `change` = record of incremental changes during the iterations.
+
+        **Note:** r and Niter should be adjusted to achieve convergence, which should be assessed by visualizing 'change' with plot(range(iter) ,change)
+
+        **Example:**
+        >>> [w, change] = basicICA(x, r, Niter)
+
+        """
+        [L, M] = x.shape
+        w = np.eye(L)
+        change = list()
+        for _ in range(Niter):
+            w_old = np.copy(w)
+            u = w.dot(x)
+            w += r*(M*np.eye(L)+(1-2*(1./(1+np.exp(-u)))).dot(u.T)).dot(w)
+            delta = (w-w_old).ravel()
+            change.append(delta.dot(delta.T))
+        return [w, change]
+
+    @staticmethod
+    def rot_ICA(V, kmax=6, learnrate=.0001, iterations=10000):
+        """ ICA rotation (using basicICA) with default parameters and normalization of
+        outputs.
+        Source: https://github.com/ranganathanlab/pySCA/
+
+        :Example:
+        >>> Vica, W = rotICA(V, kmax=6, learnrate=.0001, iterations=10000)
+        """
+        V1 = V[:,:kmax].T
+        [W, changes_s] = Alignment.basic_ICA(V1, learnrate, iterations)
+        Vica = (W.dot(V1)).T
+        for n in range(kmax):
+            imax = abs(Vica[:, n]).argmax()
+            Vica[:, n] = np.sign(Vica[imax, n])*Vica[:, n]/np.linalg.norm(Vica[:, n])
+        return Vica, W
+
+    @staticmethod
+    def ICA(matrix, kmax=6, learn_rate=.0001, iterations=10000):
+        v, _, _ = np.linalg.svd(matrix)
+        return Alignment.rot_ICA(v, kmax, learnrate=learn_rate, iterations=iterations)

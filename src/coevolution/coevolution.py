@@ -1,15 +1,15 @@
 from typing import Tuple, List
-# from numpy.typing import ArrayLike
 import numpy as np
 
+
 class Alignment:
-    """
-    Represents a Multiple Sequence Alignment
+    """ Represents a Multiple Sequence Alignment
 
     Attributes
     ----------
-
-
+    gap_threshold: float, optional
+        Gap low-pass threshold. Any position in the MSA which has a gap-proportion equal or
+        superior to this value is considered overly-gapped, by default 0.2
     """
     # Used to translate AAs to Ints to make use of Numpy vectorization
     __code_tonum = {
@@ -65,7 +65,7 @@ class Alignment:
 
     __lbda = 0.03
 
-    def __init__(self, alignment_sequence_list: List[str]) -> None:
+    def __init__(self, alignment_sequence_list: List[str], gap_lowpass_threshold=0.2) -> None:
         """
 
         Parameters
@@ -82,7 +82,9 @@ class Alignment:
         for k in Alignment.__code_tonum.keys():
             self.__num_rep[self.__text_rep == k] = self.__code_tonum[k]
 
-    def gap_frequency(self, threshold=0.2) -> Tuple[np.ndarray, float]:
+        self.gap_threshold = gap_lowpass_threshold
+
+    def gap_frequency(self) -> Tuple[np.ndarray, float]:
         """Computes the gap frequency for a MSA
 
         Parameters
@@ -112,7 +114,7 @@ class Alignment:
 
         gap_frequency = np.array(gap_frequency)
 
-        working_pos = gap_frequency < threshold
+        working_pos = gap_frequency < self.gap_threshold
         working_pos = working_pos.reshape(working_pos.shape[0], -1)
 
         mask = np.ones((self.__text_rep.shape[0], 1), dtype="bool").dot(working_pos.T)
@@ -120,22 +122,16 @@ class Alignment:
 
         return gap_frequency, float(np.mean(bg_gap_frequency == '-'))
 
-    def filtered_alignment(self, threshold=0.2) -> np.ndarray:
+    def filtered_alignment(self) -> np.ndarray:
         """Returns the filtered alignment
-
-        Parameters
-        ----------
-        threshold: float, optional
-            The threshold to discriminate positions to keep versus overly-gapped
-            positions, by default 0.2
 
         Returns
         -------
         np.ndarray of int
             The filtered alignment with overly-gapped positions removed.
         """
-        gap_frequency, _ = self.gap_frequency(threshold)
-        return self.__num_rep[:, gap_frequency < threshold].copy()
+        gap_frequency, _ = self.gap_frequency()
+        return self.__num_rep[:, gap_frequency < self.gap_threshold].copy()
 
     def seq_len(self):
         """Retrieves the length of the MSA
@@ -157,23 +153,17 @@ class Alignment:
         """
         return self.__num_rep.shape[0]
 
-    def filtered_seq_len(self, threshold):
+    def filtered_seq_len(self):
         """Retrieves the length of the filtered MSA
-
-        Parameters
-        ----------
-        threshold : float
-            The threshold to discriminate positions to keep versus overly-gapped
-            positions.
 
         Returns
         -------
         int
             Length of the filtered MSA.
         """
-        return self.filtered_alignment(threshold).shape[1]
+        return self.filtered_alignment().shape[1]
 
-    def similarity(self, use_filtered=True, threshold=0.2) -> np.ndarray:
+    def similarity(self, use_filtered=True) -> np.ndarray:
         """Computes the similarity between sequences in a MSA
 
         Parameters
@@ -181,16 +171,13 @@ class Alignment:
         use_filtered: bool, optional
             Make use of the filtered MSA, according to the gap frequency
             threshold, by default True
-        threshold: float, optional
-            The threshold to filter overly-gapped positions, unused if
-            use_filtered is False, by default 0.2
 
         Returns
         -------
         np.ndarray of shape (n_seq,n_seq)
             The similarity matrix between sequences: a symmetric square matrix.
         """
-        src = self.filtered_alignment(threshold) if use_filtered else self.__num_rep
+        src = self.filtered_alignment() if use_filtered else self.__num_rep
         n_seqs = src.shape[0]
         res = np.zeros(shape=(n_seqs, n_seqs))
         for seq_1_i in range(n_seqs):
@@ -247,7 +234,7 @@ class Alignment:
             freqs = (1 - lbda) * freqs + lbda / aa_count
         return freqs
 
-    def regularized_background_frequencies(self, threshold=0.2, aa_count=21):
+    def regularized_background_frequencies(self, aa_count=21):
         """Computes background frequencies for every amino acid in the current alignment
 
         Parameters
@@ -262,7 +249,7 @@ class Alignment:
         np.ndarray of shape (aa_count)
             The regularized frequencies for every amino acid.
         """
-        _, gap_bg_freq = self.gap_frequency(threshold)
+        _, gap_bg_freq = self.gap_frequency()
         mult_fact = 1 - gap_bg_freq
         freq0 = Alignment.__freq0 * mult_fact
         freq0g = np.insert(freq0, 0, gap_bg_freq)
@@ -272,7 +259,7 @@ class Alignment:
         freq0g_n = (1 - Alignment.__lbda) * freq0g + Alignment.__lbda / aa_count
         return freq0g_n
 
-    def sca_entropy(self, aa_count=21, weights=None, threshold=0.2) -> np.ndarray:
+    def sca_entropy(self, aa_count=21, weights=None) -> np.ndarray:
         """Computes entropy as per SCA guidelines
 
         Parameters
@@ -291,9 +278,9 @@ class Alignment:
         np.ndarray of shape (N_pos, N_aa)
             The entropy for each of the positions in the filtered alignment.
         """
-        working_alignment = self.filtered_alignment(threshold)
+        working_alignment = self.filtered_alignment()
 
-        freq0g_n = self.regularized_background_frequencies(threshold)
+        freq0g_n = self.regularized_background_frequencies()
 
         freqs = np.apply_along_axis(
             Alignment.aa_freq_at_pos,
@@ -307,7 +294,7 @@ class Alignment:
         )
         return rel_entropy.transpose([1, 0])
 
-    def position_weights_sca(self, threshold=0.2, weights=None):
+    def position_weights_sca(self, weights=None):
         """Computes SCA weights positions
 
         Parameters
@@ -322,9 +309,9 @@ class Alignment:
         np.ndarray of shape (N_pos, N_pos, aa_count, aa_count)
             Weights as computed in SCA (using the derivative of the relative entropy)
         """
-        working_alignment = self.filtered_alignment(threshold)
+        working_alignment = self.filtered_alignment()
 
-        freq0g_n = self.regularized_background_frequencies(threshold)
+        freq0g_n = self.regularized_background_frequencies()
 
         freqs = np.apply_along_axis(
             Alignment.aa_freq_at_pos,
@@ -357,14 +344,20 @@ class Alignment:
 
         Returns
         -------
-        float
+        np.ndarray
             Weights
         """
         return (1 / np.sum(similarity >= threshold, axis=0))
 
+    def sca_seq_weights(
+        self
+    ) -> np.ndarray:
+        similarity_matrix = self.similarity()
+        return self.similarity_weights(similarity_matrix, 0.8)
+
     def weight_bins(
         self, threshold_increment=.001, low_bin_count=100, weight_vector_count=5,
-        use_filtered=True, threshold=0.2
+        use_filtered=True
     ) -> Tuple[List[float], List[List[float]]]:
         """Computes weight bins using a similarity matrix, in order to regroup
            "similar-enough" sequences in bins
@@ -393,7 +386,7 @@ class Alignment:
             n_seq weights, grouped using the corresponding delta found in
             delta_list.
         """
-        similarity_matrix = self.similarity(use_filtered=use_filtered, threshold=threshold)
+        similarity_matrix = self.similarity(use_filtered=use_filtered)
         bin_sizes = np.logspace(
             np.log10(low_bin_count),
             np.log10(similarity_matrix.shape[0]),
@@ -416,7 +409,7 @@ class Alignment:
             currt_delta -= threshold_increment
         return delta_list, weight_list
 
-    def most_frequent_aa(self, filtered=True, threshold=.2) -> Tuple[np.ndarray, np.ndarray]:
+    def most_frequent_aa(self, filtered=True) -> Tuple[np.ndarray, np.ndarray]:
         """Computes the most frequent amino acid at each position
 
         Parameters
@@ -430,7 +423,7 @@ class Alignment:
         most_freq_aa = []
         most_freq_aa_freq = []
         working_alignment = (
-            self.filtered_alignment(threshold=threshold) if filtered else self.__num_rep
+            self.filtered_alignment() if filtered else self.__num_rep
         )
         for i in range(working_alignment.shape[1]):
             currt_col = working_alignment[:, i]
@@ -452,11 +445,11 @@ class Alignment:
         return fia, fjb, fijab
 
     def _slow_coevolution_matrix(
-        self, weights, threshold=.2, aa_count=21
+        self, weights, aa_count=21
     ) -> Tuple[np.ndarray, np.ndarray]:
         """FOR LEARNING PURPOSES ONLY: prefer the optimized version
         """
-        algnt = self.filtered_alignment(threshold=threshold)
+        algnt = self.filtered_alignment()
         seq_size = algnt.shape[1]
         Cijab = np.zeros((seq_size, seq_size, aa_count, aa_count))
         Cij = np.zeros((seq_size, seq_size))
@@ -472,7 +465,7 @@ class Alignment:
         return Cijab, Cij
 
     def aminoacid_joint_frequencies(
-        self, weights: np.ndarray, threshold=.2, aa_count=21, use_tensorflow=False
+        self, weights: np.ndarray, aa_count=21, use_tensorflow=False
     ) -> Tuple[np.ndarray, np.ndarray]:
         """Computes the joint frequencies for every amino acid at every position
 
@@ -501,7 +494,7 @@ class Alignment:
             a and b at positions i and j respectively, if a at position i and j
             at position b are independent random variables.
         """
-        algnt = self.filtered_alignment(threshold=threshold)
+        algnt = self.filtered_alignment()
         seq_size = algnt.shape[1]
 
         # Joint frequencies
@@ -543,7 +536,7 @@ class Alignment:
         return joint_freqs, joint_freqs_ind
 
     def sca_coevolution(
-        self, seq_weights=None, pos_weights=None, threshold=.2, aa_count=21, use_tensorflow=False
+        self, seq_weights=None, pos_weights=None, aa_count=21, use_tensorflow=False
     ) -> np.ndarray:
         """Computes the SCA coevolution matrix
 
@@ -553,8 +546,6 @@ class Alignment:
             Sequence weights
         pos_weights : np.ndarray of float of shape (N_pos, N_pos, aa_count, aa_count)
             Position weights
-        threshold : float, optional
-            Gap-frequency low-pass value, by default .2
         aa_count : int, optional
             Number of aminoacids to consider, by default 21
         use_tensorflow : bool, optional
@@ -573,19 +564,19 @@ class Alignment:
 
         pos_weights = pos_weights
         if pos_weights is None:
-            filtered_seq_len = self.filtered_seq_len(threshold)
+            filtered_seq_len = self.filtered_seq_len()
             pos_weights = np.ones((filtered_seq_len, filtered_seq_len, aa_count, aa_count))
 
         jf, jfi = self.aminoacid_joint_frequencies(
-            seq_weights, threshold, aa_count, use_tensorflow
+            seq_weights, aa_count, use_tensorflow
         )
 
         cijab = jf - jfi
         cijab_w = cijab * pos_weights
-        return np.sqrt(np.sum(cijab_w ** 2, axis=(2, 3)))
+        return CoevolutionMatrix(self, "SCA", np.sqrt(np.sum(cijab_w ** 2, axis=(2, 3))))
 
     def mutual_information(
-        self, seq_weights=None, pos_weights=None, threshold=.2, aa_count=21, use_tensorflow=False
+        self, seq_weights=None, pos_weights=None, aa_count=21, use_tensorflow=False
     ) -> np.ndarray:
         """Computes a mutual-information coevolution matrix
 
@@ -595,8 +586,6 @@ class Alignment:
             Sequence weights
         pos_weights : np.ndarray of float of shape (N_pos, N_pos, aa_count, aa_count)
             Position weights
-        threshold : float, optional
-            Gap-frequency low-pass value, by default .2
         aa_count : int, optional
             Number of aminoacids to consider, by default 21
         use_tensorflow : bool, optional
@@ -616,12 +605,11 @@ class Alignment:
 
         pos_weights = pos_weights
         if pos_weights is None:
-            filtered_seq_len = self.filtered_seq_len(threshold)
+            filtered_seq_len = self.filtered_seq_len()
             pos_weights = np.ones((filtered_seq_len, filtered_seq_len, aa_count, aa_count))
 
         jf, jfi = self.aminoacid_joint_frequencies(
             seq_weights,
-            threshold,
             aa_count,
             use_tensorflow
         )
@@ -630,10 +618,72 @@ class Alignment:
                     * np.log(jf / jfi)
                     * pos_weights)
 
-        return np.sum(mat_ijab, axis=(2, 3))
+        return CoevolutionMatrix(self, "MI", np.sum(mat_ijab, axis=(2, 3)))
 
-    def vorberg_entropy(self, threshold=0.2):
+    def vorberg_entropy(self):
         """vorberg_entropy [summary]
+
+        Returns
+        -------
+        np.ndarray
+            Entropy values for each position in the filtered alignment
+        """
+        working_alignment = self.filtered_alignment()
+        f = np.apply_along_axis(
+            Alignment.aa_freq_at_pos,
+            0,
+            working_alignment
+        ).transpose(1, 0)
+        s = - np.sum(f * np.log(f), axis=1)
+        return s
+
+    def SCA(self):
+        seq_weights = self.sca_seq_weights()
+        pos_weights = self.position_weights_sca(seq_weights)
+        mat = self.sca_coevolution(seq_weights, pos_weights)
+        return CoevolutionMatrix.ICA(mat.matrix)
+
+
+class CoevolutionMatrix:
+    """Represents a coevolution matrix
+
+    Attributes
+    ----------
+    alignment: Alignment
+        The MSA from which the current instance was generated.
+    meta: str
+        Some metadata about the current matrix.
+    matrix: np.ndarray
+        The 2D matrix itself
+    """
+    def __init__(self, alignment: Alignment, meta: str, matrix: np.ndarray) -> None:
+        assert len(matrix.shape) % 2 == 0
+        assert len(matrix.shape) >= 2
+        assert matrix.shape[0] == matrix.shape[1] == alignment.filtered_seq_len()
+        self.matrix = matrix
+        self.type = meta
+        self.alignment = alignment
+
+    def average_product_correction(self) -> np.ndarray:
+        """Compute average product correction according to Vorberg et al., 2018
+
+        Parameters
+        ----------
+        matrix : np.ndarray
+            Coevolution matrix of shape (N_seq, N_seq)
+
+        Returns
+        -------
+        np.ndarray
+            Corrected coevolution matrix of shape (N_seq, N_seq)
+        """
+        mat = (self.matrix -
+               (np.mean(self.matrix, axis=1) * np.mean(self.matrix, axis=0))
+               / np.mean(self.matrix))
+        return CoevolutionMatrix(self.alignment, "Average-product-corrected (Vorberg)", mat)
+
+    def entropy_correction(self) -> np.ndarray:
+        """Compute entropy correction according to Vorberg et al., 2018
 
         Parameters
         ----------
@@ -643,16 +693,17 @@ class Alignment:
         Returns
         -------
         np.ndarray
-            Entropy values for each position in the filtered alignment
+            Corrected coevolution matrix of shape (N_seq, N_seq)
         """
-        working_alignment = self.filtered_alignment(threshold)
-        f = np.apply_along_axis(
-            Alignment.aa_freq_at_pos,
-            0,
-            working_alignment
-        ).transpose(1, 0)
-        s = - np.sum(f * np.log(f), axis=1)
-        return s
+        s = self.alignment.vorberg_entropy()
+        s_prod = np.multiply.outer(s, s)
+        no_diag_eye = (1 - np.eye(s_prod.shape[0]))
+        alpha = np.sum((no_diag_eye * np.sqrt(s_prod)
+                        * self.matrix) / np.sum((no_diag_eye * s_prod)))
+
+        return CoevolutionMatrix(self.alignment,
+                                 "Entropy-corrected (Vorberg)",
+                                 self.matrix - alpha * np.sqrt(s_prod))
 
     @staticmethod
     def basic_ICA(x, r, Niter):
@@ -695,8 +746,8 @@ class Alignment:
         :Example:
         >>> Vica, W = rotICA(V, kmax=6, learnrate=.0001, iterations=10000)
         """
-        V1 = V[:,:kmax].T
-        [W, changes_s] = Alignment.basic_ICA(V1, learnrate, iterations)
+        V1 = V[:, :kmax].T
+        [W, _] = CoevolutionMatrix.basic_ICA(V1, learnrate, iterations)
         Vica = (W.dot(V1)).T
         for n in range(kmax):
             imax = abs(Vica[:, n]).argmax()
@@ -706,4 +757,4 @@ class Alignment:
     @staticmethod
     def ICA(matrix, kmax=6, learn_rate=.0001, iterations=10000):
         v, _, _ = np.linalg.svd(matrix)
-        return Alignment.rot_ICA(v, kmax, learnrate=learn_rate, iterations=iterations)
+        return CoevolutionMatrix.rot_ICA(v, kmax, learnrate=learn_rate, iterations=iterations)

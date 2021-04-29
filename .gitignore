@@ -160,3 +160,7 @@ Thumbs.db #thumbnail cache on Windows
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/python,visualstudiocode
+
+*.swp
+*.swo
+doc/auto_examples

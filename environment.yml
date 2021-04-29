@@ -1,0 +1,13 @@
+name: test
+channels:
+    - default
+dependencies:
+    - python=3.8
+    - pip
+    - pip:
+        - numpy
+        - sphinx
+        - matplotlib
+        - sphinx_gallery
+        - numpydoc
+        - pytest

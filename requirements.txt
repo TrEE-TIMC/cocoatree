@@ -3,3 +3,4 @@ pytest
 sphinx
 numpydoc
 sphinx-gallery
+tensorflow

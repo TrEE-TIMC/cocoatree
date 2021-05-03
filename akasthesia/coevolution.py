@@ -678,7 +678,7 @@ class CoevolutionMatrix:
             Corrected coevolution matrix of shape (N_seq, N_seq)
         """
         mat = (self.matrix -
-               (np.mean(self.matrix, axis=1) * np.mean(self.matrix, axis=0))
+               (np.multiply.outer(np.mean(self.matrix, axis=1), np.mean(self.matrix, axis=0)))
                / np.mean(self.matrix))
         return CoevolutionMatrix(self.alignment, "Average-product-corrected (Vorberg)", mat)
 

@@ -90,7 +90,8 @@ class Alignment:
 
     __lbda = 0.03
 
-    def __init__(self, alignment_sequence_list: List[str], gap_lowpass_threshold=0.2) -> None:
+    def __init__(self, alignment_sequence_headers: List[str],
+                 alignment_sequence_list: List[str], gap_lowpass_threshold=0.2) -> None:
         """
 
         Parameters
@@ -98,6 +99,7 @@ class Alignment:
         alignment_sequence_list: list of str
             list of strings corresponding to one string per sequence
         """
+        self.__headers = alignment_sequence_headers
         self.__raw = alignment_sequence_list
         # Split characters so that one element in each row represents one aminoacid
         self.__text_rep = np.array(
@@ -112,6 +114,37 @@ class Alignment:
             self.__dayhoff[self.__text_rep == k] = self.__code_todayhoff[k]
 
         self.gap_threshold = gap_lowpass_threshold
+
+    @staticmethod
+    def from_file(file_path: str, threshold=.2):
+        """Parses an alignment used to instantiate an Alignment object
+
+        Parameters
+        ----------
+        file_path : str
+            Path resolving to a fasta alignment
+        threshold : float, optional
+            Positions will be considered overly-gapped if their gap ratio is
+            above this value, by default 0.2
+
+        Returns
+        -------
+        Alignment
+        """
+        headers = []
+        seqs = []
+        with open(file_path, 'r') as f:
+            currt_seq = []
+            for line in f.readlines():
+                if line.startswith('>'):
+                    if len(currt_seq) != 0:
+                        seqs.append(''.join(currt_seq).upper())
+                    currt_seq = []
+                    headers.append(line.replace('>', ''))
+                else:
+                    currt_seq.append(line)
+            seqs.append(''.join(currt_seq))
+        return Alignment(headers, seqs, threshold)
 
     def gap_frequency(self) -> Tuple[np.ndarray, float]:
         """Computes the gap frequency for a MSA

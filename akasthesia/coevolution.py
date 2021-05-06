@@ -430,6 +430,13 @@ class Alignment:
     def sca_seq_weights(
         self
     ) -> np.ndarray:
+        """Computes sequence weights the SCA way
+
+        Returns
+        -------
+        np.ndarray of shape (N_seq)
+            Array of sequence weights
+        """
         similarity_matrix = self.similarity()
         return self.similarity_weights(similarity_matrix, 0.8)
 

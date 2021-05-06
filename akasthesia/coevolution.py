@@ -37,6 +37,31 @@ class Alignment:
         'Y': 20
     }
 
+    __code_todayhoff = {
+        '-': 0,
+        'X': 0,  # Consider unknown AAs as gaps
+        'A': 2,
+        'C': 1,
+        'D': 3,
+        'E': 3,
+        'F': 6,
+        'G': 2,
+        'H': 4,
+        'I': 5,
+        'K': 4,
+        'L': 5,
+        'M': 5,
+        'N': 3,
+        'P': 2,
+        'Q': 3,
+        'R': 4,
+        'S': 2,
+        'T': 2,
+        'V': 5,
+        'W': 6,
+        'Y': 6
+    }
+
     # Values taken from pySCA
     __freq0 = np.array(
         [
@@ -79,8 +104,12 @@ class Alignment:
             [np.array([char for char in row]) for row in alignment_sequence_list]
         )
         self.__num_rep = np.zeros(self.__text_rep.shape, dtype=np.int64)
+        self.__dayhoff = np.zeros(self.__text_rep.shape, dtype=np.int64)
         for k in Alignment.__code_tonum.keys():
             self.__num_rep[self.__text_rep == k] = self.__code_tonum[k]
+
+        for k in Alignment.__code_todayhoff.keys():
+            self.__dayhoff[self.__text_rep == k] = self.__code_todayhoff[k]
 
         self.gap_threshold = gap_lowpass_threshold
 
@@ -131,7 +160,23 @@ class Alignment:
             The filtered alignment with overly-gapped positions removed.
         """
         gap_frequency, _ = self.gap_frequency()
-        return self.__num_rep[:, gap_frequency < self.gap_threshold].copy()
+        return self.__num_rep[:, gap_frequency <= self.gap_threshold].copy()
+
+    def filtered_mapping(self) -> np.ndarray:
+        """Computes a mapping of positions from the filtered alignment to the unfiltered one
+
+        Returns
+        -------
+        np.ndarray
+            Array of indices corresponding to the positions in the unfiltered alignment.
+            Example : arr[i] corresponds to the position in the unfiltered alignment of position i
+                      in the filtered one.
+        """
+        return (self.gap_frequency()[0] <= self.gap_threshold).nonzero()
+
+    def filtered_dayhoff(self) -> np.ndarray:
+        gap_frequency, _ = self.gap_frequency()
+        return self.__dayhoff[:, gap_frequency <= self.gap_threshold].copy()
 
     def seq_len(self):
         """Retrieves the length of the MSA

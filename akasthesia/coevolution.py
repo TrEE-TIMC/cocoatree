@@ -142,9 +142,91 @@ class Alignment:
                     currt_seq = []
                     headers.append(line.replace('>', ''))
                 else:
-                    currt_seq.append(line)
+                    currt_seq.append(line.replace('\n',''))
             seqs.append(''.join(currt_seq))
         return Alignment(headers, seqs, threshold)
+
+    def find_seq_by_name(self, name: str):
+        """Finds a sequence in the alignment
+
+        Parameters
+        ----------
+        name : str
+            Sequence name prefix
+
+        Returns
+        -------
+        str
+            The full sequence name.
+
+        np.ndarray or None
+            The sequence, split by character. If multiple sequences match the prefix, the first
+            sequence found in the alignment is returned. If no sequence is found, this function
+            returns None
+        """
+        for i, seq_name in enumerate(self.__headers):
+            if seq_name.startswith(name):
+                return seq_name.strip(), self.__text_rep[i]
+        return None, None
+
+    def find_real_positions_in_seq(self, sequence_name, positions):
+        """Maps positions from the alignment to the sequence
+
+        Parameters
+        ----------
+        sequence_name : str
+            Sequence name prefix
+        positions : List(int)
+            Indices in the alignment space (starting at 0)
+
+        Returns
+        -------
+        List(int)
+            Indices relative to the sequence (starting at 0)
+
+        Raises
+        ------
+        NameError
+            Raised when no sequence can be found
+        """
+        seqn, seq = self.find_seq_by_name(sequence_name)
+        if seq is None:
+            raise NameError('Sequence not found in alignment: {}'.format(sequence_name))
+        a = (seq != '-').nonzero()
+        pos = []
+        for ind in positions:
+            p, = np.where(a[0] == ind)
+            if len(p) != 0:
+                pos.append(p[0])
+        return pos
+
+    def find_alignment_positions_from_seq(self, src_sequence_name: str, src_positions: List[int]):
+        """Maps positions from the sequence to the alignment
+
+        Parameters
+        ----------
+        src_sequence_name : str
+            The sequence name
+        src_positions : List[int]
+            List of positions in the sequence identified by the first parameter
+
+        Returns
+        -------
+        List[int]
+            Positions in the alignment
+        """
+        _, seq = self.find_seq_by_name(src_sequence_name)
+        counts = np.cumsum(seq != '-')
+        return np.searchsorted(counts, src_positions).tolist()
+
+    def to_file(self, file_path: str, filter_gaps=False):
+        algt = self.__raw if not filter_gaps else self.filtered_alignment(False)
+        data = zip(self.__headers, algt)
+        with open(file_path, "w") as f:
+            for elt in data:
+                f.write('>>>{}'.format(elt[0]))
+                f.write(''.join(x for x in elt[1]).replace('\n', ''))
+                f.write('\n')
 
     def gap_frequency(self) -> Tuple[np.ndarray, float]:
         """Computes the gap frequency for a MSA
@@ -184,16 +266,22 @@ class Alignment:
 
         return gap_frequency, float(np.mean(bg_gap_frequency == '-'))
 
-    def filtered_alignment(self) -> np.ndarray:
+    def filtered_alignment(self, numerical_representation=True) -> np.ndarray:
         """Returns the filtered alignment
+
+        Parameters
+        ----------
+        numerical_representation: boolean, optional
+            Return data as a numerical representatino, by default True
 
         Returns
         -------
         np.ndarray of int
             The filtered alignment with overly-gapped positions removed.
         """
+        algt = self.__num_rep if numerical_representation else self.__text_rep
         gap_frequency, _ = self.gap_frequency()
-        return self.__num_rep[:, gap_frequency <= self.gap_threshold].copy()
+        return algt[:, gap_frequency <= self.gap_threshold].copy()
 
     def filtered_mapping(self) -> np.ndarray:
         """Computes a mapping of positions from the filtered alignment to the unfiltered one

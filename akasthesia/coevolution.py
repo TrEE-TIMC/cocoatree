@@ -516,9 +516,15 @@ class Alignment:
         return (1 / np.sum(similarity >= threshold, axis=0))
 
     def sca_seq_weights(
-        self
+        self,
+        similarity_threshold=.8
     ) -> np.ndarray:
         """Computes sequence weights the SCA way
+
+        Parameters
+        ----------
+        similarity_threshold: float, optional
+            The value at which sequences are considered "similar". Defaults to .8 (the SCA default)
 
         Returns
         -------
@@ -526,7 +532,7 @@ class Alignment:
             Array of sequence weights
         """
         similarity_matrix = self.similarity()
-        return self.similarity_weights(similarity_matrix, 0.8)
+        return self.similarity_weights(similarity_matrix, similarity_threshold)
 
     def weight_bins(
         self, threshold_increment=.001, low_bin_count=100, weight_vector_count=5,

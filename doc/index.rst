@@ -15,7 +15,7 @@ Welcome to Akasthesia's documentation!
 Indices and tables
 ==================
 
-* `Gallery <auto_examples/index>`_
+* `Gallery <auto_examples/index.html>`_
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`

@@ -142,7 +142,7 @@ class Alignment:
                     currt_seq = []
                     headers.append(line.replace('>', ''))
                 else:
-                    currt_seq.append(line.replace('\n',''))
+                    currt_seq.append(line.replace('\n', ''))
             seqs.append(''.join(currt_seq))
         return Alignment(headers, seqs, threshold)
 
@@ -487,7 +487,9 @@ class Alignment:
         )
 
         rel_entropy_derivative = (
-            np.log(freqs * (1 - freq0g_n[:, np.newaxis]) / (1 - freqs) * freq0g_n[:, np.newaxis])
+            np.log(
+                freqs * (1 - freq0g_n[:, np.newaxis]) / 
+                ((1 - freqs) * freq0g_n[:, np.newaxis]))
             .transpose([1, 0])
         )
 

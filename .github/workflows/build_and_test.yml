@@ -24,7 +24,7 @@ jobs:
             - name: Install package
               shell: bash -l {0}
               run: |
-                python setup.py install                
+                python -m pip install .
 
             - name: Run the tests
               shell: bash -l {0}

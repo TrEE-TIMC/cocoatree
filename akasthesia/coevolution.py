@@ -488,7 +488,7 @@ class Alignment:
 
         rel_entropy_derivative = (
             np.log(
-                freqs * (1 - freq0g_n[:, np.newaxis]) / 
+                freqs * (1 - freq0g_n[:, np.newaxis]) /
                 ((1 - freqs) * freq0g_n[:, np.newaxis]))
             .transpose([1, 0])
         )
@@ -888,23 +888,37 @@ class CoevolutionMatrix:
 
     @staticmethod
     def basic_ICA(x, r, Niter):
-        """ Basic ICA algorithm, based on work by Bell & Sejnowski (infomax). The input data should preferentially be sphered, i.e., x.T.dot(x) = 1
+        """
+        Basic ICA algorithm, based on work by Bell & Sejnowski (infomax). The
+        input data should preferentially be sphered, i.e., x.T.dot(x) = 1
+
         Source: https://github.com/ranganathanlab/pySCA/
 
         Parameters
         ----------
-        -  `x` = LxM input matrix where L = # features and M = # samples
-        -  `r` = learning rate / relaxation parameter (e.g. r=.0001)
-        -  `Niter` =  number of iterations (e.g. 1000)
+        x : LxM input matrix
+            where L = # features and M = # samples
 
-        **Returns:**
-        -  `w` = unmixing matrix
-        -  `change` = record of incremental changes during the iterations.
+        r : float
+            learning rate / relaxation parameter (e.g. r=.0001)
 
-        **Note:** r and Niter should be adjusted to achieve convergence, which should be assessed by visualizing 'change' with plot(range(iter) ,change)
+        Niter : int
+            number of iterations (e.g. 1000)
 
-        **Example:**
-        >>> [w, change] = basicICA(x, r, Niter)
+        Returns
+        -------
+        [w, change]
+            list of two elements: (1 )unmixing matrix, record of
+            incremental changes during the iterations.
+
+        Note
+        ----
+        r and Niter should be adjusted to achieve convergence, which should be
+        assessed by visualizing 'change' with plot(range(iter) ,change)
+
+        Example
+        -------
+        `[w, change] = basicICA(x, r, Niter)`
 
         """
         [L, M] = x.shape
@@ -924,8 +938,9 @@ class CoevolutionMatrix:
         outputs.
         Source: https://github.com/ranganathanlab/pySCA/
 
-        :Example:
-        >>> Vica, W = rotICA(V, kmax=6, learnrate=.0001, iterations=10000)
+        Example
+        ------
+        `Vica, W = rotICA(V, kmax=6, learnrate=.0001, iterations=10000)`
         """
         V1 = V[:, :kmax].T
         [W, _] = CoevolutionMatrix.basic_ICA(V1, learnrate, iterations)

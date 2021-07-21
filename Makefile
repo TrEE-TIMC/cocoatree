@@ -14,7 +14,7 @@ test-code: inplace
 
 test-coverage:
 	rm -rf coverage .coverage
-	$(PYTEST) akasthesia --showlocals -v --cov=akasthesia
+	$(PYTEST) akasthesia --doctest-modules --showlocals -v --cov=akasthesia
 
 clean-ctags:
 	rm -f tags

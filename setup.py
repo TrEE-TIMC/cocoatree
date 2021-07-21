@@ -23,7 +23,7 @@ setup(
 
     keywords='coevolution, MSA',
     packages=find_packages(),  # Required
-    python_requires='>=3.88888888, <4',
+    python_requires='>=3.8, <4',
     install_requires=['numpy'],  # Optional
     extras_require={  # Optional
         'dev': ['flake8'],

@@ -36,7 +36,16 @@ extensions = [
     "sphinx_gallery.gen_gallery",
     "sphinx.ext.autodoc",
     "sphinx.ext.imgmath",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.doctest",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.imgconverter",
+
 ]
+
+autosummary_generate = True
+autodoc_default_options = {"members": True, "inherited-members": True}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

@@ -11,3 +11,4 @@ dependencies:
         - sphinx_gallery
         - numpydoc
         - pytest
+        - sklearn

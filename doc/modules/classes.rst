@@ -16,5 +16,5 @@ Reference
     :toctree: generated/
     :template: class.rst
 
-    coevolution.Alignment
-    coevolution.CoevolutionMatrix
+    Alignment
+    CoevolutionMatrix

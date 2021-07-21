@@ -26,6 +26,13 @@ jobs:
               run: |
                 python setup.py install                
 
+            - name: Run the tests
+              shell: bash -l {0}
+              run: |
+                pushd ..
+                pytest --showlocals -v --pyargs akasthesia
+                popd
+
             - name: Build the documentation
               shell: bash -l {0}
               run: |

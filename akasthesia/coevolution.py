@@ -98,6 +98,12 @@ class Alignment:
         ----------
         alignment_sequence_list: list of str
             list of strings corresponding to one string per sequence
+
+
+        Examples
+        --------
+        >>> from akasthesia.coevolution import Alignment
+        >>> t = Alignment(["AXA"], alignment_sequence_list=["test"])
         """
         self.__headers = alignment_sequence_headers
         self.__raw = alignment_sequence_list

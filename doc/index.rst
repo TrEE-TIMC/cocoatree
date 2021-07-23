@@ -10,12 +10,12 @@ Welcome to Akasthesia's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
+  modules/classes
+  auto_examples/index
 
 Indices and tables
 ==================
 
-* `Gallery <auto_examples/index.html>`_
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`

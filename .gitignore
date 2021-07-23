@@ -165,3 +165,4 @@ Thumbs.db #thumbnail cache on Windows
 *.swp
 *.swo
 doc/auto_examples
+doc/modules/generated

@@ -1,0 +1,12 @@
+﻿:mod:`akasthesia.coevolution`.CoevolutionMatrix
+======================================================
+
+.. currentmodule:: akasthesia.coevolution
+
+.. autoclass:: CoevolutionMatrix
+
+.. include:: akasthesia.coevolution.CoevolutionMatrix.examples
+
+.. raw:: html
+
+    <div class="clearer"></div>

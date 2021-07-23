@@ -1,0 +1,12 @@
+﻿:mod:`akasthesia.coevolution`.Alignment
+==============================================
+
+.. currentmodule:: akasthesia.coevolution
+
+.. autoclass:: Alignment
+
+.. include:: akasthesia.coevolution.Alignment.examples
+
+.. raw:: html
+
+    <div class="clearer"></div>

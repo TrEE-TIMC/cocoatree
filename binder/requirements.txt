@@ -4,3 +4,7 @@ sphinx
 numpydoc
 sphinx-gallery
 tensorflow
+pytest
+pytest-coverage
+flake8
+matplotlib

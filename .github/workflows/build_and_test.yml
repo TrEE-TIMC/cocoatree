@@ -24,7 +24,12 @@ jobs:
             - name: Install package
               shell: bash -l {0}
               run: |
-                python setup.py install                
+                python -m pip install .
+
+            - name: Run the tests
+              shell: bash -l {0}
+              run: |
+                source .github/workflows/test_script.sh
 
             - name: Build the documentation
               shell: bash -l {0}
@@ -32,3 +37,4 @@ jobs:
                 pushd doc
                 make html
                 touch _build/html/.nojekyll
+                popd

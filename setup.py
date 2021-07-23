@@ -1,10 +1,11 @@
 from setuptools import setup, find_packages
+from akasthesia import __version__
 
 long_description = "Long description of the awesome coevolution package"
 
 setup(
     name='akasthesia',
-    version='0.0.0.a.dev0',
+    version=__version__,
     description='Awesome coevolution stuff',  # Optional
     long_description=long_description,  # Optional
     long_description_content_type='text/markdown',  # Optional (see note above)
@@ -22,7 +23,7 @@ setup(
 
     keywords='coevolution, MSA',
     packages=find_packages(),  # Required
-    python_requires='>=3.88888888, <4',
+    python_requires='>=3.8, <4',
     install_requires=['numpy'],  # Optional
     extras_require={  # Optional
         'dev': ['flake8'],

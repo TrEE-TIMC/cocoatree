@@ -4,6 +4,7 @@ sphinx
 numpydoc
 sphinx-gallery
 tensorflow
+sklearn
 pytest
 pytest-coverage
 flake8

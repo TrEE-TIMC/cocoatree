@@ -28,6 +28,27 @@ General examples
    :hidden:
 
    /auto_examples/plot_example
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example showcases how to run the whole SCA pipeline on the S1A protein family. This reprod...">
+
+.. only:: html
+
+ .. figure:: /auto_examples/images/thumb/sphx_glr_plot_sca_thumb.png
+     :alt: Running SCA on the S1A serine protease family
+
+     :ref:`sphx_glr_auto_examples_plot_sca.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/plot_sca
 .. raw:: html
 
     <div class="sphx-glr-clear"></div>

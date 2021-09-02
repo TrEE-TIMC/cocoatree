@@ -14,21 +14,21 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import quantile_transform
 from akasthesia.coevolution import Alignment, CoevolutionMatrix
 
-import datasets
-
 ###############################################################################
-# ## Loading the S1A serine data
+# Loading the S1A serine data
+###############################################################################
 #
 # This example is based on the serine protein family, studied by Halabi et al,
 # and then further by Rivoire at al.
-alg = datasets.s1a()
+alg = Alignment.from_file('data/s1Ahalabi_1470.an')
 
 n_sequences = alg.seq_count()
 n_residues = alg.filtered_seq_len()
 print("Loaded %d sequence of with %d residues" % (n_sequences, alg.seq_len()))
 
 ###############################################################################
-# ## Calculate Weights - Sequence Weight and Position Weights
+# Calculate Weights - Sequence Weight and Position Weights
+###############################################################################
 #
 # The first step of the pipeline consists in evaluating two sets of weights.
 # First, what we denote by sequence weight or organism weight: these weights
@@ -43,7 +43,8 @@ seq_weights = alg.sca_seq_weights()
 pos_weights = alg.position_weights_sca(seq_weights)
 
 ###############################################################################
-#  ## Estimating the coevolution matrix
+#  Estimating the coevolution matrix
+###############################################################################
 #
 # Then, we estimate the co-evolution matrix from the alignment, corrected with
 # these sequence and residue weights. The goal here is to estimate robustly
@@ -59,7 +60,8 @@ ax.set_xticks(range(0, np.shape(weighted_cij.matrix)[0], 40))
 cbar = ax.figure.colorbar(im, ax=ax)
 
 ###############################################################################
-# ## Statistical analysis using Independant Component Analysis (ICA)
+# Statistical analysis using Independant Component Analysis (ICA)
+###############################################################################
 #
 # The last step of the analysis consists in performing somewhat of an ICA on
 # the coevolution matrix estimated in the previous steps.

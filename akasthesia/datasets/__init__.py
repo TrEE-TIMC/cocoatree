@@ -4,23 +4,22 @@ import numpy as np
 from . import simulation
 
 import os
-path = os.path.dirname(simulation.__file__)
 
 
-def s1a(threshold=.2):
-    """S1A Serine Protease protein family
+# def s1a(threshold=.2):
+#     """S1A Serine Protease protein family
 
-    Parameters
-    ------
-    threshold : float
-        Default .2
+#     Parameters
+#     ------
+#     threshold : float
+#         Default .2
 
-    Returns
-    ------
-    Alignment :
-        Alignment object of S1A protein family
-    """
-    return Alignment.from_file(path+'/s1Ahalabi_1470.an', threshold=threshold)
+#     Returns
+#     ------
+#     Alignment :
+#         Alignment object of S1A protein family
+#     """
+#     return Alignment.from_file(os.getcwd()+'/data/s1Ahalabi_1470.an', threshold=threshold)
 
 
 def simple_simulated():

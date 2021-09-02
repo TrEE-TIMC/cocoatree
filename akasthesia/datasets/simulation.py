@@ -1,11 +1,9 @@
-# %%
 import numpy as np
 from akasthesia.coevolution import Alignment
 
 aa = '-ACDEFGHIKLMNPQRSTVWY'
 
 
-# %%
 # Gibbs sampling
 def conditional_prob(xt, res, v, w):
     """Calculate conditional probability from v and w"""
@@ -43,21 +41,21 @@ def gibbs_sampling(init_seq, v, w, T):
     return seqs
 
 
-# %%
 # Support functions
-def num_to_aa(num_seqs, N):
+def num_to_aa(num_seqs: np.ndarray):
     """Return a amino acid represenation of the MSA from numerical"""
+    N = num_seqs.shape[0]
     seqs = []
     for i in range(N):
-        seqs.append([aa[_+1] for _ in num_seqs[:, i]])
+        seqs.append([aa[_+1] for _ in num_seqs[i]])
     return np.array(seqs)
 
 
-def to_Alignment(seqs, N):
+def to_Alignment(seqs: np.ndarray):
     """Generate a set of headers for Cocoa's Alignment objects
 
     Parameters:
-        seqs : nparray (LxN)
+        seqs : nparray (NxL)
             amino acid representation of the MSA
 
     Returns
@@ -65,13 +63,15 @@ def to_Alignment(seqs, N):
     Alignment :
         Alignment object of the MSA
     """
+    if seqs.dtype is np.dtype(np.int_):
+        seqs = num_to_aa(seqs)
+    N = seqs.shape[0]
     headers = []
     for i in range(N):
         headers.append(" ".join(["Generated sequence No. ", str(i)]))
     return Alignment(headers, seqs, 0)
 
 
-# %%
 # Generate parameters
 def generate_v(L, type_of_v, exclusion=[]):
     # Define v
@@ -146,5 +146,3 @@ def generate_v_and_w(L, v_type, edges):
     x_single = generate_v(L, v_type, exclusion)
     x_pair = generate_w(L, edges)
     return x_single, x_pair
-
-# %%

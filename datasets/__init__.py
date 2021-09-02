@@ -43,7 +43,7 @@ def simulated(N, v, w, T):
     """Generate simulated dataset using Gibbs sampling
 
     Take the model in the form of v (Lx20) and w (LxLx20x20)
-    and generate a MSA data set. The probability of encountering 
+    and generate a MSA data set. The probability of encountering
     a sequence is
 
     .. math:

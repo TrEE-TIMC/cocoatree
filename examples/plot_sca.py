@@ -14,16 +14,18 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import quantile_transform
 from akasthesia.coevolution import Alignment, CoevolutionMatrix
 
+import datasets
+
 ###############################################################################
 # ## Loading the S1A serine data
 #
 # This example is based on the serine protein family, studied by Halabi et al,
 # and then further by Rivoire at al.
-alg = Alignment.from_file("data/s1Ahalabi_1470.an")
+alg = datasets.s1a()
 
 n_sequences = alg.seq_count()
-n_residues = alg.seq_len()
-print("Loaded %d sequence of with %d residues" % (n_sequences, n_residues))
+n_residues = alg.filtered_seq_len()
+print("Loaded %d sequence of with %d residues" % (n_sequences, alg.seq_len()))
 
 ###############################################################################
 # ## Calculate Weights - Sequence Weight and Position Weights

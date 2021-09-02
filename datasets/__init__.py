@@ -1,7 +1,10 @@
 from akasthesia.coevolution import Alignment
 import numpy as np
 
-import simulation
+from . import simulation
+
+import os
+path = os.path.dirname(simulation.__file__)
 
 
 def s1a(threshold=.2):
@@ -17,7 +20,7 @@ def s1a(threshold=.2):
     Alignment :
         Alignment object of S1A protein family
     """
-    return Alignment.from_file('data/s1Ahalabi_1470.an', threshold=threshold)
+    return Alignment.from_file(path+'/s1Ahalabi_1470.an', threshold=threshold)
 
 
 def simple_simulated():

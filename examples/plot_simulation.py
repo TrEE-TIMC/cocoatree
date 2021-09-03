@@ -51,6 +51,7 @@ for _ in range(n_secs):
 # Generate the data sets
 ###############################################################################
 # The simulation take the model v and w; and perform T Gibbs cycle
+#
 # The initial sequences are drawed randomly
 
 
@@ -69,17 +70,18 @@ assert alg.seq_len() == L
 # Plot the positional entropy of the data set: sectors should have lower entropy
 # compare to the rest of the residues
 
-
+# %%
 color = ['red']*L
 for i in edges:
     color[i[0]] = 'blue'
     color[i[2]] = 'blue'
-plt.bar(np.arange(L), alg.vorberg_entropy(), color=color)
-plt.xlabel('Residues')
-plt.ylabel('Entropy')
+
+fig, ax = plt.subplots()
+fig.set_size_inches(10, 3)
+ax.bar(np.arange(L), alg.vorberg_entropy(), color=color)
+ax.set_xlabel('Residues')
+ax.set_ylabel('Entropy')
 
 
 ###############################################################################
 # Further analysis can be done on this data sets, similar to S1A
-
-

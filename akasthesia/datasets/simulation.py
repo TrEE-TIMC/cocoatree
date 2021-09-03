@@ -1,6 +1,10 @@
 import numpy as np
 from akasthesia.coevolution import Alignment
 
+import types
+
+from joblib import Parallel, delayed
+
 aa = '-ACDEFGHIKLMNPQRSTVWY'
 
 
@@ -12,7 +16,16 @@ def conditional_prob(xt, res, v, w):
     return (pot).T/np.sum(pot)
 
 
-def gibbs_sampling(init_seq, v, w, T):
+def gibbs_step(seq, v, w):
+    len_seq = seq.shape[0]
+    _seq = np.copy(seq)
+    for a in range(len_seq):
+        cond_prob = conditional_prob(seq, a, v, w)
+        _seq[a] = np.random.choice(20, p=cond_prob)
+    return _seq
+
+
+def gibbs_sampling(init_seq, n_seq, v, w, n_steps):
     """Gibbs sampling process
 
     Return a simulated MSA in numerical represenations, according to
@@ -20,7 +33,37 @@ def gibbs_sampling(init_seq, v, w, T):
 
     Parameters
     ----------
-    init_seq : np array of initial sequences
+    init_seq : initial sequences
+    n_seq : int
+        number of desired sequences
+    v, w : np array
+        the statistical model
+    n_steps : int
+        number of gibbs steps per new accepted point
+
+    Results
+    -------
+    Generator of sequences
+        Result of simulation
+    """
+    seq = init_seq
+    for i in range(n_seq):
+        for _ in range(n_steps):
+            seq = gibbs_step(seq, v, w)
+            yield seq
+
+
+def gibbs_sampling_old(init_seq, n_seq, v, w, n_steps, burnin=10):
+    """Gibbs sampling process
+    #### OLD VERSION - checkout the new version above
+    Return a simulated MSA in numerical represenations, according to
+    the model v and w using Gibbs sampling process
+
+    Parameters
+    ----------
+    init_seq : initial sequences
+    N : int
+        number of desired sequences
     v, w : np array
         the statistical model
     T : int
@@ -31,14 +74,28 @@ def gibbs_sampling(init_seq, v, w, T):
     np array (LxN)
         Result of simulation
     """
-    seqs = np.copy(init_seq)
-    [N, L] = seqs.shape
-    for _ in range(T):
-        for i in range(N):
-            for a in range(L):
-                cond_prob = conditional_prob(seqs[i], a, v, w)
-                seqs[i, a] = np.random.choice(20, p=cond_prob)
+    len_seq = v.shape[0]
+    seqs = np.empty(shape=[n_seq, len_seq]).astype('int64')
+    seqs[0] = init_seq
+    # # burn in phase:
+    # for _ in range(burnin):
+    #     seqs[0] = gibb_step(seqs[0], v, w)
+
+    for i in range(n_seq-1):
+        for _ in range(n_steps):
+            seqs[i] = gibbs_step(seqs[i], v, w)
+        seqs[i+1] = seqs[i]
     return seqs
+
+
+def gibbs_sampling_p(init_seq, N, v, w, T, burnin=10, n_threads=2):
+    """Parallelize version of Gibbs sampling
+    UNDER DEVELOPMENT - DO NOT USE
+    """
+    return np.vstack(Parallel(n_jobs=n_threads)
+                             (delayed(gibbs_sampling)
+                              (init_seq, int(N/n_threads), v, w, T,
+                              burnin=burnin) for _ in range(n_threads)))
 
 
 # Support functions
@@ -63,9 +120,11 @@ def to_Alignment(seqs: np.ndarray):
     Alignment :
         Alignment object of the MSA
     """
+    if isinstance(seqs, types.GeneratorType):
+        _seqs = [_ for _ in seqs]
     if seqs.dtype is np.dtype(np.int_):
-        seqs = num_to_aa(seqs)
-    N = seqs.shape[0]
+        _seqs = num_to_aa(seqs)
+    N = _seqs.shape[0]
     headers = []
     for i in range(N):
         headers.append(" ".join(["Generated sequence No. ", str(i)]))

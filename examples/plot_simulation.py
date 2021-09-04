@@ -56,7 +56,7 @@ for _ in range(n_secs):
 
 
 T = 100
-msa_raw = simulation.gibbs_sampling(np.random.randint(20, size=[N, L]), v, w, T)
+msa_raw = simulation.gibbs_sampling(np.random.randint(20, size=[L]), N, v, w, T)
 alg = simulation.to_Alignment(msa_raw)
 
 ###############################################################################

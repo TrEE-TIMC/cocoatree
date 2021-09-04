@@ -50,7 +50,7 @@ def gibbs_sampling(init_seq, n_seq, v, w, n_steps):
     for i in range(n_seq):
         for _ in range(n_steps):
             seq = gibbs_step(seq, v, w)
-            yield seq
+        yield seq
 
 
 def gibbs_sampling_old(init_seq, n_seq, v, w, n_steps, burnin=10):
@@ -121,10 +121,10 @@ def to_Alignment(seqs: np.ndarray):
         Alignment object of the MSA
     """
     if isinstance(seqs, types.GeneratorType):
-        _seqs = [_ for _ in seqs]
+        seqs = np.array(list(seqs))
     if seqs.dtype is np.dtype(np.int_):
-        _seqs = num_to_aa(seqs)
-    N = _seqs.shape[0]
+        seqs = num_to_aa(seqs)
+    N = seqs.shape[0]
     headers = []
     for i in range(N):
         headers.append(" ".join(["Generated sequence No. ", str(i)]))

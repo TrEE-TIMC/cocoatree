@@ -31,6 +31,11 @@ def gibbs_sampling(init_seq, n_seq, v, w, n_steps):
     Return a simulated MSA in numerical represenations, according to
     the model v and w using Gibbs sampling process
 
+    Probability of encountering a sequence is (Volberg 2018)
+
+    .. math:
+        p(x|v,w) ~ exp(sum{i}(v_i(x_i)) + sum{ij}(w_ij(x_i, x_j)))
+
     Parameters
     ----------
     init_seq : initial sequences

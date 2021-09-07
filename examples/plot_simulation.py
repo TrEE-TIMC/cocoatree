@@ -84,4 +84,19 @@ ax.set_ylabel('Entropy')
 
 
 ###############################################################################
+# Plot the coevolution matrix of the data set: sectors should show up brighter
+# compare to the rest of the residues
+
+seq_weights = alg.sca_seq_weights()
+pos_weights = alg.position_weights_sca(seq_weights)
+
+weighted_cij = alg.sca_coevolution(seq_weights=seq_weights,
+                                   pos_weights=pos_weights)
+
+figure, ax = plt.subplots()
+im = ax.matshow(weighted_cij.matrix)
+ax.set_yticks(range(0, np.shape(weighted_cij.matrix)[0], 40))
+ax.set_xticks(range(0, np.shape(weighted_cij.matrix)[0], 40))
+cbar = ax.figure.colorbar(im, ax=ax)
+###############################################################################
 # Further analysis can be done on this data sets, similar to S1A

@@ -133,7 +133,7 @@ def to_Alignment(seqs: np.ndarray):
     headers = []
     for i in range(N):
         headers.append(" ".join(["Generated sequence No. ", str(i)]))
-    return Alignment(headers, seqs, 0)
+    return Alignment(headers, seqs, 1)
 
 
 # Generate parameters

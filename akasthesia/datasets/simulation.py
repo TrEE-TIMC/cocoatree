@@ -16,16 +16,18 @@ def conditional_prob(xt, res, v, w):
     return (pot).T/np.sum(pot)
 
 
-def gibbs_step(seq, v, w):
+def gibbs_step(seq, v, w, rng=None):
+    if rng is None:
+        rng = np.random.default_rng()
     len_seq = seq.shape[0]
     _seq = np.copy(seq)
     for a in range(len_seq):
         cond_prob = conditional_prob(seq, a, v, w)
-        _seq[a] = np.random.choice(20, p=cond_prob)
+        _seq[a] = rng.choice(20, p=cond_prob)
     return _seq
 
 
-def gibbs_sampling(init_seq, n_seq, v, w, n_steps):
+def gibbs_sampling(init_seq, n_seq, v, w, n_steps, seed=42):
     """Gibbs sampling process
 
     Return a simulated MSA in numerical represenations, according to
@@ -52,9 +54,10 @@ def gibbs_sampling(init_seq, n_seq, v, w, n_steps):
         Result of simulation
     """
     seq = init_seq
+    rng = np.random.default_rng(seed)
     for i in range(n_seq):
         for _ in range(n_steps):
-            seq = gibbs_step(seq, v, w)
+            seq = gibbs_step(seq, v, w, rng)
         yield seq
 
 
@@ -123,7 +126,7 @@ def to_Alignment(seqs: np.ndarray):
     Returns
     -------
     Alignment :
-        Alignment object of the MSA
+        Alignment object of the MSAs
     """
     if isinstance(seqs, types.GeneratorType):
         seqs = np.array(list(seqs))
@@ -137,15 +140,16 @@ def to_Alignment(seqs: np.ndarray):
 
 
 # Generate parameters
-def generate_v(L, type_of_v, exclusion=[]):
+def generate_v(L, type_of_v, exclusion=[], seed=42):
     # Define v
+    rng = np.random.default_rng(seed)
     if type_of_v == 'simple':
         v = np.ones([L, 20])
     else:
         choices = np.delete(np.arange(L), exclusion)
         v_highrange = [8,  9]
         v_lowrange = [-0.02,  0.05]
-        high_v_residue = np.random.choice(choices, size=20, replace=False)
+        high_v_residue = rng.choice(choices, size=20, replace=False)
         low_v_residue = [i for i in range(L) if i not in high_v_residue]
         v = np.ones([L, 20])
         for i in high_v_residue:

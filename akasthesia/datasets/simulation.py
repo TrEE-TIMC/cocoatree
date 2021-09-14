@@ -1,5 +1,6 @@
 import numpy as np
 from akasthesia.coevolution import Alignment
+import scipy.special as sp
 
 import types
 
@@ -12,8 +13,8 @@ aa = '-ACDEFGHIKLMNPQRSTVWY'
 def conditional_prob(xt, res, v, w):
     """Calculate conditional probability from v and w"""
     j = np.delete(np.arange(len(xt)), res)
-    pot = np.exp(v[res] + np.sum(w[res, j, :, xt[j]], axis=0))
-    return (pot).T/np.sum(pot)
+    pot = (v[res] + np.sum(w[res, j, :, xt[j]], axis=0))
+    return np.exp((pot).T - sp.logsumexp(pot))
 
 
 def gibbs_step(seq, v, w, rng=None):
@@ -197,7 +198,7 @@ def generate_topology(nodes,  topo,  n_edges=None):
 
 def generate_w(L, edges):
     # edge nomenclature: [i, a, j, b]: amino acid a at res i to aa b at j
-    w = np.ones([L, L, 20, 20])*-1
+    w = np.zeros([L, L, 20, 20])
     for edge in edges:
         if edge[0] == edge[2]:
             continue

@@ -3,7 +3,7 @@ import numpy as np
 
 from . import simulation
 
-import os
+# import os
 
 
 # def s1a(threshold=.2):
@@ -38,8 +38,8 @@ def simple_simulated():
     return simulation.to_Alignment(simulation.num_to_aa(seqs, N), N)
 
 
-def simulated(N, v, w, T):
-    """Generate simulated dataset using Gibbs sampling
+def simulated(N, v, w, T, seed=42, burnin=0):
+    """Generate simulated dataset using Gibbs sampling (Volberg et al, 2018)
 
     Take the model in the form of v (Lx20) and w (LxLx20x20)
     and generate a MSA data set. The probability of encountering
@@ -65,6 +65,8 @@ def simulated(N, v, w, T):
 
     """
     L = v.shape[0]
-    init_seqs = np.random.randint(20, size=[N, L])
-    seqs = simulation.gibbs_sampling(init_seqs, v, w, T)
-    return simulation.to_Alignment(simulation.num_to_aa(seqs, N), N)
+    init_seqs = np.random.randint(20, size=L)
+    seqs = simulation.gibbs_sampling(init_seqs, N+burnin, v, w, T, seed=seed)
+    for i in range(burnin):
+        seqs.__next__()
+    return simulation.to_Alignment(seqs)

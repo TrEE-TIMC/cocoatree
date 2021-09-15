@@ -11,6 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from akasthesia.datasets import simulation
+import __helper
 
 
 ###############################################################################
@@ -42,9 +43,9 @@ for _ in range(n_secs):
         _nodes += [[i, np.random.randint(0, 20)]
                    for i in range(s_node,  s_node+n_nodes)]
     nodes.append(_nodes)
-    edges += simulation.generate_topology(_nodes, topo='line')
+    edges += __helper.generate_topology(_nodes, topo='line')
 
-(v, w) = simulation.generate_v_and_w(L, "simple", edges=edges)
+(v, w) = __helper.generate_v_and_w(L, "simple", edges=edges)
 
 
 ###############################################################################
@@ -86,7 +87,7 @@ ax.set_ylabel('Entropy')
 ###############################################################################
 # Plot the coevolution matrix of the data set: sectors should show up brighter
 # compare to the rest of the residues
-
+# %%
 seq_weights = alg.sca_seq_weights()
 pos_weights = alg.position_weights_sca(seq_weights)
 

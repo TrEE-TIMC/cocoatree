@@ -66,4 +66,4 @@ def test_gibbs_sampling_simple():
     # check overall frequencies: all should be relatively close to .05
     freq1 = np.sum([alg.aa_freq_at_pos(alg.filtered_alignment()[:, i], lbda=0)
                     for i in np.arange(75)], axis=0)[1:]/75
-    npt.assert_allclose(freq1, np.tile(0.05, size=75))
+    npt.assert_allclose(freq1, np.tile(0.05, 20), .01, .02)

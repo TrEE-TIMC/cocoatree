@@ -10,9 +10,9 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
+import os
 import sys
-# sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath('../akasthesia'))
 import sphinx_gallery
 
 
@@ -35,12 +35,13 @@ release = '0.0'
 extensions = [
     "sphinx_gallery.gen_gallery",
     "sphinx.ext.autodoc",
-    "sphinx.ext.imgmath",
+    "sphinx.ext.mathjax",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.doctest",
     "sphinx.ext.intersphinx",
     "sphinx.ext.imgconverter",
+    "sphinx.ext.napoleon"
 
 ]
 
@@ -53,7 +54,7 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '**/__helper**']
 
 
 # -- Options for HTML output -------------------------------------------------
@@ -77,20 +78,20 @@ intersphinx_mapping = {
     'numpy': ('https://docs.scipy.org/doc/numpy/', None),
     'scipy': ('https://docs.scipy.org/doc/scipy/reference', None),
     'matplotlib': ('https://matplotlib.org/', None),
-}   
+}
 
 sphinx_gallery_conf = {
     'backreferences_dir': "generated/backreferences",
     'doc_module': ("akasthesia", ),
     "reference_url": {"pastis": None},
     'binder': {
-    # Required keys
-    'org': 'tree-timc',
-    'repo': 'custom_sca',
-    'branch': 'gh-pages',
-    'binderhub_url': 'https://mybinder.org',  # Any URL of a binderhub deployment. Must be full URL (e.g. https://mybinder.org).
-    'dependencies': '../requirements.txt',
-    'use_jupyter_lab': True
+        # Required keys
+        'org': 'tree-timc',
+        'repo': 'custom_sca',
+        'branch': 'gh-pages',
+        'binderhub_url': 'https://mybinder.org',  # Any URL of a binderhub deployment. Must be full URL (e.g. https://mybinder.org).
+        'dependencies': '../requirements.txt',
+        'use_jupyter_lab': True
     }
 }
 

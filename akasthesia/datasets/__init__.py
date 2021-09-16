@@ -2,6 +2,8 @@ from akasthesia.coevolution import Alignment
 import numpy as np
 
 from . import simulation
+import sys
+sys.path.append('..')
 
 # import os
 

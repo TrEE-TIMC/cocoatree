@@ -10,7 +10,7 @@ Welcome to Akasthesia's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-  modules/classes
+  modules/modules
   auto_examples/index
 
 Indices and tables

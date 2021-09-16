@@ -1,5 +1,5 @@
 """
-=============================================
+..
 A collection of support functions, in particular to generate models
 that are used to generate simulation datasets
 """

@@ -75,6 +75,11 @@ def gibbs_sampling(init_seq, n_seq, x_single, x_pair, n_steps, burnin=100, seed=
     Return a simulated MSA in numerical represenations, according to
     the model v and w using Gibbs sampling process
 
+    The probability of encounting a sequence x:
+    
+    .. math::
+        p(x|v,w) \\propto (\\sum_i v_i + \\sum_{i,j} w_{i,j})
+
     Parameters
     ----------
         init_seq: numpy.ndarray
@@ -100,39 +105,6 @@ def gibbs_sampling(init_seq, n_seq, x_single, x_pair, n_steps, burnin=100, seed=
         for __ in range(n_steps):
             seq = gibbs_step(seq, x_single, x_pair, rng)
         yield seq
-
-
-def gibbs_sampling_p(init_seq, num_seq, x_single, x_pair, n_steps, burnin=10, n_threads=2):
-    """Parallelize version of Gibbs sampling
-
-    UNDER DEVELOPMENT - DO NOT USE
-
-    Return a simulated MSA in numerical represenations, according to
-    the model v and w using Gibbs sampling process
-
-    Parameters
-    ----------
-        init_seq: numpy.ndarray
-            initial sequences
-        n_seq: int
-            number of desired sequences
-        x_single, x_pair: (numpy.ndarray
-            the statistical model
-        n_steps: int
-            number of gibbs steps between new accepted sequence
-        burnin: int
-            number of burnin (throwaway) Gibbs steps before start sampling
-        n_threads: int
-            number of threads - equal to number of Markov chains evolve in parallel
-
-    Return:
-        numpy.ndarray :
-            Result of simulation
-    """
-    return np.vstack(Parallel(n_jobs=n_threads)
-                             (delayed(gibbs_sampling)
-                              (init_seq, int(num_seq/n_threads), x_single, x_pair, n_steps,
-                              burnin=burnin) for _ in range(n_threads)))
 
 
 # Support functions
@@ -176,3 +148,34 @@ def to_Alignment(seqs: np.ndarray):
     for i in range(N):
         headers.append(" ".join(["Generated sequence No. ", str(i)]))
     return Alignment(headers, seqs, 1)
+
+
+def recompute_v(background_freq, x_pair, z=1, lmbd=1):
+    """
+    Reformulation of the mathematic model
+
+    Take the positional frequency of amino acids at positions and readjust v (x_single) so that the
+    outcome frequency reflect the input frequency
+
+    .. math::
+        v_i(a) = log(f_i(a)) + log Z - \\lambda \\sum_c \\sum_{j \\neq i} w_{ij}(a, c)
+
+    Parameters
+    ----------
+        background_freq : numpy.ndarray
+            Desired outcome frequency of amino acid at residues
+        x_pair : numpy.ndarray
+            Pairwise statistical potential
+        z : int, optional
+            A constant to adjust the value of z; default: 1
+        lmbd : int, optional
+            A constant to adjust the impact of x_pair; default: 1
+
+    Returns
+    -------
+        numpy.ndarray :
+            Recomputed v (single residue potential)
+    """
+    return (np.tile(np.log(z), (20, 1)).T
+            + np.log(background_freq)
+            - lmbd*np.sum(x_pair, axis=(1, 3)))

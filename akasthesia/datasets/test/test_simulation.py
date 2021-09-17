@@ -1,7 +1,7 @@
 import numpy as np
 from numpy import testing as npt
 
-from datasets import simulation
+from akasthesia.datasets import simulation
 
 
 def test_cond_prob_simple():
@@ -32,7 +32,7 @@ def test_cond_prob_v():
     v[:, choose[-1]] = 8  # 50%
     v[:, choose[:-1]] = 8 - np.log(4) + np.log(2)  # 25% each
 
-    # Generate conditional probability
+    # Calculate conditional probability
     cond_prob = simulation.conditional_prob(np.random.randint(20, size=75), 0, v, w)
     # Check if is probability: sum up to 1
     npt.assert_almost_equal(
@@ -47,7 +47,29 @@ def test_cond_prob_v():
 
 
 def test_cond_prob_w():
-    pass
+    v = np.zeros([75, 20])
+    w = np.zeros([75, 75, 20, 20])
+
+    # Pick 2 residues with significant association between theirs amino acids
+    choose = np.random.choice(75, size=2)
+    table = np.random.permutation(20)
+    for i in range(20):
+        w[choose[0], choose[1], table[i], i] = 5  # just choose a random value
+        w[choose[1], choose[0], i, table[i]] = 5  # The other way
+
+    # Calculate conditional probability
+    seq = np.random.randint(20, size=75)  # storing the state: cond.prob depend on the curr state
+    cond_prob = simulation.conditional_prob(seq, choose[0], v, w)
+
+    # Check sum to 1
+    npt.assert_almost_equal(
+        np.sum(cond_prob), 1
+    )
+    # Check if distribution is correct (the coupled aa at residue i must be higher than the rest)
+    npt.assert_array_less(
+        np.delete(cond_prob, table[seq[choose[1]]]),  # Remove the probability in concern
+        np.tile(cond_prob[table[seq[choose[1]]]], 19)
+    )
 
 
 def test_gibbs_sampling_simple():

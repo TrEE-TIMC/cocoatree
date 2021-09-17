@@ -31,7 +31,7 @@ seed = 42
 # The probability of a certain sequence is
 #
 # .. math::
-# p(x|v,w) \propto (\sum_i v_i + \sum_{i,j} w\{i,j})
+# p(x|v,w) \propto (\sum_i v_i + \sum_{i,j} w_{i,j})
 
 np.random.seed(seed)
 edges = []
@@ -39,8 +39,9 @@ nodes = []
 for _ in range(n_secs):
     s_node = np.random.randint(L-n_nodes)
     _nodes = []
-    for __ in range(3):
-        _nodes += [[i, np.random.randint(0, 20)]
+    table = [np.random.permutation(20) for i in range(n_nodes)]
+    for __ in range(20):
+        _nodes += [[i, table[i-s_node][__]]
                    for i in range(s_node,  s_node+n_nodes)]
     nodes.append(_nodes)
     edges += __helper.generate_topology(_nodes, topo='line')
@@ -54,9 +55,9 @@ for _ in range(n_secs):
 # The simulation take the model v and w; and perform T Gibbs cycle
 #
 # The initial sequences are drawed randomly
+# %%
 
-
-T = 100
+T = 10
 msa_raw = simulation.gibbs_sampling(np.random.randint(20, size=[L]), N, v, w, T)
 alg = simulation.to_Alignment(msa_raw)
 

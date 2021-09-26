@@ -129,9 +129,10 @@ whether pairs of residues co-evolve.
 
 
 
-.. image:: /auto_examples/images/sphx_glr_plot_sca_001.png
-    :alt: plot sca
-    :class: sphx-glr-single-img
+.. image-sg:: /auto_examples/images/sphx_glr_plot_sca_001.png
+   :alt: plot sca
+   :srcset: /auto_examples/images/sphx_glr_plot_sca_001.png
+   :class: sphx-glr-single-img
 
 
 
@@ -185,9 +186,10 @@ the coevolution matrix estimated in the previous steps.
 
 
 
-.. image:: /auto_examples/images/sphx_glr_plot_sca_002.png
-    :alt: plot sca
-    :class: sphx-glr-single-img
+.. image-sg:: /auto_examples/images/sphx_glr_plot_sca_002.png
+   :alt: plot sca
+   :srcset: /auto_examples/images/sphx_glr_plot_sca_002.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -196,8 +198,8 @@ the coevolution matrix estimated in the previous steps.
 
  .. code-block:: none
 
-    /usr/share/miniconda3/envs/tests/lib/python3.8/site-packages/sklearn/preprocessing/_data.py:2612: UserWarning: n_quantiles (832) is greater than the total number of samples (218). n_quantiles is set to n_samples.
-      warnings.warn("n_quantiles (%s) is greater than the total number "
+    /usr/share/miniconda3/envs/tests/lib/python3.8/site-packages/sklearn/preprocessing/_data.py:2588: UserWarning: n_quantiles (832) is greater than the total number of samples (218). n_quantiles is set to n_samples.
+      warnings.warn(
 
 
 
@@ -210,7 +212,7 @@ clusters of residues. These likely correspond to sectors.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  50.034 seconds)
+   **Total running time of the script:** ( 2 minutes  27.768 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_sca.py:

@@ -5,10 +5,10 @@
 
 Computation times
 =================
-**02:00.724** total execution time for **auto_examples** files:
+**01:54.800** total execution time for **auto_examples** files:
 
 +---------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_auto_examples_plot_sca.py` (``plot_sca.py``)         | 02:00.610 | 0.0 MB |
+| :ref:`sphx_glr_auto_examples_plot_sca.py` (``plot_sca.py``)         | 01:54.690 | 0.0 MB |
 +---------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr_auto_examples_plot_example.py` (``plot_example.py``) | 00:00.114 | 0.0 MB |
+| :ref:`sphx_glr_auto_examples_plot_example.py` (``plot_example.py``) | 00:00.111 | 0.0 MB |
 +---------------------------------------------------------------------+-----------+--------+

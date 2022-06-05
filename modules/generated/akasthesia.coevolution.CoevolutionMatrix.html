@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>akasthesia.coevolution.CoevolutionMatrix &#8212; Akasthesia 0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
@@ -16,6 +16,7 @@
     <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -38,10 +39,10 @@
           <div class="body" role="main">
             
   <section id="akasthesia-coevolution-coevolutionmatrix">
-<h1><a class="reference internal" href="../classes.html#module-akasthesia.coevolution" title="akasthesia.coevolution"><code class="xref py py-mod docutils literal notranslate"><span class="pre">akasthesia.coevolution</span></code></a>.CoevolutionMatrix<a class="headerlink" href="#akasthesia-coevolution-coevolutionmatrix" title="Permalink to this headline">¶</a></h1>
+<h1><a class="reference internal" href="../classes.html#module-akasthesia.coevolution" title="akasthesia.coevolution"><code class="xref py py-mod docutils literal notranslate"><span class="pre">akasthesia.coevolution</span></code></a>.CoevolutionMatrix<a class="headerlink" href="#akasthesia-coevolution-coevolutionmatrix" title="Permalink to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="akasthesia.coevolution.CoevolutionMatrix">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">akasthesia.coevolution.</span></span><span class="sig-name descname"><span class="pre">CoevolutionMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alignment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="akasthesia.coevolution.Alignment.html#akasthesia.coevolution.Alignment" title="akasthesia.coevolution.Alignment"><span class="pre">akasthesia.coevolution.Alignment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">numpy.ndarray</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#akasthesia.coevolution.CoevolutionMatrix" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">akasthesia.coevolution.</span></span><span class="sig-name descname"><span class="pre">CoevolutionMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alignment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="akasthesia.coevolution.Alignment.html#akasthesia.coevolution.Alignment" title="akasthesia.coevolution.Alignment"><span class="pre">Alignment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#akasthesia.coevolution.CoevolutionMatrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents a coevolution matrix</p>
 <dl class="simple">
 <dt>alignment: Alignment</dt><dd><p>The MSA from which the current instance was generated.</p>
@@ -53,7 +54,7 @@
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="akasthesia.coevolution.CoevolutionMatrix.average_product_correction">
-<span class="sig-name descname"><span class="pre">average_product_correction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">numpy.ndarray</span></a></span></span><a class="headerlink" href="#akasthesia.coevolution.CoevolutionMatrix.average_product_correction" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">average_product_correction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#akasthesia.coevolution.CoevolutionMatrix.average_product_correction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute average product correction according to Vorberg et al., 2018</p>
 <dl class="simple">
 <dt>matrix<span class="classifier">np.ndarray</span></dt><dd><p>Coevolution matrix of shape (N_seq, N_seq)</p>
@@ -91,7 +92,7 @@ assessed by visualizing ‘change’ with plot(range(iter) ,change)</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="akasthesia.coevolution.CoevolutionMatrix.entropy_correction">
-<span class="sig-name descname"><span class="pre">entropy_correction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">numpy.ndarray</span></a></span></span><a class="headerlink" href="#akasthesia.coevolution.CoevolutionMatrix.entropy_correction" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">entropy_correction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#akasthesia.coevolution.CoevolutionMatrix.entropy_correction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute entropy correction according to Vorberg et al., 2018</p>
 <dl class="simple">
 <dt>threshold<span class="classifier">float, optional</span></dt><dd><p>Gap-frequency low-pass value, by default .2</p>
@@ -166,7 +167,7 @@ Source: <a class="reference external" href="https://github.com/ranganathanlab/py
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -183,7 +184,7 @@ Source: <a class="reference external" href="https://github.com/ranganathanlab/py
       &copy;2021, William Schmitt.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

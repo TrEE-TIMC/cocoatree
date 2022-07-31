@@ -67,8 +67,6 @@ I could add another code block
 
 .. rst-class:: sphx-glr-script-out
 
- Out:
-
  .. code-block:: none
 
 
@@ -79,35 +77,30 @@ I could add another code block
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.096 seconds)
+   **Total running time of the script:** ( 0 minutes  0.106 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_example.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
-  .. container:: binder-badge
+    .. container:: binder-badge
 
-    .. image:: images/binder_badge_logo.svg
-      :target: https://mybinder.org/v2/gh/tree-timc/custom_sca/gh-pages?urlpath=lab/tree/notebooks/auto_examples/plot_example.ipynb
-      :alt: Launch binder
-      :width: 150 px
+      .. image:: images/binder_badge_logo.svg
+        :target: https://mybinder.org/v2/gh/tree-timc/custom_sca/gh-pages?urlpath=lab/tree/notebooks/auto_examples/plot_example.ipynb
+        :alt: Launch binder
+        :width: 150 px
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: plot_example.py <plot_example.py>`
 
-     :download:`Download Python source code: plot_example.py <plot_example.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: plot_example.ipynb <plot_example.ipynb>`
+      :download:`Download Jupyter notebook: plot_example.ipynb <plot_example.ipynb>`
 
 
 .. only:: html

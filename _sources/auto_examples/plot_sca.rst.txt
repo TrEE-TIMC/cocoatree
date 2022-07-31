@@ -67,8 +67,6 @@ and then further by Rivoire at al.
 
 .. rst-class:: sphx-glr-script-out
 
- Out:
-
  .. code-block:: none
 
     Loaded 1470 sequence of with 832 residues
@@ -194,8 +192,6 @@ the coevolution matrix estimated in the previous steps.
 
 .. rst-class:: sphx-glr-script-out
 
- Out:
-
  .. code-block:: none
 
     /usr/share/miniconda3/envs/tests/lib/python3.8/site-packages/sklearn/preprocessing/_data.py:2583: UserWarning: n_quantiles (832) is greater than the total number of samples (218). n_quantiles is set to n_samples.
@@ -212,35 +208,30 @@ clusters of residues. These likely correspond to sectors.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  7.124 seconds)
+   **Total running time of the script:** ( 1 minutes  27.669 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_sca.py:
 
+.. only:: html
 
-.. only :: html
-
- .. container:: sphx-glr-footer
-    :class: sphx-glr-footer-example
+  .. container:: sphx-glr-footer sphx-glr-footer-example
 
 
-  .. container:: binder-badge
+    .. container:: binder-badge
 
-    .. image:: images/binder_badge_logo.svg
-      :target: https://mybinder.org/v2/gh/tree-timc/custom_sca/gh-pages?urlpath=lab/tree/notebooks/auto_examples/plot_sca.ipynb
-      :alt: Launch binder
-      :width: 150 px
+      .. image:: images/binder_badge_logo.svg
+        :target: https://mybinder.org/v2/gh/tree-timc/custom_sca/gh-pages?urlpath=lab/tree/notebooks/auto_examples/plot_sca.ipynb
+        :alt: Launch binder
+        :width: 150 px
 
+    .. container:: sphx-glr-download sphx-glr-download-python
 
-  .. container:: sphx-glr-download sphx-glr-download-python
+      :download:`Download Python source code: plot_sca.py <plot_sca.py>`
 
-     :download:`Download Python source code: plot_sca.py <plot_sca.py>`
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-
-
-  .. container:: sphx-glr-download sphx-glr-download-jupyter
-
-     :download:`Download Jupyter notebook: plot_sca.ipynb <plot_sca.ipynb>`
+      :download:`Download Jupyter notebook: plot_sca.ipynb <plot_sca.ipynb>`
 
 
 .. only:: html

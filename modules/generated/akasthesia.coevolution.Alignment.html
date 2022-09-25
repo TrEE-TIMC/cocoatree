@@ -18,6 +18,7 @@
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="akasthesia.coevolution.CoevolutionMatrix" href="akasthesia.coevolution.CoevolutionMatrix.html" />
@@ -465,7 +466,35 @@ delta_list.</p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../classes.html">Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../classes.html#module-akasthesia.coevolution"><code class="xref py py-mod docutils literal notranslate"><span class="pre">akasthesia.coevolution</span></code>: Coevolution</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">akasthesia.coevolution</span></code>.Alignment</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">akasthesia.coevolution</span></code>.Alignment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#akasthesia.coevolution.Alignment"><code class="docutils literal notranslate"><span class="pre">Alignment</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.aa_freq_at_pos"><code class="docutils literal notranslate"><span class="pre">Alignment.aa_freq_at_pos()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.aminoacid_joint_frequencies"><code class="docutils literal notranslate"><span class="pre">Alignment.aminoacid_joint_frequencies()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.filtered_alignment"><code class="docutils literal notranslate"><span class="pre">Alignment.filtered_alignment()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.filtered_mapping"><code class="docutils literal notranslate"><span class="pre">Alignment.filtered_mapping()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.filtered_seq_len"><code class="docutils literal notranslate"><span class="pre">Alignment.filtered_seq_len()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.find_alignment_positions_from_seq"><code class="docutils literal notranslate"><span class="pre">Alignment.find_alignment_positions_from_seq()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.find_real_positions_in_seq"><code class="docutils literal notranslate"><span class="pre">Alignment.find_real_positions_in_seq()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.find_seq_by_name"><code class="docutils literal notranslate"><span class="pre">Alignment.find_seq_by_name()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.from_file"><code class="docutils literal notranslate"><span class="pre">Alignment.from_file()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.gap_frequency"><code class="docutils literal notranslate"><span class="pre">Alignment.gap_frequency()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.most_frequent_aa"><code class="docutils literal notranslate"><span class="pre">Alignment.most_frequent_aa()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.mutual_information"><code class="docutils literal notranslate"><span class="pre">Alignment.mutual_information()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.position_weights_sca"><code class="docutils literal notranslate"><span class="pre">Alignment.position_weights_sca()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.regularized_background_frequencies"><code class="docutils literal notranslate"><span class="pre">Alignment.regularized_background_frequencies()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.sca_coevolution"><code class="docutils literal notranslate"><span class="pre">Alignment.sca_coevolution()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.sca_entropy"><code class="docutils literal notranslate"><span class="pre">Alignment.sca_entropy()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.sca_seq_weights"><code class="docutils literal notranslate"><span class="pre">Alignment.sca_seq_weights()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.seq_count"><code class="docutils literal notranslate"><span class="pre">Alignment.seq_count()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.seq_len"><code class="docutils literal notranslate"><span class="pre">Alignment.seq_len()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.similarity"><code class="docutils literal notranslate"><span class="pre">Alignment.similarity()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.similarity_weights"><code class="docutils literal notranslate"><span class="pre">Alignment.similarity_weights()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.vorberg_entropy"><code class="docutils literal notranslate"><span class="pre">Alignment.vorberg_entropy()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.Alignment.weight_bins"><code class="docutils literal notranslate"><span class="pre">Alignment.weight_bins()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="akasthesia.coevolution.CoevolutionMatrix.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">akasthesia.coevolution</span></code>.CoevolutionMatrix</a></li>
 </ul>
 </li>
@@ -512,7 +541,7 @@ delta_list.</p>
       &copy;2021, William Schmitt.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.1.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.2.0.post0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

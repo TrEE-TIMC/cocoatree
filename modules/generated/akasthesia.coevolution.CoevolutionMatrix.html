@@ -18,6 +18,7 @@
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="&lt;no title&gt;" href="../../auto_examples/index.html" />
@@ -138,7 +139,16 @@ Source: <a class="reference external" href="https://github.com/ranganathanlab/py
 <li class="toctree-l1 current"><a class="reference internal" href="../classes.html">Reference</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../classes.html#module-akasthesia.coevolution"><code class="xref py py-mod docutils literal notranslate"><span class="pre">akasthesia.coevolution</span></code>: Coevolution</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="akasthesia.coevolution.Alignment.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">akasthesia.coevolution</span></code>.Alignment</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">akasthesia.coevolution</span></code>.CoevolutionMatrix</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">akasthesia.coevolution</span></code>.CoevolutionMatrix</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#akasthesia.coevolution.CoevolutionMatrix"><code class="docutils literal notranslate"><span class="pre">CoevolutionMatrix</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.CoevolutionMatrix.average_product_correction"><code class="docutils literal notranslate"><span class="pre">CoevolutionMatrix.average_product_correction()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.CoevolutionMatrix.basic_ICA"><code class="docutils literal notranslate"><span class="pre">CoevolutionMatrix.basic_ICA()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.CoevolutionMatrix.entropy_correction"><code class="docutils literal notranslate"><span class="pre">CoevolutionMatrix.entropy_correction()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#akasthesia.coevolution.CoevolutionMatrix.rot_ICA"><code class="docutils literal notranslate"><span class="pre">CoevolutionMatrix.rot_ICA()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -184,7 +194,7 @@ Source: <a class="reference external" href="https://github.com/ranganathanlab/py
       &copy;2021, William Schmitt.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.1.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.2.0.post0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

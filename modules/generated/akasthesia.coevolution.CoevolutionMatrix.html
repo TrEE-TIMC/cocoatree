@@ -45,6 +45,8 @@
 <dt class="sig sig-object py" id="akasthesia.coevolution.CoevolutionMatrix">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">akasthesia.coevolution.</span></span><span class="sig-name descname"><span class="pre">CoevolutionMatrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alignment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="akasthesia.coevolution.Alignment.html#akasthesia.coevolution.Alignment" title="akasthesia.coevolution.Alignment"><span class="pre">Alignment</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#akasthesia.coevolution.CoevolutionMatrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents a coevolution matrix</p>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading">¶</a></h2>
 <dl class="simple">
 <dt>alignment: Alignment</dt><dd><p>The MSA from which the current instance was generated.</p>
 </dd>
@@ -57,14 +59,20 @@
 <dt class="sig sig-object py" id="akasthesia.coevolution.CoevolutionMatrix.average_product_correction">
 <span class="sig-name descname"><span class="pre">average_product_correction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#akasthesia.coevolution.CoevolutionMatrix.average_product_correction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute average product correction according to Vorberg et al., 2018</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
 <dt>matrix<span class="classifier">np.ndarray</span></dt><dd><p>Coevolution matrix of shape (N_seq, N_seq)</p>
 </dd>
 </dl>
+</section>
+<section id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
 <dt>np.ndarray</dt><dd><p>Corrected coevolution matrix of shape (N_seq, N_seq)</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
@@ -73,6 +81,8 @@
 <dd><p>Basic ICA algorithm, based on work by Bell &amp; Sejnowski (infomax). The
 input data should preferentially be sphered, i.e., x.T.dot(x) = 1</p>
 <p>Source: <a class="reference external" href="https://github.com/ranganathanlab/pySCA/">https://github.com/ranganathanlab/pySCA/</a></p>
+<section id="id1">
+<h3>Parameters<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
 <dt>x<span class="classifier">LxM input matrix</span></dt><dd><p>where L = # features and M = # samples</p>
 </dd>
@@ -81,28 +91,44 @@ input data should preferentially be sphered, i.e., x.T.dot(x) = 1</p>
 <dt>Niter<span class="classifier">int</span></dt><dd><p>number of iterations (e.g. 1000)</p>
 </dd>
 </dl>
+</section>
+<section id="id2">
+<h3>Returns<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
 <dt>[w, change]</dt><dd><p>list of two elements: (1 )unmixing matrix, record of
 incremental changes during the iterations.</p>
 </dd>
 </dl>
+</section>
+<section id="note">
+<h3>Note<a class="headerlink" href="#note" title="Permalink to this heading">¶</a></h3>
 <p>r and Niter should be adjusted to achieve convergence, which should be
 assessed by visualizing ‘change’ with plot(range(iter) ,change)</p>
+</section>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this heading">¶</a></h3>
 <p><cite>[w, change] = basicICA(x, r, Niter)</cite></p>
+</section>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="akasthesia.coevolution.CoevolutionMatrix.entropy_correction">
 <span class="sig-name descname"><span class="pre">entropy_correction</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#akasthesia.coevolution.CoevolutionMatrix.entropy_correction" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute entropy correction according to Vorberg et al., 2018</p>
+<section id="id3">
+<h3>Parameters<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
 <dt>threshold<span class="classifier">float, optional</span></dt><dd><p>Gap-frequency low-pass value, by default .2</p>
 </dd>
 </dl>
+</section>
+<section id="id4">
+<h3>Returns<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
 <dl class="simple">
 <dt>np.ndarray</dt><dd><p>Corrected coevolution matrix of shape (N_seq, N_seq)</p>
 </dd>
 </dl>
+</section>
 </dd></dl>
 
 <dl class="py method">
@@ -111,9 +137,13 @@ assessed by visualizing ‘change’ with plot(range(iter) ,change)</p>
 <dd><p>ICA rotation (using basicICA) with default parameters and normalization of
 outputs.
 Source: <a class="reference external" href="https://github.com/ranganathanlab/pySCA/">https://github.com/ranganathanlab/pySCA/</a></p>
+<section id="id5">
+<h3>Example<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
 <p><cite>Vica, W = rotICA(V, kmax=6, learnrate=.0001, iterations=10000)</cite></p>
+</section>
 </dd></dl>
 
+</section>
 </dd></dl>
 
 <div class="clearer"></div></section>
@@ -194,7 +224,7 @@ Source: <a class="reference external" href="https://github.com/ranganathanlab/py
       &copy;2021, William Schmitt.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.2.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.3.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

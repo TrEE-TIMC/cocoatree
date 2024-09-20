@@ -1,5 +1,7 @@
 import numpy as np
 from Bio import AlignIO
+from Bio import Seq
+from .__params import lett2num
 
 
 def MSA(filename, frmt, clean=False, verbose=True):
@@ -29,7 +31,7 @@ def MSA(filename, frmt, clean=False, verbose=True):
 
     # Option to clean the alignment
     if clean:
-        alignment = clean_msa(alignment)
+        alignment = _clean_msa(alignment)
 
     seq_list = []
     id_list = []
@@ -53,3 +55,26 @@ def MSA(filename, frmt, clean=False, verbose=True):
         print("Number of sequences: %i" % binary_array.shape[1])
 
     return [alignment, id_list, seq_list, binary_array]
+
+
+
+def _clean_msa(msa) :
+
+    """Function to remove unknown amino acids when importing the multiple sequence alignment
+    
+    msa = bioalign object
+    """
+
+    for index, record in enumerate(msa) :
+        #print(record.id) 
+        for char in record.seq : 
+            if char not in lett2num.keys() :
+                #print('Sequence', record.id)
+                #print(char, 'at position', record.seq.index(char))
+                sequence = list(record.seq)
+                sequence[record.seq.index(char)] = '-'
+                sequence = "".join(sequence)
+                #print(sequence)
+                msa[index].seq = Seq(sequence)
+
+    return msa

@@ -24,7 +24,7 @@ jobs:
               shell: bash -l {0}
               run: |
                 python -m pip list
-                python -m pip install .
+                make install
 
             - name: Run the tests
               shell: bash -l {0}

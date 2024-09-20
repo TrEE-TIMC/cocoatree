@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>cocoatree.coevolution.Alignment &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/basic.css?v=c058f7c8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css?v=27fed22d" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="../../_static/documentation_options.js?v=837179f8"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="cocoatree.coevolution.CoevolutionMatrix" href="cocoatree.coevolution.CoevolutionMatrix.html" />
+    <link rel="prev" title="Reference" href="../classes.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cocoatree-coevolution-alignment">
+<h1><a class="reference internal" href="../classes.html#module-cocoatree.coevolution" title="cocoatree.coevolution"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.coevolution</span></code></a>.Alignment<a class="headerlink" href="#cocoatree-coevolution-alignment" title="Link to this heading">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">cocoatree.coevolution.</span></span><span class="sig-name descname"><span class="pre">Alignment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alignment_sequence_headers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alignment_sequence_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap_lowpass_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.coevolution.Alignment" title="Link to this definition">¶</a></dt>
+<dd><p>Represents a Multiple Sequence Alignment</p>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>gap_threshold: float, optional</dt><dd><p>Gap low-pass threshold. Any position in the MSA which has a gap-proportion equal or
+superior to this value is considered overly-gapped, by default 0.2</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.aa_freq_at_pos">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">aa_freq_at_pos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algnt_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">lbda</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.03</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aa_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">21</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regularization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#cocoatree.coevolution.Alignment.aa_freq_at_pos" title="Link to this definition">¶</a></dt>
+<dd><p>Computes frequencies of aminoacids at a specific position</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>algnt_col: np.series</dt><dd><p>The column for which frequency should be computed.</p>
+</dd>
+<dt>lbda: float, optional</dt><dd><p>A regularization parameter, by default 0.03</p>
+</dd>
+<dt>aa_count: int, optional</dt><dd><p>The number of amino acids to consider for the shape of the return
+value. Defaults to 21 to account for unknown (X) amino acids which
+are considered as gaps for the lack of a better category.</p>
+</dd>
+<dt>weights: numpy 1D array, optional</dt><dd><p>Gives more or less importance to certain sequences.
+If provided, the length of this array should be equal to the length
+of algnt_col, by default None</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>np.ndarray of shape (aa_count)</dt><dd><p>A numpy array of length aa_count, containing regularized frequencies
+for each amino acid. A mapping from amino-acid to indices in this
+result can be found in __code_tonum.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.aminoacid_joint_frequencies">
+<span class="sig-name descname"><span class="pre">aminoacid_joint_frequencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">aa_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">21</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_tensorflow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cocoatree.coevolution.Alignment.aminoacid_joint_frequencies" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the joint frequencies for every amino acid at every position</p>
+<section id="id1">
+<h3>Parameters<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>weights: np.ndarray of float</dt><dd><p>Gives more or less importance to certain sequences in the MSA.</p>
+</dd>
+<dt>threshold: float, optional</dt><dd><p>The threshold over which positions are considered overly-gapped and
+are thus filtered out, by default 0.2</p>
+</dd>
+<dt>aa_count: int, optional</dt><dd><p>The number of amino acids to consider for the shape of the return
+value. Defaults to 21 to account for unknown (X) amino acids which
+are considered as gaps for the lack of a better category, by default 21</p>
+</dd>
+<dt>use_tensor: bool, optional</dt><dd><p>Whether to use tensordot to compute joint frequencies, by default False</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h3>Returns<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>np.ndarray of shape (n_pos, n_pos, aa_count, aa_count)</dt><dd><p>For joint_freqs[i,j,a,b], the joint frequencies for of amino acids
+a and b at positions i and j respectively.</p>
+</dd>
+<dt>np.ndarray of shape (n_pos, n_pos, aa_count, aa_count)</dt><dd><p>For joint_freqs[i,j,a,b], the joint frequencies for of amino acids
+a and b at positions i and j respectively, if a at position i and j
+at position b are independent random variables.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.filtered_alignment">
+<span class="sig-name descname"><span class="pre">filtered_alignment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">numerical_representation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#cocoatree.coevolution.Alignment.filtered_alignment" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the filtered alignment</p>
+<section id="id3">
+<h3>Parameters<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>numerical_representation: boolean, optional</dt><dd><p>Return data as a numerical representatino, by default True</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h3>Returns<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>np.ndarray of int</dt><dd><p>The filtered alignment with overly-gapped positions removed.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.filtered_mapping">
+<span class="sig-name descname"><span class="pre">filtered_mapping</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#cocoatree.coevolution.Alignment.filtered_mapping" title="Link to this definition">¶</a></dt>
+<dd><p>Computes a mapping of positions from the filtered alignment to the unfiltered one</p>
+<section id="id5">
+<h3>Returns<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<dl>
+<dt>np.ndarray</dt><dd><p>Array of indices corresponding to the positions in the unfiltered alignment.
+Example : arr[i] corresponds to the position in the unfiltered alignment of position i</p>
+<blockquote>
+<div><p>in the filtered one.</p>
+</div></blockquote>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.filtered_seq_len">
+<span class="sig-name descname"><span class="pre">filtered_seq_len</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.coevolution.Alignment.filtered_seq_len" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves the length of the filtered MSA</p>
+<section id="id6">
+<h3>Returns<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>int</dt><dd><p>Length of the filtered MSA.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.find_alignment_positions_from_seq">
+<span class="sig-name descname"><span class="pre">find_alignment_positions_from_seq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">src_sequence_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_positions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.coevolution.Alignment.find_alignment_positions_from_seq" title="Link to this definition">¶</a></dt>
+<dd><p>Maps positions from the sequence to the alignment</p>
+<section id="id7">
+<h3>Parameters<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>src_sequence_name<span class="classifier">str</span></dt><dd><p>The sequence name</p>
+</dd>
+<dt>src_positions<span class="classifier">List[int]</span></dt><dd><p>List of positions in the sequence identified by the first parameter</p>
+</dd>
+</dl>
+</section>
+<section id="id8">
+<h3>Returns<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>List[int]</dt><dd><p>Positions in the alignment</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.find_real_positions_in_seq">
+<span class="sig-name descname"><span class="pre">find_real_positions_in_seq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">positions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.coevolution.Alignment.find_real_positions_in_seq" title="Link to this definition">¶</a></dt>
+<dd><p>Maps positions from the alignment to the sequence</p>
+<section id="id9">
+<h3>Parameters<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>sequence_name<span class="classifier">str</span></dt><dd><p>Sequence name prefix</p>
+</dd>
+<dt>positions<span class="classifier">List(int)</span></dt><dd><p>Indices in the alignment space (starting at 0)</p>
+</dd>
+</dl>
+</section>
+<section id="id10">
+<h3>Returns<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>List(int)</dt><dd><p>Indices relative to the sequence (starting at 0)</p>
+</dd>
+</dl>
+</section>
+<section id="raises">
+<h3>Raises<a class="headerlink" href="#raises" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>NameError</dt><dd><p>Raised when no sequence can be found</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.find_seq_by_name">
+<span class="sig-name descname"><span class="pre">find_seq_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.coevolution.Alignment.find_seq_by_name" title="Link to this definition">¶</a></dt>
+<dd><p>Finds a sequence in the alignment</p>
+<section id="id11">
+<h3>Parameters<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>name<span class="classifier">str</span></dt><dd><p>Sequence name prefix</p>
+</dd>
+</dl>
+</section>
+<section id="id12">
+<h3>Returns<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>str</dt><dd><p>The full sequence name.</p>
+</dd>
+<dt>np.ndarray or None</dt><dd><p>The sequence, split by character. If multiple sequences match the prefix, the first
+sequence found in the alignment is returned. If no sequence is found, this function
+returns None</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.from_file">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.coevolution.Alignment.from_file" title="Link to this definition">¶</a></dt>
+<dd><p>Parses an alignment used to instantiate an Alignment object</p>
+<section id="id13">
+<h3>Parameters<a class="headerlink" href="#id13" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>file_path<span class="classifier">str</span></dt><dd><p>Path resolving to a fasta alignment</p>
+</dd>
+<dt>threshold<span class="classifier">float, optional</span></dt><dd><p>Positions will be considered overly-gapped if their gap ratio is
+above this value, by default 0.2</p>
+</dd>
+</dl>
+</section>
+<section id="id14">
+<h3>Returns<a class="headerlink" href="#id14" title="Link to this heading">¶</a></h3>
+<p>Alignment</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.gap_frequency">
+<span class="sig-name descname"><span class="pre">gap_frequency</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cocoatree.coevolution.Alignment.gap_frequency" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the gap frequency for a MSA</p>
+<section id="id15">
+<h3>Parameters<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>threshold: float, optional</dt><dd><p>Positions will be considered overly-gapped if their gap ratio is
+above this value, by default 0.2</p>
+</dd>
+</dl>
+</section>
+<section id="id16">
+<h3>Returns<a class="headerlink" href="#id16" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>np.ndarray of shape (n_pos)</dt><dd><p>An array of length n_pos with each value set to the gap frequency at
+the position corresponding to the index.</p>
+</dd>
+<dt>float</dt><dd><p>Containing the gap frequency accross all positions which are below
+the desired threshold.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.most_frequent_aa">
+<span class="sig-name descname"><span class="pre">most_frequent_aa</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filtered</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cocoatree.coevolution.Alignment.most_frequent_aa" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the most frequent amino acid at each position</p>
+<section id="id17">
+<h3>Parameters<a class="headerlink" href="#id17" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>filtered: bool, optional</dt><dd><p>Whether overly-gapped positions should be excluded, by default True</p>
+</dd>
+<dt>threshold: float, optional</dt><dd><p>The threshold over which positions are considered overly-gapped.
+Useless if filtered is False, by default 0.2</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.mutual_information">
+<span class="sig-name descname"><span class="pre">mutual_information</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aa_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">21</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_tensorflow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#cocoatree.coevolution.Alignment.mutual_information" title="Link to this definition">¶</a></dt>
+<dd><p>Computes a mutual-information coevolution matrix</p>
+<section id="id18">
+<h3>Parameters<a class="headerlink" href="#id18" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>seq_weights<span class="classifier">np.ndarray</span></dt><dd><p>Sequence weights</p>
+</dd>
+<dt>pos_weights<span class="classifier">np.ndarray of float of shape (N_pos, N_pos, aa_count, aa_count)</span></dt><dd><p>Position weights</p>
+</dd>
+<dt>aa_count<span class="classifier">int, optional</span></dt><dd><p>Number of aminoacids to consider, by default 21</p>
+</dd>
+<dt>use_tensorflow<span class="classifier">bool, optional</span></dt><dd><p>Whether tensorflow should be used to compute frequency matrices, by default False</p>
+</dd>
+</dl>
+</section>
+<section id="id19">
+<h3>Returns<a class="headerlink" href="#id19" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>np.ndarray</dt><dd><p>The weighted mutual-information coevolution matrix of shape (N_pos, N_pos)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.position_weights_sca">
+<span class="sig-name descname"><span class="pre">position_weights_sca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.coevolution.Alignment.position_weights_sca" title="Link to this definition">¶</a></dt>
+<dd><p>Computes SCA weights positions</p>
+<section id="id20">
+<h3>Parameters<a class="headerlink" href="#id20" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>threshold<span class="classifier">float, optional</span></dt><dd><p>The gap frequency low-pass threshold, by default 0.2</p>
+</dd>
+<dt>weights<span class="classifier">np.ndarray, optional</span></dt><dd><p>Gives more or less importance to certain sequences in the MSA, by default None</p>
+</dd>
+</dl>
+</section>
+<section id="id21">
+<h3>Returns<a class="headerlink" href="#id21" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>np.ndarray of shape (N_pos, N_pos, aa_count, aa_count)</dt><dd><p>Weights as computed in SCA (using the derivative of the relative entropy)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.regularized_background_frequencies">
+<span class="sig-name descname"><span class="pre">regularized_background_frequencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aa_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">21</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.coevolution.Alignment.regularized_background_frequencies" title="Link to this definition">¶</a></dt>
+<dd><p>Computes background frequencies for every amino acid in the current alignment</p>
+<section id="id22">
+<h3>Parameters<a class="headerlink" href="#id22" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>threshold<span class="classifier">float, optional</span></dt><dd><p>Low-pass gap frequency filter, by default 0.2</p>
+</dd>
+<dt>aa_count<span class="classifier">int, optional</span></dt><dd><p>Number of amino acids to consider, by default 21</p>
+</dd>
+</dl>
+</section>
+<section id="id23">
+<h3>Returns<a class="headerlink" href="#id23" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>np.ndarray of shape (aa_count)</dt><dd><p>The regularized frequencies for every amino acid.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.sca_coevolution">
+<span class="sig-name descname"><span class="pre">sca_coevolution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pos_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aa_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">21</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_tensorflow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#cocoatree.coevolution.Alignment.sca_coevolution" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the SCA coevolution matrix</p>
+<section id="id24">
+<h3>Parameters<a class="headerlink" href="#id24" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>seq_weights<span class="classifier">np.ndarray of float of shape (N_seq)</span></dt><dd><p>Sequence weights</p>
+</dd>
+<dt>pos_weights<span class="classifier">np.ndarray of float of shape (N_pos, N_pos, aa_count, aa_count)</span></dt><dd><p>Position weights</p>
+</dd>
+<dt>aa_count<span class="classifier">int, optional</span></dt><dd><p>Number of aminoacids to consider, by default 21</p>
+</dd>
+<dt>use_tensorflow<span class="classifier">bool, optional</span></dt><dd><p>Whether tensorflow should be used to compute frequency matrices, by default False</p>
+</dd>
+</dl>
+</section>
+<section id="id25">
+<h3>Returns<a class="headerlink" href="#id25" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>np.ndarray</dt><dd><p>The weighted SCA coevolution matrix of shape (N_pos, N_pos)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.sca_entropy">
+<span class="sig-name descname"><span class="pre">sca_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aa_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">21</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#cocoatree.coevolution.Alignment.sca_entropy" title="Link to this definition">¶</a></dt>
+<dd><p>Computes entropy as per SCA guidelines</p>
+<section id="id26">
+<h3>Parameters<a class="headerlink" href="#id26" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>aa_count: int</dt><dd><p>The number of amino acids to consider for the shape of the return
+value. Defaults to 21 to account for unknown (X) amino acids which
+are considered as gaps for the lack of a better category.</p>
+</dd>
+<dt>weights: np.ndarray of shape (N_seq)</dt><dd><p>Gives more or less importance to certain sequences in the MSA.</p>
+</dd>
+<dt>threshold: float</dt><dd><p>The gap frequency low-pass threshold.</p>
+</dd>
+</dl>
+</section>
+<section id="id27">
+<h3>Returns<a class="headerlink" href="#id27" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>np.ndarray of shape (N_pos, N_aa)</dt><dd><p>The entropy for each of the positions in the filtered alignment.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.sca_seq_weights">
+<span class="sig-name descname"><span class="pre">sca_seq_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">similarity_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#cocoatree.coevolution.Alignment.sca_seq_weights" title="Link to this definition">¶</a></dt>
+<dd><p>Computes sequence weights the SCA way</p>
+<section id="id28">
+<h3>Parameters<a class="headerlink" href="#id28" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>similarity_threshold: float, optional</dt><dd><p>The value at which sequences are considered “similar”. Defaults to .8 (the SCA default)</p>
+</dd>
+</dl>
+</section>
+<section id="id29">
+<h3>Returns<a class="headerlink" href="#id29" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>np.ndarray of shape (N_seq)</dt><dd><p>Array of sequence weights</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.seq_count">
+<span class="sig-name descname"><span class="pre">seq_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.coevolution.Alignment.seq_count" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves the number of sequences in the MSA</p>
+<section id="id30">
+<h3>Returns<a class="headerlink" href="#id30" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>int</dt><dd><p>Number of sequences in the MSA</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.seq_len">
+<span class="sig-name descname"><span class="pre">seq_len</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.coevolution.Alignment.seq_len" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieves the length of the MSA</p>
+<section id="id31">
+<h3>Returns<a class="headerlink" href="#id31" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>int</dt><dd><p>Length of the MSA</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.similarity">
+<span class="sig-name descname"><span class="pre">similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_filtered</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></span><a class="headerlink" href="#cocoatree.coevolution.Alignment.similarity" title="Link to this definition">¶</a></dt>
+<dd><p>Computes the similarity between sequences in a MSA</p>
+<section id="id32">
+<h3>Parameters<a class="headerlink" href="#id32" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>use_filtered: bool, optional</dt><dd><p>Make use of the filtered MSA, according to the gap frequency
+threshold, by default True</p>
+</dd>
+</dl>
+</section>
+<section id="id33">
+<h3>Returns<a class="headerlink" href="#id33" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>np.ndarray of shape (n_seq,n_seq)</dt><dd><p>The similarity matrix between sequences: a symmetric square matrix.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.similarity_weights">
+<span class="sig-name descname"><span class="pre">similarity_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">similarity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><span class="pre">ndarray</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a></span></span><a class="headerlink" href="#cocoatree.coevolution.Alignment.similarity_weights" title="Link to this definition">¶</a></dt>
+<dd><p>Get the effective number of sequences after applying weights</p>
+<section id="id34">
+<h3>Parameters<a class="headerlink" href="#id34" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>similarity: numpy 2D array of shape (N_seq, N_seq)</dt><dd><p>A similarity matrix</p>
+</dd>
+<dt>threshold: float, optional</dt><dd><p>The “width” (delta) of an effective sequence: defines the threshold
+at which sequences are regrouped as an effective sequence.
+Defaults to 0.2.</p>
+</dd>
+</dl>
+</section>
+<section id="id35">
+<h3>Returns<a class="headerlink" href="#id35" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>np.ndarray</dt><dd><p>Weights</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.vorberg_entropy">
+<span class="sig-name descname"><span class="pre">vorberg_entropy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.coevolution.Alignment.vorberg_entropy" title="Link to this definition">¶</a></dt>
+<dd><section id="id36">
+<h3>Returns<a class="headerlink" href="#id36" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>np.ndarray</dt><dd><p>Entropy values for each position in the filtered alignment</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="cocoatree.coevolution.Alignment.weight_bins">
+<span class="sig-name descname"><span class="pre">weight_bins</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold_increment</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low_bin_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_vector_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_filtered</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.12)"><span class="pre">Tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.12)"><span class="pre">List</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#cocoatree.coevolution.Alignment.weight_bins" title="Link to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Computes weight bins using a similarity matrix, in order to regroup</dt><dd><p>“similar-enough” sequences in bins</p>
+</dd>
+</dl>
+<section id="id37">
+<h3>Parameters<a class="headerlink" href="#id37" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>threshold_increment: float, optional</dt><dd><p>The rate at which delta should be decremented when trying to build
+bins, defaults to 0.001.</p>
+</dd>
+<dt>low_bin_count: int, optional</dt><dd><p>The target effective sequence count for the smallest bin.</p>
+</dd>
+<dt>weight_vector_count: int, optional</dt><dd><p>The number of bins to create. Defaults to 5.</p>
+</dd>
+<dt>use_filtered: bool, optional</dt><dd><p>Use a filtered version of the alignment according to gap cutoffs.
+Defaults to True.</p>
+</dd>
+<dt>threshold: float, optional</dt><dd><p>The threshold over which positions are considered overly-gapped.</p>
+</dd>
+</dl>
+</section>
+<section id="id38">
+<h3>Returns<a class="headerlink" href="#id38" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>delta_list: list of float</dt><dd><p>A list of the used deltas: the width of effective sequences groups.</p>
+</dd>
+<dt>weight_list: list of list of float</dt><dd><p>A list of list of weights: for each position in this list, there are
+n_seq weights, grouped using the corresponding delta found in
+delta_list.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+<div class="clearer"></div></section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">cocoatree</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../classes.html">Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../classes.html#module-cocoatree.coevolution"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.coevolution</span></code>: Coevolution</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.coevolution</span></code>.Alignment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#cocoatree.coevolution.Alignment"><code class="docutils literal notranslate"><span class="pre">Alignment</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.aa_freq_at_pos"><code class="docutils literal notranslate"><span class="pre">Alignment.aa_freq_at_pos()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.aminoacid_joint_frequencies"><code class="docutils literal notranslate"><span class="pre">Alignment.aminoacid_joint_frequencies()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.filtered_alignment"><code class="docutils literal notranslate"><span class="pre">Alignment.filtered_alignment()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.filtered_mapping"><code class="docutils literal notranslate"><span class="pre">Alignment.filtered_mapping()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.filtered_seq_len"><code class="docutils literal notranslate"><span class="pre">Alignment.filtered_seq_len()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.find_alignment_positions_from_seq"><code class="docutils literal notranslate"><span class="pre">Alignment.find_alignment_positions_from_seq()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.find_real_positions_in_seq"><code class="docutils literal notranslate"><span class="pre">Alignment.find_real_positions_in_seq()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.find_seq_by_name"><code class="docutils literal notranslate"><span class="pre">Alignment.find_seq_by_name()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.from_file"><code class="docutils literal notranslate"><span class="pre">Alignment.from_file()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.gap_frequency"><code class="docutils literal notranslate"><span class="pre">Alignment.gap_frequency()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.most_frequent_aa"><code class="docutils literal notranslate"><span class="pre">Alignment.most_frequent_aa()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.mutual_information"><code class="docutils literal notranslate"><span class="pre">Alignment.mutual_information()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.position_weights_sca"><code class="docutils literal notranslate"><span class="pre">Alignment.position_weights_sca()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.regularized_background_frequencies"><code class="docutils literal notranslate"><span class="pre">Alignment.regularized_background_frequencies()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.sca_coevolution"><code class="docutils literal notranslate"><span class="pre">Alignment.sca_coevolution()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.sca_entropy"><code class="docutils literal notranslate"><span class="pre">Alignment.sca_entropy()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.sca_seq_weights"><code class="docutils literal notranslate"><span class="pre">Alignment.sca_seq_weights()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.seq_count"><code class="docutils literal notranslate"><span class="pre">Alignment.seq_count()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.seq_len"><code class="docutils literal notranslate"><span class="pre">Alignment.seq_len()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.similarity"><code class="docutils literal notranslate"><span class="pre">Alignment.similarity()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.similarity_weights"><code class="docutils literal notranslate"><span class="pre">Alignment.similarity_weights()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.vorberg_entropy"><code class="docutils literal notranslate"><span class="pre">Alignment.vorberg_entropy()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#cocoatree.coevolution.Alignment.weight_bins"><code class="docutils literal notranslate"><span class="pre">Alignment.weight_bins()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="cocoatree.coevolution.CoevolutionMatrix.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.coevolution</span></code>.CoevolutionMatrix</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/plot_example.html">A magnificient example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../auto_examples/plot_sca.html">Running SCA on the S1A serine protease family</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../classes.html">Reference</a><ul>
+      <li>Previous: <a href="../classes.html" title="previous chapter">Reference</a></li>
+      <li>Next: <a href="cocoatree.coevolution.CoevolutionMatrix.html" title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.coevolution</span></code>.CoevolutionMatrix</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, compbio@TrEE.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.0.2</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="../../_sources/modules/generated/cocoatree.coevolution.Alignment.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

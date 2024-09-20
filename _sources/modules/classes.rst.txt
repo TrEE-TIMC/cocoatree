@@ -3,10 +3,10 @@
 Reference
 =========
 
-:mod:`akasthesia.coevolution`: Coevolution
+:mod:`cocoatree.coevolution`: Coevolution
 ==========================================
 
-.. automodule:: akasthesia.coevolution
+.. automodule:: cocoatree.coevolution
     :no-members:
     :no-inherited-members:
 

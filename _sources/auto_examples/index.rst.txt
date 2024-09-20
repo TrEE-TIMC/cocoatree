@@ -8,6 +8,7 @@ General examples
 
     <div class="sphx-glr-thumbnails">
 
+.. thumbnail-parent-div-open
 
 .. raw:: html
 
@@ -16,7 +17,7 @@ General examples
 .. only:: html
 
   .. image:: /auto_examples/images/thumb/sphx_glr_plot_example_thumb.png
-    :alt: A magnificient example
+    :alt:
 
   :ref:`sphx_glr_auto_examples_plot_example.py`
 
@@ -28,12 +29,12 @@ General examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This example showcases how to run the whole SCA pipeline on the S1A protein family. This reprod...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example showcases how to run the whole SCA pipeline on the S1A protein family. This reproduces the results of Halabi et al, 2009.">
 
 .. only:: html
 
   .. image:: /auto_examples/images/thumb/sphx_glr_plot_sca_thumb.png
-    :alt: Running SCA on the S1A serine protease family
+    :alt:
 
   :ref:`sphx_glr_auto_examples_plot_sca.py`
 
@@ -42,6 +43,8 @@ General examples
       <div class="sphx-glr-thumbnail-title">Running SCA on the S1A serine protease family</div>
     </div>
 
+
+.. thumbnail-parent-div-close
 
 .. raw:: html
 

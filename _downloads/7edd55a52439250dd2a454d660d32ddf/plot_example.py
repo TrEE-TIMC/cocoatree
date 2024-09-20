@@ -8,7 +8,7 @@ Here's an example with maplotlib and numpy
 
 import numpy as np
 import matplotlib.pyplot as plt
-from akasthesia import coevolution
+from cocoatree import coevolution
 
 X = np.arange(10)
 

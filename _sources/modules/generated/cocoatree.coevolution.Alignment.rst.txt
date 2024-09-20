@@ -1,0 +1,12 @@
+﻿:mod:`cocoatree.coevolution`.Alignment
+=============================================
+
+.. currentmodule:: cocoatree.coevolution
+
+.. autoclass:: Alignment
+
+.. include:: cocoatree.coevolution.Alignment.examples
+
+.. raw:: html
+
+    <div class="clearer"></div>

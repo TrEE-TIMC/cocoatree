@@ -12,7 +12,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from sklearn.preprocessing import quantile_transform
-from akasthesia.coevolution import Alignment, CoevolutionMatrix
+from cocoatree.coevolution import Alignment, CoevolutionMatrix
 
 ###############################################################################
 # ## Loading the S1A serine data

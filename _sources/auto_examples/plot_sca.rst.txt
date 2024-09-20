@@ -10,8 +10,8 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_auto_examples_plot_sca.py>`
-        to download the full example code or to run this example in your browser via Binder
+        :ref:`Go to the end <sphx_glr_download_auto_examples_plot_sca.py>`
+        to download the full example code. or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
 
@@ -27,7 +27,7 @@ family. This reproduces the results of Halabi et al, 2009.
 
 .. GENERATED FROM PYTHON SOURCE LINES 9-17
 
-.. code-block:: default
+.. code-block:: Python
 
 
     import itertools
@@ -35,7 +35,7 @@ family. This reproduces the results of Halabi et al, 2009.
     import matplotlib.pyplot as plt
 
     from sklearn.preprocessing import quantile_transform
-    from akasthesia.coevolution import Alignment, CoevolutionMatrix
+    from cocoatree.coevolution import Alignment, CoevolutionMatrix
 
 
 
@@ -53,7 +53,7 @@ and then further by Rivoire at al.
 
 .. GENERATED FROM PYTHON SOURCE LINES 22-28
 
-.. code-block:: default
+.. code-block:: Python
 
     alg = Alignment.from_file("data/s1Ahalabi_1470.an")
 
@@ -89,7 +89,7 @@ others.
 
 .. GENERATED FROM PYTHON SOURCE LINES 39-43
 
-.. code-block:: default
+.. code-block:: Python
 
 
     seq_weights = alg.sca_seq_weights()
@@ -112,7 +112,7 @@ whether pairs of residues co-evolve.
 
 .. GENERATED FROM PYTHON SOURCE LINES 49-59
 
-.. code-block:: default
+.. code-block:: Python
 
 
     weighted_cij = alg.sca_coevolution(seq_weights=seq_weights,
@@ -145,7 +145,7 @@ the coevolution matrix estimated in the previous steps.
 
 .. GENERATED FROM PYTHON SOURCE LINES 64-98
 
-.. code-block:: default
+.. code-block:: Python
 
 
     n_components = 6
@@ -194,7 +194,7 @@ the coevolution matrix estimated in the previous steps.
 
  .. code-block:: none
 
-    /usr/share/miniconda3/envs/tests/lib/python3.8/site-packages/sklearn/preprocessing/_data.py:2583: UserWarning: n_quantiles (832) is greater than the total number of samples (218). n_quantiles is set to n_samples.
+    /opt/hostedtoolcache/Python/3.11.10/x64/lib/python3.11/site-packages/sklearn/preprocessing/_data.py:2785: UserWarning: n_quantiles (832) is greater than the total number of samples (218). n_quantiles is set to n_samples.
       warnings.warn(
 
 
@@ -208,7 +208,7 @@ clusters of residues. These likely correspond to sectors.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  1.499 seconds)
+   **Total running time of the script:** (0 minutes 52.250 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_sca.py:
@@ -217,7 +217,6 @@ clusters of residues. These likely correspond to sectors.
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
@@ -225,13 +224,17 @@ clusters of residues. These likely correspond to sectors.
         :alt: Launch binder
         :width: 150 px
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+      :download:`Download Jupyter notebook: plot_sca.ipynb <plot_sca.ipynb>`
+
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_sca.py <plot_sca.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: plot_sca.ipynb <plot_sca.ipynb>`
+      :download:`Download zipped: plot_sca.zip <plot_sca.zip>`
 
 
 .. only:: html

@@ -10,8 +10,8 @@
     .. note::
         :class: sphx-glr-download-link-note
 
-        Click :ref:`here <sphx_glr_download_auto_examples_plot_example.py>`
-        to download the full example code or to run this example in your browser via Binder
+        :ref:`Go to the end <sphx_glr_download_auto_examples_plot_example.py>`
+        to download the full example code. or to run this example in your browser via Binder
 
 .. rst-class:: sphx-glr-example-title
 
@@ -26,12 +26,12 @@ Here's an example with maplotlib and numpy
 
 .. GENERATED FROM PYTHON SOURCE LINES 8-15
 
-.. code-block:: default
+.. code-block:: Python
 
 
     import numpy as np
     import matplotlib.pyplot as plt
-    from akasthesia import coevolution
+    from cocoatree import coevolution
 
     X = np.arange(10)
 
@@ -48,7 +48,7 @@ I could add another code block
 
 .. GENERATED FROM PYTHON SOURCE LINES 17-23
 
-.. code-block:: default
+.. code-block:: Python
 
 
     fig, ax = plt.subplots()
@@ -77,7 +77,7 @@ I could add another code block
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  0.075 seconds)
+   **Total running time of the script:** (0 minutes 0.062 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_example.py:
@@ -86,7 +86,6 @@ I could add another code block
 
   .. container:: sphx-glr-footer sphx-glr-footer-example
 
-
     .. container:: binder-badge
 
       .. image:: images/binder_badge_logo.svg
@@ -94,13 +93,17 @@ I could add another code block
         :alt: Launch binder
         :width: 150 px
 
+    .. container:: sphx-glr-download sphx-glr-download-jupyter
+
+      :download:`Download Jupyter notebook: plot_example.ipynb <plot_example.ipynb>`
+
     .. container:: sphx-glr-download sphx-glr-download-python
 
       :download:`Download Python source code: plot_example.py <plot_example.py>`
 
-    .. container:: sphx-glr-download sphx-glr-download-jupyter
+    .. container:: sphx-glr-download sphx-glr-download-zip
 
-      :download:`Download Jupyter notebook: plot_example.ipynb <plot_example.ipynb>`
+      :download:`Download zipped: plot_example.zip <plot_example.zip>`
 
 
 .. only:: html

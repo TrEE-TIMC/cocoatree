@@ -3,18 +3,9 @@
 Reference
 =========
 
-:mod:`cocoatree.coevolution`: Coevolution
+:mod:`cocoatree`
 ==========================================
 
-.. automodule:: cocoatree.coevolution
+.. automodule:: cocoatree
     :no-members:
     :no-inherited-members:
-
-
-.. autosummary::
-    :nosignatures:
-    :toctree: generated/
-    :template: class.rst
-
-    Alignment
-    CoevolutionMatrix

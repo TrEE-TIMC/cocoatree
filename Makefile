@@ -20,7 +20,7 @@ test-code: inplace
 
 test-coverage:
 	rm -rf coverage .coverage
-	$(PYTEST) cocoatree --doctest-modules --showlocals -v --cov=cocoatree
+	pushd ../../; $(PYTEST) cocoatree --doctest-modules --showlocals -v --cov=cocoatree
 
 clean-ctags:
 	rm -f tags

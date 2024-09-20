@@ -7,7 +7,7 @@ on:
             - main
 
 jobs:
-    run_tests:
+    install_and_build_doc:
         runs-on: ubuntu-latest
 
         steps:

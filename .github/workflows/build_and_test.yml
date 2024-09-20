@@ -30,7 +30,7 @@ jobs:
               shell: bash -l {0}
               run: |
                 (cd .. && pytest --doctest-modules --cov=cocoatree --pyargs cocoatree)
-                flake8 --exit-zero cocoatree examples
+                flake8 cocoatree examples
 
             - name: Build the documentation
               shell: bash -l {0}

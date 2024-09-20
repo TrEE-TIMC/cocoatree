@@ -8,7 +8,6 @@ Here's an example with maplotlib and numpy
 
 import numpy as np
 import matplotlib.pyplot as plt
-import cocoatree
 
 X = np.arange(10)
 
@@ -19,4 +18,3 @@ fig, ax = plt.subplots()
 ax.plot(np.arange(10))
 ax.set_xlabel("X-label")
 ax.set_ylabel("Y-label")
-

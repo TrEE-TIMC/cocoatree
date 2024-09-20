@@ -18,19 +18,19 @@ jobs:
             - name: Install dependencies
               run: |
                 python -m pip install --upgrade pip
-                pip install -r requirements.txt
+                python -m pip install -r requirements.txt
 
             - name: Install package
               shell: bash -l {0}
               run: |
                 python -m pip list
-                make install
+                python -m pip install .
 
             - name: Run the tests
               shell: bash -l {0}
               run: |
-                (cd .. && pytest --doctest-modules --cov=cocoatree --pyargs cocoatree)
-                flake8 --exit-zero cocoatree examples
+                pushd ../.. && pytest cocoatree --doctest-modules --showlocals -v --cov=cocoatree && popd
+                flake8 cocoatree examples
 
             - name: Build the documentation
               shell: bash -l {0}

@@ -52,20 +52,20 @@ def load_MSA(filename, frmt, clean=False, verbose=True):
     return [alignment, id_list, seq_list, binary_array]
 
 
-
-def _clean_msa(msa) :
-
+def _clean_msa(msa):
     """
-    This function compares the amino acid codes in the sequence alignment with 
-    the ones in lett2num and removes unknown amino acids (such as 'X' or 'B') 
+    This function compares the amino acid codes in the sequence alignment with
+    the ones in lett2num and removes unknown amino acids (such as 'X' or 'B')
     when importing the multiple sequence alignment.
-    
+
+    Arguments
+    ---------
     msa : bioalign object
     """
 
-    for index, record in enumerate(msa) :
-        for char in record.seq : 
-            if char not in lett2num.keys() :
+    for index, record in enumerate(msa):
+        for char in record.seq:
+            if char not in lett2num.keys():
                 sequence = list(record.seq)
                 sequence[record.seq.index(char)] = '-'
                 sequence = "".join(sequence)

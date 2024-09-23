@@ -6,12 +6,14 @@
 Cocoatree
 ======================================
 
-.. toctree::
-    :hidden:
-    :glob:
 
-  installation
+.. toctree::
+  :hidden:
+  :glob:
+  :caption: Contents
+
+
+  install
   modules/classes
   auto_examples/index
-
 

@@ -7,3 +7,4 @@ pytest-coverage
 flake8
 matplotlib
 scikit-learn
+biopython

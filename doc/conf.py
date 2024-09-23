@@ -98,15 +98,15 @@ intersphinx_mapping = {
 sphinx_gallery_conf = {
     'backreferences_dir': "generated/backreferences",
     'doc_module': ("cocoatree", ),
-    "reference_url": {"pastis": None},
+    "reference_url": {"cocoatree": None},
     'binder': {
-    # Required keys
-    'org': 'tree-timc',
-    'repo': 'custom_sca',
-    'branch': 'gh-pages',
-    'binderhub_url': 'https://mybinder.org',  # Any URL of a binderhub deployment. Must be full URL (e.g. https://mybinder.org).
-    'dependencies': '../requirements.txt',
-    'use_jupyter_lab': True
-    }
+        # Required keys
+        'org': 'tree-timc',
+        'repo': 'cocoatree',
+        'branch': 'gh-pages',
+        'binderhub_url': 'https://mybinder.org',  # Any URL of a binderhub deployment. Must be full URL (e.g. https://mybinder.org).
+        'dependencies': '../requirements.txt',
+        'use_jupyter_lab': True
+        }
 }
 

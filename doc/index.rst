@@ -16,4 +16,3 @@ Cocoatree
   install
   modules/classes
   auto_examples/index
-

@@ -2,6 +2,8 @@ import numpy as np
 from Bio import AlignIO
 from Bio import Seq
 from .__params import lett2num
+import sklearn.metrics as sn
+import matplotlib.pyplot as plt
 
 
 def load_MSA(filename, frmt, clean=False, verbose=True):
@@ -94,7 +96,8 @@ def filter_gap_pos(sequences, threshold=0.4):
 
     Nseq, Npos = len(sequences), len(sequences[0])
 
-    gaps = np.array([[int(sequences[seq][pos] == '-') for pos in range(Npos)] for seq in range(Nseq)])
+    gaps = np.array([[int(sequences[seq][pos] == '-') for pos in range(Npos)]
+                     for seq in range(Nseq)])
 
     freq_gap_per_pos = np.cumsum(gaps, axis=0)[-1] / Nseq
 
@@ -102,7 +105,8 @@ def filter_gap_pos(sequences, threshold=0.4):
 
     print("Keeping %i out of %i positions" % (len(pos_kept), Npos))
 
-    filt_seqs = ["".join([sequences[seq][pos] for pos in pos_kept]) for seq in range(Nseq)]
+    filt_seqs = ["".join([sequences[seq][pos] for pos in pos_kept])
+                 for seq in range(Nseq)]
 
     return filt_seqs, pos_kept
 
@@ -141,7 +145,8 @@ def filter_gap_seq(seq_id, sequences, threshold=0.2, filtrefseq=False,
 
     Nseq, Npos = len(sequences), len(sequences[0])
 
-    freq_gap_per_seq = np.array([sequences[seq].count('-') / Npos for seq in range(Nseq)])
+    freq_gap_per_seq = np.array([sequences[seq].count('-') / Npos
+                                 for seq in range(Nseq)])
 
     seq_kept_index = np.where(freq_gap_per_seq <= threshold)[0]
     print('Keeping %i sequences out of %i sequences' %
@@ -198,3 +203,74 @@ def filter_ref_seq(seq_id, sequences, delta=0.2, refseq_id=None):
     print('Keeping %i out of %i sequences' % (len(seq_kept), Nseq))
 
     return seq_id_kept, seq_kept
+
+
+def refSeq(msa):
+
+    """This function chooses a default reference sequence for the alignment by
+    taking the sequence which has the mean pairwise sequence identity closest
+    to that of the entire sequence alignment.
+
+    Parameters
+    ----------
+    msa: the multiple sequence alignment
+
+    Returns
+    -------
+    The index of the reference sequence in the given alignment
+    """
+
+    sim_matrix = seq_identity(msa, graphic=False)
+
+    global_sim = np.mean(sim_matrix)
+
+    mean_pairwise_seq_sim = np.mean(sim_matrix, axis=0)
+
+    meanDiff = abs(mean_pairwise_seq_sim - global_sim)
+
+    ref_seq = np.where(meanDiff == min(meanDiff))
+
+    return ref_seq[0][0]
+
+
+def seq_identity(sequences, graphic=True):
+
+    """
+    Computes the identity between sequences in a MSA (as Hamming's pairwise
+    distance)
+
+    Arguments
+    ---------
+    sequences : list of sequences
+
+    graphic : boolean, whether to plot the identity matrix
+
+    Returns
+    -------
+    sim_matrix : identity matrix
+    """
+
+    separated_aa = np.array(
+        [np.array([lett2num[char] for char in row])
+         for row in sequences])
+
+    sim_matrix = 1 - sn.DistanceMetric.get_metric(
+        "hamming").pairwise(separated_aa)
+
+    if graphic:
+        # List all elements above the diagonal
+        listS = [sim_matrix[i, j] for i in range(sim_matrix.shape[0])
+                 for j in range(i + 1, sim_matrix.shape[1])]
+
+        plt.figure()
+        plt.rcParams['figure.figsize'] = 9, 4
+        plt.subplot(121)
+        plt.hist(listS, int(round(separated_aa.shape[1]/2)))
+        plt.xlabel('Pairwise sequence identities', fontsize=14)
+        plt.ylabel('Number', fontsize=14)
+        plt.subplot(122)
+        plt.imshow(sim_matrix, vmin=0, vmax=1)
+        plt.colorbar()
+        plt.show()
+
+    return sim_matrix

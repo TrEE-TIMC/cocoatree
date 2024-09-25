@@ -83,7 +83,7 @@ feature, code or documentation improvement).
 Additional dependencies for building the documentation
 ------------------------------------------------------
 
-In addition to the formentioned dependencies for `cocoatree`, in order to
+In addition to the aforementioned dependencies for `cocoatree`, in order to
 build the documentation you will need:
 
 - sphinx (>= 1.0)
@@ -98,7 +98,7 @@ These can be installed with pip using the command::
 Additional dependencies for running the tests
 ---------------------------------------------
 
-In addition to the formentioned dependencies for `cocoatree`, in order to
+In addition to the aforementioned dependencies for `cocoatree`, in order to
 build the documentation you will need:
 
 - pytest

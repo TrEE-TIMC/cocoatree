@@ -1,5 +1,5 @@
 from Bio import AlignIO
-from Bio import Seq
+from Bio.Seq import Seq
 from .__params import lett2num
 
 

@@ -1,0 +1,6 @@
+﻿cocoatree.msa.filter\_gap\_pos
+==============================
+
+.. currentmodule:: cocoatree.msa
+
+.. autofunction:: filter_gap_pos

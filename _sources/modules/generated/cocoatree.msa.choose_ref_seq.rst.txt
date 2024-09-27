@@ -1,0 +1,6 @@
+﻿cocoatree.msa.choose\_ref\_seq
+==============================
+
+.. currentmodule:: cocoatree.msa
+
+.. autofunction:: choose_ref_seq

@@ -1,0 +1,6 @@
+﻿cocoatree.msa.filter\_gap\_seq
+==============================
+
+.. currentmodule:: cocoatree.msa
+
+.. autofunction:: filter_gap_seq

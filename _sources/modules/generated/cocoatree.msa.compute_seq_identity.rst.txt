@@ -1,0 +1,6 @@
+﻿cocoatree.msa.compute\_seq\_identity
+====================================
+
+.. currentmodule:: cocoatree.msa
+
+.. autofunction:: compute_seq_identity

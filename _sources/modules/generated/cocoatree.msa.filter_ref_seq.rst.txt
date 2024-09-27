@@ -1,0 +1,6 @@
+﻿cocoatree.msa.filter\_ref\_seq
+==============================
+
+.. currentmodule:: cocoatree.msa
+
+.. autofunction:: filter_ref_seq

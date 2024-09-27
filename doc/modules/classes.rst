@@ -22,10 +22,10 @@ Functions
    :template: function.rst
 
    msa.load_MSA
-   filter_gap_pos
-   filter_gap_seq
-   filter_ref_seq
-   choose_ref_seq
-   compute_seq_identity
+   msa.filter_gap_pos
+   msa.filter_gap_seq
+   msa.filter_ref_seq
+   msa.choose_ref_seq
+   msa.compute_seq_identity
 
 .. _msa_ref:

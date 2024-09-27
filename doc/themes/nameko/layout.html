@@ -1,0 +1,36 @@
+{%- extends "basic/layout.html" %}
+{%- block extrahead %}
+  {{ super() }}
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+{% endblock %}
+
+{# Silence the sidebar's, relbar's #}
+{% block header %}
+  {%- block navbar -%}
+  <div class="navbar related">
+      <a href="{{ pathto('index') }}">
+        {# <img src="{{ pathto('_static/logos/logo_1.png', 1) }}" \> #}
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="{{ pathto('auto_examples/index') }}">Gallery</a> </li>
+      <li class="right"><a href="{{ pathto('modules/classes') }}">Documentation</a> | </li>
+      <li class="right"><a href="{{ pathto('install') }}">Installation</a> | </li>
+      <li class="right"><a href="{{ pathto('index') }}">Home</a> | </li>
+      {#<li><a href="{{ pathto('results') }}">Results</a></li> # #}
+    </ul>
+  </div>
+  {%- endblock -%}
+
+{% endblock %}
+{% if pagename == 'index' %}
+  {% block sidebar2 %}{% endblock %}
+{% endif %}
+{% block sidebar1 %}{% endblock %}
+{% block relbar1 %}{% endblock %}
+{% block relbar2 %}{% endblock %}
+{% block sidebarsourcelink %}{% endblock %}
+
+{%- block footer %}
+{%- endblock %}

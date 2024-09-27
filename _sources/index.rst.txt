@@ -6,6 +6,7 @@
 Cocoatree
 ======================================
 
+An amazing package about co-evolution!
 
 .. toctree::
   :hidden:
@@ -14,5 +15,5 @@ Cocoatree
 
 
   install
-  modules/classes
+  documentation
   auto_examples/index

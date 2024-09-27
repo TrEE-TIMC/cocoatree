@@ -1,56 +1,44 @@
-import numpy as np
 from Bio import AlignIO
-from Bio import Seq
+from Bio.Seq import Seq
 from .__params import lett2num
 import sklearn.metrics as sn
 
 
-def load_MSA(filename, frmt, clean=False, verbose=True):
-    """Import and formatting of multiple sequence alignment data
-
-    Imports multiple sequence alignment data using BioPython's AlignIO
+def load_MSA(file_path, format, clean=True, verbose=False):
+    """Read in a multiple sequence alignment (MSA)
 
     Arguments
     ---------
-    filename : path to the alignment file
+    file_path : path to the alignment file
 
-    frmt : format of the alignment file (e.g. 'fasta', 'phylip', etc.)
+    format : format of the alignment file (e.g. 'fasta', 'phylip', etc.)
+
+    verbose : boolean,
+            whether to print informations about the MSA
 
     Returns
-    ----------
-    alignment : Bio.Align.MultipleSeqAlignment object
+    -------
+    seq_id : list of sequence identifiers
 
-    id_list : list of sequence identifiers
-
-    seq_list : list of sequences
-
-    binary_array : MxLx20 binary array x_a_si where s = 1,..., M labels the
-                   sequences, i = 1,..., L the positions, a = 1,..., 20 the
-                   amino acids. x_a_si = 1 if sequence s has aa a at position
-                   i and 0 otherwise.
+    sequences : list of sequences as strings
     """
 
-    alignment = AlignIO.read(filename, frmt)
+    alignment = AlignIO.read(file_path, format)
 
-    # Option to clean the alignment
     if clean:
         alignment = _clean_msa(alignment)
 
-    seq_list = []
-    id_list = []
+    seq_id = list()
+    sequences = list()
     for record in alignment:
-        seq_list.append(str(record.seq))
-        id_list.append(record.id)
-    seq_list = np.array(seq_list)
-
-    tmp = np.array([np.array([char for char in row]) for row in seq_list])
-    binary_array = np.array([tmp == aa for aa in lett2num.keys()]).astype(int)
+        seq_id.append(record.id)
+        sequences.append(str(record.seq))
 
     if verbose:
-        print("Alignment of length %i" % binary_array.shape[2])
-        print("Number of sequences: %i" % binary_array.shape[1])
+        print('Number of sequences: %i' % len(alignment))
+        print('Alignment of length: %i' % len(alignment[0]))
 
-    return [alignment, id_list, seq_list, binary_array]
+    return seq_id, sequences
 
 
 def _clean_msa(msa):

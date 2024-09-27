@@ -63,6 +63,22 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 #
 html_theme = 'alabaster'
 
+html_theme_options = {
+    # 'logo': 'logo.png',
+    'github_user': 'tree-timc',
+    'github_repo': 'cocoatree',
+}
+
+
+html_sidebars = {
+    '**': [
+        'about.html',
+        'searchfield.html',
+        'navigation.html',
+        'relations.html',
+    ]
+}
+
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
@@ -82,15 +98,15 @@ intersphinx_mapping = {
 sphinx_gallery_conf = {
     'backreferences_dir': "generated/backreferences",
     'doc_module': ("cocoatree", ),
-    "reference_url": {"pastis": None},
+    "reference_url": {"cocoatree": None},
     'binder': {
-    # Required keys
-    'org': 'tree-timc',
-    'repo': 'custom_sca',
-    'branch': 'gh-pages',
-    'binderhub_url': 'https://mybinder.org',  # Any URL of a binderhub deployment. Must be full URL (e.g. https://mybinder.org).
-    'dependencies': '../requirements.txt',
-    'use_jupyter_lab': True
-    }
+        # Required keys
+        'org': 'tree-timc',
+        'repo': 'cocoatree',
+        'branch': 'gh-pages',
+        'binderhub_url': 'https://mybinder.org',  # Any URL of a binderhub deployment. Must be full URL (e.g. https://mybinder.org).
+        'dependencies': '../requirements.txt',
+        'use_jupyter_lab': True
+        }
 }
 

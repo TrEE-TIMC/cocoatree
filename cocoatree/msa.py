@@ -91,7 +91,8 @@ def filter_gap_pos(sequences, threshold=0.4, verbose=False):
     pos_kept : numpy.ndarray of the positions that were conserved
     """
 
-    print("Filter MSA for overly gapped positions")
+    if verbose:
+        print("Filter MSA for overly gapped positions")
 
     Nseq, Npos = len(sequences), len(sequences[0])
 
@@ -201,7 +202,7 @@ def filter_ref_seq(seq_id, sequences, delta=0.2, refseq_id=None,
             print('Reference sequence is: %i' % refseq_id)
         refseq_idx = seq_id.index(refseq_id)
 
-    sim_matrix = seq_identity(sequences, graphic=False)
+    sim_matrix = compute_seq_identity(sequences, graphic=False)
     seq_kept_index = np.where(sim_matrix[refseq_idx] >= delta)[0]
     seq_kept = [sequences[seq] for seq in seq_kept_index]
     seq_id_kept = [seq_id[seq] for seq in seq_kept_index]
@@ -227,20 +228,16 @@ def choose_ref_seq(msa):
     The index of the reference sequence in the given alignment
     """
 
-    sim_matrix = seq_identity(msa)
-
-    global_sim = np.mean(sim_matrix)
+    sim_matrix = compute_seq_identity(msa)
 
     mean_pairwise_seq_sim = np.mean(sim_matrix, axis=0)
 
-    meanDiff = np.abs(mean_pairwise_seq_sim - global_sim)
-
-    ref_seq = np.argmin(meanDiff)
+    ref_seq = np.argmin(mean_pairwise_seq_sim)
 
     return ref_seq
 
 
-def seq_identity(sequences):
+def compute_seq_identity(sequences):
 
     """
     Computes the identity between sequences in a MSA (as Hamming's pairwise

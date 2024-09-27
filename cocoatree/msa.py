@@ -3,7 +3,6 @@ from Bio import AlignIO
 from Bio import Seq
 from .__params import lett2num
 import sklearn.metrics as sn
-import matplotlib.pyplot as plt
 
 
 def load_MSA(filename, frmt, clean=False, verbose=True):
@@ -76,7 +75,7 @@ def _clean_msa(msa):
     return msa
 
 
-def filter_gap_pos(sequences, threshold=0.4):
+def filter_gap_pos(sequences, threshold=0.4, verbose=False):
     """Filter the sequences for overly gapped positions.
 
     Arguments
@@ -99,11 +98,12 @@ def filter_gap_pos(sequences, threshold=0.4):
     gaps = np.array([[int(sequences[seq][pos] == '-') for pos in range(Npos)]
                      for seq in range(Nseq)])
 
-    freq_gap_per_pos = np.cumsum(gaps, axis=0)[-1] / Nseq
+    freq_gap_per_pos = np.sum(gaps, axis=0) / Nseq
 
     pos_kept = np.where(freq_gap_per_pos <= threshold)[0]
 
-    print("Keeping %i out of %i positions" % (len(pos_kept), Npos))
+    if verbose:
+        print("Keeping %i out of %i positions" % (len(pos_kept), Npos))
 
     filt_seqs = ["".join([sequences[seq][pos] for pos in pos_kept])
                  for seq in range(Nseq)]
@@ -112,7 +112,7 @@ def filter_gap_pos(sequences, threshold=0.4):
 
 
 def filter_gap_seq(seq_id, sequences, threshold=0.2, filtrefseq=False,
-                   refseq_id=None):
+                   refseq_id=None, verbose=False):
     """
     Remove sequences with a fraction of gaps greater than a specified
     value.
@@ -141,7 +141,8 @@ def filter_gap_seq(seq_id, sequences, threshold=0.2, filtrefseq=False,
     seq_kept : list of kept sequences
     """
 
-    print('Filter MSA for overly gapped sequences')
+    if verbose:
+        print('Filter MSA for overly gapped sequences')
 
     Nseq, Npos = len(sequences), len(sequences[0])
 
@@ -149,21 +150,24 @@ def filter_gap_seq(seq_id, sequences, threshold=0.2, filtrefseq=False,
                                  for seq in range(Nseq)])
 
     seq_kept_index = np.where(freq_gap_per_seq <= threshold)[0]
-    print('Keeping %i sequences out of %i sequences' %
-          (len(seq_kept_index), Nseq))
+    if verbose:
+        print('Keeping %i sequences out of %i sequences' %
+              (len(seq_kept_index), Nseq))
 
     seq_kept = [sequences[seq] for seq in seq_kept_index]
     seq_id_kept = [seq_id[seq] for seq in seq_kept_index]
 
     if filtrefseq:
-        print('Remove sequences too similar to the reference sequence')
+        if verbose:
+            print('Remove sequences too similar to the reference sequence')
         seq_id_kept, seq_kept = filter_ref_seq(seq_id_kept, seq_kept,
                                                delta=0.2, refseq_id=refseq_id)
 
     return seq_id_kept, seq_kept
 
 
-def filter_ref_seq(seq_id, sequences, delta=0.2, refseq_id=None):
+def filter_ref_seq(seq_id, sequences, delta=0.2, refseq_id=None,
+                   verbose=False):
     '''
     Remove sequences r with Sr < delta, where Sr is the fractional identity
     between r and a specified reference sequence.
@@ -189,10 +193,12 @@ def filter_ref_seq(seq_id, sequences, delta=0.2, refseq_id=None):
     Nseq = len(sequences)
 
     if refseq_id is None:
-        print('Choose a default reference sequence within the alignment')
-        refseq_idx = refSeq(sequences)
+        if verbose:
+            print('Choose a default reference sequence within the alignment')
+        refseq_idx = choose_ref_seq(sequences)
     else:
-        print('Reference sequence is: %i' % refseq_id)
+        if verbose:
+            print('Reference sequence is: %i' % refseq_id)
         refseq_idx = seq_id.index(refseq_id)
 
     sim_matrix = seq_identity(sequences, graphic=False)
@@ -200,12 +206,13 @@ def filter_ref_seq(seq_id, sequences, delta=0.2, refseq_id=None):
     seq_kept = [sequences[seq] for seq in seq_kept_index]
     seq_id_kept = [seq_id[seq] for seq in seq_kept_index]
 
-    print('Keeping %i out of %i sequences' % (len(seq_kept), Nseq))
+    if verbose:
+        print('Keeping %i out of %i sequences' % (len(seq_kept), Nseq))
 
     return seq_id_kept, seq_kept
 
 
-def refSeq(msa):
+def choose_ref_seq(msa):
 
     """This function chooses a default reference sequence for the alignment by
     taking the sequence which has the mean pairwise sequence identity closest
@@ -213,27 +220,27 @@ def refSeq(msa):
 
     Parameters
     ----------
-    msa: the multiple sequence alignment
+    msa : the multiple sequence alignment as a list of sequences
 
     Returns
     -------
     The index of the reference sequence in the given alignment
     """
 
-    sim_matrix = seq_identity(msa, graphic=False)
+    sim_matrix = seq_identity(msa)
 
     global_sim = np.mean(sim_matrix)
 
     mean_pairwise_seq_sim = np.mean(sim_matrix, axis=0)
 
-    meanDiff = abs(mean_pairwise_seq_sim - global_sim)
+    meanDiff = np.abs(mean_pairwise_seq_sim - global_sim)
 
-    ref_seq = np.where(meanDiff == min(meanDiff))
+    ref_seq = np.argmin(meanDiff)
 
-    return ref_seq[0][0]
+    return ref_seq
 
 
-def seq_identity(sequences, graphic=True):
+def seq_identity(sequences):
 
     """
     Computes the identity between sequences in a MSA (as Hamming's pairwise
@@ -243,11 +250,9 @@ def seq_identity(sequences, graphic=True):
     ---------
     sequences : list of sequences
 
-    graphic : boolean, whether to plot the identity matrix
-
     Returns
     -------
-    sim_matrix : identity matrix
+    sim_matrix : identity matrix of shape (Nseq, Nseq)
     """
 
     separated_aa = np.array(
@@ -256,21 +261,5 @@ def seq_identity(sequences, graphic=True):
 
     sim_matrix = 1 - sn.DistanceMetric.get_metric(
         "hamming").pairwise(separated_aa)
-
-    if graphic:
-        # List all elements above the diagonal
-        listS = [sim_matrix[i, j] for i in range(sim_matrix.shape[0])
-                 for j in range(i + 1, sim_matrix.shape[1])]
-
-        plt.figure()
-        plt.rcParams['figure.figsize'] = 9, 4
-        plt.subplot(121)
-        plt.hist(listS, int(round(separated_aa.shape[1]/2)))
-        plt.xlabel('Pairwise sequence identities', fontsize=14)
-        plt.ylabel('Number', fontsize=14)
-        plt.subplot(122)
-        plt.imshow(sim_matrix, vmin=0, vmax=1)
-        plt.colorbar()
-        plt.show()
 
     return sim_matrix

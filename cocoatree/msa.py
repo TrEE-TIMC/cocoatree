@@ -2,6 +2,7 @@ from Bio import AlignIO
 from Bio.Seq import Seq
 from .__params import lett2num
 import sklearn.metrics as sn
+import numpy as np
 
 
 def load_MSA(file_path, format, clean=True, verbose=False):

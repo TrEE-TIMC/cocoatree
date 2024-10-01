@@ -1,5 +1,31 @@
 import numpy as np
+import sklearn.metrics as sn
 from ._params import lett2num
+
+
+def compute_seq_identity(sequences):
+
+    """
+    Computes the identity between sequences in a MSA (as Hamming's pairwise
+    distance)
+
+    Arguments
+    ---------
+    sequences : list of sequences
+
+    Returns
+    -------
+    sim_matrix : identity matrix of shape (Nseq, Nseq)
+    """
+
+    separated_aa = np.array(
+        [np.array([lett2num[char] for char in row])
+         for row in sequences])
+
+    sim_matrix = 1 - sn.DistanceMetric.get_metric(
+        "hamming").pairwise(separated_aa)
+
+    return sim_matrix
 
 
 def aa_joint_freq(sequences, weights, lbda=0.03):

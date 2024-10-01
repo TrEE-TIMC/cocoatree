@@ -31,12 +31,12 @@ def aa_joint_freq(sequences, weights, lbda=0.03):
     """Computes the joint frequencies of each pair of amino acids in a MSA
 
     .. math::
-        f_{ij}^{ab} = (1 - \lambda) \sum_s w_s \frac{x_{si}^a x_{sj}^b}{M'} + \frac{\lambda^2}{(21)^2}
+        f_{ij}^{ab} = (1 - \\lambda) \\sum_s w_s \\frac{x_{si}^a x_{sj}^b}{M'} + \\frac{\lambda^2}{(21)^2}
 
     where
 
     .. math::
-        M' = \sum_s w_s
+        M' = \\sum_s w_s
 
     represents the effective number of sequences in the alignment and *lambda*
     is a small regularization parameter (default=0.03).
@@ -103,7 +103,7 @@ def compute_sca_matrix(joint_freqs, joint_freqs_ind, aa_freq, qa):
         C_{ij}^{ab} = f_{ij}^{ab} - f_i^a f_j^b
 
     .. math::
-        \tilde{C_{ij}} = \sqrt{sum_{a,b} \tilde{(C_{ij}^{ab})^2}}
+        \\tilde{C_{ij}} = \\sqrt{sum_{a,b} \\tilde{(C_{ij}^{ab})^2}}
 
     Arguments
     ----------

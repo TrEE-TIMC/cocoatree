@@ -13,8 +13,10 @@ def load_S1A_serine_proteases():
     Returns
     -------
 
-    dictionnary containing :
-        - alignment :
+    a dictionnary containing :
+        - `sequences_ids`: a list of strings corresponding to sequence names
+        - `alignment`: a list of strings corresponding to sequences. Because it
+          is an MSA, all the strings are of same length.
     """
 
     module_path = os.path.dirname(__file__)

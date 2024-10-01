@@ -31,23 +31,32 @@ def compute_seq_identity(sequences):
 def aa_joint_freq(sequences, weights, lbda=0.03):
     """Computes the joint frequencies of each pair of amino acids in a MSA
 
+    :math:`f_{ij}`
+
+    .. math::
+        f_{ij}^{ab} = (1 - \\lambda) \\sum_s w_s \\frac{x_{si}^a x_{sj}^b}{M^a} + \\frac{\lambda^2}{(21)^2}
+
     Arguments
     ----------
     sequences : list of sequences as imported by load_MSA()
 
-    weights : sequence weights as calculated by seq_weights()
+    weights : ndarray of shape (Nseq)
+            sequence weights as calculated by seq_weights()
 
-    lbda : regularization parameter lambda (default=0.03)
+    lbda : float
+        regularization parameter lambda (default=0.03)
 
     Returns
     -------
-    joint_freqs : amino acid joint frequencies
+    joint_freqs : ndarray of shape (Nseq, Nseq)
+                amino acid joint frequencies
 
-    joint_freqs_ind : amino acid joint frequencies if independent
+    joint_freqs_ind : ndarray of shape (Nseq, Nseq)
+                amino acid joint frequencies if independent
     """
 
     # Convert sequences to binary format
-    tmp = np.array([np.array([char for char in row]) for row in sequences])
+    tmp = np.array([[char for char in row] for row in sequences])
     binary_array = np.array([tmp == aa for aa in lett2num.keys()]).astype(int)
 
     aa_count, seq_nb, seq_length = binary_array.shape
@@ -82,7 +91,7 @@ def aa_joint_freq(sequences, weights, lbda=0.03):
     return joint_freqs, joint_freqs_ind
 
 
-def compute_sca_matrix(joint_freqs, joint_freqs_ind, fia, qa):
+def compute_sca_matrix(joint_freqs, joint_freqs_ind, aa_freq, qa):
     """Compute SCA coevolution matrix
 
     Arguments
@@ -91,7 +100,7 @@ def compute_sca_matrix(joint_freqs, joint_freqs_ind, fia, qa):
 
     joint_freqs_ind : amino acid joint frequencies if independent
 
-    fia : frequency of amino acid *a* at position *i*
+    aa_freq : frequency of amino acid *a* at position *i*
 
     qa : background frequency of amino acid *a*
 
@@ -105,10 +114,10 @@ def compute_sca_matrix(joint_freqs, joint_freqs_ind, fia, qa):
     Cijab_raw = joint_freqs - joint_freqs_ind
 
     # Derivee de l'entropie relative (fonction Phi)
-    fia = fia.transpose([1, 0])
+    aa_freq = aa_freq.transpose([1, 0])
     phi = np.log(
-        fia * (1 - qa[:, np.newaxis]) / (
-            (1 - fia) * qa[:, np.newaxis])).transpose([1, 0])
+        aa_freq * (1 - qa[:, np.newaxis]) / (
+            (1 - aa_freq) * qa[:, np.newaxis])).transpose([1, 0])
     phi = np.multiply.outer(phi, phi).transpose([0, 2, 1, 3])
 
     Cijab_tilde = phi * Cijab_raw

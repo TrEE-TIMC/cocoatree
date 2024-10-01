@@ -56,3 +56,22 @@ Functions
 .. _msa_ref:
 
 
+:mod:`cocoatree.statistics`: Multiple sequence alignment
+========================================================
+
+.. automodule:: cocoatree.statistics
+    :no-members:
+    :no-inherited-members:
+
+
+Functions
+---------
+
+.. currentmodule:: cocoatree
+
+.. autosummary::
+
+   :toctree: generated/
+   :template: function.rst
+
+   statistics.pairwise.aa_joint_freq

@@ -27,7 +27,7 @@ def compute_seq_identity(sequences):
     return sim_matrix
 
 
-def aa_joint_freq(sequences, weights, lbda=0.03):
+def aa_joint_freq(sequences, weights, lambda_coef=0.03):
     """Computes the joint frequencies of each pair of amino acids in a MSA
 
     .. math::
@@ -49,7 +49,7 @@ def aa_joint_freq(sequences, weights, lbda=0.03):
     weights : ndarray of shape (Nseq)
             sequence weights as calculated by seq_weights()
 
-    lbda : float
+    lambda_coef : float
         regularization parameter lambda (default=0.03)
 
     Returns
@@ -81,14 +81,16 @@ def aa_joint_freq(sequences, weights, lbda=0.03):
     # Sum on the number of sequences
     simple_freq = np.sum(simple_freq, axis=1)
 
-    simple_freq = (1 - lbda**2) * simple_freq + (lbda / aa_count)**2
+    simple_freq = (1 - lambda_coef**2) * simple_freq +\
+        (lambda_coef / aa_count)**2
 
     joint_freq_aibj = np.tensordot(weighted_binary_array, binary_array,
                                    axes=([1], [1])) / m_eff
 
     joint_freqs = joint_freq_aibj.transpose(1, 3, 0, 2)
 
-    joint_freqs = (1 - lbda**2) * joint_freqs + lbda**2 / (aa_count)**2
+    joint_freqs = (1 - lambda_coef**2) * joint_freqs +\
+        lambda_coef**2 / (aa_count)**2
 
     joint_freqs_ind = np.multiply.outer(simple_freq, simple_freq)
 

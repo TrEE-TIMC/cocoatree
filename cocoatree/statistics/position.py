@@ -2,7 +2,7 @@ import numpy as np
 from ..__params import lett2num, __freq0
 
 
-def aa_freq_at_pos(sequences, lambda_coef=0.03, aa_count=21, weights=None):
+def aa_freq_at_pos(sequences, lambda_coef=0.03, weights=None):
     """Computes frequencies of aminoacids at each position of the alignment.
 
     .. math::
@@ -14,10 +14,6 @@ def aa_freq_at_pos(sequences, lambda_coef=0.03, aa_count=21, weights=None):
     sequences : list of sequences as imported by load_msa()
 
     lambda_coef : regularization parameter lambda (default=0.03)
-
-    aa_count : int, optional
-            The number of amino acids to consider. Defaults to 21 to account
-            for unknown (X) amino acids which are considered as gaps.
 
     weights : numpy 1D array, optional
             Gives more or less importance to certain sequences.
@@ -55,6 +51,8 @@ def aa_freq_at_pos(sequences, lambda_coef=0.03, aa_count=21, weights=None):
     # np.bincount : Count number of occurrences of each value in array of
     # non-negative ints.
     aa_freq = []
+    # consider gaps as a 21st amino acid
+    aa_count = 21
     for pos in range(N_pos):
         tmp = np.bincount(separated_aa_num[:, pos], weights=weights,
                           minlength=aa_count) / Neff_seq
@@ -66,7 +64,7 @@ def aa_freq_at_pos(sequences, lambda_coef=0.03, aa_count=21, weights=None):
     return aa_freq
 
 
-def background_freq(aa_freq, lambda_coef=0.03, aa_count=21):
+def background_freq(aa_freq, lambda_coef=0.03):
     """Computes regularized background frequencies of amino acids
 
     Arguments
@@ -74,10 +72,6 @@ def background_freq(aa_freq, lambda_coef=0.03, aa_count=21):
     aa_freq : np.ndarray of the positional amino acid frequencies
 
     lambda_coef : regularization parameter lambda (default=0.03)
-
-    aa_count : int
-            The number of amino acids to consider. Defaults to 21 to account
-            for unknown amino acids which are considered as gaps.
 
     Returns
     -------
@@ -92,6 +86,8 @@ def background_freq(aa_freq, lambda_coef=0.03, aa_count=21):
     qa.insert(0, q0)
     qa = np.array(qa)
 
+    # consider gaps as 21st amino acid
+    aa_count = 21
     if lambda_coef > 0:
         qa = (1 - lambda_coef) * qa + lambda_coef / aa_count
 

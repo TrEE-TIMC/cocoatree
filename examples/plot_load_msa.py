@@ -1,5 +1,5 @@
 """
-Load an MSA
+Compute SCA coevolution matrix
 ===========
 
 A small example that shows how to load and filter an MSA, compute positional
@@ -10,9 +10,11 @@ matrix.
 
 
 from cocoatree.msa import load_MSA, filter_gap_seq, filter_gap_pos, \
+    seq_weights
+from cocoatree.statistics.position import aa_freq_at_pos, background_freq
+from cocoatree.statistics.pairwise import aa_joint_freq, compute_sca_matrix, \
     compute_seq_identity
-from cocoatree.sca_functions import seq_weights, aa_freq_at_pos, \
-    background_freq, aa_joint_freq, compute_sca_matrix
+
 
 seq_id, sequences = load_MSA("data/s1Ahalabi_1470.an", format="fasta")
 Npos, Nseq = len(sequences[0]), len(sequences)

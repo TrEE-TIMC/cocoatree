@@ -2,35 +2,37 @@ import numpy as np
 from ..__params import lett2num, __freq0
 
 
-def aa_freq_at_pos(sequences, lbda=0.03, aa_count=21, weights=None):
+def aa_freq_at_pos(sequences, lambda_coef=0.03, aa_count=21, weights=None):
     """Computes frequencies of aminoacids at each position of the alignment.
-    .. math ::
+
+    .. math::
+    f_i^a = (1 - \lambda) \sum_s w_s \frac{x_{si}^a}{M^a} + \frac{\lambda}{21}
 
     Arguments
     ----------
     sequences : list of sequences as imported by load_msa()
 
-    lbda: regularization parameter lambda (default=0.03)
+    lambda_coef : regularization parameter lambda (default=0.03)
 
-    aa_count: int, optional
+    aa_count : int, optional
             The number of amino acids to consider. Defaults to 21 to account
             for unknown (X) amino acids which are considered as gaps.
 
-    weights: numpy 1D array, optional
+    weights : numpy 1D array, optional
             Gives more or less importance to certain sequences.
             If weights=None, all sequences are attributed an equal weight of 1.
 
     Returns
     -------
-    fia : np.ndarray of shape (Npos, aa_count)
+    aa_freq : np.ndarray of shape (Npos, aa_count)
+            frequency of amino acid *a* at position *i*
     """
 
-    separated_aa = np.array(
-        [np.array([char for char in row]) for row in sequences])
-    N_seq = separated_aa.shape[0]
+    separated_aa = np.array([[char for char in row] for row in sequences])
+    N_seq, N_pos = separated_aa.shape
     if weights is None:
         weights = np.ones(N_seq)
-    if lbda > 0:
+    if lambda_coef > 0:
         Neff_seq = np.sum(weights)
     else:
         Neff_seq = N_seq
@@ -51,26 +53,26 @@ def aa_freq_at_pos(sequences, lbda=0.03, aa_count=21, weights=None):
 
     # np.bincount : Count number of occurrences of each value in array of
     # non-negative ints.
-    fia = []
+    aa_freq = []
     for pos in range(N_pos):
         tmp = np.bincount(separated_aa_num[:, pos], weights=weights,
-                          minlength=21) / Neff_seq
-        if lbda >= 0:
-            tmp = (1 - lbda) * tmp + lbda / aa_count
-        fia.append(tmp)
-    fia = np.array(fia)
+                          minlength=aa_count) / Neff_seq
+        if lambda_coef >= 0:
+            tmp = (1 - lambda_coef) * tmp + lambda_coef / aa_count
+        aa_freq.append(tmp)
+    aa_freq = np.array(aa_freq)
 
-    return fia
+    return aa_freq
 
 
-def background_freq(fia, lbda=0.03, aa_count=21):
+def background_freq(aa_freq, lambda_coef=0.03, aa_count=21):
     """Computes regularized background frequencies of amino acids
 
     Arguments
     ---------
-    fia : np.ndarray of the positional amino acid frequencies
+    aa_freq : np.ndarray of the positional amino acid frequencies
 
-    lbda : regularization parameter lambda (default=0.03)
+    lambda_coef : regularization parameter lambda (default=0.03)
 
     aa_count : int
             The number of amino acids to consider. Defaults to 21 to account
@@ -82,12 +84,14 @@ def background_freq(fia, lbda=0.03, aa_count=21):
     """
 
     # q0 : fraction of gaps in the alignment
-    q0 = np.mean(fia[:, 0])
+    q0 = np.mean(aa_freq[:, 0])
+    # qa : correction factor on __freq0 in order to take the proportion of
+    # gaps into account
     qa = list((1 - q0) * __freq0)
     qa.insert(0, q0)
     qa = np.array(qa)
 
-    if lbda > 0:
-        qa = (1 - lbda) * qa + lbda / aa_count
+    if lambda_coef > 0:
+        qa = (1 - lambda_coef) * qa + lambda_coef / aa_count
 
     return qa

@@ -36,6 +36,7 @@ extensions = [
     "sphinx_gallery.gen_gallery",
     "sphinx.ext.autodoc",
     "sphinx.ext.imgmath",
+    "sphinx.ext.mathjax",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.doctest",
@@ -46,6 +47,9 @@ extensions = [
 
 autosummary_generate = True
 autodoc_default_options = {"members": True, "inherited-members": True}
+
+# options for math equations
+
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

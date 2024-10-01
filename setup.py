@@ -27,7 +27,7 @@ setup(
         "": ["*.csv", "*.fasta", "*.gz", "*.txt", "*.pxd", "*.rst", "*.jpg",
              "*.css"]
     },
-
+    include_package_data=True,
     python_requires='>=3.8, <4',
     install_requires=['numpy'],  # Optional
     extras_require={  # Optional

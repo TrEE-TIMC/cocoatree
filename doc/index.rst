@@ -13,7 +13,3 @@ An amazing package about co-evolution!
   :glob:
   :caption: Contents
 
-
-  install
-  documentation
-  auto_examples/index

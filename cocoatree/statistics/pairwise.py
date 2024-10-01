@@ -31,7 +31,7 @@ def aa_joint_freq(sequences, weights, lbda=0.03):
     """Computes the joint frequencies of each pair of amino acids in a MSA
 
     .. math::
-        f_{ij}^{ab} = (1 - \\lambda) \\sum_s w_s \\frac{x_{si}^a x_{sj}^b}{M'} + \\frac{\lambda^2}{(21)^2}
+        f_{ij}^{ab} = (1 - \\lambda) \\sum_s w_s \\frac{x_{si}^a x_{sj}^b}{M'} + \\frac{\\lambda^2}{(21)^2}
 
     where
 

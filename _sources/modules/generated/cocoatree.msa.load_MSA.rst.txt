@@ -1,6 +1,0 @@
-﻿cocoatree.msa.load\_MSA
-=======================
-
-.. currentmodule:: cocoatree.msa
-
-.. autofunction:: load_MSA

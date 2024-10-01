@@ -1,5 +1,5 @@
 import numpy as np
-from .statistics._params import lett2num, __freq0
+from .._params import lett2num, __freq0
 
 
 def aa_freq_at_pos(sequences, lbda=0.03, aa_count=21, weights=None):

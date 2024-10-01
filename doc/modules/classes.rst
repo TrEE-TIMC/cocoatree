@@ -4,6 +4,30 @@
 Reference
 =========
 
+
+:mod:`cocoatree.datasets`: Datasets
+===================================
+
+.. automodule:: cocoatree.datasets
+    :no-members:
+    :no-inherited-members:
+
+
+Functions
+---------
+
+.. currentmodule:: cocoatree
+
+.. autosummary::
+
+   :toctree: generated/
+   :template: function.rst
+
+   datasets.load_S1A_serine_proteases
+
+.. _datasets_ref:
+
+
 :mod:`cocoatree.msa`: Multiple sequence alignment
 =================================================
 
@@ -30,3 +54,5 @@ Functions
    msa.compute_seq_identity
 
 .. _msa_ref:
+
+

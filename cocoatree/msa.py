@@ -2,7 +2,7 @@ from Bio import AlignIO
 from Bio.Seq import Seq
 from .__params import lett2num
 import numpy as np
-from statistics.pairwise import compute_seq_identity
+from .statistics.pairwise import compute_seq_identity
 
 
 def load_MSA(file_path, format, clean=True, verbose=False):

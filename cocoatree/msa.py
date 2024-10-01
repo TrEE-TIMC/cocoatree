@@ -1,8 +1,8 @@
 from Bio import AlignIO
 from Bio.Seq import Seq
 from .__params import lett2num
-import sklearn.metrics as sn
 import numpy as np
+from .statistics.pairwise import compute_seq_identity
 
 
 def load_MSA(file_path, format, clean=True, verbose=False):
@@ -226,26 +226,24 @@ def choose_ref_seq(msa):
     return ref_seq
 
 
-def compute_seq_identity(sequences):
+def seq_weights(sim_matrix, threshold=0.8):
+    """Each sequence s is given a weight ws = 1/Ns where Ns is the number of
+    sequences with an identity to s above a specified threshold.
 
-    """
-    Computes the identity between sequences in a MSA (as Hamming's pairwise
-    distance)
+    Parameters
+    ----------
+    sim_matrix : similarity matrix (e.g. output from seq_similarity() function)
 
-    Arguments
-    ---------
-    sequences : list of sequences
+    threshold : percentage identity above which the sequences are considered
+                identical (default=0.8)
 
     Returns
     -------
-    sim_matrix : identity matrix of shape (Nseq, Nseq)
+    weights : np.array of each sequence weight
     """
 
-    separated_aa = np.array(
-        [np.array([lett2num[char] for char in row])
-         for row in sequences])
+    weights = (1 / np.sum(sim_matrix >= threshold, axis=0))
 
-    sim_matrix = 1 - sn.DistanceMetric.get_metric(
-        "hamming").pairwise(separated_aa)
+    Nseq_eff = sum(weights)
 
-    return sim_matrix
+    return weights, Nseq_eff

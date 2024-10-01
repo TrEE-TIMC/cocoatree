@@ -1,6 +1,6 @@
 """
 Compute SCA coevolution matrix
-===========
+===============================
 
 A small example that shows how to load and filter an MSA, compute positional
 and joint amino acid frequencies and finally, compute the SCA coevolution
@@ -27,20 +27,20 @@ seq_id_kept, seq_kept = filter_gap_seq(seq_id, filt_seqs, threshold=0.2,
                                        filtrefseq=False)
 
 # Compute matrix of pairwise sequence identity
-sim_matrix = compute_seq_identity(seq_kept, graphic=False)
+sim_matrix = compute_seq_identity(seq_kept)
 
 # Compute sequence weights
 weights, Neff = seq_weights(sim_matrix)
 
 # compute allele frequencies
-fia = aa_freq_at_pos(seq_kept, lbda=0.03, aa_count=21, weights=weights)
+aa_freq = aa_freq_at_pos(seq_kept, lambda_coef=0.03, weights=weights)
 # Compute background frequencies
-qa = background_freq(fia)
+qa = background_freq(aa_freq)
 # Compute joint allele frequencies
-fijab, fijab_ind = aa_joint_freq(seq_kept, weights=weights, lbda=0.03)
+fijab, fijab_ind = aa_joint_freq(seq_kept, weights=weights, lambda_coef=0.03)
 
 # Compute the SCA coevolution matrix
 Cijab_raw, Cij = compute_sca_matrix(joint_freqs=fijab,
                                     joint_freqs_ind=fijab_ind,
-                                    fia=fia,
+                                    aa_freq=aa_freq,
                                     qa=qa)

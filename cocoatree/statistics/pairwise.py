@@ -1,6 +1,6 @@
 import numpy as np
 import sklearn.metrics as sn
-from .._params import lett2num
+from ..__params import lett2num
 
 
 def compute_seq_identity(sequences):

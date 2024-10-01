@@ -23,6 +23,11 @@ setup(
 
     keywords='coevolution, MSA',
     packages=find_packages(),  # Required
+    package_data={
+        "": ["*.csv", "*.fasta", "*.gz", "*.txt", "*.pxd", "*.rst", "*.jpg",
+             "*.css"]
+    },
+
     python_requires='>=3.8, <4',
     install_requires=['numpy'],  # Optional
     extras_require={  # Optional

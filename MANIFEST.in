@@ -1,1 +1,5 @@
-recursive-include cocoatree/datasets/data *
+recursive-include doc *
+recursive-include examples *
+
+recursive-include cocoatree/datasets/data/* *
+

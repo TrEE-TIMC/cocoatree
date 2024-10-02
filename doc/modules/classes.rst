@@ -52,12 +52,13 @@ Functions
    msa.filter_ref_seq
    msa.choose_ref_seq
    msa.compute_seq_identity
+   msa.seq_weights
 
 .. _msa_ref:
 
 
-:mod:`cocoatree.statistics`: Multiple sequence alignment
-========================================================
+:mod:`cocoatree.statistics`: Computation of statistics
+======================================================
 
 .. automodule:: cocoatree.statistics
     :no-members:
@@ -75,3 +76,9 @@ Functions
    :template: function.rst
 
    statistics.pairwise.aa_joint_freq
+   statistics.pairwise.compute_seq_identity
+   statistics.pairwise.compute_sca_matrix
+   statistics.position.aa_freq_at_pos
+   statistics.positions.background_freq
+
+.. _statistics_ref:

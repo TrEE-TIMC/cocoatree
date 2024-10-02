@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Reference &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../_static/nameko.css?v=2296cfae" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="../_static/documentation_options.js?v=837179f8"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  </head><body><div class="navbar related">
+      <a href="../index.html">
+        
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="../auto_examples/index.html">Gallery</a> </li>
+      <li class="right"><a href="#">Documentation</a> | </li>
+      <li class="right"><a href="../install.html">Installation</a> | </li>
+      <li class="right"><a href="../index.html">Home</a> | </li>
+      
+    </ul>
+  </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="reference">
+<h1>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h1>
+<section id="module-cocoatree.datasets">
+<span id="cocoatree-datasets-datasets"></span><h2><a class="reference internal" href="#module-cocoatree.datasets" title="cocoatree.datasets"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.datasets</span></code></a>: Datasets<a class="headerlink" href="#module-cocoatree.datasets" title="Link to this heading">¶</a></h2>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">datasets.load_S1A_serine_proteases</span></code>()</p></td>
+<td><p>Load the S1A serine protease dataset</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="module-cocoatree.msa">
+<span id="cocoatree-msa-multiple-sequence-alignment"></span><span id="datasets-ref"></span><h2><a class="reference internal" href="#module-cocoatree.msa" title="cocoatree.msa"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.msa</span></code></a>: Multiple sequence alignment<a class="headerlink" href="#module-cocoatree.msa" title="Link to this heading">¶</a></h2>
+<section id="id1">
+<h3>Functions<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.load_MSA</span></code>(file_path, format[, clean, verbose])</p></td>
+<td><p>Read in a multiple sequence alignment (MSA)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.filter_gap_pos</span></code>(sequences[, threshold, ...])</p></td>
+<td><p>Filter the sequences for overly gapped positions.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.filter_gap_seq</span></code>(seq_id, sequences[, ...])</p></td>
+<td><p>Remove sequences with a fraction of gaps greater than a specified value.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.filter_ref_seq</span></code>(seq_id, sequences[, ...])</p></td>
+<td><p>Remove sequences r with Sr &lt; delta, where Sr is the fractional identity between r and a specified reference sequence.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.choose_ref_seq</span></code>(msa)</p></td>
+<td><p>This function chooses a default reference sequence for the alignment by taking the sequence which has the mean pairwise sequence identity closest to that of the entire sequence alignment.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.compute_seq_identity</span></code>(sequences)</p></td>
+<td><p>Computes the identity between sequences in a MSA (as Hamming's pairwise distance)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="module-cocoatree.statistics">
+<span id="cocoatree-statistics-multiple-sequence-alignment"></span><span id="msa-ref"></span><h2><a class="reference internal" href="#module-cocoatree.statistics" title="cocoatree.statistics"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.statistics</span></code></a>: Multiple sequence alignment<a class="headerlink" href="#module-cocoatree.statistics" title="Link to this heading">¶</a></h2>
+<section id="id2">
+<h3>Functions<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">statistics.pairwise.aa_joint_freq</span></code>(sequences, ...)</p></td>
+<td><p>Computes the joint frequencies of each pair of amino acids in a MSA</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

@@ -1,3 +1,4 @@
+import scipy.linalg as sp
 import numpy as np
 
 
@@ -16,8 +17,8 @@ def eigen_decomp(mat):
     eigenvectors : ndarray of shape (Npos, Npos)
     """
 
-    eigenvalues, eigenvectors = np.linalg.eig(mat)
-    eigenvalues = np.real(eigenvalues)
-    eigenvectors = np.real(eigenvectors)
+    eigenvalues, eigenvectors = sp.eigh(mat)
+    eigenvalues = np.sort(eigenvalues)
+    eigenvectors = eigenvectors[:, np.arange(eigenvalues - 1, -1, -1)]
 
     return eigenvalues, eigenvectors

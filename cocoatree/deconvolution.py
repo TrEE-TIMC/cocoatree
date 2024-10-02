@@ -19,6 +19,6 @@ def eigen_decomp(mat):
 
     eigenvalues, eigenvectors = sp.eigh(mat)
     eigenvalues = np.sort(eigenvalues)
-    eigenvectors = eigenvectors[:, np.arange(eigenvalues - 1, -1, -1)]
+    eigenvectors = eigenvectors[:, np.arange(eigenvalues.shape[0] - 1, -1, -1)]
 
     return eigenvalues, eigenvectors

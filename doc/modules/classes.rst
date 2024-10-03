@@ -82,3 +82,28 @@ Functions
    statistics.positions.background_freq
 
 .. _statistics_ref:
+
+
+:mod: `cocoatree.deconvolution`: Matrix deconvolution
+=====================================================
+
+.. automodule:: cocoatree.deconvolution
+    :no-members:
+    :no-inherited-members:
+
+
+Functions
+---------
+
+.. currentmodule:: cocoatree
+
+.. autosummary::
+
+    :toctree: generated/
+    :template: function.rst
+
+    deconvolution.eigen_decomp
+    deconvolution.basicICA
+    deconvolution.rotICA
+
+.. _deconvolution_ref:

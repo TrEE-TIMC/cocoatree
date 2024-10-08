@@ -25,7 +25,7 @@ def eigen_decomp(mat):
     return eigenvalues, eigenvectors
 
 
-def basicICA(x, r0, Niter, tolerance=1e-15):
+def _basicICA(x, r0, Niter, tolerance=1e-15):
     """
     Basic ICA algorithm, based on work by Bell & Sejnowski (infomax). The input
     data should preferentially be sphered, i.e., x.T.dot(x) = 1
@@ -88,7 +88,7 @@ def rotICA(V, kmax=6, learnrate=0.1, iterations=100000):
     """
 
     V1 = V[:, :kmax].T
-    [W, changes] = basicICA(V1, learnrate, iterations)
+    [W, changes] = _basicICA(V1, learnrate, iterations)
     Vica = (W.dot(V1)).T
     for n in range(kmax):
         imax = abs(Vica[:, n]).argmax()

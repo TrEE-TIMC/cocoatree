@@ -76,7 +76,7 @@ def _basicICA(x, r0, Niter, tolerance=1e-15):
 
 
 # Vica, W = rotICA(eig_vec, kmax = 6, learnrate = 0.0001, iterations = 10000)
-def rotICA(V, kmax=6, learnrate=0.1, iterations=100000):
+def compute_ica(V, kmax=6, learnrate=0.1, iterations=100000):
     """
     ICA rotation (using basicICA) with default parameters and normalization of
     outputs.

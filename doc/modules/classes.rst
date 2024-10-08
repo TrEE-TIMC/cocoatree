@@ -103,6 +103,6 @@ Functions
     :template: function.rst
 
     deconvolution.eigen_decomp
-    deconvolution.rotICA
+    deconvolution.compute_ica
 
 .. _deconvolution_ref:

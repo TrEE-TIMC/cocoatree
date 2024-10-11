@@ -79,7 +79,7 @@ Functions
    statistics.pairwise.compute_seq_identity
    statistics.pairwise.compute_sca_matrix
    statistics.position.aa_freq_at_pos
-   statistics.positions.background_freq
+   statistics.position.background_freq
 
 .. _statistics_ref:
 

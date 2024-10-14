@@ -25,9 +25,14 @@ A small example that shows how to load and filter an MSA, compute positional
 and joint amino acid frequencies and finally, compute the SCA coevolution
 matrix.
 
-.. GENERATED FROM PYTHON SOURCE LINES 10-47
+.. GENERATED FROM PYTHON SOURCE LINES 10-62
 
 
+
+.. image-sg:: /auto_examples/images/sphx_glr_plot_load_msa_001.png
+   :alt: plot load msa
+   :srcset: /auto_examples/images/sphx_glr_plot_load_msa_001.png
+   :class: sphx-glr-single-img
 
 
 
@@ -42,6 +47,8 @@ matrix.
     from cocoatree.statistics.position import aa_freq_at_pos, background_freq
     from cocoatree.statistics.pairwise import aa_joint_freq, compute_sca_matrix, \
         compute_seq_identity
+    from cocoatree.deconvolution import eigen_decomp, compute_ica
+    import matplotlib.pyplot as plt
 
 
     seq_id, sequences = load_MSA("data/s1Ahalabi_1470.an", format="fasta")
@@ -73,10 +80,23 @@ matrix.
                                         aa_freq=aa_freq,
                                         qa=qa)
 
+    # Decomposition of the matrix into principal components
+    eigenvalues, eigenvectors = eigen_decomp(Cij)
+
+    # Plot distribution of eigenvalues
+    plt.figure()
+    plt.hist(eigenvalues, bins=100, color="black")
+    plt.ylabel('Number')
+    plt.xlabel('Eigenvalue')
+    plt.show()
+
+    # Independent component analysis (ICA)
+    Vica, W = compute_ica(eigenvectors, kmax=6, learnrate=0.1, iterations=100000)
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 3.151 seconds)
+   **Total running time of the script:** (0 minutes 3.403 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_load_msa.py:

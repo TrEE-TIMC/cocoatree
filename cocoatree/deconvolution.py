@@ -75,13 +75,39 @@ def _basicICA(x, r0, Niter, tolerance=1e-15):
     return [w, change]
 
 
-# Vica, W = rotICA(eig_vec, kmax = 6, learnrate = 0.0001, iterations = 10000)
-def compute_ica(V, kmax=6, learnrate=0.1, iterations=100000):
+def compute_ica(V, kmax=6, learnrate=0.1, iterations=10000):
     """
-    ICA rotation (using basicICA) with default parameters and normalization of
+    ICA rotation (using _basicICA) with default parameters and normalization of
     outputs.
+    Basic ICA algorithm, based on work by Bell & Sejnowski (infomax). The input
+    data should preferentially be sphered, i.e., x.T.dot(x) = 1
 
     Source: https://github.com/ranganathanlab/pySCA/
+
+    Arguments
+    ---------
+    V : ndarray,
+        eigenvectors obtained after matrix decomposition
+
+    kmax : integer,
+        number of independent components to retrieve
+
+    learnrate : integer,
+        learning rate / relaxation parameter
+
+    iterations : integer,
+        number of iterations
+
+    **Note** r and Niter should be adjusted to achieve convergence, which
+    should be assessed by visualizing 'change' with plot(range(iter), change)
+
+    Returns
+    -------
+    Vica : ndarray,
+        contributions along each independent components
+
+    W : ndarray of shape (kmax, kmax),
+        unmixing matrix
 
     **Example**::
        Vica, W = rotICA(V, kmax=6, learnrate=.0001, iterations=10000)

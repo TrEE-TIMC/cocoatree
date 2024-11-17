@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:03.556** total execution time for 3 files **from all galleries**:
+**00:03.575** total execution time for 3 files **from all galleries**:
 
 .. container::
 
@@ -33,10 +33,10 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_auto_examples_plot_load_msa.py` (``../examples/plot_load_msa.py``)
-     - 00:03.250
+     - 00:03.277
      - 0.0
    * - :ref:`sphx_glr_auto_examples_datasets_plot_s1A_serine_proteases.py` (``../examples/datasets/plot_s1A_serine_proteases.py``)
-     - 00:00.253
+     - 00:00.246
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_example.py` (``../examples/plot_example.py``)
      - 00:00.052

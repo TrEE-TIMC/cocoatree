@@ -119,3 +119,44 @@ def _get_color_palette(values):
             color_dict[values[i]] = color_list[i]
 
     return color_dict
+
+
+def _get_color_gradient(self):
+    """
+    Function which allows to use matplotlib colormaps in ete3 heatmap
+    Adapted from:
+    https://github.com/lthiberiol/virfac/blob/master/get_color_gradient.py
+    """
+    cNorm = colors.Normalize(vmin=0, vmax=1)
+    scalarMap = cmx.ScalarMappable(norm=cNorm,
+                                   cmap=plt.get_cmap(self.colorscheme))
+    color_scale = []
+    for scale in np.linspace(0, 1, 201):
+        [r, g, b, a] = scalarMap.to_rgba(scale, bytes=True)
+        color_scale.append(QtGui.QColor(r, g, b, a))
+
+    return color_scale
+
+
+def _get_sector_seq(sector_fasta):
+    """
+    Get the amino acid sequences of the sector (fasta format)
+
+    Arguments
+    ---------
+    sector_fasta : path to the fasta of the sector sequences
+
+    Returns
+    -------
+    sector : list of sequences
+
+    sector_length : number of residues in the sector
+    """
+    sector = {}
+    fasta = AlignIO.read(sector_fasta, "fasta")
+    sector_length = len(fasta[0].seq)
+
+    for i in range(0, len(fasta)):
+        sector[fasta[i].id] = str(fasta[i].seq)
+
+    return sector, sector_length

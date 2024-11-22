@@ -48,15 +48,24 @@ def import_tree(tree):
 
 def _annot_to_color(attribute, tree, annot_file):
     """
+    Reads in the attributes specified by the user in the annotation csv file
+    and attributes a color palette for each.
 
     Arguments
     ---------
     tree : path to the tree (Newick format)
+
     attributes : list of column names to grab
+
     annot_file : path to the annotation file
+
+    Returns
+    -------
+    att_dict:
+
+    color_dict:
     """
-    t = Tree(tree, format=0)
-    id_lst = t.get_leaf_names()
+    t, id_lst = import_tree(tree)
     df_annot = pd.read_csv(annot_file)
     df_annot = df_annot.fillna('unknown')
     if is_numeric_dtype(df_annot['Seq_ID']):
@@ -75,7 +84,7 @@ def _annot_to_color(attribute, tree, annot_file):
     return att_dict, color_dict
 
 
-# Ajouter une vérification if value == 'unknown': color = 'white'
+# TO DO: add check if value == 'unknown': color = 'white'
 def _get_color_palette(values):
     # color palettes (modified from colorbrewer set1, expanded to 50)
     colors_50 = ["#E41A1C", "#C72A35", "#AB3A4E", "#8F4A68", "#735B81",
@@ -104,6 +113,9 @@ def _get_color_palette(values):
         color_list = simple_palette
     color_dict = {}  # key = value, value = colour id
     for i in range(0, nvals):
-        color_dict[values[i]] = color_list[i]
+        if values[i] == 'unknown':
+            color_dict[values[i]] = 'white'
+        else:
+            color_dict[values[i]] = color_list[i]
 
     return color_dict

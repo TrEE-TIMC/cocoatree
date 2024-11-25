@@ -1,5 +1,6 @@
 from Bio import AlignIO
 from .msa import _clean_msa
+from ete3 import Tree
 
 
 def load_MSA(file_path, format, clean=True, verbose=False):
@@ -38,3 +39,25 @@ def load_MSA(file_path, format, clean=True, verbose=False):
 
     return seq_id, sequences
 
+
+def import_tree(tree):
+    """
+    Import tree (Newick format) and get list of sequence IDs
+
+    Arguments
+    ---------
+    tree : path to the newick file
+
+    Returns
+    -------
+    t : tree object
+
+    id_lst : list of the tree leaves (sequence IDs)
+
+    Example
+    -------
+    t, id_lst = import_tree(tree)
+    """
+    t = Tree(tree, format=0)
+    id_lst = t.get_leaf_names()
+    return t, id_lst

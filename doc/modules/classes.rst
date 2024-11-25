@@ -103,5 +103,6 @@ Functions
    :template: function.rst
 
     cocoatree_io.load_MSA
+    cocoatree_io.import_tree
 
 .. _cocoatree_io_ref:

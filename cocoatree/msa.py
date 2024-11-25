@@ -1,5 +1,6 @@
 from Bio import AlignIO
 from Bio.Seq import Seq
+from Bio.Align import MultipleSeqAlignment
 from .__params import lett2num
 import numpy as np
 from .statistics.pairwise import compute_seq_identity
@@ -247,3 +248,38 @@ def seq_weights(sim_matrix, threshold=0.8):
     Nseq_eff = sum(weights)
 
     return weights, Nseq_eff
+
+
+def filter_seq_id(msa, list_id):
+    """
+    Filter a multiple sequence alignment to keep only sequences whose
+    identifiers are in a user provided list.
+
+    Parameters
+    ----------
+    msa: Bio.Align.MultipleSeqAlignment object
+
+    list_id: list of sequence identifiers the user wants to keep. The
+    identifiers must be in the same format as in the input MSA
+
+    Returns
+    -------
+    new_msa: filtered msa
+
+    id_list: list of sequence ID in the filtered MSA
+
+    seq_list: list of sequences of the filtered MSA
+    """
+    new_msa = MultipleSeqAlignment([])
+    for i in list_id:
+        for record in msa[0]:
+            if record.id == i:
+                new_msa.append(record)
+    seq_list = []
+    id_list = []
+    for record in new_msa:
+        seq_list.append(str(record.seq))
+        id_list.append(record.id)
+    seq_list = np.array(seq_list)
+
+    return [new_msa, id_list, seq_list]

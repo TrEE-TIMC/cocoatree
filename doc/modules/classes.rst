@@ -82,3 +82,26 @@ Functions
    statistics.positions.background_freq
 
 .. _statistics_ref:
+
+
+:mod:`cocoatree.cocoatree_io`: Functions to import and export files
+===================================================================
+
+.. automodule:: cocoatree.cocoatree_io
+    :no-members:
+    :no-inherited-members:
+
+
+Functions
+---------
+
+.. currentmodule:: cocoatree
+
+.. autosummary::
+
+   :toctree: generated/
+   :template: function.rst
+
+    cocoatree_io.load_MSA
+
+.. _cocoatree_io_ref:

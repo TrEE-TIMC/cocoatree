@@ -1,5 +1,5 @@
 import os
-from ..msa import load_MSA
+from ..cocoatree_io import load_MSA
 
 
 def load_S1A_serine_proteases():

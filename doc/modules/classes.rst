@@ -79,7 +79,7 @@ Functions
    statistics.pairwise.compute_seq_identity
    statistics.pairwise.compute_sca_matrix
    statistics.position.aa_freq_at_pos
-   statistics.positions.background_freq
+   statistics.position.background_freq
 
 .. _statistics_ref:
 
@@ -88,14 +88,6 @@ Functions
 ===================================================================
 
 .. automodule:: cocoatree.cocoatree_io
-    :no-members:
-    :no-inherited-members:
-
-
-Functions
----------
-
-.. currentmodule:: cocoatree
 
 .. autosummary::
 
@@ -106,3 +98,27 @@ Functions
     cocoatree_io.import_tree
 
 .. _cocoatree_io_ref:
+
+
+:mod: `cocoatree.deconvolution`: Matrix deconvolution
+=====================================================
+
+.. automodule:: cocoatree.deconvolution
+    :no-members:
+    :no-inherited-members:
+
+
+Functions
+---------
+
+.. currentmodule:: cocoatree
+
+.. autosummary::
+    
+    :toctree: generated/
+    :template: function.rst
+
+    deconvolution.eigen_decomp
+    deconvolution.compute_ica
+
+.. _deconvolution_ref:

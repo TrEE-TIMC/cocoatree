@@ -35,7 +35,7 @@ jobs:
             - name: Build the documentation
               shell: bash -l {0}
               run: |
-                pushd doc
+                cd doc
                 make html
                 touch _build/html/.nojekyll
-                popd
+                cd ..

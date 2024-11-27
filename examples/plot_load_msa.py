@@ -14,6 +14,8 @@ from cocoatree.msa import filter_gap_seq, filter_gap_pos, seq_weights
 from cocoatree.statistics.position import aa_freq_at_pos, background_freq
 from cocoatree.statistics.pairwise import aa_joint_freq, compute_sca_matrix, \
     compute_seq_identity
+from cocoatree.deconvolution import eigen_decomp, compute_ica
+import matplotlib.pyplot as plt
 
 
 seq_id, sequences = load_MSA("data/s1Ahalabi_1470.an", format="fasta")
@@ -44,3 +46,16 @@ Cijab_raw, Cij = compute_sca_matrix(joint_freqs=fijab,
                                     joint_freqs_ind=fijab_ind,
                                     aa_freq=aa_freq,
                                     qa=qa)
+
+# Decomposition of the matrix into principal components
+eigenvalues, eigenvectors = eigen_decomp(Cij)
+
+# Plot distribution of eigenvalues
+plt.figure()
+plt.hist(eigenvalues, bins=100, color="black")
+plt.ylabel('Number')
+plt.xlabel('Eigenvalue')
+plt.show()
+
+# Independent component analysis (ICA)
+Vica, W = compute_ica(eigenvectors, kmax=6, learnrate=0.1, iterations=100000)

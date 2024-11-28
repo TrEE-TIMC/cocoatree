@@ -133,15 +133,17 @@ def chooseKpos(eigenvalues, rand_eigenvalues):
 
     Arguments
     ---------
-    eigenvalues : list of eigenvalues of the coevolution matrix based on the
-        real MSA
+    eigenvalues : ndarray of shape (Npos),
+        list of eigenvalues of the coevolution matrix based on the real MSA
 
-    rand_eigenvalues : list of eigenvalue lists of coevolution matrices based
-        on randomized alignments
+    rand_eigenvalues : ndarray of shape (Nrep, Npos), where Nrep is the number
+        of randomization iterations
+        eigenvalues of all the iteartions of randomized alignments
 
     Returns
     -------
-    kpos : number of significant eigenmodes
+    kpos : integer,
+        number of significant eigenmodes
     """
 
     kpos = eigenvalues[eigenvalues > (rand_eigenvalues.mean() +

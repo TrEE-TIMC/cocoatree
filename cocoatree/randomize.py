@@ -4,12 +4,11 @@
 import numpy as np
 from __params import lett2num
 from statistics.position import aa_freq_at_pos, background_freq
-from statistics.pairwise import aa_joint_freq, compute_sca_matrix, \
-    compute_mi_matrix
+from statistics.pairwise import aa_joint_freq, compute_sca_matrix
 from deconvolution import eigen_decomp
 
 
-def random_aln(fia, Nseq):
+def _random_aln(fia, Nseq):
     """
     Generate a random alignment with Nseq sequences and amino acid frequency
     at each position fia
@@ -98,7 +97,7 @@ def randomization(sequences, Nrep, weights=1, lambda_coef=0.03, kmax=6,
     # initialize for eigenvalues
     val_rand = np.zeros((Nrep, Npos))
     for rep in range(Nrep):
-        msa_random = random_aln(fia, Nseq)[0]
+        msa_random = _random_aln(fia, Nseq)[0]
         fijab, fijab_ind = aa_joint_freq(msa_random, weights,
                                          lambda_coef=lambda_coef)
         # Compute coevolution matrix for the randomized alignment

@@ -122,3 +122,29 @@ def compute_ica(V, kmax=6, learnrate=0.1, iterations=10000):
             np.sign(Vica[imax, n]) * Vica[:, n] / np.linalg.norm(Vica[:, n])
         )
     return Vica, W
+
+
+def chooseKpos(eigenvalues, rand_eigenvalues):
+    """
+    Given the eigenvalues of the coevolution matrix (Lsca), and the
+    eigenvalues for the set of randomized matrices (Lrand), return
+    the number of significant eigenmodes.
+    Based on Rivoire et al. (2016)
+
+    Arguments
+    ---------
+    eigenvalues : list of eigenvalues of the coevolution matrix based on the
+        real MSA
+
+    rand_eigenvalues : list of eigenvalue lists of coevolution matrices based
+        on randomized alignments
+
+    Returns
+    -------
+    kpos : number of significant eigenmodes
+    """
+
+    kpos = eigenvalues[eigenvalues > (rand_eigenvalues.mean() +
+                                      (3 * rand_eigenvalues.std()))].shape[0]
+
+    return kpos

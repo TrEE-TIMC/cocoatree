@@ -104,6 +104,7 @@ Functions
 
     deconvolution.eigen_decomp
     deconvolution.compute_ica
+    deconvolution.chooseKpos
 
 .. _deconvolution_ref:
 

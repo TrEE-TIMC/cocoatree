@@ -9,14 +9,23 @@ Reference
 ===================================================================
 
 .. automodule:: cocoatree.io
+    :no-members:
+    :no-inherited-members:
+
+
+Functions
+---------
+
+.. currentmodule:: cocoatree
+ 
 
 .. autosummary::
 
-   :toctree: generated/
-   :template: function.rst
+  :toctree: generated/
+  :template: function.rst
 
-    io.load_MSA
-    io.load_tree
+  io.load_MSA
+  io.load_tree
 
 .. _io_ref:
 
@@ -63,13 +72,13 @@ Functions
    :toctree: generated/
    :template: function.rst
 
-   msa.load_MSA
    msa.filter_gap_pos
    msa.filter_gap_seq
    msa.filter_ref_seq
    msa.choose_ref_seq
    msa.compute_seq_identity
    msa.seq_weights
+
 
 .. _msa_ref:
 
@@ -98,16 +107,16 @@ Functions
    statistics.position.aa_freq_at_pos
    statistics.position.background_freq
 
+
 .. _statistics_ref:
 
 
-
-:mod: `cocoatree.deconvolution`: Matrix deconvolution
+:mod:`cocoatree.deconvolution`: Matrix deconvolution
 =====================================================
 
 .. automodule:: cocoatree.deconvolution
-    :no-members:
-    :no-inherited-members:
+  :no-members:
+  :no-inherited-members:
 
 
 Functions
@@ -122,5 +131,6 @@ Functions
 
     deconvolution.eigen_decomp
     deconvolution.compute_ica
+
 
 .. _deconvolution_ref:

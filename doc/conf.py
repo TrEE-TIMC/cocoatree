@@ -80,7 +80,7 @@ html_theme_options = {
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = []
 
-exclude_patterns = ['modules/generated']
+# exclude_patterns = ['modules/generated']
 
 # Sphinx-gallery options
 from sphinx_gallery.sorting import ExplicitOrder, FileNameSortKey

@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:03.373** total execution time for 2 files **from auto_examples**:
+**00:03.374** total execution time for 2 files **from auto_examples**:
 
 .. container::
 

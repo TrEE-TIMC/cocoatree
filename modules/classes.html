@@ -42,10 +42,26 @@
             
   <section id="reference">
 <h1>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h1>
-<section id="module-cocoatree.datasets">
-<span id="cocoatree-datasets-datasets"></span><h2><a class="reference internal" href="#module-cocoatree.datasets" title="cocoatree.datasets"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.datasets</span></code></a>: Datasets<a class="headerlink" href="#module-cocoatree.datasets" title="Link to this heading">¶</a></h2>
+<section id="module-cocoatree.io">
+<span id="cocoatree-io-functions-to-import-and-export-files"></span><h2><a class="reference internal" href="#module-cocoatree.io" title="cocoatree.io"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.io</span></code></a>: Functions to import and export files<a class="headerlink" href="#module-cocoatree.io" title="Link to this heading">¶</a></h2>
 <section id="functions">
 <h3>Functions<a class="headerlink" href="#functions" title="Link to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">io.load_MSA</span></code>(file_path, format[, clean, verbose])</p></td>
+<td><p>Read in a multiple sequence alignment (MSA)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">io.load_tree</span></code>(file_path)</p></td>
+<td><p>Import tree (Newick format) and get list of sequence IDs</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="module-cocoatree.datasets">
+<span id="cocoatree-datasets-datasets"></span><span id="io-ref"></span><h2><a class="reference internal" href="#module-cocoatree.datasets" title="cocoatree.datasets"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.datasets</span></code></a>: Datasets<a class="headerlink" href="#module-cocoatree.datasets" title="Link to this heading">¶</a></h2>
+<section id="id1">
+<h3>Functions<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">datasets.load_S1A_serine_proteases</span></code>()</p></td>
@@ -57,29 +73,26 @@
 </section>
 <section id="module-cocoatree.msa">
 <span id="cocoatree-msa-multiple-sequence-alignment"></span><span id="datasets-ref"></span><h2><a class="reference internal" href="#module-cocoatree.msa" title="cocoatree.msa"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.msa</span></code></a>: Multiple sequence alignment<a class="headerlink" href="#module-cocoatree.msa" title="Link to this heading">¶</a></h2>
-<section id="id1">
-<h3>Functions<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<section id="id2">
+<h3>Functions<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.load_MSA</span></code>(file_path, format[, clean, verbose])</p></td>
-<td><p>Read in a multiple sequence alignment (MSA)</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.filter_gap_pos</span></code>(sequences[, threshold, ...])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.filter_gap_pos</span></code>(sequences[, threshold, ...])</p></td>
 <td><p>Filter the sequences for overly gapped positions.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.filter_gap_seq</span></code>(seq_id, sequences[, ...])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.filter_gap_seq</span></code>(seq_id, sequences[, ...])</p></td>
 <td><p>Remove sequences with a fraction of gaps greater than a specified value.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.filter_ref_seq</span></code>(seq_id, sequences[, ...])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.filter_ref_seq</span></code>(seq_id, sequences[, ...])</p></td>
 <td><p>Remove sequences r with Sr &lt; delta, where Sr is the fractional identity between r and a specified reference sequence.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.choose_ref_seq</span></code>(msa)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.choose_ref_seq</span></code>(msa)</p></td>
 <td><p>This function chooses a default reference sequence for the alignment by taking the sequence which has the mean pairwise sequence identity closest to that of the entire sequence alignment.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.compute_seq_identity</span></code>(sequences)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.compute_seq_identity</span></code>(sequences)</p></td>
 <td><p>Computes the identity between sequences in a MSA (as Hamming's pairwise distance)</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.seq_weights</span></code>(sim_matrix[, threshold])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.seq_weights</span></code>(sim_matrix[, threshold])</p></td>
 <td><p>Each sequence s is given a weight ws = 1/Ns where Ns is the number of sequences with an identity to s above a specified threshold.</p></td>
 </tr>
 </tbody>
@@ -88,8 +101,8 @@
 </section>
 <section id="module-cocoatree.statistics">
 <span id="cocoatree-statistics-computation-of-statistics"></span><span id="msa-ref"></span><h2><a class="reference internal" href="#module-cocoatree.statistics" title="cocoatree.statistics"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.statistics</span></code></a>: Computation of statistics<a class="headerlink" href="#module-cocoatree.statistics" title="Link to this heading">¶</a></h2>
-<section id="id2">
-<h3>Functions<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<section id="id3">
+<h3>Functions<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">statistics.pairwise.aa_joint_freq</span></code>(sequences, ...)</p></td>
@@ -109,15 +122,12 @@
 </tr>
 </tbody>
 </table>
-<dl class="field-list simple" id="statistics-ref">
-<dt class="field-odd">mod<span class="colon">:</span></dt>
-<dd class="field-odd"><p><cite>cocoatree.deconvolution</cite>: Matrix deconvolution</p>
-</dd>
-</dl>
-<hr class="docutils" />
+</section>
 </section>
 <section id="module-cocoatree.deconvolution">
-<span id="id3"></span><h3>Functions<a class="headerlink" href="#module-cocoatree.deconvolution" title="Link to this heading">¶</a></h3>
+<span id="cocoatree-deconvolution-matrix-deconvolution"></span><span id="statistics-ref"></span><h2><a class="reference internal" href="#module-cocoatree.deconvolution" title="cocoatree.deconvolution"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.deconvolution</span></code></a>: Matrix deconvolution<a class="headerlink" href="#module-cocoatree.deconvolution" title="Link to this heading">¶</a></h2>
+<section id="id4">
+<h3>Functions<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.eigen_decomp</span></code>(mat)</p></td>

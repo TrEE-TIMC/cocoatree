@@ -8,3 +8,4 @@ flake8
 matplotlib
 scikit-learn
 biopython
+ete3

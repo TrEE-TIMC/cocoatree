@@ -86,13 +86,16 @@
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.filter_ref_seq</span></code>(seq_id, sequences[, ...])</p></td>
 <td><p>Remove sequences r with Sr &lt; delta, where Sr is the fractional identity between r and a specified reference sequence.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.choose_ref_seq</span></code>(msa)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.filter_seq_id</span></code>(msa, list_id)</p></td>
+<td><p>Filter a multiple sequence alignment to keep only sequences whose identifiers are in a user provided list.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.choose_ref_seq</span></code>(msa)</p></td>
 <td><p>This function chooses a default reference sequence for the alignment by taking the sequence which has the mean pairwise sequence identity closest to that of the entire sequence alignment.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.compute_seq_identity</span></code>(sequences)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.compute_seq_identity</span></code>(sequences)</p></td>
 <td><p>Computes the identity between sequences in a MSA (as Hamming's pairwise distance)</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.seq_weights</span></code>(sim_matrix[, threshold])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.seq_weights</span></code>(sim_matrix[, threshold])</p></td>
 <td><p>Each sequence s is given a weight ws = 1/Ns where Ns is the number of sequences with an identity to s above a specified threshold.</p></td>
 </tr>
 </tbody>

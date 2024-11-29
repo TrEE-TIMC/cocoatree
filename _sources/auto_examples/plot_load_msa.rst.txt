@@ -18,28 +18,34 @@
 .. _sphx_glr_auto_examples_plot_load_msa.py:
 
 
+==============================
 Compute SCA coevolution matrix
-===============================
+==============================
 
 A small example that shows how to load and filter an MSA, compute positional
-and joint amino acid frequencies and finally, compute the SCA coevolution
-matrix.
+and joint amino acid frequencies and compute the SCA coevolution matrix.
+The matrix is then decomposed into principal components and independent
+component analysis is performed.
 
-.. GENERATED FROM PYTHON SOURCE LINES 10-62
-
-
-
-.. image-sg:: /auto_examples/images/sphx_glr_plot_load_msa_001.png
-   :alt: plot load msa
-   :srcset: /auto_examples/images/sphx_glr_plot_load_msa_001.png
-   :class: sphx-glr-single-img
-
-
-
-
+.. GENERATED FROM PYTHON SOURCE LINES 12-17
 
 .. code-block:: Python
 
+
+    # Author: Margaux Jullien <margaux.jullien@univ-grenoble-alpes.fr>
+    #         Nelle Varoquaux <nelle.varoquaux@univ-grenoble-alpes.fr>
+    # License: TBD
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 18-27
+
+.. code-block:: Python
 
 
     from cocoatree.io import load_MSA
@@ -51,20 +57,112 @@ matrix.
     import matplotlib.pyplot as plt
 
 
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 28-30
+
+Import MSA
+----------
+
+.. GENERATED FROM PYTHON SOURCE LINES 30-34
+
+.. code-block:: Python
+
+
     seq_id, sequences = load_MSA("data/s1Ahalabi_1470.an", format="fasta")
     Npos, Nseq = len(sequences[0]), len(sequences)
 
-    # Filter overly gapped positions
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 35-40
+
+MSA filtering
+-------------
+
+Filter overly gapped positions
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. GENERATED FROM PYTHON SOURCE LINES 40-49
+
+.. code-block:: Python
+
+
     filt_seqs, pos_kept = filter_gap_pos(sequences, threshold=0.4)
 
     # Filter overly gapped sequences
+    # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
     seq_id_kept, seq_kept = filter_gap_seq(seq_id, filt_seqs, threshold=0.2,
                                            filtrefseq=False)
 
-    # Compute matrix of pairwise sequence identity
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 50-52
+
+Compute matrix of pairwise sequence identity
+--------------------------------------------
+
+.. GENERATED FROM PYTHON SOURCE LINES 52-55
+
+.. code-block:: Python
+
+
     sim_matrix = compute_seq_identity(seq_kept)
 
-    # Compute sequence weights
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 56-65
+
+.. code-block:: Python
+
+    fig = plt.figure()
+    plt.rcParams['figure.figsize'] = 10, 10
+    plt.xlabel('Sequences', fontsize=10)
+    plt.ylabel(None)
+    plt.title('Matrix of pairwise sequence identity')
+    plt.imshow(sim_matrix, vmin=0, vmax=1, cmap='inferno')
+    plt.colorbar(shrink=0.7)
+    plt.show()
+
+
+
+
+.. image-sg:: /auto_examples/images/sphx_glr_plot_load_msa_001.png
+   :alt: Matrix of pairwise sequence identity
+   :srcset: /auto_examples/images/sphx_glr_plot_load_msa_001.png
+   :class: sphx-glr-single-img
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 66-67
+
+Compute sequence weights
+
+.. GENERATED FROM PYTHON SOURCE LINES 67-76
+
+.. code-block:: Python
+
     weights, Neff = seq_weights(sim_matrix)
 
     # compute allele frequencies
@@ -74,29 +172,113 @@ matrix.
     # Compute joint allele frequencies
     fijab, fijab_ind = aa_joint_freq(seq_kept, weights=weights, lambda_coef=0.03)
 
-    # Compute the SCA coevolution matrix
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 77-79
+
+Compute the SCA coevolution matrix
+----------------------------------
+
+.. GENERATED FROM PYTHON SOURCE LINES 79-85
+
+.. code-block:: Python
+
+
     Cijab_raw, Cij = compute_sca_matrix(joint_freqs=fijab,
                                         joint_freqs_ind=fijab_ind,
                                         aa_freq=aa_freq,
                                         qa=qa)
 
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 86-100
+
+.. code-block:: Python
+
+    fig = plt.figure()
+    plt.rcParams['figure.figsize'] = 10, 10
+    plt.xlabel('Residue', fontsize=10)
+    plt.ylabel(None)
+    plt.title('Coevolution matrix')
+    plt.imshow(Cij, vmin=0, vmax=1.4, cmap='inferno')
+    plt.colorbar(shrink=0.7)
+    plt.show()
+
     # Decomposition of the matrix into principal components
+    # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
     eigenvalues, eigenvectors = eigen_decomp(Cij)
 
-    # Plot distribution of eigenvalues
+
+
+
+.. image-sg:: /auto_examples/images/sphx_glr_plot_load_msa_002.png
+   :alt: Coevolution matrix
+   :srcset: /auto_examples/images/sphx_glr_plot_load_msa_002.png
+   :class: sphx-glr-single-img
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 101-102
+
+Plot distribution of eigenvalues
+
+.. GENERATED FROM PYTHON SOURCE LINES 102-108
+
+.. code-block:: Python
+
     plt.figure()
     plt.hist(eigenvalues, bins=100, color="black")
     plt.ylabel('Number')
     plt.xlabel('Eigenvalue')
     plt.show()
 
-    # Independent component analysis (ICA)
+
+
+
+.. image-sg:: /auto_examples/images/sphx_glr_plot_load_msa_003.png
+   :alt: plot load msa
+   :srcset: /auto_examples/images/sphx_glr_plot_load_msa_003.png
+   :class: sphx-glr-single-img
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 109-111
+
+Independent component analysis (ICA)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. GENERATED FROM PYTHON SOURCE LINES 111-113
+
+.. code-block:: Python
+
+
     Vica, W = compute_ica(eigenvectors, kmax=6, learnrate=0.1, iterations=100000)
+
+
+
+
+
+
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 3.337 seconds)
+   **Total running time of the script:** (0 minutes 3.671 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_load_msa.py:

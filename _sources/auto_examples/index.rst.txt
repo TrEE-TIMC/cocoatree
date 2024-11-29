@@ -33,7 +33,7 @@ General examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="A small example that shows how to load and filter an MSA, compute positional and joint amino acid frequencies and finally, compute the SCA coevolution matrix.">
+    <div class="sphx-glr-thumbcontainer" tooltip="A small example that shows how to load and filter an MSA, compute positional and joint amino acid frequencies and compute the SCA coevolution matrix. The matrix is then decomposed into principal components and independent component analysis is performed.">
 
 .. only:: html
 

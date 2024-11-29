@@ -9,7 +9,7 @@ matrix.
 """
 
 
-from cocoatree.cocoatree_io import load_MSA
+from cocoatree.io import load_MSA
 from cocoatree.msa import filter_gap_seq, filter_gap_pos, seq_weights
 from cocoatree.statistics.position import aa_freq_at_pos, background_freq
 from cocoatree.statistics.pairwise import aa_joint_freq, compute_sca_matrix, \

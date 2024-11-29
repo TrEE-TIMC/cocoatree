@@ -5,6 +5,23 @@ Reference
 =========
 
 
+:mod:`cocoatree.io`: Functions to import and export files
+===================================================================
+
+.. automodule:: cocoatree.io
+
+.. autosummary::
+
+   :toctree: generated/
+   :template: function.rst
+
+    io.load_MSA
+    io.load_tree
+
+.. _io_ref:
+
+
+
 :mod:`cocoatree.datasets`: Datasets
 ===================================
 
@@ -83,21 +100,6 @@ Functions
 
 .. _statistics_ref:
 
-
-:mod:`cocoatree.cocoatree_io`: Functions to import and export files
-===================================================================
-
-.. automodule:: cocoatree.cocoatree_io
-
-.. autosummary::
-
-   :toctree: generated/
-   :template: function.rst
-
-    cocoatree_io.load_MSA
-    cocoatree_io.import_tree
-
-.. _cocoatree_io_ref:
 
 
 :mod: `cocoatree.deconvolution`: Matrix deconvolution

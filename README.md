@@ -3,9 +3,15 @@
 **COCOA-Tree** is a Python library to perform coevolution analyses of proteins and integrate phylogenetic information
 to better understand the coevolution signals.
 
+It regroups various coevolution metrics and corrections, such as statistical coevolution analysis (SCA) or mutual
+information (MI).
+
 Website: [tree-bioinfo-intra.timc.fr/projects/cocoa/](http://tree-bioinfo-intra.timc.fr/projects/cocoa/index.html)
 
 ## Library organization
+
+COCOA-Tree is organized in several modules, each allowing to perform different tasks of a coevolution analysis
+pipeline:
 
 [cocoatree_orga](../cocoatree_orga.pdf)
 
@@ -20,7 +26,7 @@ COCOA-Tree requires:
 - biopython
 - ete3
 
-For running the examples, Matplotlib is required.
+Matplotlib is also required for running the examples.
 
 ### User installation
 

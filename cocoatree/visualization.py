@@ -6,7 +6,7 @@
 # - annotation table in csv format
 
 # Import necessary packages
-from ete3 import Tree, ProfileFace, TreeStyle, NodeStyle, TextFace, \
+from ete3 import ProfileFace, TreeStyle, NodeStyle, TextFace, \
     add_face_to_node, SeqMotifFace, RectFace
 import pandas as pd  # type: ignore
 from pandas.api.types import is_numeric_dtype  # type: ignore
@@ -18,31 +18,9 @@ import matplotlib.colors as colors
 import matplotlib.cm as cmx
 import matplotlib.pyplot as plt
 
+from .io import load_tree
 from .msa import filter_seq_id
 from .statistics.pairwise import compute_seq_identity
-
-
-def import_tree(tree):
-    """
-    Import tree (Newick format) and get list of sequence IDs
-
-    Arguments
-    ---------
-    tree : path to the newick file
-
-    Returns
-    -------
-    t : tree object
-
-    id_lst : list of the tree leaves (sequence IDs)
-
-    Example
-    -------
-    t, id_lst = import_tree(tree)
-    """
-    t = Tree(tree, format=0)
-    id_lst = t.get_leaf_names()
-    return t, id_lst
 
 
 def _annot_to_color(attribute, tree, annot_file):
@@ -64,7 +42,7 @@ def _annot_to_color(attribute, tree, annot_file):
 
     color_dict:
     """
-    t, id_lst = import_tree(tree)
+    t, id_lst = load_tree(tree)
     df_annot = pd.read_csv(annot_file)
     df_annot = df_annot.fillna('unknown')
     if is_numeric_dtype(df_annot['Seq_ID']):
@@ -193,7 +171,7 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
         sequences
     """
 
-    t, id_lst = import_tree(tree_file)
+    t, id_lst = load_tree(tree_file)
     nb_seq = len(id_lst)
 
     ts = TreeStyle()

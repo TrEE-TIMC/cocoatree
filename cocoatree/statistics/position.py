@@ -6,8 +6,8 @@ def aa_freq_at_pos(sequences, lambda_coef=0.03, weights=None):
     """Computes frequencies of aminoacids at each position of the alignment.
 
     .. math::
-    f_i^a = (1 - \\lambda) \\sum_s w_s \\frac{x_{si}^a}{M^a} +\
-         \\frac{\\lambda}{21}
+        f_i^a = (1 - \\lambda) \\sum_s w_s \\frac{x_{si}^a}{M^a} +\
+             \\frac{\\lambda}{21}
 
     Arguments
     ----------

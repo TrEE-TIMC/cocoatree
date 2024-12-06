@@ -17,13 +17,14 @@ from PyQt5 import QtGui
 import matplotlib.colors as colors
 import matplotlib.cm as cmx
 import matplotlib.pyplot as plt
+from matplotlib import colors
 
 from .io import load_tree
 from .msa import filter_seq_id
 from .statistics.pairwise import compute_seq_identity
 
 
-def _annot_to_color(attribute, tree, annot_file):
+def _annot_to_color(attribute, tree, annot_file, cmap='jet'):
     """
     Reads in the attributes specified by the user in the annotation csv file
     and attributes a color palette for each.
@@ -51,7 +52,7 @@ def _annot_to_color(attribute, tree, annot_file):
 
     att_dict = {}
     df_annot = df_annot[['Seq_ID', attribute]]
-    color_dict = _get_color_palette(df_annot[attribute].unique())
+    color_dict = _get_color_palette(list(df_annot[attribute].unique()), cmap)
     df_annot[str(attribute + '_color')] = df_annot.apply(
         lambda row: color_dict[row[attribute]], axis=1)
     for i in range(0, len(df_annot['Seq_ID'])):
@@ -61,39 +62,32 @@ def _annot_to_color(attribute, tree, annot_file):
     return att_dict, color_dict
 
 
-# TO DO: add check if value == 'unknown': color = 'white'
-def _get_color_palette(values):
-    # color palettes (modified from colorbrewer set1, expanded to 50)
-    colors_50 = ["#E41A1C", "#C72A35", "#AB3A4E", "#8F4A68", "#735B81",
-                 "#566B9B", "#3A7BB4", "#3A85A8", "#3D8D96", "#419584",
-                 "#449D72", "#48A460", "#4CAD4E", "#56A354", "#629363",
-                 "#6E8371", "#7A7380", "#87638F", "#93539D", "#A25392",
-                 "#B35A77", "#C4625D", "#D46A42", "#E57227", "#F67A0D",
-                 "#FF8904", "#FF9E0C", "#FFB314", "#FFC81D", "#FFDD25",
-                 "#FFF12D", "#F9F432", "#EBD930", "#DCBD2E", "#CDA12C",
-                 "#BF862B", "#B06A29", "#A9572E", "#B65E46", "#C3655F",
-                 "#D06C78", "#DE7390", "#EB7AA9", "#F581BE", "#E585B8",
-                 "#D689B1", "#C78DAB", "#B791A5", "#A8959F", "#999999"]
-    simple_palette = ["HotPink", "LimeGreen", "DodgerBlue", "Turquoise",
-                      "Indigo", "MediumTurquoise", "Sienna", "LightCoral",
-                      "LightSkyBlue", "Indigo", "Tan", "Coral",
-                      "OliveDrab", "Teal"]
+def generate_colors_from_colormaps(n_colors, cmap="jet", as_hex=False):
+    """
+    Generate a list of n colors from colormap
+    """
+
+    colormap = plt.get_cmap(str(cmap))
+    indx = np.linspace(0, 1, n_colors)
+    indexed_colors = [colormap(i) for i in indx]
+    if as_hex:
+        indexed_colors = [colors.to_hex(i) for i in indexed_colors]
+    return indexed_colors
+
+
+# TO DO: allow user to choose which color to use for 'unknown'
+# (currently: white by default)
+def _get_color_palette(values, cmap):
 
     nvals = len(values)
-    if nvals > 14:
-        if nvals > 50:
-            color_list = colors_50 + int(nvals/50) * colors_50
-        else:
-            # every nth colour
-            color_list = colors_50[::int(math.floor(50/nvals))]
-    else:
-        color_list = simple_palette
+    colors = generate_colors_from_colormaps(nvals, cmap=cmap, as_hex=False)
+
     color_dict = {}  # key = value, value = colour id
     for i in range(0, nvals):
         if values[i] == 'unknown':
-            color_dict[values[i]] = 'white'
+            color_dict[values[i]] = (255, 255, 255, 1)
         else:
-            color_dict[values[i]] = color_list[i]
+            color_dict[values[i]] = colors[i]
 
     return color_dict
 
@@ -140,6 +134,10 @@ def _get_sector_seq(sector_fasta):
 
 
 # DON'T REVIEW YET, I STILL HAVE THINGS TO CHECK
+# This function is very long, I was thinking maybe I should write smaller functions
+# that create the different layouts and then they are each called by a wrapping function
+# but I have to check with ete3 whether it is feasible
+# /!\ compatibility problem with filter_seq_id()
 def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
                               fig_title, rectface=True, seqmotif=True,
                               heatmap=True, colormap='inferno'):
@@ -192,8 +190,9 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
     col_rectface = 0
     col_legend_rectface = 0
     if rectface is True:
-        for att in attributes:
-            attribute_colors, col_dict = _annot_to_color(att, tree_file,
+        # Case with only one attribute to plot
+        if type(attributes) == str:
+            attribute_colors, col_dict = _annot_to_color(attributes, tree_file,
                                                          annot_file)
 
             def layout_RectFace(node):
@@ -202,14 +201,11 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
                     square = RectFace(50, 20, fgcolor=attribute_colors[name],
                                       bgcolor=attribute_colors[name])
                     square.margin_left = 10
-                    # TO DO: For now, works only when there is only one
-                    # attribute to represent
                     add_face_to_node(square, node, column=col_rectface,
                                      position='aligned')
             ts.layout_fn.append(layout_RectFace)
-            col_rectface += 1
             # Add legend
-            ts.legend.add_face(TextFace(att, fsize=10, bold=True),
+            ts.legend.add_face(TextFace(attributes, fsize=10, bold=True),
                                column=col_legend_rectface)
             # otherwise text is not in front of RectFace
             ts.legend.add_face(TextFace(""), column=col_legend_rectface + 1)
@@ -221,6 +217,39 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
                 ts.legend.add_face(TextFace(gene, fsize=10),
                                    column=col_legend_rectface + 1)
             col_legend_rectface += 2
+        # Case with several attributes to plot
+        elif type(attributes) == list:
+            for att in attributes:
+                attribute_colors, col_dict = _annot_to_color(att, tree_file,
+                                                             annot_file)
+
+                def layout_RectFace(node):
+                    if node.is_leaf():
+                        name = node.name
+                        square = RectFace(50, 20,
+                                          fgcolor=attribute_colors[name],
+                                          bgcolor=attribute_colors[name])
+                        square.margin_left = 10
+                        # TO DO: For now, works only when there is only one
+                        # attribute to represent
+                        add_face_to_node(square, node, column=col_rectface,
+                                         position='aligned')
+                ts.layout_fn.append(layout_RectFace)
+                col_rectface += 1
+                # Add legend
+                ts.legend.add_face(TextFace(att, fsize=10, bold=True),
+                                   column=col_legend_rectface)
+                # otherwise text is not in front of RectFace
+                ts.legend.add_face(TextFace(""),
+                                   column=col_legend_rectface + 1)
+                for gene in col_dict.keys():
+                    legend_face = RectFace(50, 20, fgcolor=col_dict[gene],
+                                           bgcolor=col_dict[gene])
+                    legend_face.margin_right = 5
+                    ts.legend.add_face(legend_face, column=col_legend_rectface)
+                    ts.legend.add_face(TextFace(gene, fsize=10),
+                                       column=col_legend_rectface + 1)
+                col_legend_rectface += 2
 
     col_seqmotif = 0
     if seqmotif is True:

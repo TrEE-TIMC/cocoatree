@@ -12,12 +12,10 @@ import pandas as pd  # type: ignore
 from pandas.api.types import is_numeric_dtype  # type: ignore
 import numpy as np
 from Bio import AlignIO
-import math
 from PyQt5 import QtGui
 import matplotlib.colors as colors
 import matplotlib.cm as cmx
 import matplotlib.pyplot as plt
-from matplotlib import colors
 
 from .io import load_tree
 from .msa import filter_seq_id
@@ -191,7 +189,7 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
     col_legend_rectface = 0
     if rectface:
         # Case with only one attribute to plot
-        if type(attributes) == str:
+        if isinstance(attributes, str):
             attribute_colors, col_dict = _annot_to_color(attributes, tree_file,
                                                          annot_file)
 
@@ -218,7 +216,7 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
                                    column=col_legend_rectface + 1)
             col_legend_rectface += 2
         # Case with several attributes to plot
-        elif type(attributes) == list:
+        elif isinstance(attributes, list):
             for att in attributes:
                 attribute_colors, col_dict = _annot_to_color(att, tree_file,
                                                              annot_file)

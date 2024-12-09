@@ -189,7 +189,7 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
 
     col_rectface = 0
     col_legend_rectface = 0
-    if rectface is True:
+    if rectface:
         # Case with only one attribute to plot
         if type(attributes) == str:
             attribute_colors, col_dict = _annot_to_color(attributes, tree_file,
@@ -252,9 +252,9 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
                 col_legend_rectface += 2
 
     col_seqmotif = 0
-    if seqmotif is True:
+    if seqmotif:
         sector_seq, sector_length = _get_sector_seq(sector_fasta)
-        if rectface is True:
+        if rectface:
             col_seqmotif = col_rectface
 
         def layout_SeqMotifFace(node):
@@ -276,7 +276,7 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
         col_seqmotif += 1
 
     col_heatmap = 0
-    if heatmap is True:
+    if heatmap:
         # allow to chose among Matplotlib's colormaps
         ProfileFace.get_color_gradient = _get_color_gradient
         # Check that sequences in the similarity matrix are ordered as in the

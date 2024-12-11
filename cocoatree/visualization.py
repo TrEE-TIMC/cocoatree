@@ -60,7 +60,7 @@ def _annot_to_color(attribute, tree, annot_file, cmap='jet'):
     return att_dict, color_dict
 
 
-def generate_colors_from_colormaps(n_colors, cmap="jet", as_hex=False):
+def generate_colors_from_colormaps(n_colors, cmap="jet", as_hex=True):
     """
     Generate a list of n colors from colormap
     """
@@ -78,12 +78,12 @@ def generate_colors_from_colormaps(n_colors, cmap="jet", as_hex=False):
 def _get_color_palette(values, cmap):
 
     nvals = len(values)
-    colors = generate_colors_from_colormaps(nvals, cmap=cmap, as_hex=False)
+    colors = generate_colors_from_colormaps(nvals, cmap=cmap, as_hex=True)
 
     color_dict = {}  # key = value, value = colour id
     for i in range(0, nvals):
         if values[i] == 'unknown':
-            color_dict[values[i]] = (255, 255, 255, 1)
+            color_dict[values[i]] = '#FFFFFF'
         else:
             color_dict[values[i]] = colors[i]
 
@@ -132,9 +132,9 @@ def _get_sector_seq(sector_fasta):
 
 
 # DON'T REVIEW YET, I STILL HAVE THINGS TO CHECK
-# This function is very long, I was thinking maybe I should write smaller functions
-# that create the different layouts and then they are each called by a wrapping function
-# but I have to check with ete3 whether it is feasible
+# This function is very long, I was thinking maybe I should write smaller
+# functions that create the different layouts and then they are each called
+# by a wrapping function but I have to check with ete3 whether it is feasible
 # /!\ compatibility problem with filter_seq_id()
 def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
                               fig_title, rectface=True, seqmotif=True,

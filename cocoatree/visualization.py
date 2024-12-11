@@ -60,7 +60,7 @@ def _annot_to_color(attribute, tree, annot_file, cmap='jet'):
     return att_dict, color_dict
 
 
-def generate_colors_from_colormaps(n_colors, cmap="jet", as_hex=True):
+def _generate_colors_from_colormaps(n_colors, cmap="jet", as_hex=True):
     """
     Generate a list of n colors from colormap
     """
@@ -78,7 +78,7 @@ def generate_colors_from_colormaps(n_colors, cmap="jet", as_hex=True):
 def _get_color_palette(values, cmap):
 
     nvals = len(values)
-    colors = generate_colors_from_colormaps(nvals, cmap=cmap, as_hex=True)
+    colors = _generate_colors_from_colormaps(nvals, cmap=cmap, as_hex=True)
 
     color_dict = {}  # key = value, value = colour id
     for i in range(0, nvals):
@@ -216,6 +216,8 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
                                    column=col_legend_rectface + 1)
             col_legend_rectface += 2
         # Case with several attributes to plot
+        # Doesn't work because it writes a new layout function over the
+        # previous one
         elif isinstance(attributes, list):
             for att in attributes:
                 attribute_colors, col_dict = _annot_to_color(att, tree_file,
@@ -228,8 +230,6 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
                                           fgcolor=attribute_colors[name],
                                           bgcolor=attribute_colors[name])
                         square.margin_left = 10
-                        # TO DO: For now, works only when there is only one
-                        # attribute to represent
                         add_face_to_node(square, node, column=col_rectface,
                                          position='aligned')
                 ts.layout_fn.append(layout_RectFace)

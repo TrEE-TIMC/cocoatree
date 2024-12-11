@@ -226,7 +226,8 @@ def filter_seq_id(msa, list_id):
 
     Returns
     -------
-    new_msa: filtered msa
+    new_msa: Bio.Align.MultipleSeqAlignment object,
+            filtered msa
 
     id_list: list of sequence ID in the filtered MSA
 
@@ -234,7 +235,7 @@ def filter_seq_id(msa, list_id):
     """
     new_msa = MultipleSeqAlignment([])
     for i in list_id:
-        for record in msa[0]:
+        for record in msa:
             if record.id == i:
                 new_msa.append(record)
     seq_list = []

@@ -36,9 +36,11 @@ def _annot_to_color(attribute, tree, df_annot, cmap='jet'):
 
     Returns
     -------
-    att_dict:
+    att_dict : dictionnary in which keys are the sequence IDs and the values
+            are the colors associated with it
 
-    color_dict:
+    color_dict : dictionnary in which keys are the attribute's categories and
+            the values are the colors associated to each category
     """
     id_lst = tree.get_leaf_names()
     df_annot = df_annot.fillna('unknown')

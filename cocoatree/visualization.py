@@ -8,7 +8,6 @@
 # Import necessary packages
 from ete3 import ProfileFace, TreeStyle, NodeStyle, TextFace, \
     add_face_to_node, SeqMotifFace, RectFace
-import pandas as pd  # type: ignore
 from pandas.api.types import is_numeric_dtype  # type: ignore
 import numpy as np
 from Bio import AlignIO
@@ -17,23 +16,23 @@ import matplotlib.colors as colors
 import matplotlib.cm as cmx
 import matplotlib.pyplot as plt
 
-from .io import load_tree
 from .msa import filter_seq_id
 from .statistics.pairwise import compute_seq_identity
 
 
-def _annot_to_color(attribute, tree, annot_file, cmap='jet'):
+def _annot_to_color(attribute, tree, df_annot, cmap='jet'):
     """
     Reads in the attributes specified by the user in the annotation csv file
     and attributes a color palette for each.
 
     Arguments
     ---------
-    tree : path to the tree (Newick format)
+    tree : ete3's tree object,
+            as imported by io.load_tree()
 
     attributes : list of column names to grab
 
-    annot_file : path to the annotation file
+    df_annot : pandas dataframe of the annotation file
 
     Returns
     -------
@@ -41,8 +40,7 @@ def _annot_to_color(attribute, tree, annot_file, cmap='jet'):
 
     color_dict:
     """
-    t, id_lst = load_tree(tree)
-    df_annot = pd.read_csv(annot_file)
+    id_lst = tree.get_leaf_names()
     df_annot = df_annot.fillna('unknown')
     if is_numeric_dtype(df_annot['Seq_ID']):
         df_annot['Seq_ID'] = df_annot['Seq_ID'].astype('str')
@@ -107,13 +105,15 @@ def _get_color_gradient(self):
     return color_scale
 
 
-def _get_sector_seq(sector_fasta):
+def _get_sector_seq(sector_fasta, seq_id):
     """
     Get the amino acid sequences of the sector (fasta format)
 
     Arguments
     ---------
-    sector_fasta : path to the fasta of the sector sequences
+    sector_fasta : list of sequences as str as imported by io.load_msa()
+
+    seq_id : list of sequence identifiers, as imported by io.load_msa()
 
     Returns
     -------
@@ -122,11 +122,10 @@ def _get_sector_seq(sector_fasta):
     sector_length : number of residues in the sector
     """
     sector = {}
-    fasta = AlignIO.read(sector_fasta, "fasta")
-    sector_length = len(fasta[0].seq)
+    sector_length = len(sector_fasta[0])
 
-    for i in range(0, len(fasta)):
-        sector[fasta[i].id] = str(fasta[i].seq)
+    for i in range(0, len(sector_fasta)):
+        sector[seq_id[i]] = str(sector_fasta[i])
 
     return sector, sector_length
 
@@ -135,8 +134,7 @@ def _get_sector_seq(sector_fasta):
 # This function is very long, I was thinking maybe I should write smaller
 # functions that create the different layouts and then they are each called
 # by a wrapping function but I have to check with ete3 whether it is feasible
-# /!\ compatibility problem with filter_seq_id()
-def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
+def plot_coev_along_phylogeny(tree, df_annot, sector_fasta, seq_id, attributes,
                               fig_title, rectface=True, seqmotif=True,
                               heatmap=True, colormap='inferno'):
     """
@@ -145,11 +143,15 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
 
     Arguments
     ---------
-    tree_file : path to the tree (Newick format)
+    tree : ete3's tree object,
+            as imported by io.load_tree()
 
-    annot_file : path to the annotation file (csv format)
+    annot_file : pandas dataframe of the annotation file
 
-    sector_fasta : path to the fasta containing the sequences to display
+    sector_fasta : list of sequences to display, as imported by io.load_msa()
+
+    seq_id : list of sequence identifiers, as imported by io.load_msa()
+            the sequence names must match with the tree's sequence names
 
     attributes : list of annotations to display, should be the same as in the
         annotation file (should be a list, even if there is only one attribute)
@@ -167,7 +169,7 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
         sequences
     """
 
-    t, id_lst = load_tree(tree_file)
+    id_lst = tree.get_leaf_names()
     nb_seq = len(id_lst)
 
     ts = TreeStyle()
@@ -179,7 +181,7 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
     boot_style["size"] = 10
     empty_style = NodeStyle()
     empty_style["size"] = 0
-    for node in t.traverse():
+    for node in tree.traverse():
         if node.support >= 95:
             node.set_style(boot_style)
         else:
@@ -190,8 +192,8 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
     if rectface:
         # Case with only one attribute to plot
         if isinstance(attributes, str):
-            attribute_colors, col_dict = _annot_to_color(attributes, tree_file,
-                                                         annot_file)
+            attribute_colors, col_dict = _annot_to_color(attributes, tree,
+                                                         df_annot)
 
             def layout_RectFace(node):
                 if node.is_leaf():
@@ -220,8 +222,8 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
         # previous one
         elif isinstance(attributes, list):
             for att in attributes:
-                attribute_colors, col_dict = _annot_to_color(att, tree_file,
-                                                             annot_file)
+                attribute_colors, col_dict = _annot_to_color(att, tree,
+                                                             df_annot)
 
                 def layout_RectFace(node):
                     if node.is_leaf():
@@ -251,7 +253,7 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
 
     col_seqmotif = 0
     if seqmotif:
-        sector_seq, sector_length = _get_sector_seq(sector_fasta)
+        sector_seq, sector_length = _get_sector_seq(sector_fasta, seq_id)
         if rectface:
             col_seqmotif = col_rectface
 
@@ -294,7 +296,7 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
 
         count = 0
         # Add heatmap profile to each leaf
-        for lf in t.iter_leaves():
+        for lf in tree.iter_leaves():
             lf.add_features(profile=id_mat[count])
             count += 1
             lf.add_features(deviation=[0 for x in range(id_mat.shape[0])])
@@ -307,4 +309,4 @@ def plot_coev_along_phylogeny(tree_file, annot_file, sector_fasta, attributes,
     # Add title
     ts.title.add_face(TextFace(fig_title, fsize=20), column=0)
 
-    return t.show(tree_style=ts)
+    return tree.show(tree_style=ts)

@@ -8,14 +8,18 @@ plot_coev_along_phylogeny of the visualization module.
 
 """
 
+import pandas as pd
+from cocoatree.io import load_MSA, load_tree
 from cocoatree.visualization import plot_coev_along_phylogeny
 
-annot_file = 'data/random_seq_tree_annotation.csv'
+annot_file = 'data/random_seq_tree_annotations.csv'
+df_annot = pd.read_csv(annot_file)
 tree_file = 'data/random_seq_tree_kpicsg_ete3.treefile'
+tree, id_list = load_tree(tree_file)
 sector_fasta = 'data/SCA_sector_1_core_tagged_seq.fasta'
+sector_id, sector_seq = load_MSA(sector_fasta, 'fasta')
 
-plot_coev_along_phylogeny(tree_file=tree_file, annot_file=annot_file,
-                          sector_fasta=sector_fasta,
+plot_coev_along_phylogeny(tree, df_annot, sector_seq,
                           attributes=('HMM_annotation'),
                           fig_title='Test HMM annot',
                           rectface=True,

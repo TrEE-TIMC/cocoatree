@@ -10,7 +10,6 @@ from ete3 import ProfileFace, TreeStyle, NodeStyle, TextFace, \
     add_face_to_node, SeqMotifFace, RectFace
 from pandas.api.types import is_numeric_dtype  # type: ignore
 import numpy as np
-from Bio import AlignIO
 from PyQt5 import QtGui
 import matplotlib.colors as colors
 import matplotlib.cm as cmx
@@ -218,7 +217,7 @@ def plot_coev_along_phylogeny(tree, df_annot, sector_fasta, seq_id, attributes,
                 ts.legend.add_face(legend_face, column=col_legend_rectface)
                 ts.legend.add_face(TextFace(gene, fsize=10),
                                    column=col_legend_rectface + 1)
-            col_legend_rectface += 2
+
         # Case with several attributes to plot
         # Doesn't work because it writes a new layout function over the
         # previous one
@@ -282,9 +281,8 @@ def plot_coev_along_phylogeny(tree, df_annot, sector_fasta, seq_id, attributes,
         # allow to chose among Matplotlib's colormaps
         ProfileFace.get_color_gradient = _get_color_gradient
         # Check that sequences in the similarity matrix are ordered as in the
-        # tree leaves
-        msa = AlignIO.read(sector_fasta, 'fasta')
-        reorder_msa = filter_seq_id(msa, id_lst)
+        # tree leaves and keep only sequences that are present in the tree
+        reorder_msa = filter_seq_id(sector_fasta, seq_id, id_lst)
         id_mat = compute_seq_identity(reorder_msa[2])
         # Define the column in which the heatmap will be
         if (rectface is True) & (seqmotif is False):

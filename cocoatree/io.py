@@ -57,3 +57,24 @@ def load_tree(file_path):
     tree = Tree(file_path, format=0)
     id_lst = tree.get_leaf_names()
     return tree, id_lst
+
+
+def export_fasta(sequences, seq_id, outpath):
+    """
+    Function to export intermediate files in fasta format
+
+    Arguments
+    ---------
+    sequences : list of sequences as strings (as imported by load_MSA)
+
+    seq_id : list of sequences identifiers (as imported by load_MSA)
+
+    outpath : path to the output file
+    """
+
+    # Add checks to see if the path exists?
+    Nseq = len(sequences)
+    with open(outpath, 'w') as outfile:
+        for record in range(0, Nseq):
+            outfile.write('>' + str(seq_id[record]) + '\n')
+            outfile.write(str(sequences[record]) + '\n')

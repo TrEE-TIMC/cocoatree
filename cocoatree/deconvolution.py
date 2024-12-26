@@ -221,3 +221,32 @@ def icList(Vpica, kpos, Csca, p_cut=0.95):
         s.vect = -Vpica[s.items, k]
         ics.append(s)
     return ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits
+
+
+def chooseKpos(eigenvalues, rand_eigenvalues):
+    """
+    Given the eigenvalues of the coevolution matrix (Lsca), and the
+    eigenvalues for the set of randomized matrices (Lrand), return
+    the number of significant eigenmodes.
+    Based on Rivoire et al. (2016)
+
+    Arguments
+    ---------
+    eigenvalues : ndarray of shape (Npos),
+        list of eigenvalues of the coevolution matrix based on the real MSA
+
+    rand_eigenvalues : ndarray of shape (Nrep, Npos), where Nrep is the number
+        of randomization iterations
+        eigenvalues of all the iteartions of randomized alignments
+
+    Returns
+    -------
+    kpos : integer,
+        number of significant eigenmodes
+    """
+
+    kpos = eigenvalues[eigenvalues > (rand_eigenvalues.mean() +
+                                      (3 * rand_eigenvalues.std()))].shape[0]
+
+    return kpos
+

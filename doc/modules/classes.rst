@@ -132,6 +132,31 @@ Functions
 
     deconvolution.eigen_decomp
     deconvolution.compute_ica
+    deconvolution.chooseKpos
+
 
 
 .. _deconvolution_ref:
+
+
+:mod: `cocoatree.randomize`: Alignment randomization
+====================================================
+
+.. automodule:: cocoatree.randomize
+    :no-members:
+    :no-inherited-members:
+
+
+Functions
+---------
+
+.. currentmodule:: cocoatree
+
+.. autosummary::
+
+    :toctree: generated/
+    :template: function.rst
+
+    randomize.randomization
+
+.. _randomize_ref:

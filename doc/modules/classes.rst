@@ -26,6 +26,7 @@ Functions
 
   io.load_MSA
   io.load_tree
+  io.export_fasta
 
 .. _io_ref:
 

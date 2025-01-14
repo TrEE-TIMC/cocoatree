@@ -131,7 +131,6 @@ def _get_sector_seq(sector_fasta, seq_id):
     return sector, sector_length
 
 
-# DON'T REVIEW YET, I STILL HAVE THINGS TO CHECK
 # This function is very long, I was thinking maybe I should write smaller
 # functions that create the different layouts and then they are each called
 # by a wrapping function but I have to check with ete3 whether it is feasible
@@ -156,6 +155,7 @@ def plot_coev_along_phylogeny(tree, df_annot, sector_fasta, seq_id, attributes,
 
     attributes : list of annotations to display, should be the same as in the
         annotation file (should be a list, even if there is only one attribute)
+        Currently, only one attribute is implemented
 
     fig_title : figure title (str)
 
@@ -169,6 +169,10 @@ def plot_coev_along_phylogeny(tree, df_annot, sector_fasta, seq_id, attributes,
         whether to add a heatmap of the identity matrix between sector
         sequences
     """
+
+    # Raise an exception if there is more than one attribute
+    if len(attributes) > 1:
+        raise NotImplementedError
 
     id_lst = tree.get_leaf_names()
     nb_seq = len(id_lst)
@@ -217,40 +221,6 @@ def plot_coev_along_phylogeny(tree, df_annot, sector_fasta, seq_id, attributes,
                 ts.legend.add_face(legend_face, column=col_legend_rectface)
                 ts.legend.add_face(TextFace(gene, fsize=10),
                                    column=col_legend_rectface + 1)
-
-        # Case with several attributes to plot
-        # Doesn't work because it writes a new layout function over the
-        # previous one
-        elif isinstance(attributes, list):
-            for att in attributes:
-                attribute_colors, col_dict = _annot_to_color(att, tree,
-                                                             df_annot)
-
-                def layout_RectFace(node):
-                    if node.is_leaf():
-                        name = node.name
-                        square = RectFace(50, 20,
-                                          fgcolor=attribute_colors[name],
-                                          bgcolor=attribute_colors[name])
-                        square.margin_left = 10
-                        add_face_to_node(square, node, column=col_rectface,
-                                         position='aligned')
-                ts.layout_fn.append(layout_RectFace)
-                col_rectface += 1
-                # Add legend
-                ts.legend.add_face(TextFace(att, fsize=10, bold=True),
-                                   column=col_legend_rectface)
-                # otherwise text is not in front of RectFace
-                ts.legend.add_face(TextFace(""),
-                                   column=col_legend_rectface + 1)
-                for gene in col_dict.keys():
-                    legend_face = RectFace(50, 20, fgcolor=col_dict[gene],
-                                           bgcolor=col_dict[gene])
-                    legend_face.margin_right = 5
-                    ts.legend.add_face(legend_face, column=col_legend_rectface)
-                    ts.legend.add_face(TextFace(gene, fsize=10),
-                                       column=col_legend_rectface + 1)
-                col_legend_rectface += 2
 
     col_seqmotif = 0
     if seqmotif:

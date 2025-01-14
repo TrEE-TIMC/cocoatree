@@ -21,8 +21,10 @@ from cocoatree.msa import filter_gap_seq, filter_gap_pos, seq_weights
 from cocoatree.statistics.position import aa_freq_at_pos, background_freq
 from cocoatree.statistics.pairwise import aa_joint_freq, compute_sca_matrix, \
     compute_seq_identity
-from cocoatree.deconvolution import eigen_decomp, compute_ica
+from cocoatree.deconvolution import eigen_decomp, compute_ica, chooseKpos
+from cocoatree.randomize import randomization
 import matplotlib.pyplot as plt
+import numpy as np
 
 # %%
 # Import MSA
@@ -106,7 +108,55 @@ plt.xlabel('Eigenvalue')
 plt.show()
 
 # %%
+# Select number of significant components
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Vrand, Lrand = randomization(sequences, Nrep=10,
+                             weights=weights, lbda=0.03, kmax=10, metric='SCA',
+                             correction=None)
+kpos = chooseKpos(eigenvalues, Lrand)
+print('kpos = ' + str(kpos))
+
+plt.rcParams['figure.figsize'] = 9, 4
+hist0, bins = np.histogram(Lrand.flatten(), bins=Npos,
+                           range=(0, eigenvalues.max()))
+hist1, bins = np.histogram(eigenvalues, bins=Npos,
+                           range=(0, eigenvalues.max()))
+plt.bar(bins[:-1], hist1, np.diff(bins), color='k')
+plt.plot(bins[:-1], hist0/10, 'r', linewidth=3)
+plt.tick_params(labelsize=11)
+plt.xlabel('Eigenvalues', fontsize=18)
+plt.ylabel('Numbers', fontsize=18)
+
+# %%
 # Independent component analysis (ICA)
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Vica, W = compute_ica(eigenvectors, kmax=6, learnrate=0.1, iterations=100000)
+Vica, W = compute_ica(eigenvectors, kmax=kpos, learnrate=0.1,
+                      iterations=100000)
+
+# Plot results
+EVs = eigenvectors
+ICs = Vica
+pairs = [[x, x+1] for x in range(0, kpos, 2)]
+ncols = len(pairs)
+plt.rcParams['figure.figsize'] = 14, 8
+for k, [k1, k2] in enumerate(pairs):
+    plt.subplot(2, ncols, k+1)
+    plt.plot(EVs[:, k1], EVs[:, k2], 'ok')
+    plt.xlabel("EV%i" % (k1+1), fontsize=16)
+    plt.ylabel("EV%i" % (k2+1), fontsize=16)
+    plt.subplot(2, ncols, k+1+ncols)
+    plt.plot(ICs[:, k1], ICs[:, k2], 'ok')
+    plt.xlabel("IC%i" % (k1+1), fontsize=16)
+    plt.ylabel("IC%i" % (k2+1), fontsize=16)
+plt.tight_layout()
+
+# %%
+ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits = icList(Vica, kpos, Cij, p_cut = 0.95)
+
+# print('Positions on the first IC:')
+# display(ics[0].items)
+
+print('Sizes of the 2 ICs:')
+display(icsize)

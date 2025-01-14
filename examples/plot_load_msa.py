@@ -16,12 +16,13 @@ component analysis is performed.
 
 # %%
 
-from cocoatree.io import load_MSA
+from cocoatree.io import load_MSA, export_fasta
 from cocoatree.msa import filter_gap_seq, filter_gap_pos, seq_weights
 from cocoatree.statistics.position import aa_freq_at_pos, background_freq
 from cocoatree.statistics.pairwise import aa_joint_freq, compute_sca_matrix, \
     compute_seq_identity
-from cocoatree.deconvolution import eigen_decomp, compute_ica, chooseKpos
+from cocoatree.deconvolution import eigen_decomp, compute_ica, chooseKpos, \
+    icList
 from cocoatree.randomize import randomization
 import matplotlib.pyplot as plt
 import numpy as np
@@ -41,7 +42,9 @@ Npos, Nseq = len(sequences[0]), len(sequences)
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 filt_seqs, pos_kept = filter_gap_pos(sequences, threshold=0.4)
+Npos_kept = len(pos_kept)
 
+# %%
 # Filter overly gapped sequences
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -49,12 +52,11 @@ seq_id_kept, seq_kept = filter_gap_seq(seq_id, filt_seqs, threshold=0.2,
                                        filtrefseq=False)
 
 # %%
-# Compute matrix of pairwise sequence identity
+# Compute the matrix of pairwise sequence identity
 # --------------------------------------------
 
 sim_matrix = compute_seq_identity(seq_kept)
 
-# %%
 fig = plt.figure()
 plt.rcParams['figure.figsize'] = 10, 10
 plt.xlabel('Sequences', fontsize=10)
@@ -67,11 +69,13 @@ plt.show()
 # %%
 # Compute sequence weights
 weights, Neff = seq_weights(sim_matrix)
-
+# %%
 # compute allele frequencies
 aa_freq = aa_freq_at_pos(seq_kept, lambda_coef=0.03, weights=weights)
+# %%
 # Compute background frequencies
 qa = background_freq(aa_freq)
+# %%
 # Compute joint allele frequencies
 fijab, fijab_ind = aa_joint_freq(seq_kept, weights=weights, lambda_coef=0.03)
 
@@ -84,7 +88,6 @@ Cijab_raw, Cij = compute_sca_matrix(joint_freqs=fijab,
                                     aa_freq=aa_freq,
                                     qa=qa)
 
-# %%
 fig = plt.figure()
 plt.rcParams['figure.figsize'] = 10, 10
 plt.xlabel('Residue', fontsize=10)
@@ -94,6 +97,7 @@ plt.imshow(Cij, vmin=0, vmax=1.4, cmap='inferno')
 plt.colorbar(shrink=0.7)
 plt.show()
 
+# %%
 # Decomposition of the matrix into principal components
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -118,9 +122,9 @@ kpos = chooseKpos(eigenvalues, Lrand)
 print('kpos = ' + str(kpos))
 
 plt.rcParams['figure.figsize'] = 9, 4
-hist0, bins = np.histogram(Lrand.flatten(), bins=Npos,
+hist0, bins = np.histogram(Lrand.flatten(), bins=Npos_kept,
                            range=(0, eigenvalues.max()))
-hist1, bins = np.histogram(eigenvalues, bins=Npos,
+hist1, bins = np.histogram(eigenvalues, bins=Npos_kept,
                            range=(0, eigenvalues.max()))
 plt.bar(bins[:-1], hist1, np.diff(bins), color='k')
 plt.plot(bins[:-1], hist0/10, 'r', linewidth=3)
@@ -153,10 +157,39 @@ for k, [k1, k2] in enumerate(pairs):
 plt.tight_layout()
 
 # %%
-ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits = icList(Vica, kpos, Cij, p_cut = 0.95)
+# Select residues that significantly contribute to each independent component
+ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits = icList(Vica, kpos, Cij,
+                                                              p_cut=0.95)
 
-# print('Positions on the first IC:')
-# display(ics[0].items)
+print('Sizes of the ' + str(kpos) + ' ICs: ' + icsize)
 
-print('Sizes of the 2 ICs:')
-display(icsize)
+# %%
+# Plot coevolution within and between the sectors
+plt.rcParams['figure.figsize'] = 10, 10
+plt.subplot(121)
+plt.imshow(Cij[np.ix_(sortedpos, sortedpos)], vmin=0, vmax=2,
+           interpolation='none', aspect='equal',
+           extent=[0, sum(icsize), 0, sum(icsize)], cmap='inferno')
+plt.colorbar(shrink=0.25)
+line_index = 0
+for i in range(kpos):
+    plt.plot([line_index + icsize[i], line_index + icsize[i]],
+             [0, sum(icsize)], 'w', linewidth=2)
+    plt.plot([0, sum(icsize)], [sum(icsize) - line_index,
+                                sum(icsize) - line_index], 'w', linewidth=2)
+    line_index += icsize[i]
+
+# %%
+# Export fasta files of the sectors for all the sequences
+seq_id, sequences
+
+sector_1_pos = list(ics[0].items)
+sector_1 = []
+for sequence in range(len(seq_id)):
+    seq = ''
+    for pos in sector_1_pos:
+        seq += sequences[sequence][pos]
+    sector_1.append(seq)
+
+export_fasta(sequences, seq_id, outpath)
+# outpath needs to be defined properly

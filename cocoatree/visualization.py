@@ -172,7 +172,7 @@ def plot_coev_along_phylogeny(tree, df_annot, sector_fasta, seq_id, attributes,
 
     # Raise an exception if there is more than one attribute
     if len(attributes) > 1:
-        raise NotImplementedError
+        raise NotImplementedError("Only one attribute is currently supported")
 
     id_lst = tree.get_leaf_names()
     nb_seq = len(id_lst)

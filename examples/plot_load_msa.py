@@ -1,21 +1,26 @@
 """
-==============================
-Compute SCA coevolution matrix
-==============================
+=========================
+Perform full SCA analysis
+=========================
 
-A small example that shows how to load and filter an MSA, compute positional
-and joint amino acid frequencies and compute the SCA coevolution matrix.
+This example shows the full process to perform a complete coevolution
+analysis in order to detect protein sectors from data importation, MSA
+filtering, computation of positional and joint amino acid frequencies,
+and computation of the SCA coevolution matrix.
 The matrix is then decomposed into principal components and independent
 component analysis is performed.
+In the end, we export a fasta file of the residues contributing to the first
+independent component.
 
 """
 
 # Author: Margaux Jullien <margaux.jullien@univ-grenoble-alpes.fr>
 #         Nelle Varoquaux <nelle.varoquaux@univ-grenoble-alpes.fr>
+#         Ivan Junier <ivan.junier@univ-grenoble-alpes.fr>
 # License: TBD
 
 # %%
-
+# Import necessary
 from cocoatree.io import load_MSA, export_fasta
 from cocoatree.msa import filter_gap_seq, filter_gap_pos, seq_weights
 from cocoatree.statistics.position import aa_freq_at_pos, background_freq

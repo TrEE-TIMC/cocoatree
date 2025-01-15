@@ -97,6 +97,7 @@ sphinx_gallery_conf = {
     'backreferences_dir': "generated/backreferences",
     'doc_module': ("cocoatree", ),
     "reference_url": {"cocoatree": None},
+    'abort_on_example_error': True,
     'binder': {
         # Required keys
         'org': 'tree-timc',

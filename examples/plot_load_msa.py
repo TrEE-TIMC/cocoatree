@@ -190,12 +190,12 @@ for i in range(kpos):
     plt.plot([0, sum(icsize)], [sum(icsize) - line_index,
                                 sum(icsize) - line_index], 'w', linewidth=2)
     line_index += icsize[i]
+plt.show()
 
 # %%
 # Export fasta files of the sectors for all the sequences
-seq_id, sequences
 
-sector_1_pos = list(ics[0].items)
+sector_1_pos = list(pos_kept[ics[0].items])
 sector_1 = []
 for sequence in range(len(seq_id)):
     seq = ''
@@ -203,5 +203,5 @@ for sequence in range(len(seq_id)):
         seq += sequences[sequence][pos]
     sector_1.append(seq)
 
-export_fasta(sequences, seq_id, outpath)
+export_fasta(sector_1, seq_id, outpath)
 # outpath needs to be defined properly

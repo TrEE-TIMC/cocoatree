@@ -215,6 +215,8 @@ def seq_weights(sim_matrix, threshold=0.8):
 
 def filter_seq_id(seq_id, sequences, list_id):
     """
+    Filter sequences based on list
+
     Filter a multiple sequence alignment to keep only sequences whose
     identifiers are in a user provided list.
 
@@ -238,12 +240,11 @@ def filter_seq_id(seq_id, sequences, list_id):
     """
     new_msa = MultipleSeqAlignment([])
     new_record = SeqRecord([])
-    for i in list_id:
-        for ident in seq_id:
-            if ident == i:
-                new_record = SeqRecord(Seq(sequences[seq_id.index(ident)]),
-                                       id=ident)
-                new_msa.append(new_record)
+    for ident in seq_id:
+        if ident in list_id:
+            new_record = SeqRecord(Seq(sequences[seq_id.index(ident)]),
+                                    id=ident)
+            new_msa.append(new_record)
 
     seq_list = []
     id_list = []

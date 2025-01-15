@@ -96,6 +96,7 @@ intersphinx_mapping = {
 sphinx_gallery_conf = {
     'backreferences_dir': "generated/backreferences",
     'doc_module': ("cocoatree", ),
+    'abort_on_example_error': True,
     "reference_url": {"cocoatree": None},
     'binder': {
         # Required keys

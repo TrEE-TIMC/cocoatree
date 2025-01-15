@@ -36,7 +36,7 @@ def _random_aln(fia, n_seq, random_state):
         col = np.array([], dtype=int)
         for aa, M in enumerate(Maa):
             col = np.append(col, np.tile(aa, M))
-        np.random.shuffle(col)
+        random_state.shuffle(col)
         msa_rand[:, i] = col
 
     binarray = np.array(
@@ -64,9 +64,14 @@ def randomization(sequences, n_rep, weights=1, lambda_coef=0.03, kmax=6,
     ---------
     sequences : multiple sequence alignment
 
-    n_rep : number of iterations of randomization
+    n_rep : int
+        number of iterations of randomization
 
-    weights : vector of sequence weights (default = assume equal weights)
+    weights : {1, np.array (n_seq)}, default : 1
+        weights provided to :fun:`cocoatree.statistics.pairwise.aa_joint_freq`
+
+            - If int, assumes equal weights on all sequences
+            - If, vector of sequence weights for each sequence
 
     lambda_coef : float, optional, default: 0.03
         pseudo-counts

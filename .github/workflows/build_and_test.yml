@@ -44,10 +44,10 @@ jobs:
                 flake8 cocoatree examples
 
             - name: Build the documentation
-              shell: bash -l {0}
+              uses: GabrielBB/xvfb-action@v1
               run: |
                 set -evx
                 cd doc
-                xvfb-run make html
+                make html
                 touch _build/html/.nojekyll
                 cd ..

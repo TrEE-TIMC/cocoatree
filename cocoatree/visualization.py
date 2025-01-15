@@ -106,21 +106,20 @@ def _get_color_gradient(self):
     return color_scale
 
 
-# This function is very long, I was thinking maybe I should write smaller
-# functions that create the different layouts and then they are each called
-# by a wrapping function but I have to check with ete3 whether it is feasible
-def plot_coev_along_phylogeny(
-        tree, df_annot, sector_id, sector_seq, attributes,
-        fig_title, rectface=True, seqmotif=True,
-        heatmap=True, colormap='inferno'
+def update_tree_ete3_and_return_style(
+        tree_ete3, df_annot, sector_id, sector_seq, meta_data,
+        fig_title='',
+        t_sector_seq=True,
+        t_sector_heatmap=True,
+        colormap='inferno'
         ):
     """
-    Wrapping function that draws the phylogenetic tree along with specified
-    sector characteristics.
+    Update ete3 tree with sector info and attributes
+    and return tree_style for further visualization.
 
     Arguments
     ---------
-    tree : ete3's tree object,
+    tree_ete3 : ete3's tree object,
             as imported by io.load_tree()
 
     annot_file : pandas dataframe of the annotation file
@@ -131,32 +130,28 @@ def plot_coev_along_phylogeny(
     sector_seq : corresponding list of sector sequences to display,
             as imported by io.load_msa()
 
-    attributes : list of annotations to display, should be the same as in the
-        annotation file (should be a list, even if there is only one attribute)
-        Currently, only one attribute is implemented
+    meta_data : tuple of annotations to display
+                 (from annotation file's header)
 
     fig_title : figure title (str)
 
-    rectface : boolean,
-        whether to add a RectFace of each attribute
+    t_sector_seq : boolean,
+        whether to show the sequences of the sector
 
-    seqmotif : boolean,
-        whether to add a SeqMotifFace of the sequences
-
-    heatmap : boolean,
+    t_sector_heatmap : boolean,
         whether to add a heatmap of the identity matrix between sector
         sequences
+
+    Returns
+    -------
+    tree_style : TreeStyle class from ete3
     """
 
-    # Raise an exception if there is more than one attribute
-    if len(attributes) > 1:
-        raise NotImplementedError("Only one attribute is currently supported")
-
-    leaves_id = tree.get_leaf_names()
+    leaves_id = tree_ete3.get_leaf_names()
     nb_leaves = len(leaves_id)
 
-    ts = TreeStyle()
-    ts.layout_fn = []
+    tree_style = TreeStyle()
+    tree_style.layout_fn = []
 
     # Add bootstrap support NodeStyle
     boot_style = NodeStyle()
@@ -164,90 +159,95 @@ def plot_coev_along_phylogeny(
     boot_style["size"] = 10
     empty_style = NodeStyle()
     empty_style["size"] = 0
-    for node in tree.traverse():
+    for node in tree_ete3.traverse():
         if node.support >= 95:
             node.set_style(boot_style)
         else:
             node.set_style(empty_style)
 
-    col_rectface = 0
+    column_layout = 0
     col_legend_rectface = 0
-    if rectface:
-        # Case with only one attribute to plot
-        if isinstance(attributes, str):
-            attribute_colors, col_dict = _annot_to_color(attributes, tree,
-                                                         df_annot)
+    if meta_data:  # if no meta_data, do nothing
+        # add column associated with attributes
+        def layout_attribute(node, column=column_layout):
+            if node.is_leaf():
+                name = node.name
+                rect_faces = [None for i in range(len(meta_data))]
+                for i in range(len(meta_data)):
+                    colors, _ = _annot_to_color(meta_data[i],
+                                                tree_ete3,
+                                                df_annot)
 
-            def layout_RectFace(node):
-                if node.is_leaf():
-                    name = node.name
-                    square = RectFace(50, 20, fgcolor=attribute_colors[name],
-                                      bgcolor=attribute_colors[name])
-                    square.margin_left = 10
-                    add_face_to_node(square, node, column=col_rectface,
+                    rect_faces[i] = RectFace(50, 20,
+                                             fgcolor=colors[name],
+                                             bgcolor=colors[name])
+                    rect_faces[i].margin_left = 15
+                    rect_faces[i].margin_right = 15
+                    if i == len(meta_data) - 1:
+                        rect_faces[i].margin_right = 30
+                    add_face_to_node(rect_faces[i], node, column=column,
                                      position='aligned')
-            ts.layout_fn.append(layout_RectFace)
-            # Add legend
-            ts.legend.add_face(TextFace(attributes, fsize=10, bold=True),
-                               column=col_legend_rectface)
+                    column += 1
+
+        tree_style.layout_fn.append(layout_attribute)
+
+        # Add legend
+        legend_face = [None for i in range(len(meta_data))]
+        for i in range(len(meta_data)):
+            _, col_dict = _annot_to_color(meta_data[i], tree_ete3,
+                                          df_annot)
+            tree_style.legend.add_face(TextFace(meta_data[i],
+                                                fsize=10,
+                                                bold=True),
+                                       column=col_legend_rectface)
             # otherwise text is not in front of RectFace
-            ts.legend.add_face(TextFace(""), column=col_legend_rectface + 1)
-            for gene in col_dict.keys():
-                legend_face = RectFace(50, 20, fgcolor=col_dict[gene],
-                                       bgcolor=col_dict[gene])
-                legend_face.margin_right = 5
-                ts.legend.add_face(legend_face, column=col_legend_rectface)
-                ts.legend.add_face(TextFace(gene, fsize=10),
-                                   column=col_legend_rectface + 1)
+            tree_style.legend.add_face(TextFace(""),
+                                       column=col_legend_rectface + 1)
 
-    col_seqmotif = 0
-    if seqmotif:
+            legend_face[i] = {key: None for key in col_dict.keys()}
+            for key in col_dict.keys():
+                legend_face[i][key] = RectFace(50, 20, fgcolor=col_dict[key],
+                                               bgcolor=col_dict[key])
+                legend_face[i][key].margin_right = 5
+                legend_face[i][key].margin_left = 10
+                tree_style.legend.add_face(legend_face[i][key],
+                                           column=col_legend_rectface)
+                tree_style.legend.add_face(TextFace(key, fsize=10),
+                                           column=col_legend_rectface + 1)
+            col_legend_rectface += 2
+    column_layout += len(meta_data)
 
-        sector_length = len(sector_seq[0])
+    if t_sector_seq:
         sector_dict = {sector_id[i]: str(sector_seq[i])
                        for i in range(len(sector_id))}
 
-        if rectface:
-            col_seqmotif = col_rectface
-
-        def layout_SeqMotifFace(node):
+        def layout_SeqMotifFace(node, column=column_layout):
             if node.is_leaf():
                 if node.name in sector_dict:
                     seq = sector_dict[node.name]
                 else:
-                    seq = '-' * sector_length
+                    seq = '-' * len(sector_seq[0])
                 seqFace = SeqMotifFace(seq,
-                                       motifs=[[0, sector_length, "seq", 20,
-                                                20, None, None, None]],
+                                       motifs=[[0, len(sector_seq[0]), "seq",
+                                                20, 20, None, None, None]],
                                        scale_factor=1)
-                seqFace.margin_left = 10
-                seqFace.margin_right = 10
-                add_face_to_node(seqFace, node, column=col_seqmotif,
+                seqFace.margin_right = 30
+                add_face_to_node(seqFace, node, column=column,
                                  position='aligned')
-        ts.layout_fn.append(layout_SeqMotifFace)
-        col_seqmotif += 1
+        tree_style.layout_fn.append(layout_SeqMotifFace)
+        column_layout += 1
 
-    col_heatmap = 0
-    if heatmap:
+    if t_sector_heatmap:
         # allow to chose among Matplotlib's colormaps
         ProfileFace.get_color_gradient = _get_color_gradient
         # Check that sequences in the similarity matrix are ordered as in the
         # tree leaves and keep only sequences that are present in the tree
         reorder_msa = filter_seq_id(sector_id, sector_seq, leaves_id)
         id_mat = compute_seq_identity(reorder_msa[2])
-        # Define the column in which the heatmap will be
-        if (rectface is True) & (seqmotif is False):
-            col_heatmap = col_rectface + 1
-        elif (rectface is True) & (seqmotif is True):
-            col_heatmap = col_seqmotif + 1
-        elif (rectface is False) & (seqmotif is False):
-            col_heatmap = 0
-        elif (rectface is False) & (seqmotif is True):
-            col_heatmap = col_seqmotif + 1
 
         count = 0
         # Add heatmap profile to each leaf
-        for lf in tree.iter_leaves():
+        for lf in tree_ete3.iter_leaves():
             lf.add_features(profile=id_mat[count])
             count += 1
             lf.add_features(deviation=[0 for x in range(id_mat.shape[0])])
@@ -255,9 +255,9 @@ def plot_coev_along_phylogeny(
                                     width=(nb_leaves*20), height=20,
                                     style='heatmap',
                                     colorscheme=colormap),
-                        column=col_heatmap, position="aligned")
+                        column=column_layout, position="aligned")
 
     # Add title
-    ts.title.add_face(TextFace(fig_title, fsize=20), column=0)
+    tree_style.title.add_face(TextFace(fig_title, fsize=20), column=0)
 
-    return tree.show(tree_style=ts)
+    return tree_style

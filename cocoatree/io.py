@@ -40,23 +40,21 @@ def load_MSA(file_path, format, clean=True, verbose=False):
     return seq_id, sequences
 
 
-def load_tree(file_path):
+def load_tree_ete3(file_path):
     """
-    Import tree (Newick format) and get list of sequence IDs
+    From the loading of a Newick tree, generate a ete3.Tree object
 
     Arguments
     ---------
-    file_path : path to the newick file
+    file_path : path to the Newick file
 
     Returns
     -------
-    tree : `ete3.Tree` object
+    tree_ete3 : `ete3.Tree` object
 
-    id_lst : list of the tree leaves (sequence IDs)
     """
-    tree = Tree(file_path, format=0)
-    id_lst = tree.get_leaf_names()
-    return tree, id_lst
+    tree_ete3 = Tree(file_path, format=0)
+    return tree_ete3
 
 
 def export_fasta(sequences, seq_id, outpath):

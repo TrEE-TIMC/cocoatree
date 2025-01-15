@@ -106,37 +106,14 @@ def _get_color_gradient(self):
     return color_scale
 
 
-def _get_sector_seq(sector_fasta, seq_id):
-    """
-    Get the amino acid sequences of the sector (fasta format)
-
-    Arguments
-    ---------
-    sector_fasta : list of sequences as str as imported by io.load_msa()
-
-    seq_id : list of sequence identifiers, as imported by io.load_msa()
-
-    Returns
-    -------
-    sector : list of sequences
-
-    sector_length : number of residues in the sector
-    """
-    sector = {}
-    sector_length = len(sector_fasta[0])
-
-    for i in range(0, len(sector_fasta)):
-        sector[seq_id[i]] = str(sector_fasta[i])
-
-    return sector, sector_length
-
-
 # This function is very long, I was thinking maybe I should write smaller
 # functions that create the different layouts and then they are each called
 # by a wrapping function but I have to check with ete3 whether it is feasible
-def plot_coev_along_phylogeny(tree, df_annot, sector_fasta, seq_id, attributes,
-                              fig_title, rectface=True, seqmotif=True,
-                              heatmap=True, colormap='inferno'):
+def plot_coev_along_phylogeny(
+        tree, df_annot, sector_id, sector_seq, attributes,
+        fig_title, rectface=True, seqmotif=True,
+        heatmap=True, colormap='inferno'
+        ):
     """
     Wrapping function that draws the phylogenetic tree along with specified
     sector characteristics.
@@ -148,11 +125,12 @@ def plot_coev_along_phylogeny(tree, df_annot, sector_fasta, seq_id, attributes,
 
     annot_file : pandas dataframe of the annotation file
 
-    sector_fasta : list of sequences to display, as imported by io.load_msa()
+    sector_id : list of sector identifiers, as imported by io.load_msa()
+            the ids must match with the tree's leaves id
 
-    seq_id : list of sequence identifiers, as imported by io.load_msa()
-            the sequence names must match with the tree's sequence names
-
+    sector_seq : corresponding list of sector sequences to display, 
+            as imported by io.load_msa()
+    
     attributes : list of annotations to display, should be the same as in the
         annotation file (should be a list, even if there is only one attribute)
         Currently, only one attribute is implemented
@@ -174,8 +152,8 @@ def plot_coev_along_phylogeny(tree, df_annot, sector_fasta, seq_id, attributes,
     if len(attributes) > 1:
         raise NotImplementedError("Only one attribute is currently supported")
 
-    id_lst = tree.get_leaf_names()
-    nb_seq = len(id_lst)
+    leaves_id = tree.get_leaf_names()
+    nb_leaves = len(leaves_id)
 
     ts = TreeStyle()
     ts.layout_fn = []
@@ -224,15 +202,18 @@ def plot_coev_along_phylogeny(tree, df_annot, sector_fasta, seq_id, attributes,
 
     col_seqmotif = 0
     if seqmotif:
-        sector_seq, sector_length = _get_sector_seq(sector_fasta, seq_id)
+
+        sector_length = len(sector_seq[0])
+        sector_dict = {sector_id[i]: str(sector_seq[i])
+                       for i in range(len(sector_id))}
+    
         if rectface:
             col_seqmotif = col_rectface
 
         def layout_SeqMotifFace(node):
             if node.is_leaf():
-                name = node.name
-                if name in sector_seq:
-                    seq = sector_seq[name]
+                if node.name in sector_dict:
+                    seq = sector_dict[node.name]
                 else:
                     seq = '-' * sector_length
                 seqFace = SeqMotifFace(seq,
@@ -252,7 +233,7 @@ def plot_coev_along_phylogeny(tree, df_annot, sector_fasta, seq_id, attributes,
         ProfileFace.get_color_gradient = _get_color_gradient
         # Check that sequences in the similarity matrix are ordered as in the
         # tree leaves and keep only sequences that are present in the tree
-        reorder_msa = filter_seq_id(seq_id, sector_fasta, id_lst)
+        reorder_msa = filter_seq_id(sector_id, sector_seq, leaves_id)
         id_mat = compute_seq_identity(reorder_msa[2])
         # Define the column in which the heatmap will be
         if (rectface is True) & (seqmotif is False):
@@ -271,7 +252,7 @@ def plot_coev_along_phylogeny(tree, df_annot, sector_fasta, seq_id, attributes,
             count += 1
             lf.add_features(deviation=[0 for x in range(id_mat.shape[0])])
             lf.add_face(ProfileFace(max_v=1, min_v=0.0, center_v=0.5,
-                                    width=(nb_seq*20), height=20,
+                                    width=(nb_leaves*20), height=20,
                                     style='heatmap',
                                     colorscheme=colormap),
                         column=col_heatmap, position="aligned")

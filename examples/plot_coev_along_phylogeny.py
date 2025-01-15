@@ -15,12 +15,12 @@ from cocoatree.visualization import plot_coev_along_phylogeny
 annot_file = 'data/random_seq_tree_annotations.csv'
 df_annot = pd.read_csv(annot_file)
 tree_file = 'data/random_seq_tree_kpicsg_ete3.treefile'
-tree, id_list = load_tree(tree_file)
-sector_fasta = 'data/SCA_sector_1_core_tagged_seq.fasta'
-sector_id, sector_seq = load_MSA(sector_fasta, 'fasta')
+tree, leaves_id = load_tree(tree_file)
+sector_file = 'data/SCA_sector_1_core_tagged_seq.fasta'
+sector_id, sector_seq = load_MSA(sector_file, 'fasta')
 
-plot_coev_along_phylogeny(tree, df_annot, sector_seq, id_list,
-                          attributes=('HMM_annotation'),
+plot_coev_along_phylogeny(tree, df_annot, sector_id, sector_seq,
+                          attributes=('HMM_annotation',),
                           fig_title='Test HMM annot',
                           rectface=True,
                           seqmotif=True,

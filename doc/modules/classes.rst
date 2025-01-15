@@ -107,7 +107,7 @@ Functions
    statistics.pairwise.compute_seq_identity
    statistics.pairwise.compute_sca_matrix
    statistics.position.aa_freq_at_pos
-   statistics.position.background_freq
+   statistics.position.compute_background_frequencies
 
 
 .. _statistics_ref:
@@ -133,7 +133,7 @@ Functions
 
     deconvolution.eigen_decomp
     deconvolution.compute_ica
-    deconvolution.chooseKpos
+    deconvolution.choose_num_components
 
 
 

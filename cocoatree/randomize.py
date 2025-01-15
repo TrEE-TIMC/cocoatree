@@ -6,9 +6,10 @@ from .__params import lett2num
 from .statistics.position import aa_freq_at_pos, compute_background_frequencies
 from .statistics.pairwise import aa_joint_freq, compute_sca_matrix
 from .deconvolution import eigen_decomp
+from sklearn.utils import check_random_state
 
 
-def _random_aln(fia, n_seq):
+def _random_aln(fia, n_seq, random_state):
     """
     Generate a random alignment with n_seq sequences and amino acid frequency
     at each position fia
@@ -18,6 +19,8 @@ def _random_aln(fia, n_seq):
     fia : frequency of amino acid *a* at position *i*
 
     n_seq : number of sequences
+
+    random_state : np.random.RandomState
 
     Returns
     -------
@@ -29,7 +32,7 @@ def _random_aln(fia, n_seq):
     n_pos = fia.shape[0]
     msa_rand = np.zeros((n_seq, n_pos), dtype=int)
     for i in range(n_pos):
-        Maa = np.random.multinomial(n_seq, fia[i, :])
+        Maa = random_state.multinomial(n_seq, fia[i, :])
         col = np.array([], dtype=int)
         for aa, M in enumerate(Maa):
             col = np.append(col, np.tile(aa, M))
@@ -51,7 +54,8 @@ def _random_aln(fia, n_seq):
     return msa_str, binarray
 
 
-def randomization(sequences, n_rep, weights=1, lambda_coef=0.03, kmax=6):
+def randomization(sequences, n_rep, weights=1, lambda_coef=0.03, kmax=6,
+                  random_state=None):
     """
     Randomize the alignment while preserving the frequencies of amino acids at
     each position and compute the resulting spectrum of coevolution matrix.
@@ -67,7 +71,12 @@ def randomization(sequences, n_rep, weights=1, lambda_coef=0.03, kmax=6):
     lambda_coef : float, optional, default: 0.03
         pseudo-counts
 
-    kmax : number of eigenvectors to keep for each randomized iteration
+    kmax : int, optional, default: 6
+        number of eigenvectors to keep for each randomized iteration
+
+    random_state : int or RandomState instance, default=None
+        Determines random number generation for centroid initialization. Pass
+        an int for reproducible output across multiple function calls.
 
     Returns
     -------
@@ -75,6 +84,7 @@ def randomization(sequences, n_rep, weights=1, lambda_coef=0.03, kmax=6):
 
     val_rand :
     """
+    random_state = check_random_state(random_state)
 
     n_seq, n_pos = len(sequences), len(sequences[0])
 
@@ -91,7 +101,7 @@ def randomization(sequences, n_rep, weights=1, lambda_coef=0.03, kmax=6):
     # initialize for eigenvalues
     val_rand = np.zeros((n_rep, n_pos))
     for rep in range(n_rep):
-        msa_random = _random_aln(fia, n_seq)[0]
+        msa_random = _random_aln(fia, n_seq, random_state=random_state)[0]
         fijab, fijab_ind = aa_joint_freq(msa_random, weights,
                                          lambda_coef=lambda_coef)
         # Compute coevolution matrix for the randomized alignment

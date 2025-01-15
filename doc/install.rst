@@ -57,6 +57,9 @@ feature, code or documentation improvement).
    - SciPy (>= 0.1dd9.1),
    - Matplotlib (>= 3.9),
    - biopython
+   - ete3
+   - Qt5
+   - pandas
 
 2. Optional (but recommended): create and activate a dedicated virtualenv or conda environment.
 

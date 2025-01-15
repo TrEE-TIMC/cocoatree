@@ -1,4 +1,5 @@
 from Bio.Seq import Seq
+from Bio.SeqRecord import SeqRecord
 from Bio.Align import MultipleSeqAlignment
 from .__params import lett2num
 import numpy as np
@@ -212,31 +213,38 @@ def seq_weights(sim_matrix, threshold=0.8):
     return weights, Nseq_eff
 
 
-def filter_seq_id(msa, list_id):
+def filter_seq_id(seq_id, sequences, list_id):
     """
+    Filter sequences based on list
+
     Filter a multiple sequence alignment to keep only sequences whose
     identifiers are in a user provided list.
 
     Parameters
     ----------
-    msa: Bio.Align.MultipleSeqAlignment object
+    seq_id : list of the MSA's sequence identifiers
 
-    list_id: list of sequence identifiers the user wants to keep. The
+    sequences : list of MSA sequences
+
+    list_id : list of sequence identifiers the user wants to keep. The
     identifiers must be in the same format as in the input MSA
 
     Returns
     -------
-    new_msa: filtered msa
+    new_msa : Bio.Align.MultipleSeqAlignment object,
+            filtered msa
 
-    id_list: list of sequence ID in the filtered MSA
+    id_list : list of sequence ID in the filtered MSA
 
-    seq_list: list of sequences of the filtered MSA
+    seq_list : list of sequences of the filtered MSA
     """
     new_msa = MultipleSeqAlignment([])
-    for i in list_id:
-        for record in msa[0]:
-            if record.id == i:
-                new_msa.append(record)
+    for ident in seq_id:
+        if ident in list_id:
+            new_record = SeqRecord(Seq(sequences[seq_id.index(ident)]),
+                                    id=ident)
+            new_msa.append(new_record)
+
     seq_list = []
     id_list = []
     for record in new_msa:

@@ -120,8 +120,9 @@ plt.show()
 # Select number of significant components
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Vrand, Lrand = randomization(sequences, Nrep=10,
-                             weights=weights, lbda=0.03, kmax=10, metric='SCA',
+Vrand, Lrand = randomization(seq_kept, Nrep=10,
+                             weights=weights, lambda_coef=0.03, kmax=10,
+                             metric='SCA',
                              correction=None)
 kpos = chooseKpos(eigenvalues, Lrand)
 print('kpos = ' + str(kpos))

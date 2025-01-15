@@ -239,7 +239,6 @@ def filter_seq_id(seq_id, sequences, list_id):
     seq_list : list of sequences of the filtered MSA
     """
     new_msa = MultipleSeqAlignment([])
-    new_record = SeqRecord([])
     for ident in seq_id:
         if ident in list_id:
             new_record = SeqRecord(Seq(sequences[seq_id.index(ident)]),

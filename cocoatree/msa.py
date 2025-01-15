@@ -242,7 +242,7 @@ def filter_seq_id(seq_id, sequences, list_id):
     for ident in seq_id:
         if ident in list_id:
             new_record = SeqRecord(Seq(sequences[seq_id.index(ident)]),
-                                    id=ident)
+                                   id=ident)
             new_msa.append(new_record)
 
     seq_list = []

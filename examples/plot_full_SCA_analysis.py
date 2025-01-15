@@ -7,8 +7,10 @@ This example shows the full process to perform a complete coevolution
 analysis in order to detect protein sectors from data importation, MSA
 filtering, computation of positional and joint amino acid frequencies,
 and computation of the SCA coevolution matrix.
+
 The matrix is then decomposed into principal components and independent
 component analysis is performed.
+
 In the end, we export a fasta file of the residues contributing to the first
 independent component.
 
@@ -37,8 +39,9 @@ import numpy as np
 # ----------
 
 seq_id, sequences = load_MSA("data/s1Ahalabi_1470.an", format="fasta")
-Npos, Nseq = len(sequences[0]), len(sequences)
+n_pos, n_seq = len(sequences[0]), len(sequences)
 
+print(f"The loaded MSA has {n_seq} sequences and {n_pos} positions.")
 # %%
 # MSA filtering
 # -------------
@@ -47,7 +50,8 @@ Npos, Nseq = len(sequences[0]), len(sequences)
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 filt_seqs, pos_kept = filter_gap_pos(sequences, threshold=0.4)
-Npos_kept = len(pos_kept)
+n_pos_kept = len(pos_kept)
+print(f"After filtering, we have {n_pos_kept} effective sequences.")
 
 # %%
 # Filter overly gapped sequences
@@ -62,21 +66,24 @@ seq_id_kept, seq_kept = filter_gap_seq(seq_id, filt_seqs, threshold=0.2,
 
 sim_matrix = compute_seq_identity(seq_kept)
 
-fig = plt.figure()
-plt.rcParams['figure.figsize'] = 10, 10
-plt.xlabel('Sequences', fontsize=10)
-plt.ylabel(None)
-plt.title('Matrix of pairwise sequence identity')
-plt.imshow(sim_matrix, vmin=0, vmax=1, cmap='inferno')
-plt.colorbar(shrink=0.7)
+fig, ax = plt.subplots()
+m = ax.imshow(sim_matrix, vmin=0, vmax=1, cmap='inferno')
+ax.set_xlabel("sequences", fontsize=10)
+ax.set_ylabel("sequences", fontsize=10)
+ax.set_title('Matrix of pairwise sequence identity', fontweight="bold")
+cb = fig.colorbar(m)
+cb.set_label("Pairwise sequence identity", fontweight="bold")
 plt.show()
 
 # %%
 # Compute sequence weights
-weights, Neff = seq_weights(sim_matrix)
+weights, n_eff_seq = seq_weights(sim_matrix)
+print(f"Number of effective sequences {n_eff_seq}")
+
 # %%
 # compute allele frequencies
 aa_freq = aa_freq_at_pos(seq_kept, lambda_coef=0.03, weights=weights)
+
 # %%
 # Compute background frequencies
 qa = background_freq(aa_freq)

@@ -223,7 +223,7 @@ def icList(Vpica, kpos, Csca, p_cut=0.95):
     return ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits
 
 
-def chooseKpos(eigenvalues, rand_eigenvalues):
+def choose_num_components(eigenvalues, rand_eigenvalues):
     """
     Given the eigenvalues of the coevolution matrix (Lsca), and the
     eigenvalues for the set of randomized matrices (Lrand), return
@@ -241,11 +241,12 @@ def chooseKpos(eigenvalues, rand_eigenvalues):
 
     Returns
     -------
-    kpos : integer,
+    n_component : integer,
         number of significant eigenmodes
     """
 
-    kpos = eigenvalues[eigenvalues > (rand_eigenvalues.mean() +
-                                      (3 * rand_eigenvalues.std()))].shape[0]
+    n_component = eigenvalues[eigenvalues >
+                              (rand_eigenvalues.mean() +
+                               (3 * rand_eigenvalues.std()))].shape[0]
 
-    return kpos
+    return n_component

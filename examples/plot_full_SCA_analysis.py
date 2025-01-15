@@ -52,7 +52,7 @@ print(f"The loaded MSA has {n_seq} sequences and {n_pos} positions.")
 
 filt_seqs, pos_kept = filter_gap_pos(sequences, threshold=0.4)
 n_pos_kept = len(pos_kept)
-print(f"After filtering, we have {n_pos_kept} effective sequences.")
+print(f"After filtering, we have {n_pos_kept} remaining sequences.")
 
 # %%
 # Filter overly gapped sequences
@@ -74,7 +74,6 @@ ax.set_ylabel("sequences", fontsize=10)
 ax.set_title('Matrix of pairwise sequence identity', fontweight="bold")
 cb = fig.colorbar(m)
 cb.set_label("Pairwise sequence identity", fontweight="bold")
-plt.show()
 
 # %%
 # Compute sequence weights
@@ -109,7 +108,6 @@ ax.set_xlabel('Residue', fontsize=10)
 ax.set_ylabel(None)
 ax.set_title('Coevolution matrix')
 fig.colorbar(im, shrink=0.7)
-plt.show()
 
 # %%
 # Decomposition of the matrix into principal components
@@ -146,7 +144,6 @@ ax.bar(bins[:-1], hist1, np.diff(bins), color='k')
 ax.plot(bins[:-1], hist0/10, 'r', linewidth=3)
 ax.set_xlabel('Eigenvalues', fontweight="bold")
 ax.set_ylabel('Numbers', fontweight="bold")
-plt.show()
 
 # %%
 # Independent component analysis (ICA)
@@ -178,7 +175,6 @@ for k, [k1, k2] in enumerate(pairs):
     ax.plot(independant_components[:, k1], independant_components[:, k2], 'ok')
     ax.set_xlabel("independant component %i" % (k1+1), fontsize=16)
     ax.set_ylabel("independant component %i" % (k2+1), fontsize=16)
-plt.show()
 
 # %%
 # Select residues that significantly contribute to each independent component
@@ -186,24 +182,23 @@ ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits = icList(
     independant_components, kpos, Cij,
     p_cut=0.95)
 
-print('Sizes of the ' + str(kpos) + ' ICs: ' + str(icsize))
+print(f"Sizes of the {kpos} ICs: {icsize}")
 
 # %%
 # Plot coevolution within and between the sectors
-plt.rcParams['figure.figsize'] = 10, 10
-plt.subplot(121)
-plt.imshow(Cij[np.ix_(sortedpos, sortedpos)], vmin=0, vmax=2,
-           interpolation='none', aspect='equal',
-           extent=[0, sum(icsize), 0, sum(icsize)], cmap='inferno')
-plt.colorbar(shrink=0.25)
+fig, ax = plt.subplots()
+im = ax.imshow(Cij[np.ix_(sortedpos, sortedpos)], vmin=0, vmax=2,
+               interpolation='none', aspect='equal',
+               extent=[0, sum(icsize), 0, sum(icsize)], cmap='inferno')
+cb = fig.colorbar(im)
+
 line_index = 0
 for i in range(kpos):
-    plt.plot([line_index + icsize[i], line_index + icsize[i]],
-             [0, sum(icsize)], 'w', linewidth=2)
-    plt.plot([0, sum(icsize)], [sum(icsize) - line_index,
-                                sum(icsize) - line_index], 'w', linewidth=2)
+    ax.plot([line_index + icsize[i], line_index + icsize[i]],
+            [0, sum(icsize)], 'w', linewidth=2)
+    ax.plot([0, sum(icsize)], [sum(icsize) - line_index,
+                               sum(icsize) - line_index], 'w', linewidth=2)
     line_index += icsize[i]
-plt.show()
 
 # %%
 # Export fasta files of the sectors for all the sequences

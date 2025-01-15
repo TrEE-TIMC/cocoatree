@@ -249,4 +249,3 @@ def chooseKpos(eigenvalues, rand_eigenvalues):
                                       (3 * rand_eigenvalues.std()))].shape[0]
 
     return kpos
-

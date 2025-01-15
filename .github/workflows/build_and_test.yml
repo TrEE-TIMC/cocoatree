@@ -29,7 +29,9 @@ jobs:
             - name: Run the tests
               shell: bash -l {0}
               run: |
-                python -m pytest cocoatree --doctest-modules --showlocals -v --cov=cocoatree
+                pushd ..
+                pytest --doctest-modules --showlocals --pyargs cocoatree --cov=cocoatree
+                popd
                 flake8 cocoatree examples
 
             - name: Build the documentation

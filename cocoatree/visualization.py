@@ -128,9 +128,9 @@ def plot_coev_along_phylogeny(
     sector_id : list of sector identifiers, as imported by io.load_msa()
             the ids must match with the tree's leaves id
 
-    sector_seq : corresponding list of sector sequences to display, 
+    sector_seq : corresponding list of sector sequences to display,
             as imported by io.load_msa()
-    
+
     attributes : list of annotations to display, should be the same as in the
         annotation file (should be a list, even if there is only one attribute)
         Currently, only one attribute is implemented
@@ -206,7 +206,7 @@ def plot_coev_along_phylogeny(
         sector_length = len(sector_seq[0])
         sector_dict = {sector_id[i]: str(sector_seq[i])
                        for i in range(len(sector_id))}
-    
+
         if rectface:
             col_seqmotif = col_rectface
 

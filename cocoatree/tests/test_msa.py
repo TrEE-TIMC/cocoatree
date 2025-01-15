@@ -10,3 +10,4 @@ def test_filter_seq_id():
     filtered_seq = msa.filter_seq_id(
         sequence_ids, sequences,
         sequence_ids[:100])
+    assert len(filtered_seq) <= 100

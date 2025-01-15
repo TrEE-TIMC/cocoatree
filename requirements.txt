@@ -11,3 +11,4 @@ biopython
 ete3
 six
 pyqt5
+pandas

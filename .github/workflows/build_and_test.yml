@@ -29,7 +29,6 @@ jobs:
             - name: Run the tests
               shell: bash -l {0}
               run: |
-                set -evx
                 pushd ..
                 pytest --doctest-modules --showlocals --pyargs cocoatree --cov=cocoatree
                 popd

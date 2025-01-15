@@ -24,7 +24,7 @@ independent component.
 # %%
 # Import necessary
 from cocoatree.datasets import load_S1A_serine_proteases
-from cocoatree.io import load_MSA, export_fasta
+from cocoatree.io import export_fasta
 from cocoatree.msa import filter_gap_seq, filter_gap_pos, seq_weights
 from cocoatree.statistics.position import aa_freq_at_pos, \
     compute_background_frequencies
@@ -140,8 +140,8 @@ v_rand, l_rand = randomization(seq_kept, Nrep=10,
                                weights=weights, lambda_coef=0.03, kmax=10,
                                metric='SCA',
                                correction=None)
-kpos = choose_num_components(eigenvalues, l_rand)
-print('kpos = ' + str(kpos))
+n_components = choose_num_components(eigenvalues, l_rand)
+print('n_components = ' + str(n_components))
 
 hist0, bins = np.histogram(l_rand.flatten(), bins=n_pos_kept,
                            range=(0, eigenvalues.max()))
@@ -159,18 +159,18 @@ ax.set_ylabel('Numbers', fontweight="bold")
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 independant_components, W = compute_ica(
-    eigenvectors, kmax=kpos, learnrate=0.1,
+    eigenvectors, kmax=n_components, learnrate=0.1,
     iterations=100000)
 
 # Plot results
-if kpos % 2 != 0:
+if n_components % 2 != 0:
     print('Uneven number of axes, discard the last one for visual \
           representation')
-    kpos -= 2
+    n_components -= 2
 else:
-    kpos -= 1
+    n_components -= 1
 
-pairs = [[x, x+1] for x in range(0, kpos, 2)]
+pairs = [[x, x+1] for x in range(0, n_components, 2)]
 ncols = len(pairs)
 plt.rcParams['figure.figsize'] = 14, 8
 fig, axes = plt.subplots(nrows=2, ncols=len(pairs), tight_layout=True)
@@ -188,10 +188,10 @@ for k, [k1, k2] in enumerate(pairs):
 # %%
 # Select residues that significantly contribute to each independent component
 ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits = icList(
-    independant_components, kpos, Cij,
+    independant_components, n_components, Cij,
     p_cut=0.95)
 
-print(f"Sizes of the {kpos} ICs: {icsize}")
+print(f"Sizes of the {n_components} ICs: {icsize}")
 
 # %%
 # Plot coevolution within and between the sectors
@@ -203,7 +203,7 @@ cb = fig.colorbar(im)
 cb.set_label("Coevolution measure")
 
 line_index = 0
-for i in range(kpos):
+for i in range(n_components):
     ax.plot([line_index + icsize[i], line_index + icsize[i]],
             [0, sum(icsize)], 'w', linewidth=2)
     ax.plot([0, sum(icsize)], [sum(icsize) - line_index,

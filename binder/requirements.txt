@@ -9,3 +9,5 @@ matplotlib
 scikit-learn
 biopython
 ete3
+six
+pyqt5

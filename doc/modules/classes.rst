@@ -140,7 +140,7 @@ Functions
 .. _deconvolution_ref:
 
 
-:mod: `cocoatree.randomize`: Alignment randomization
+:mod:`cocoatree.randomize`: Alignment randomization
 ====================================================
 
 .. automodule:: cocoatree.randomize

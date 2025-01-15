@@ -137,6 +137,7 @@ plt.plot(bins[:-1], hist0/10, 'r', linewidth=3)
 plt.tick_params(labelsize=11)
 plt.xlabel('Eigenvalues', fontsize=18)
 plt.ylabel('Numbers', fontsize=18)
+plt.show()
 
 # %%
 # Independent component analysis (ICA)
@@ -146,6 +147,10 @@ Vica, W = compute_ica(eigenvectors, kmax=kpos, learnrate=0.1,
                       iterations=100000)
 
 # Plot results
+if kpos % 2 != 0:
+    print('Uneven number of axes, discard the last one for visual \
+          representation')
+    kpos = kpos - 1
 EVs = eigenvectors
 ICs = Vica
 pairs = [[x, x+1] for x in range(0, kpos, 2)]
@@ -161,13 +166,14 @@ for k, [k1, k2] in enumerate(pairs):
     plt.xlabel("IC%i" % (k1+1), fontsize=16)
     plt.ylabel("IC%i" % (k2+1), fontsize=16)
 plt.tight_layout()
+plt.show()
 
 # %%
 # Select residues that significantly contribute to each independent component
 ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits = icList(Vica, kpos, Cij,
                                                               p_cut=0.95)
 
-print('Sizes of the ' + str(kpos) + ' ICs: ' + icsize)
+print('Sizes of the ' + str(kpos) + ' ICs: ' + str(icsize))
 
 # %%
 # Plot coevolution within and between the sectors

@@ -64,7 +64,7 @@ def aa_freq_at_pos(sequences, lambda_coef=0.03, weights=None):
     return aa_freq
 
 
-def background_freq(aa_freq, lambda_coef=0.03):
+def compute_background_frequencies(aa_freq, lambda_coef=0.03):
     """Computes regularized background frequencies of amino acids
 
     Arguments
@@ -75,20 +75,21 @@ def background_freq(aa_freq, lambda_coef=0.03):
 
     Returns
     -------
-    qa : np.array of the background frequencies
+    background_freq : np.array of the background frequencies
     """
 
     # q0 : fraction of gaps in the alignment
     q0 = np.mean(aa_freq[:, 0])
-    # qa : correction factor on __freq0 in order to take the proportion of
-    # gaps into account
-    qa = list((1 - q0) * __freq0)
-    qa.insert(0, q0)
-    qa = np.array(qa)
+    # background_freq : correction factor on __freq0 in order to take the
+    # proportion of gaps into account
+    background_freq = list((1 - q0) * __freq0)
+    background_freq.insert(0, q0)
+    background_freq = np.array(background_freq)
 
     # consider gaps as 21st amino acid
     aa_count = 21
     if lambda_coef > 0:
-        qa = (1 - lambda_coef) * qa + lambda_coef / aa_count
+        background_freq = (1 - lambda_coef) * background_freq + \
+            lambda_coef / aa_count
 
-    return qa
+    return background_freq

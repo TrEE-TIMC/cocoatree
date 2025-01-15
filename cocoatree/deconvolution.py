@@ -125,9 +125,6 @@ def compute_ica(V, kmax=6, learnrate=0.1, iterations=10000):
     return Vica, W
 
 
-<<<<<<< HEAD
-def choose_num_components(eigenvalues, rand_eigenvalues):
-=======
 class Unit:
     """
     A class for units (sectors, sequence families, etc.)
@@ -226,8 +223,7 @@ def icList(Vpica, kpos, Csca, p_cut=0.95):
     return ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits
 
 
-def chooseKpos(eigenvalues, rand_eigenvalues):
->>>>>>> origin/main
+def choose_num_components(eigenvalues, rand_eigenvalues):
     """
     Given the eigenvalues of the coevolution matrix (Lsca), and the
     eigenvalues for the set of randomized matrices (Lrand), return

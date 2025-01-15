@@ -19,10 +19,11 @@ tree, leaves_id = load_tree(tree_file)
 sector_file = 'data/SCA_sector_1_core_tagged_seq.fasta'
 sector_id, sector_seq = load_MSA(sector_file, 'fasta')
 
-plot_coev_along_phylogeny(tree, df_annot, sector_id, sector_seq,
-                          attributes=('HMM_annotation',),
-                          fig_title='Test HMM annot',
-                          rectface=True,
-                          seqmotif=True,
-                          heatmap=True,
-                          colormap='inferno')
+tree, tree_stype = plot_coev_along_phylogeny(
+    tree, df_annot, sector_id, sector_seq,
+    attributes=('HMM_annotation',),
+    fig_title='Test HMM annot',
+    rectface=True,
+    seqmotif=True,
+    heatmap=True,
+    colormap='inferno')

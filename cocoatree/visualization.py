@@ -260,4 +260,4 @@ def plot_coev_along_phylogeny(
     # Add title
     ts.title.add_face(TextFace(fig_title, fsize=20), column=0)
 
-    return tree.show(tree_style=ts)
+    return tree, ts

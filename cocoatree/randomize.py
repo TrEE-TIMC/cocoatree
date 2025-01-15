@@ -2,11 +2,18 @@
 
 
 import numpy as np
+<<<<<<< HEAD
 from __params import lett2num
 from statistics.position import aa_freq_at_pos, \
     compute_background_frequencies
 from statistics.pairwise import aa_joint_freq, compute_sca_matrix
 from deconvolution import eigen_decomp
+=======
+from .__params import lett2num
+from .statistics.position import aa_freq_at_pos, background_freq
+from .statistics.pairwise import aa_joint_freq, compute_sca_matrix
+from .deconvolution import eigen_decomp
+>>>>>>> origin/main
 
 
 def _random_aln(fia, Nseq):

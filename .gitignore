@@ -168,3 +168,6 @@ doc/auto_examples
 doc/modules/generated
 
 doc/sg_execution_times.rst
+
+# Example outputs
+examples/*.fasta

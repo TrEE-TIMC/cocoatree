@@ -45,7 +45,7 @@ feature, code or documentation improvement).
 
 1. Use Git to check out the latest source from the cocoatree repository on Github.::
 
-    git clone git://github.com/tree-timc/cocoatree.git
+    git clone git@github.com:TrEE-TIMC/cocoatree.git
     cd cocoatree
 
    If you plan on submitting a pull-request, you should clone from your fork instead.

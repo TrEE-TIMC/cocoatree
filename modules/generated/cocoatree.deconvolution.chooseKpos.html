@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>cocoatree.deconvolution.chooseKpos &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="../../_static/documentation_options.js?v=837179f8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  </head><body><div class="navbar related">
+      <a href="../../index.html">
+        
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="../../auto_examples/index.html">Gallery</a> </li>
+      <li class="right"><a href="../classes.html">Documentation</a> | </li>
+      <li class="right"><a href="../../install.html">Installation</a> | </li>
+      <li class="right"><a href="../../index.html">Home</a> | </li>
+      
+    </ul>
+  </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cocoatree-deconvolution-choosekpos">
+<h1>cocoatree.deconvolution.chooseKpos<a class="headerlink" href="#cocoatree-deconvolution-choosekpos" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="cocoatree.deconvolution.chooseKpos">
+<span class="sig-prename descclassname"><span class="pre">cocoatree.deconvolution.</span></span><span class="sig-name descname"><span class="pre">chooseKpos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eigenvalues</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rand_eigenvalues</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.deconvolution.chooseKpos" title="Link to this definition">¶</a></dt>
+<dd><p>Given the eigenvalues of the coevolution matrix (Lsca), and the
+eigenvalues for the set of randomized matrices (Lrand), return
+the number of significant eigenmodes.
+Based on Rivoire et al. (2016)</p>
+<section id="arguments">
+<h2>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>eigenvalues<span class="classifier">ndarray of shape (Npos),</span></dt><dd><p>list of eigenvalues of the coevolution matrix based on the real MSA</p>
+</dd>
+<dt>rand_eigenvalues<span class="classifier">ndarray of shape (Nrep, Npos), where Nrep is the number</span></dt><dd><p>of randomization iterations
+eigenvalues of all the iteartions of randomized alignments</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>kpos<span class="classifier">integer,</span></dt><dd><p>number of significant eigenmodes</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<div class="sphx-glr-clear"></div></section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+﻿:orphan:
+
+cocoatree.datasets.load_S1A_serine_proteases
+============================================
+
+.. currentmodule:: cocoatree.datasets
+
+.. autofunction:: load_S1A_serine_proteases
+
+.. include:: ../../generated/backreferences/cocoatree.datasets.load_S1A_serine_proteases.examples
+
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>

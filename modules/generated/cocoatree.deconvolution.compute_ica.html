@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>cocoatree.deconvolution.compute_ica &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="../../_static/documentation_options.js?v=837179f8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  </head><body><div class="navbar related">
+      <a href="../../index.html">
+        
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="../../auto_examples/index.html">Gallery</a> </li>
+      <li class="right"><a href="../classes.html">Documentation</a> | </li>
+      <li class="right"><a href="../../install.html">Installation</a> | </li>
+      <li class="right"><a href="../../index.html">Home</a> | </li>
+      
+    </ul>
+  </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cocoatree-deconvolution-compute-ica">
+<h1>cocoatree.deconvolution.compute_ica<a class="headerlink" href="#cocoatree-deconvolution-compute-ica" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="cocoatree.deconvolution.compute_ica">
+<span class="sig-prename descclassname"><span class="pre">cocoatree.deconvolution.</span></span><span class="sig-name descname"><span class="pre">compute_ica</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">V</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learnrate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.deconvolution.compute_ica" title="Link to this definition">¶</a></dt>
+<dd><p>ICA rotation (using _basicICA) with default parameters and normalization of
+outputs.
+Basic ICA algorithm, based on work by Bell &amp; Sejnowski (infomax). The input
+data should preferentially be sphered, i.e., x.T.dot(x) = 1</p>
+<p>Source: <a class="reference external" href="https://github.com/ranganathanlab/pySCA/">https://github.com/ranganathanlab/pySCA/</a></p>
+<section id="arguments">
+<h2>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>V<span class="classifier">ndarray,</span></dt><dd><p>eigenvectors obtained after matrix decomposition</p>
+</dd>
+<dt>kmax<span class="classifier">integer,</span></dt><dd><p>number of independent components to retrieve</p>
+</dd>
+<dt>learnrate<span class="classifier">integer,</span></dt><dd><p>learning rate / relaxation parameter</p>
+</dd>
+<dt>iterations<span class="classifier">integer,</span></dt><dd><p>number of iterations</p>
+</dd>
+</dl>
+<p><strong>Note</strong> r and Niter should be adjusted to achieve convergence, which
+should be assessed by visualizing ‘change’ with plot(range(iter), change)</p>
+</section>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>Vica<span class="classifier">ndarray,</span></dt><dd><p>contributions along each independent components</p>
+</dd>
+<dt>W<span class="classifier">ndarray of shape (kmax, kmax),</span></dt><dd><p>unmixing matrix</p>
+</dd>
+<dt><strong>Example</strong>::</dt><dd><p>Vica, W = rotICA(V, kmax=6, learnrate=.0001, iterations=10000)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<section id="examples-using-cocoatree-deconvolution-compute-ica">
+<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.deconvolution.compute_ica</span></code><a class="headerlink" href="#examples-using-cocoatree-deconvolution-compute-ica" title="Link to this heading">¶</a></h2>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="A small example that shows how to load and filter an MSA, compute positional and joint amino acid frequencies and compute the SCA coevolution matrix. The matrix is then decomposed into principal components and independent component analysis is performed."><img alt="" src="../../_images/sphx_glr_plot_load_msa_thumb.png" />
+<p><a class="reference internal" href="../../auto_examples/plot_load_msa.html#sphx-glr-auto-examples-plot-load-msa-py"><span class="std std-ref">Compute SCA coevolution matrix</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Compute SCA coevolution matrix</div>
+</div></div><div class="sphx-glr-clear"></div></section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

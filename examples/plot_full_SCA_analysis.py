@@ -25,11 +25,12 @@ independent component.
 # Import necessary
 from cocoatree.io import load_MSA, export_fasta
 from cocoatree.msa import filter_gap_seq, filter_gap_pos, seq_weights
-from cocoatree.statistics.position import aa_freq_at_pos, background_freq
+from cocoatree.statistics.position import aa_freq_at_pos, \
+    compute_background_frequencies
 from cocoatree.statistics.pairwise import aa_joint_freq, compute_sca_matrix, \
     compute_seq_identity
-from cocoatree.deconvolution import eigen_decomp, compute_ica, chooseKpos, \
-    icList
+from cocoatree.deconvolution import eigen_decomp, compute_ica, \
+    choose_num_components, icList
 from cocoatree.randomize import randomization
 import matplotlib.pyplot as plt
 import numpy as np
@@ -86,7 +87,7 @@ aa_freq = aa_freq_at_pos(seq_kept, lambda_coef=0.03, weights=weights)
 
 # %%
 # Compute background frequencies
-background_frequencies = background_freq(aa_freq)
+background_frequencies = compute_background_frequencies(aa_freq)
 
 # %%
 # Compute joint allele frequencies
@@ -99,7 +100,7 @@ fijab, fijab_ind = aa_joint_freq(seq_kept, weights=weights, lambda_coef=0.03)
 Cijab_raw, Cij = compute_sca_matrix(joint_freqs=fijab,
                                     joint_freqs_ind=fijab_ind,
                                     aa_freq=aa_freq,
-                                    qa=background_frequencies)
+                                    background_freq=background_frequencies)
 
 fig, ax = plt.subplots()
 im = ax.imshow(Cij, vmin=0, vmax=1.4, cmap='inferno')
@@ -132,7 +133,7 @@ v_rand, l_rand = randomization(seq_kept, Nrep=10,
                                weights=weights, lambda_coef=0.03, kmax=10,
                                metric='SCA',
                                correction=None)
-kpos = chooseKpos(eigenvalues, l_rand)
+kpos = choose_num_components(eigenvalues, l_rand)
 print('kpos = ' + str(kpos))
 
 hist0, bins = np.histogram(l_rand.flatten(), bins=n_pos_kept,

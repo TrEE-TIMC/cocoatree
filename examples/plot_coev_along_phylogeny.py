@@ -27,3 +27,4 @@ tree, tree_style = plot_coev_along_phylogeny(
     seqmotif=True,
     heatmap=True,
     colormap='inferno')
+tree.render("coev_along_phylogeny.png", tree_style=tree_style)

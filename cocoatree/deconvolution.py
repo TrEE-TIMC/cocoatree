@@ -124,7 +124,7 @@ def compute_ica(V, kmax=6, learnrate=0.1, iterations=10000):
     return Vica, W
 
 
-def chooseKpos(eigenvalues, rand_eigenvalues):
+def choose_num_components(eigenvalues, rand_eigenvalues):
     """
     Given the eigenvalues of the coevolution matrix (Lsca), and the
     eigenvalues for the set of randomized matrices (Lrand), return
@@ -142,11 +142,12 @@ def chooseKpos(eigenvalues, rand_eigenvalues):
 
     Returns
     -------
-    kpos : integer,
+    n_component : integer,
         number of significant eigenmodes
     """
 
-    kpos = eigenvalues[eigenvalues > (rand_eigenvalues.mean() +
-                                      (3 * rand_eigenvalues.std()))].shape[0]
+    n_component = eigenvalues[eigenvalues >
+                              (rand_eigenvalues.mean() +
+                               (3 * rand_eigenvalues.std()))].shape[0]
 
-    return kpos
+    return n_component

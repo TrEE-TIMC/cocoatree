@@ -213,26 +213,28 @@ def seq_weights(sim_matrix, threshold=0.8):
     return weights, Nseq_eff
 
 
-def filter_seq_id(sequences, seq_id, list_id):
+def filter_seq_id(seq_id, sequences, list_id):
     """
     Filter a multiple sequence alignment to keep only sequences whose
     identifiers are in a user provided list.
 
     Parameters
     ----------
-    msa: Bio.Align.MultipleSeqAlignment object
+    seq_id : list of the MSA's sequence identifiers
 
-    list_id: list of sequence identifiers the user wants to keep. The
+    sequences : list of MSA sequences
+
+    list_id : list of sequence identifiers the user wants to keep. The
     identifiers must be in the same format as in the input MSA
 
     Returns
     -------
-    new_msa: Bio.Align.MultipleSeqAlignment object,
+    new_msa : Bio.Align.MultipleSeqAlignment object,
             filtered msa
 
-    id_list: list of sequence ID in the filtered MSA
+    id_list : list of sequence ID in the filtered MSA
 
-    seq_list: list of sequences of the filtered MSA
+    seq_list : list of sequences of the filtered MSA
     """
     new_msa = MultipleSeqAlignment([])
     new_record = SeqRecord([])

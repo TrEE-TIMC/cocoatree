@@ -37,6 +37,7 @@ jobs:
             - name: Build the documentation
               shell: bash -l {0}
               run: |
+                set -evx
                 cd doc
                 make html
                 touch _build/html/.nojekyll

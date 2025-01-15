@@ -3,7 +3,8 @@
 
 import numpy as np
 from __params import lett2num
-from statistics.position import aa_freq_at_pos, background_freq
+from statistics.position import aa_freq_at_pos, \
+    compute_background_frequencies
 from statistics.pairwise import aa_joint_freq, compute_sca_matrix
 from deconvolution import eigen_decomp
 
@@ -90,7 +91,8 @@ def randomization(sequences, Nrep, weights=1, lambda_coef=0.03, kmax=6,
         weights = np.ones(Nseq)
 
     fia = aa_freq_at_pos(sequences, lambda_coef=lambda_coef, weights=weights)
-    qa = background_freq(fia, lambda_coef=lambda_coef)
+    background_freq = compute_background_frequencies(fia,
+                                                     lambda_coef=lambda_coef)
 
     # initialize for eigenvectors
     vect_rand = np.zeros((Nrep, Npos, kmax))
@@ -102,7 +104,8 @@ def randomization(sequences, Nrep, weights=1, lambda_coef=0.03, kmax=6,
                                          lambda_coef=lambda_coef)
         # Compute coevolution matrix for the randomized alignment
         if metric == 'SCA':
-            Coev_rand = compute_sca_matrix(fijab, fijab_ind, fia, qa)[1]
+            Coev_rand = compute_sca_matrix(fijab, fijab_ind, fia,
+                                           background_freq)[1]
         # elif metric == 'MI':
         #    Coev_rand = compute_mi_matrix(fijab, fijab_ind)
         # add a correction

@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**01:43.183** total execution time for 2 files **from auto_examples**:
+**00:13.475** total execution time for 2 files **from auto_examples**:
 
 .. container::
 
@@ -33,7 +33,7 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_auto_examples_plot_full_SCA_analysis.py` (``plot_full_SCA_analysis.py``)
-     - 01:43.183
+     - 00:13.475
      - 0.0
    * - :ref:`sphx_glr_auto_examples_no_plot_coev_along_phylogeny.py` (``no_plot_coev_along_phylogeny.py``)
      - 00:00.000

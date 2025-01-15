@@ -308,7 +308,7 @@ Compute the SCA coevolution matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7fa65d7b1b90>
+    <matplotlib.colorbar.Colorbar object at 0x7f2646bbb290>
 
 
 
@@ -392,20 +392,16 @@ Select number of significant components
 
 
 
-
-.. image-sg:: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_004.png
-   :alt: plot full SCA analysis
-   :srcset: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_004.png
-   :class: sphx-glr-single-img
-
-
 .. rst-class:: sphx-glr-script-out
 
- .. code-block:: none
+.. code-block:: pytb
 
-    n_components = 8
+    Traceback (most recent call last):
+      File "/home/runner/work/cocoatree/cocoatree/examples/plot_full_SCA_analysis.py", line 139, in <module>
+        v_rand, l_rand = randomization(seq_kept, Nrep=10,
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    TypeError: randomization() got an unexpected keyword argument 'Nrep'
 
-    Text(47.097222222222214, 0.5, 'Numbers')
 
 
 
@@ -447,17 +443,6 @@ Independent component analysis (ICA)
         ax.set_ylabel("independant component %i" % (k2+1), fontsize=16)
 
 
-
-
-.. image-sg:: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_005.png
-   :alt: plot full SCA analysis
-   :srcset: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_005.png
-   :class: sphx-glr-single-img
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 189-190
 
 Select residues that significantly contribute to each independent component
@@ -471,18 +456,6 @@ Select residues that significantly contribute to each independent component
         p_cut=0.95)
 
     print(f"Sizes of the {n_components} ICs: {icsize}")
-
-
-
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    Sizes of the 7 ICs: [17, 19, 22, 9, 13, 16, 11]
-
-
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 197-198
@@ -509,17 +482,6 @@ Plot coevolution within and between the sectors
         line_index += icsize[i]
 
 
-
-
-.. image-sg:: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_006.png
-   :alt: plot full SCA analysis
-   :srcset: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_006.png
-   :class: sphx-glr-single-img
-
-
-
-
-
 .. GENERATED FROM PYTHON SOURCE LINES 214-215
 
 Export fasta files of the sectors for all the sequences
@@ -541,15 +503,9 @@ Export fasta files of the sectors for all the sequences
     # outpath needs to be defined properly
 
 
-
-
-
-
-
-
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 43.183 seconds)
+   **Total running time of the script:** (0 minutes 13.475 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_full_SCA_analysis.py:

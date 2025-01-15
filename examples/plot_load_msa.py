@@ -203,5 +203,5 @@ for sequence in range(len(seq_id)):
         seq += sequences[sequence][pos]
     sector_1.append(seq)
 
-export_fasta(sector_1, seq_id, outpath)
+export_fasta(sector_1, seq_id, 'sector_1.fasta')
 # outpath needs to be defined properly

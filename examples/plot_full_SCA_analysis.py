@@ -86,7 +86,8 @@ aa_freq = aa_freq_at_pos(seq_kept, lambda_coef=0.03, weights=weights)
 
 # %%
 # Compute background frequencies
-qa = background_freq(aa_freq)
+background_frequencies = background_freq(aa_freq)
+
 # %%
 # Compute joint allele frequencies
 fijab, fijab_ind = aa_joint_freq(seq_kept, weights=weights, lambda_coef=0.03)
@@ -98,15 +99,15 @@ fijab, fijab_ind = aa_joint_freq(seq_kept, weights=weights, lambda_coef=0.03)
 Cijab_raw, Cij = compute_sca_matrix(joint_freqs=fijab,
                                     joint_freqs_ind=fijab_ind,
                                     aa_freq=aa_freq,
-                                    qa=qa)
+                                    qa=background_frequencies)
 
-fig = plt.figure()
-plt.rcParams['figure.figsize'] = 10, 10
-plt.xlabel('Residue', fontsize=10)
-plt.ylabel(None)
-plt.title('Coevolution matrix')
-plt.imshow(Cij, vmin=0, vmax=1.4, cmap='inferno')
-plt.colorbar(shrink=0.7)
+fig, ax = plt.subplots()
+im = ax.imshow(Cij, vmin=0, vmax=1.4, cmap='inferno')
+
+ax.set_xlabel('Residue', fontsize=10)
+ax.set_ylabel(None)
+ax.set_title('Coevolution matrix')
+fig.colorbar(im, shrink=0.7)
 plt.show()
 
 # %%
@@ -117,68 +118,72 @@ eigenvalues, eigenvectors = eigen_decomp(Cij)
 
 # %%
 # Plot distribution of eigenvalues
-plt.figure()
-plt.hist(eigenvalues, bins=100, color="black")
-plt.ylabel('Number')
-plt.xlabel('Eigenvalue')
+fig, ax = plt.subplots()
+ax.hist(eigenvalues, bins=100, color="black")
+ax.set_ylabel('Number', fontweight="bold")
+ax.set_xlabel('Eigenvalue', fontweight="bold")
 plt.show()
 
 # %%
 # Select number of significant components
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Vrand, Lrand = randomization(seq_kept, Nrep=10,
-                             weights=weights, lambda_coef=0.03, kmax=10,
-                             metric='SCA',
-                             correction=None)
-kpos = chooseKpos(eigenvalues, Lrand)
+v_rand, l_rand = randomization(seq_kept, Nrep=10,
+                               weights=weights, lambda_coef=0.03, kmax=10,
+                               metric='SCA',
+                               correction=None)
+kpos = chooseKpos(eigenvalues, l_rand)
 print('kpos = ' + str(kpos))
 
-plt.rcParams['figure.figsize'] = 9, 4
-hist0, bins = np.histogram(Lrand.flatten(), bins=Npos_kept,
+hist0, bins = np.histogram(l_rand.flatten(), bins=n_pos_kept,
                            range=(0, eigenvalues.max()))
-hist1, bins = np.histogram(eigenvalues, bins=Npos_kept,
+hist1, bins = np.histogram(eigenvalues, bins=n_pos_kept,
                            range=(0, eigenvalues.max()))
-plt.bar(bins[:-1], hist1, np.diff(bins), color='k')
-plt.plot(bins[:-1], hist0/10, 'r', linewidth=3)
-plt.tick_params(labelsize=11)
-plt.xlabel('Eigenvalues', fontsize=18)
-plt.ylabel('Numbers', fontsize=18)
+
+fig, ax = plt.subplots()
+ax.bar(bins[:-1], hist1, np.diff(bins), color='k')
+ax.plot(bins[:-1], hist0/10, 'r', linewidth=3)
+ax.set_xlabel('Eigenvalues', fontweight="bold")
+ax.set_ylabel('Numbers', fontweight="bold")
 plt.show()
 
 # %%
 # Independent component analysis (ICA)
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Vica, W = compute_ica(eigenvectors, kmax=kpos, learnrate=0.1,
-                      iterations=100000)
+independant_components, W = compute_ica(
+    eigenvectors, kmax=kpos, learnrate=0.1,
+    iterations=100000)
 
 # Plot results
 if kpos % 2 != 0:
     print('Uneven number of axes, discard the last one for visual \
           representation')
-    kpos = kpos - 1
-EVs = eigenvectors
-ICs = Vica
+    kpos -= 2
+else:
+    kpos -= 1
+
 pairs = [[x, x+1] for x in range(0, kpos, 2)]
 ncols = len(pairs)
 plt.rcParams['figure.figsize'] = 14, 8
+fig, axes = plt.subplots(nrows=2, ncols=len(pairs), tight_layout=True)
 for k, [k1, k2] in enumerate(pairs):
-    plt.subplot(2, ncols, k+1)
-    plt.plot(EVs[:, k1], EVs[:, k2], 'ok')
-    plt.xlabel("EV%i" % (k1+1), fontsize=16)
-    plt.ylabel("EV%i" % (k2+1), fontsize=16)
-    plt.subplot(2, ncols, k+1+ncols)
-    plt.plot(ICs[:, k1], ICs[:, k2], 'ok')
-    plt.xlabel("IC%i" % (k1+1), fontsize=16)
-    plt.ylabel("IC%i" % (k2+1), fontsize=16)
-plt.tight_layout()
+    ax = axes[0, k]
+    ax.plot(eigenvectors[:, k1], eigenvectors[:, k2], 'ok')
+    ax.set_xlabel("eigenvector %i" % (k1+1), fontsize=16)
+    ax.set_ylabel("eigenvector %i" % (k2+1), fontsize=16)
+
+    ax = axes[1, k]
+    ax.plot(independant_components[:, k1], independant_components[:, k2], 'ok')
+    ax.set_xlabel("independant component %i" % (k1+1), fontsize=16)
+    ax.set_ylabel("independant component %i" % (k2+1), fontsize=16)
 plt.show()
 
 # %%
 # Select residues that significantly contribute to each independent component
-ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits = icList(Vica, kpos, Cij,
-                                                              p_cut=0.95)
+ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits = icList(
+    independant_components, kpos, Cij,
+    p_cut=0.95)
 
 print('Sizes of the ' + str(kpos) + ' ICs: ' + str(icsize))
 

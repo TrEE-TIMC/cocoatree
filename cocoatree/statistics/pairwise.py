@@ -99,7 +99,7 @@ def aa_joint_freq(sequences, weights, lambda_coef=0.03):
     return joint_freqs, joint_freqs_ind
 
 
-def compute_sca_matrix(joint_freqs, joint_freqs_ind, aa_freq, qa):
+def compute_sca_matrix(joint_freqs, joint_freqs_ind, aa_freq, background_freq):
     """Compute the SCA coevolution matrix
 
     .. math::
@@ -116,7 +116,7 @@ def compute_sca_matrix(joint_freqs, joint_freqs_ind, aa_freq, qa):
 
     aa_freq : frequency of amino acid *a* at position *i*
 
-    qa : background frequency of amino acid *a*
+    background_freq : background frequency of amino acid *a*
 
     Returns
     -------
@@ -130,8 +130,8 @@ def compute_sca_matrix(joint_freqs, joint_freqs_ind, aa_freq, qa):
     # Derivee de l'entropie relative (fonction Phi)
     aa_freq = aa_freq.transpose([1, 0])
     phi = np.log(
-        aa_freq * (1 - qa[:, np.newaxis]) / (
-            (1 - aa_freq) * qa[:, np.newaxis])).transpose([1, 0])
+        aa_freq * (1 - background_freq[:, np.newaxis]) / (
+            (1 - aa_freq) * background_freq[:, np.newaxis])).transpose([1, 0])
     phi = np.multiply.outer(phi, phi).transpose([0, 2, 1, 3])
 
     Cijab_tilde = phi * Cijab_raw

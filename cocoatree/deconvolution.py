@@ -1,6 +1,7 @@
 import scipy.linalg as sp
 import numpy as np
 import sys
+from scipy.stats import t, scoreatpercentile
 
 
 def eigen_decomp(mat):
@@ -122,6 +123,104 @@ def compute_ica(V, kmax=6, learnrate=0.1, iterations=10000):
             np.sign(Vica[imax, n]) * Vica[:, n] / np.linalg.norm(Vica[:, n])
         )
     return Vica, W
+
+
+class Unit:
+    """
+    A class for units (sectors, sequence families, etc.)
+
+    Attributes
+    ----------
+
+    name :  string describing the unit (ex: 'firmicutes')
+    items : set of member items (ex: indices for all firmicutes
+            sequence in an alignment)
+    col :   color code associated to the unit (for plotting)
+    vect :  an additional vector describing the member items (ex: a list
+            of sequence weights)
+    """
+
+    def __init__(self):
+        self.name = ""
+        self.items = set()
+        self.col = 0
+        self.vect = 0
+
+
+def icList(Vpica, kpos, Csca, p_cut=0.95):
+    """
+    Produces a list of positions contributing to each independent component
+    (IC) above a defined statistical cutoff (p_cut, the cutoff on the CDF of
+    the t-distribution fit to the histogram of each IC). Any position above the
+    cutoff on more than one IC are assigned to one IC based on which group of
+    positions to which it shows a higher degree of coevolution. Additionally
+    returns the numeric value of the cutoff for each IC, and the pdf fit, which
+    can be used for plotting/evaluation.
+
+    **Example**::
+
+      icList, icsize, sortedpos, cutoff, pd = icList(Vsca, Lsca, Lrand)
+    """
+
+    # do the PDF/CDF fit, and assign cutoffs
+    Npos = len(Vpica)
+    cutoff = list()
+    scaled_pdf = list()
+    all_fits = list()
+    for k in range(kpos):
+        pd = t.fit(Vpica[:, k])
+        all_fits.append(pd)
+        iqr = scoreatpercentile(Vpica[:, k], 75) - scoreatpercentile(
+            Vpica[:, k], 25
+        )
+        binwidth = 2 * iqr * (len(Vpica[:, k]) ** (-0.33))
+        nbins = round((max(Vpica[:, k]) - min(Vpica[:, k])) / binwidth)
+        h_params = np.histogram(Vpica[:, k], int(nbins))
+        x_dist = np.linspace(min(h_params[1]), max(h_params[1]), num=100)
+        area_hist = Npos * (h_params[1][2] - h_params[1][1])
+        scaled_pdf.append(area_hist * (t.pdf(x_dist, pd[0], pd[1], pd[2])))
+        cd = t.cdf(x_dist, pd[0], pd[1], pd[2])
+        tmp = scaled_pdf[k].argmax()
+        if abs(max(Vpica[:, k])) > abs(min(Vpica[:, k])):
+            tail = cd[tmp: len(cd)]
+        else:
+            cd = 1 - cd
+            tail = cd[0:tmp]
+        diff = abs(tail - p_cut)
+        x_pos = diff.argmin()
+        cutoff.append(x_dist[x_pos + tmp])
+
+    # select the positions with significant contributions to each IC
+    ic_init = list()
+    for k in range(kpos):
+        ic_init.append([i for i in range(Npos) if Vpica[i, k] > cutoff[k]])
+
+    # construct the sorted, non-redundant iclist
+    sortedpos = list()
+    icsize = list()
+    ics = list()
+    icpos_tmp = list()
+    Csca_nodiag = Csca.copy()
+    for i in range(Npos):
+        Csca_nodiag[i, i] = 0
+    for k in range(kpos):
+        icpos_tmp = list(ic_init[k])
+        for kprime in [kp for kp in range(kpos) if kp != k]:
+            tmp = [v for v in icpos_tmp if v in ic_init[kprime]]
+            for i in tmp:
+                remsec = np.linalg.norm(
+                    Csca_nodiag[i, ic_init[k]]
+                ) < np.linalg.norm(Csca_nodiag[i, ic_init[kprime]])
+                if remsec:
+                    icpos_tmp.remove(i)
+        sortedpos += sorted(icpos_tmp, key=lambda i: -Vpica[i, k])
+        icsize.append(len(icpos_tmp))
+        s = Unit()
+        s.items = sorted(icpos_tmp, key=lambda i: -Vpica[i, k])
+        s.col = k / kpos
+        s.vect = -Vpica[s.items, k]
+        ics.append(s)
+    return ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits
 
 
 def choose_num_components(eigenvalues, rand_eigenvalues):

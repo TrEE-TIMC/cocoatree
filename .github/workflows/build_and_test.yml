@@ -25,6 +25,7 @@ jobs:
                   libxcb-randr0 \
                   libxcb-render-util0 \
                   libxcb-xinerama0 
+                sudo apt-get install xvfb
                 python -m pip install --upgrade pip
                 python -m pip install -r requirements.txt
 
@@ -47,7 +48,6 @@ jobs:
               run: |
                 set -evx
                 cd doc
-                export DISPLAY=:99
-                sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & make html
+                xvfb-run make html
                 touch _build/html/.nojekyll
                 cd ..

@@ -17,8 +17,6 @@ jobs:
 
             - name: Install dependencies
               run: |
-                apt apt-get install libxcb-xinerama0
-                apt-get install libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0 libxcb-xfixes0 libegl1-mesa
                 python -m pip install --upgrade pip
                 python -m pip install -r requirements.txt
 

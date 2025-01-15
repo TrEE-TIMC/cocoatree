@@ -1,7 +1,7 @@
 """
-=========================
-Perform full SCA analysis
-=========================
+============================================================
+Perform full SCA analysis on the S1A serine protease dataset
+============================================================
 
 This example shows the full process to perform a complete coevolution
 analysis in order to detect protein sectors from data importation, MSA
@@ -23,6 +23,7 @@ independent component.
 
 # %%
 # Import necessary
+from cocoatree.datasets import load_S1A_serine_proteases
 from cocoatree.io import load_MSA, export_fasta
 from cocoatree.msa import filter_gap_seq, filter_gap_pos, seq_weights
 from cocoatree.statistics.position import aa_freq_at_pos, \
@@ -36,16 +37,25 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # %%
-# Import MSA
-# ----------
+# Load the dataset
+# ----------------
+#
+# We start by importing the dataset. In this case, we can directly load the S1
+# serine protease dataset provided in :mod:`cocoatree`. To work on your on
+# dataset, you can use the :fun:`cocoatree.io.load_msa` function.
 
-seq_id, sequences = load_MSA("data/s1Ahalabi_1470.an", format="fasta")
+serine_dataset = load_S1A_serine_proteases()
+seq_id = serine_dataset["sequence_ids"]
+sequences = serine_dataset["alignment"]
 n_pos, n_seq = len(sequences[0]), len(sequences)
 
 print(f"The loaded MSA has {n_seq} sequences and {n_pos} positions.")
 # %%
 # MSA filtering
 # -------------
+#
+# We are going to clean a bit the loaded MSA by filtering both sequences and
+# positions.
 #
 # Filter overly gapped positions
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -63,7 +73,7 @@ seq_id_kept, seq_kept = filter_gap_seq(seq_id, filt_seqs, threshold=0.2,
 
 # %%
 # Compute the matrix of pairwise sequence identity
-# --------------------------------------------
+# ------------------------------------------------
 
 sim_matrix = compute_seq_identity(seq_kept)
 
@@ -121,7 +131,6 @@ fig, ax = plt.subplots()
 ax.hist(eigenvalues, bins=100, color="black")
 ax.set_ylabel('Number', fontweight="bold")
 ax.set_xlabel('Eigenvalue', fontweight="bold")
-plt.show()
 
 # %%
 # Select number of significant components
@@ -186,11 +195,12 @@ print(f"Sizes of the {kpos} ICs: {icsize}")
 
 # %%
 # Plot coevolution within and between the sectors
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(tight_layout=True)
 im = ax.imshow(Cij[np.ix_(sortedpos, sortedpos)], vmin=0, vmax=2,
                interpolation='none', aspect='equal',
                extent=[0, sum(icsize), 0, sum(icsize)], cmap='inferno')
 cb = fig.colorbar(im)
+cb.set_label("Coevolution measure")
 
 line_index = 0
 for i in range(kpos):

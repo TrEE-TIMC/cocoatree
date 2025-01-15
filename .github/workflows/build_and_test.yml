@@ -29,6 +29,7 @@ jobs:
             - name: Run the tests
               shell: bash -l {0}
               run: |
+                set -evx
                 pushd ..
                 pytest --doctest-modules --showlocals --pyargs cocoatree --cov=cocoatree
                 popd
@@ -37,6 +38,7 @@ jobs:
             - name: Build the documentation
               shell: bash -l {0}
               run: |
+                set -evx
                 cd doc
                 make html
                 touch _build/html/.nojekyll

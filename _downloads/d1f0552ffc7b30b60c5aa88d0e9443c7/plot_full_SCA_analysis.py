@@ -135,11 +135,14 @@ ax.set_xlabel('Eigenvalue', fontweight="bold")
 # %%
 # Select number of significant components
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-v_rand, l_rand = randomization(seq_kept, Nrep=10,
-                               weights=weights, lambda_coef=0.03, kmax=10,
-                               metric='SCA',
-                               correction=None)
+#
+# We use a randomization strategy in order to select the number of components.
+# The function :fun:cocoatree.randomize.randomization runs the full SCA
+# pipeline on randomized version of the MSA. Make sure that weights and lambda
+# coefficient are set the same way as the when performing the analysis on the
+# real dataset.
+v_rand, l_rand = randomization(seq_kept, n_rep=10,
+                               weights=weights, lambda_coef=0.03, kmax=10)
 n_components = choose_num_components(eigenvalues, l_rand)
 print('n_components = ' + str(n_components))
 

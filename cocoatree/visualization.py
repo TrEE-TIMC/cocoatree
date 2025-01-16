@@ -27,7 +27,7 @@ def _annot_to_color(attribute, tree, df_annot, cmap='jet'):
     Arguments
     ---------
     tree : ete3's tree object,
-            as imported by io.load_tree()
+            as imported by io.load_tree_ete3()
 
     attributes : list of column names to grab
 
@@ -120,7 +120,7 @@ def update_tree_ete3_and_return_style(
     Arguments
     ---------
     tree_ete3 : ete3's tree object,
-            as imported by io.load_tree()
+            as imported by io.load_tree_ete3()
 
     annot_file : pandas dataframe of the annotation file
 

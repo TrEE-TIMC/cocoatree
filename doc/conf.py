@@ -94,6 +94,7 @@ intersphinx_mapping = {
 }   
 
 sphinx_gallery_conf = {
+    'image_scrapers': ("matplotlib", "cocoatree._scraper.png_scraper"),
     'backreferences_dir': "generated/backreferences",
     'doc_module': ("cocoatree", ),
     'abort_on_example_error': True,

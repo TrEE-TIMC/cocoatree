@@ -1,0 +1,14 @@
+﻿:orphan:
+
+cocoatree.io.load_tree_ete3
+===========================
+
+.. currentmodule:: cocoatree.io
+
+.. autofunction:: load_tree_ete3
+
+.. include:: ../../generated/backreferences/cocoatree.io.load_tree_ete3.examples
+
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>

@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>cocoatree.io.load_tree &#8212; cocoatree 0.0 documentation</title>
+    <title>cocoatree.io.load_tree_ete3 &#8212; cocoatree 0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
     <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
@@ -40,28 +40,27 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="cocoatree-io-load-tree">
-<h1>cocoatree.io.load_tree<a class="headerlink" href="#cocoatree-io-load-tree" title="Link to this heading">¶</a></h1>
+  <section id="cocoatree-io-load-tree-ete3">
+<h1>cocoatree.io.load_tree_ete3<a class="headerlink" href="#cocoatree-io-load-tree-ete3" title="Link to this heading">¶</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="cocoatree.io.load_tree">
-<span class="sig-prename descclassname"><span class="pre">cocoatree.io.</span></span><span class="sig-name descname"><span class="pre">load_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.io.load_tree" title="Link to this definition">¶</a></dt>
-<dd><p>Import tree (Newick format) and get list of sequence IDs</p>
+<dt class="sig sig-object py" id="cocoatree.io.load_tree_ete3">
+<span class="sig-prename descclassname"><span class="pre">cocoatree.io.</span></span><span class="sig-name descname"><span class="pre">load_tree_ete3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.io.load_tree_ete3" title="Link to this definition">¶</a></dt>
+<dd><p>From the loading of a Newick tree, generate a ete3.Tree object</p>
 <section id="arguments">
 <h2>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">¶</a></h2>
-<p>file_path : path to the newick file</p>
+<p>file_path : path to the Newick file</p>
 </section>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
-<p>tree : <cite>ete3.Tree</cite> object</p>
-<p>id_lst : list of the tree leaves (sequence IDs)</p>
+<p>tree_ete3 : <cite>ete3.Tree</cite> object</p>
 </section>
 </dd></dl>
 
-<section id="examples-using-cocoatree-io-load-tree">
-<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.io.load_tree</span></code><a class="headerlink" href="#examples-using-cocoatree-io-load-tree" title="Link to this heading">¶</a></h2>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="A small example that shows how to use the function plot_coev_along_phylogeny of the visualization module."><img alt="" src="../../_images/sphx_glr_no_plot_coev_along_phylogeny_thumb.png" />
-<p><a class="reference internal" href="../../auto_examples/no_plot_coev_along_phylogeny.html#sphx-glr-auto-examples-no-plot-coev-along-phylogeny-py"><span class="std std-ref">Plot final figure</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Plot final figure</div>
+<section id="examples-using-cocoatree-io-load-tree-ete3">
+<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.io.load_tree_ete3</span></code><a class="headerlink" href="#examples-using-cocoatree-io-load-tree-ete3" title="Link to this heading">¶</a></h2>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="A small example that shows how to plot the sector composition within a tree and to add metadata"><img alt="" src="../../_images/sphx_glr_plot_sector_along_tree_and_metadata_thumb.png" />
+<p><a class="reference internal" href="../../auto_examples/plot_sector_along_tree_and_metadata.html#sphx-glr-auto-examples-plot-sector-along-tree-and-metadata-py"><span class="std std-ref">Plot sector together with (phylogenetic) tree and metadata</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Plot sector together with (phylogenetic) tree and metadata</div>
 </div></div><div class="sphx-glr-clear"></div></section>
 </section>
 

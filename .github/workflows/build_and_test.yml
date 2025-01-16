@@ -37,8 +37,9 @@ jobs:
             - name: Build the documentation
               shell: bash -l {0}
               run: |
+                export QT_QPA_PLATFORM=offscreen
                 set -evx
                 cd doc
-                make html
+                xvfb-run make html
                 touch _build/html/.nojekyll
                 cd ..

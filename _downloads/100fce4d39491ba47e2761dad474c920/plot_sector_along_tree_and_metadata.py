@@ -29,3 +29,6 @@ tree_style = update_tree_ete3_and_return_style(
     t_sector_heatmap=True,
     colormap='inferno'
     )
+
+
+tree_ete3.render("sector_phylogeny.png", tree_style=tree_style)

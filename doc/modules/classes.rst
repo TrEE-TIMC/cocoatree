@@ -25,7 +25,7 @@ Functions
   :template: function.rst
 
   io.load_MSA
-  io.load_tree
+  io.load_tree_ete3
   io.export_fasta
 
 .. _io_ref:
@@ -161,3 +161,27 @@ Functions
     randomize.randomization
 
 .. _randomize_ref:
+
+
+:mod:`cocoatree.visualization`: Visualization
+====================================================
+
+.. automodule:: cocoatree.visualization
+    :no-members:
+    :no-inherited-members:
+
+
+Functions
+---------
+
+.. currentmodule:: cocoatree
+
+.. autosummary::
+
+    :toctree: generated/
+    :template: function.rst
+
+    visualization.update_tree_ete3_and_return_style
+
+
+.. _visualization_ref:

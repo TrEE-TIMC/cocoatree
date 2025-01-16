@@ -16,6 +16,16 @@ jobs:
               with:
                 persist-credentials: false
 
+            - name: Install OS dependencies
+              run: |
+                sudo apt-get install texlive-fonts-recommended \
+                    texlive-latex-base \
+                    texlive-latex-extra \
+                    texlive-latex-recommended \
+                    texlive-luatex \
+                    texlive-pictures \
+                    texlive-xetex
+
             - name: Install Python
               uses: actions/setup-python@v5
               with:

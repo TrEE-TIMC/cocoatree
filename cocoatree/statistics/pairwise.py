@@ -164,3 +164,39 @@ def compute_mi_matrix(joint_freqs, joint_freqs_ind):
                   axis=(2, 3))
 
     return MIij
+
+
+def compute_apc(Cij):
+    """
+    Computes the average product correction (APC) as described in Dunn et
+    al. (2008).
+    APC(a,b) = (MI(a,x)*MI(b,x))/MI_bar
+    where MI(a,x) is the mean mutual information of column *a*
+    and *MI_bar* is the overall mean mutual information
+
+    Arguments
+    ----------
+    Cij : coevolution matrix
+
+    Returns
+    -------
+    APC_ab :
+
+    MIp = MI(a,b) - APC(a,b)
+    """
+
+    n = Cij.shape[0]
+    m = n - 1
+    # Replace the matrix diagonal by 0
+    np.fill_diagonal(Cij, 0)
+
+    MI_colmean = (1/m) * np.sum(Cij, axis=0)
+    MI_colmean = np.multiply.outer(MI_colmean, MI_colmean)
+
+    MI_overmean = (2/(m*n)) * np.sum(np.tril(Cij))
+
+    APC_ij = MI_colmean / MI_overmean
+
+    MIp = Cij - APC_ij
+
+    return APC_ij, MIp

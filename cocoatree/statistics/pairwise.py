@@ -143,3 +143,24 @@ def compute_sca_matrix(joint_freqs, joint_freqs_ind, aa_freq, background_freq):
     Cij = np.sqrt(np.sum(Cijab_tilde ** 2, axis=(2, 3)))
 
     return Cijab_raw, Cij
+
+
+def compute_mi_matrix(joint_freqs, joint_freqs_ind):
+
+    """Compute the mutual information matrix
+
+    Arguments
+    ----------
+    joint_freqs : amino acid joint frequencies
+
+    joint_freqs_ind : independent aa joint frequencies
+
+    Returns
+    -------
+    MIij: a matrix of mutual information
+    """
+
+    MIij = np.sum(joint_freqs * np.log(joint_freqs / joint_freqs_ind),
+                  axis=(2, 3))
+
+    return MIij

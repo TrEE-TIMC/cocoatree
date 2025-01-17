@@ -96,7 +96,11 @@ def compute_background_frequencies(aa_freq, lambda_coef=0.03):
 
 
 def compute_entropy(fia):
-    """Computes entropy for each position in the alignment
+    """Computes  Shannon's entropy for each position in the alignment
+
+    .. math::
+
+        H(a) = -sum_{x} p(x, a) * \\log{p(x, a)}
 
     Arguments
     ----------

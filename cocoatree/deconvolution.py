@@ -147,7 +147,7 @@ class Unit:
         self.vect = 0
 
 
-def icList(Vpica, kpos, Csca, p_cut=0.95):
+def icList(Vica, n_component, Cij, p_cut=0.95):
     """
     Produces a list of positions contributing to each independent component
     (IC) above a defined statistical cutoff (p_cut, the cutoff on the CDF of
@@ -156,32 +156,72 @@ def icList(Vpica, kpos, Csca, p_cut=0.95):
     positions to which it shows a higher degree of coevolution. Additionally
     returns the numeric value of the cutoff for each IC, and the pdf fit, which
     can be used for plotting/evaluation.
+    Based on Rivoire et al. (2016): \
+        https://doi.org/10.1371/journal.pcbi.1004817
+
+    Arguments
+    ---------
+    Vica : ndarray,
+        independent components
+
+    n_component : int,
+        number of independent components chosen
+
+    Cij : numpy.ndarray,
+        coevolution matrix
+
+    p_cut : int,
+        cutoff on the CDF of the t-distribution fit to the histogran of each IC
+
+    Returns
+    -------
+    selected_res : list of cocoatree.deconvolution.Unit,
+        positions of the selected residues for each independent component.
+        Beware that if the alignment used for the analysis has been filtered,
+        those are the positions on the filtered alignment and not on the
+        original alignment, a mapping of the positions may be needed.
+
+    ic_size : list,
+        number of selected residues for each component.
+
+    sorted_pos : list,
+        positions of the residues sorted by decreasing contribution for each
+        component.
+
+    cutoff : list,
+        numeric value of the cutoff for each component.
+
+    scaled_pdf : list of np.ndarrays,
+        scaled probability distribution function for each component.
+
+    all_fits : list,
+        t-distribution fits for each component.
 
     **Example**::
-
-      icList, icsize, sortedpos, cutoff, pd = icList(Vsca, Lsca, Lrand)
+        selected_res, ic_size, sorted_pos, cutoff, scaled_pdf, all_fits = \
+            icList(Vica, n_component, Cij, p_cut=0.95)
     """
 
     # do the PDF/CDF fit, and assign cutoffs
-    Npos = len(Vpica)
+    Npos = len(Vica)
     cutoff = list()
     scaled_pdf = list()
     all_fits = list()
-    for k in range(kpos):
-        pd = t.fit(Vpica[:, k])
+    for k in range(n_component):
+        pd = t.fit(Vica[:, k])
         all_fits.append(pd)
-        iqr = scoreatpercentile(Vpica[:, k], 75) - scoreatpercentile(
-            Vpica[:, k], 25
+        iqr = scoreatpercentile(Vica[:, k], 75) - scoreatpercentile(
+            Vica[:, k], 25
         )
-        binwidth = 2 * iqr * (len(Vpica[:, k]) ** (-0.33))
-        nbins = round((max(Vpica[:, k]) - min(Vpica[:, k])) / binwidth)
-        h_params = np.histogram(Vpica[:, k], int(nbins))
+        binwidth = 2 * iqr * (len(Vica[:, k]) ** (-0.33))
+        nbins = round((max(Vica[:, k]) - min(Vica[:, k])) / binwidth)
+        h_params = np.histogram(Vica[:, k], int(nbins))
         x_dist = np.linspace(min(h_params[1]), max(h_params[1]), num=100)
         area_hist = Npos * (h_params[1][2] - h_params[1][1])
         scaled_pdf.append(area_hist * (t.pdf(x_dist, pd[0], pd[1], pd[2])))
         cd = t.cdf(x_dist, pd[0], pd[1], pd[2])
         tmp = scaled_pdf[k].argmax()
-        if abs(max(Vpica[:, k])) > abs(min(Vpica[:, k])):
+        if abs(max(Vica[:, k])) > abs(min(Vica[:, k])):
             tail = cd[tmp: len(cd)]
         else:
             cd = 1 - cd
@@ -192,43 +232,44 @@ def icList(Vpica, kpos, Csca, p_cut=0.95):
 
     # select the positions with significant contributions to each IC
     ic_init = list()
-    for k in range(kpos):
-        ic_init.append([i for i in range(Npos) if Vpica[i, k] > cutoff[k]])
+    for k in range(n_component):
+        ic_init.append([i for i in range(Npos) if Vica[i, k] > cutoff[k]])
 
     # construct the sorted, non-redundant iclist
-    sortedpos = list()
-    icsize = list()
-    ics = list()
+    sorted_pos = list()
+    ic_size = list()
+    selected_res = list()
     icpos_tmp = list()
-    Csca_nodiag = Csca.copy()
+    Cij_nodiag = Cij.copy()
     for i in range(Npos):
-        Csca_nodiag[i, i] = 0
-    for k in range(kpos):
+        Cij_nodiag[i, i] = 0
+    for k in range(n_component):
         icpos_tmp = list(ic_init[k])
-        for kprime in [kp for kp in range(kpos) if kp != k]:
+        for kprime in [kp for kp in range(n_component) if kp != k]:
             tmp = [v for v in icpos_tmp if v in ic_init[kprime]]
             for i in tmp:
                 remsec = np.linalg.norm(
-                    Csca_nodiag[i, ic_init[k]]
-                ) < np.linalg.norm(Csca_nodiag[i, ic_init[kprime]])
+                    Cij_nodiag[i, ic_init[k]]
+                ) < np.linalg.norm(Cij_nodiag[i, ic_init[kprime]])
                 if remsec:
                     icpos_tmp.remove(i)
-        sortedpos += sorted(icpos_tmp, key=lambda i: -Vpica[i, k])
-        icsize.append(len(icpos_tmp))
+        sorted_pos += sorted(icpos_tmp, key=lambda i: -Vica[i, k])
+        ic_size.append(len(icpos_tmp))
         s = Unit()
-        s.items = sorted(icpos_tmp, key=lambda i: -Vpica[i, k])
-        s.col = k / kpos
-        s.vect = -Vpica[s.items, k]
-        ics.append(s)
-    return ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits
+        s.items = sorted(icpos_tmp, key=lambda i: -Vica[i, k])
+        s.col = k / n_component
+        s.vect = -Vica[s.items, k]
+        selected_res.append(s)
+    return selected_res, ic_size, sorted_pos, cutoff, scaled_pdf, all_fits
 
 
 def choose_num_components(eigenvalues, rand_eigenvalues):
     """
-    Given the eigenvalues of the coevolution matrix (Lsca), and the
-    eigenvalues for the set of randomized matrices (Lrand), return
-    the number of significant eigenmodes.
-    Based on Rivoire et al. (2016)
+    Given the eigenvalues of the coevolution matrix (eigenvalues), and the
+    eigenvalues for the set of randomized matrices (rand_eigenvalues), return
+    the number of significant eigenmodes as those above the average first
+    eigenvalue plus 3 standard deviations.
+    Based on S1 text of Rivoire et al. (2016)
 
     Arguments
     ---------
@@ -246,7 +287,7 @@ def choose_num_components(eigenvalues, rand_eigenvalues):
     """
 
     n_component = eigenvalues[eigenvalues >
-                              (rand_eigenvalues[:, -2].mean() +
-                               (3 * rand_eigenvalues[:, -2].std()))].shape[0]
+                              (rand_eigenvalues[:, -1].mean() +
+                               (3 * rand_eigenvalues[:, -1].std()))].shape[0]
 
     return n_component

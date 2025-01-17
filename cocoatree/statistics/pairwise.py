@@ -200,3 +200,28 @@ def compute_apc(Cij):
     MIp = Cij - APC_ij
 
     return APC_ij, MIp
+
+
+def compute_entropy_correction(coevolution_matrix, s):
+
+    """
+    Computes entropy correction according to Vorberg et al. (2018)
+
+    Arguments
+    ---------
+    coevolution_matrix : square matrix of shape (Nseq, Nseq)
+
+    s : entropy computed for every position of the MSA
+
+    Returns
+    -------
+    a square matrix of shape (Nseq, Nseq)
+    """
+
+    s_prod = np.multiply.outer(s, s)
+    no_diag_eye = (1 - np.eye(s_prod.shape[0]))
+    alpha = np.sum(
+        (no_diag_eye * np.sqrt(s_prod) * coevolution_matrix) / np.sum(
+            (no_diag_eye * s_prod)))
+
+    return coevolution_matrix - alpha * np.sqrt(s_prod)

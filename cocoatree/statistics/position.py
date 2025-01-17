@@ -112,7 +112,7 @@ def compute_entropy(fia):
     return s
 
 
-def compute_rel_entropy(fia, qa):
+def compute_rel_entropy(fia, background_freq):
     """Kullback-Leibler relative entropy
 
     Arguments
@@ -129,9 +129,10 @@ def compute_rel_entropy(fia, qa):
     Di: overall conservation of position i taking all amino acids into account
     """
 
-    Dia = fia * np.log(fia / qa) + (1 - fia) * np.log((1 - fia) / (1 - qa))
+    Dia = fia * np.log(fia / background_freq) + \
+        (1 - fia) * np.log((1 - fia) / (1 - background_freq))
 
     # sum on all aa at each position
-    Di = np.sum(fia * np.log(fia / qa), axis=1)
+    Di = np.sum(fia * np.log(fia / background_freq), axis=1)
 
     return Dia, Di

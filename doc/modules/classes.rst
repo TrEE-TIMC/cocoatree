@@ -106,8 +106,13 @@ Functions
    statistics.pairwise.aa_joint_freq
    statistics.pairwise.compute_seq_identity
    statistics.pairwise.compute_sca_matrix
+   statistics.pairwise.compute_mi_matrix
+   statistics.pairwise.compute_apc
+   statistics.pairwise.compute_entropy_correction
    statistics.position.aa_freq_at_pos
    statistics.position.compute_background_frequencies
+   statistics.position.compute_entropy
+   statistics.position.compute_rel_entropy
 
 
 .. _statistics_ref:

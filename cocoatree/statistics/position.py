@@ -110,3 +110,28 @@ def compute_entropy(fia):
     s = -np.sum(fia * np.log(fia), axis=1)
 
     return s
+
+
+def compute_rel_entropy(fia, qa):
+    """Kullback-Leibler relative entropy
+
+    Arguments
+    ----------
+    pos_freq: amino acid frequencies per position (fia)
+
+    returns
+    -------
+    Dia: relative entropy of fia given the background distribution of amino
+        acids. Indicates how unlikely the observed frequency of amino acid a
+        at position i would be if a occurred randomly with probability qa
+        (background expectation)
+
+    Di: overall conservation of position i taking all amino acids into account
+    """
+
+    Dia = fia * np.log(fia / qa) + (1 - fia) * np.log((1 - fia) / (1 - qa))
+
+    # sum on all aa at each position
+    Di = np.sum(fia * np.log(fia / qa), axis=1)
+
+    return Dia, Di

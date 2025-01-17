@@ -93,3 +93,20 @@ def compute_background_frequencies(aa_freq, lambda_coef=0.03):
             lambda_coef / aa_count
 
     return background_freq
+
+
+def compute_entropy(fia):
+    """Computes entropy for each position in the alignment
+
+    Arguments
+    ----------
+    pos_freq: amino acid frequencies per position
+
+    Returns
+    -------
+    s: array of shape (N_pos)
+    """
+
+    s = -np.sum(fia * np.log(fia), axis=1)
+
+    return s

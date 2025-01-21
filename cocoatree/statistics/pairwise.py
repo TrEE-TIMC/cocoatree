@@ -149,6 +149,10 @@ def compute_mi_matrix(joint_freqs, joint_freqs_ind):
 
     """Compute the mutual information matrix
 
+    .. math::
+
+
+
     Arguments
     ----------
     joint_freqs : amino acid joint frequencies
@@ -157,7 +161,8 @@ def compute_mi_matrix(joint_freqs, joint_freqs_ind):
 
     Returns
     -------
-    MIij: a matrix of mutual information
+    MIij: np.ndarray,
+        the matrix of mutual information
     """
 
     MIij = np.sum(joint_freqs * np.log(joint_freqs / joint_freqs_ind),
@@ -166,38 +171,51 @@ def compute_mi_matrix(joint_freqs, joint_freqs_ind):
     return MIij
 
 
-def compute_apc(Cij):
+def compute_apc(MIij):
     """
     Computes the average product correction (APC) as described in Dunn et
     al. (2008).
-    APC(a,b) = (MI(a,x)*MI(b,x))/MI_bar
-    where MI(a,x) is the mean mutual information of column *a*
-    and *MI_bar* is the overall mean mutual information
+
+    .. math::
+
+        APC(a, b) = \\frac{MI(a, \\bar{x}) MI(b, \\bar{x}){\\overline{MI}}
+
+    where :math:`MI(a, \\bar{x})` is the mean mutual information of column *a*
+    and :math:`\\overline{MI}` is the overall mean mutual information
+
+    The corrected mutual information is then:
+
+    .. math::
+
+        MIp(a, b) = MI(a, b) - APC(a, b)
 
     Arguments
     ----------
-    Cij : coevolution matrix
+    MIij : np.ndarray,
+        the mutual information matrix
 
     Returns
     -------
-    APC_ab :
+    APC_ij : np.ndarray,
+        the average product correction (APC) matrix
 
-    MIp = MI(a,b) - APC(a,b)
+    MIp = np.ndarray,
+        the APC corrected mutual information matrix
     """
 
-    n = Cij.shape[0]
+    n = MIij.shape[0]
     m = n - 1
     # Replace the matrix diagonal by 0
-    np.fill_diagonal(Cij, 0)
+    np.fill_diagonal(MIij, 0)
 
-    MI_colmean = (1/m) * np.sum(Cij, axis=0)
+    MI_colmean = (1/m) * np.sum(MIij, axis=0)
     MI_colmean = np.multiply.outer(MI_colmean, MI_colmean)
 
-    MI_overmean = (2/(m*n)) * np.sum(np.tril(Cij))
+    MI_overmean = (2/(m*n)) * np.sum(np.tril(MIij))
 
     APC_ij = MI_colmean / MI_overmean
 
-    MIp = Cij - APC_ij
+    MIp = MIij - APC_ij
 
     return APC_ij, MIp
 
@@ -205,7 +223,20 @@ def compute_apc(Cij):
 def compute_entropy_correction(coevolution_matrix, s):
 
     """
-    Computes entropy correction according to Vorberg et al. (2018)
+    Computes the entropy correction according to Vorberg et al. (2018)
+
+    .. math::
+
+        C_{ij}^{EC} = C_{ij} - \\alpha s_{i}^{\\frac{1}{2}} \
+            s_{j}^{\\frac{1}{2}}
+
+    where :math:`\\alpha` is a coefficient determining the strength of the
+    correction:
+
+    .. math::
+
+        \\alpha = \\frac{\\sum_{i \\neq j}^{L} c_ij \
+        s_{i}^{\\frac{1}{2}}}{\\sum_{i \\neq j}^{L} s_i s_j}
 
     Arguments
     ---------

@@ -95,48 +95,67 @@ def compute_background_frequencies(aa_freq, lambda_coef=0.03):
     return background_freq
 
 
-def compute_entropy(fia):
+def compute_entropy(aa_freq):
     """Computes  Shannon's entropy for each position in the alignment
 
     .. math::
 
-        H(a) = -sum_{x} p(x, a) * \\log{p(x, a)}
+        H(a) = -\\sum_i f_{ia} \\log f_{ia}
+
+    where *H(a)* is the relative entropy of amino acid *a*,
+        *fia* is the frequency of amino acid *a* at position *i*
 
     Arguments
     ----------
-    pos_freq: amino acid frequencies per position
+    aa_freq: np.ndarray,
+        amino acid frequencies per position
 
     Returns
     -------
     s: array of shape (N_pos)
     """
 
-    s = -np.sum(fia * np.log(fia), axis=1)
+    s = -np.sum(aa_freq * np.log(aa_freq), axis=1)
 
     return s
 
 
-def compute_rel_entropy(fia, background_freq):
+def compute_rel_entropy(aa_freq, background_freq):
     """Kullback-Leibler relative entropy
+
+    .. math::
+
+        D_i^a = f_i^a \\ln \\frac{f_i^a}{q^a} + (1 - f_i^a) \\ln \
+            \\frac{1 - f_i^a}{1 - q^a}
+
+    where f_i^a is the observed frequency of amino acid *a* at position *i*,
+        q^a is the background expectation
+    D_i^a is known as the Kullback-Leibler relative entropy (Cover and Thomas,
+    2012) and indicates how unlikely the observed frequencies of amino acid
+    *a* at position *i* would be if *a* occurred randomly with probability q^a.
 
     Arguments
     ----------
-    pos_freq: amino acid frequencies per position (fia)
+    aa_freq: np.ndarray,
+        amino acid frequencies per position
 
     returns
     -------
-    Dia: relative entropy of fia given the background distribution of amino
-        acids. Indicates how unlikely the observed frequency of amino acid a
-        at position i would be if a occurred randomly with probability qa
-        (background expectation)
+    Dia: np.ndarray,
+        relative entropy of aa_freq given the background distribution of amino
+        acids. Indicates how unlikely the observed frequency of amino acid *a*
+        at position *i* would be if a occurred randomly with probability
+        background_freq
 
-    Di: overall conservation of position i taking all amino acids into account
+    Di: np.ndarray,
+        overall conservation of position *i* taking all amino acids into
+        account
     """
 
-    Dia = fia * np.log(fia / background_freq) + \
-        (1 - fia) * np.log((1 - fia) / (1 - background_freq))
+    Dia = aa_freq * np.log(aa_freq / background_freq) + \
+        (1 - aa_freq) * np.log((1 - aa_freq) / (1 - background_freq))
 
-    # sum on all aa at each position
-    Di = np.sum(fia * np.log(fia / background_freq), axis=1)
+    # sum on all amino acid at each position
+    Di = np.sum(aa_freq * np.log(aa_freq / background_freq), axis=1)
 
     return Dia, Di

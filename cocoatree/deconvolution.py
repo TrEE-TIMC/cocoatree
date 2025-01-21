@@ -287,7 +287,7 @@ def choose_num_components(eigenvalues, rand_eigenvalues):
     """
 
     n_component = eigenvalues[eigenvalues >
-                              (rand_eigenvalues[:, -1].mean() +
-                               (3 * rand_eigenvalues[:, -1].std()))].shape[0]
+                              (rand_eigenvalues[:, -2].mean() +
+                               (3 * rand_eigenvalues[:, -2].std()))].shape[0]
 
     return n_component

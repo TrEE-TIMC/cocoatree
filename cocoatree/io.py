@@ -1,5 +1,7 @@
 from Bio import AlignIO
+from Bio.PDB import PDBParser
 from .msa import _clean_msa
+from .__params import aatable
 from ete3 import Tree
 
 
@@ -76,3 +78,44 @@ def export_fasta(sequences, seq_id, outpath):
         for record in range(0, Nseq):
             outfile.write('>' + str(seq_id[record]) + '\n')
             outfile.write(str(sequences[record]) + '\n')
+
+
+def load_pdb(path2pdb, pdb_id, chain):
+
+    '''
+    Import a PDB file and extract the associated sequence along with the
+    amino acid positions
+
+    Arguments
+    ---------
+    path2pdb : path to the PDB file
+
+    pdb_id : str,
+        identifier of the PDB file
+
+    chain : str,
+        name of the chain to read
+
+    Returns
+    -------
+    sequence :
+
+    labels :
+    '''
+
+    P = PDBParser(PERMISSIVE=1)
+    structure = P.get_structure(pdb_id, path2pdb)
+
+    # Fill up sequence and label information
+    sequence = ""
+    labels = list()
+    residues = [res for res in structure[0][chain] if res.get_id()[0] == " "]
+    for res in residues:
+        labels.append(str(res.get_id()[1]) + str(res.get_id()[2]).strip())
+        try:
+            sequence += aatable[res.get_resname()]
+        except BaseException as e:
+            print("Error: " + str(e))
+            sequence += "X"
+
+    return sequence, labels

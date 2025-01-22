@@ -27,6 +27,7 @@ Functions
   io.load_MSA
   io.load_tree_ete3
   io.export_fasta
+  io.load_pdb
 
 .. _io_ref:
 

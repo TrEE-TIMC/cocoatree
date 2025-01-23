@@ -199,7 +199,7 @@ def compute_apc(MIij):
     APC_ij : np.ndarray,
         the average product correction (APC) matrix
 
-    MIp = np.ndarray,
+    MIp : np.ndarray,
         the APC corrected mutual information matrix
     """
 

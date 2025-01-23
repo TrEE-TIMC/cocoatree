@@ -98,24 +98,26 @@ def load_pdb(path2pdb, pdb_id, chain):
 
     Returns
     -------
-    sequence :
+    pbd_seq : str,
+        amino acid sequence of the PDB file
 
-    labels :
+    pdb_pos : list,
+        PDB position of each amino acid
     '''
 
     P = PDBParser(PERMISSIVE=1)
     structure = P.get_structure(pdb_id, path2pdb)
 
     # Fill up sequence and label information
-    sequence = ""
-    labels = list()
+    pdb_seq = ""
+    pdb_pos = list()
     residues = [res for res in structure[0][chain] if res.get_id()[0] == " "]
     for res in residues:
-        labels.append(str(res.get_id()[1]) + str(res.get_id()[2]).strip())
+        pdb_pos.append(str(res.get_id()[1]) + str(res.get_id()[2]).strip())
         try:
-            sequence += aatable[res.get_resname()]
+            pdb_seq += aatable[res.get_resname()]
         except BaseException as e:
             print("Error: " + str(e))
-            sequence += "X"
+            pdb_seq += "X"
 
-    return sequence, labels
+    return pdb_seq, pdb_pos

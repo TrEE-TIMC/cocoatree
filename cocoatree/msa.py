@@ -253,3 +253,40 @@ def filter_seq_id(seq_id, sequences, list_id):
     seq_list = np.array(seq_list)
 
     return [new_msa, id_list, seq_list]
+
+
+def map_to_pdb(pdb_seq, pdb_pos, sequences, ref_seq_id):
+    """
+    Mapping of the unfiltered MSA positions on a PDB structure.
+
+    Parameters
+    ----------
+    pdb_seq: str,
+        amino acid sequence of the reference PDB file
+
+    pdb_pos: list,
+        Residue positions as found in the PDB file
+
+    sequences: list,
+        List of sequences of the unfiltered MSA
+
+    ref_seq_id: str,
+        identifier of the sequence the positions are mapped onto. Should be
+        included in seq_list.
+
+    Returns
+    -------
+    mapping: numpy.ndarray of shape (3, len(pdb_seq)),
+        the first element is an array of the residues found in the PDB sequence
+        the second element is an array of the PDB position of each amino acid
+        the third element is an array of the positions of those same amino
+        acids in the unfiltered MSA
+    """
+    msa_pos = []
+    for aa_index in range(len(sequences[ref_seq_id])):
+        if sequences[ref_seq_id][aa_index] != '-':
+            msa_pos.append(aa_index)
+
+    mapping = np.array((list(pdb_seq), pdb_pos, msa_pos))
+
+    return mapping

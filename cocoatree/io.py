@@ -3,6 +3,7 @@ from Bio.PDB import PDBParser
 from .msa import _clean_msa
 from .__params import aatable
 from ete3 import Tree
+import numpy as np
 
 
 def load_MSA(file_path, format, clean=True, verbose=False):
@@ -121,3 +122,49 @@ def load_pdb(path2pdb, pdb_id, chain):
             pdb_seq += "X"
 
     return pdb_seq, pdb_pos
+
+
+def export_sector_for_pymol(mapping, independent_components, axis, sector_pos,
+                            ics, outpath):
+    """
+    Export numpy arrays of a sector's residue positions and their contribution
+    for coloring in PyMol.
+
+    Arguments
+    ---------
+    mapping : numpy.ndarray,
+        mapping between the unfiltered MSA and the PDB structure, output of
+        cocoatree.msa.map_to_pdb() function
+
+    independent_components : numpy.ndarray,
+        output of cocoatree.deconvolution.compute_ica() function
+
+    axis : int,
+        rank of the independent component associated with the desired sector
+
+    sector_pos : list,
+        positions of the sector's residues in the unfiltered MSA
+
+    ics : numpy.ndarray,
+        positions of the sector's residues in the filtered MSA
+
+    outpath : str,
+        path to the output file as a binary in .npy format
+
+    Returns
+    -------
+    binary file in .npy format containing an array with the positions of the
+    sector's residues and an array with their contribution to the independent
+    component.
+    """
+
+    sector_pdb_pos = []
+    for residue in sector_pos:
+        index = np.where(mapping[2] == residue)[0][0]
+        sector_pdb_pos.append(mapping[1][index])
+
+    ic_contributions = []
+    for residue in ics[0].items:
+        ic_contributions.append(independent_components[residue, axis])
+
+    np.save(outpath, np.array([sector_pdb_pos, ic_contributions]))

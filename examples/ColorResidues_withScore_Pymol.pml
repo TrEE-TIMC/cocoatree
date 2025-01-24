@@ -25,7 +25,7 @@ residues_swap = list(np.load('/home/jullimar/Documents/Postdoc_TIMC/test_color_r
 Scores =  list(np.load('/home/jullimar/Documents/Postdoc_TIMC/test_color_residues_contributions.npy'))
 
 nvals = len(residues_swap)
-colormap = _generate_colors_from_colormaps(nvals, cmap='jet', as_hex=True)
+colormap = _generate_colors_from_colormaps(nvals, cmap='jet', as_hex=False)
 
 for i in range(len(residues_swap)):
     residue = residues_swap[i]

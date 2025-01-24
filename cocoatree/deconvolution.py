@@ -147,7 +147,7 @@ class Unit:
         self.vect = 0
 
 
-def icList(Vica, n_component, Cij, p_cut=0.95):
+def extract_positions_from_IC(Vica, n_component, Cij, p_cut=0.95):
     """
     Produces a list of positions contributing to each independent component
     (IC) above a defined statistical cutoff (p_cut, the cutoff on the CDF of

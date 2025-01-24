@@ -146,7 +146,8 @@ def export_sector_for_pymol(mapping, independent_components, axis, sector_pos,
         positions of the sector's residues in the unfiltered MSA
 
     ics : numpy.ndarray,
-        positions of the sector's residues in the filtered MSA
+        positions of the sector's residues in the filtered MSA, output from
+        cocoatree.deconvolution.icList() function
 
     outpath : str,
         path to the output file as a binary in .npy format

@@ -31,7 +31,7 @@ from cocoatree.statistics.position import aa_freq_at_pos, \
 from cocoatree.statistics.pairwise import aa_joint_freq, compute_sca_matrix, \
     compute_seq_identity
 from cocoatree.deconvolution import eigen_decomp, compute_ica, \
-    choose_num_components, icList
+    choose_num_components, extract_positions_from_IC
 from cocoatree.randomize import randomization
 import matplotlib.pyplot as plt
 import numpy as np
@@ -190,9 +190,9 @@ for k, [k1, k2] in enumerate(pairs):
 
 # %%
 # Select residues that significantly contribute to each independent component
-ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits = icList(
-    independant_components, n_components, Cij,
-    p_cut=0.95)
+ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits = \
+    extract_positions_from_IC(independant_components, n_components, Cij,
+                              p_cut=0.95)
 
 print(f"Sizes of the {n_components} ICs: {icsize}")
 

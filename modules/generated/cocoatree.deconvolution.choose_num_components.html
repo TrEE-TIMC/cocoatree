@@ -45,10 +45,11 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="cocoatree.deconvolution.choose_num_components">
 <span class="sig-prename descclassname"><span class="pre">cocoatree.deconvolution.</span></span><span class="sig-name descname"><span class="pre">choose_num_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eigenvalues</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rand_eigenvalues</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.deconvolution.choose_num_components" title="Link to this definition">¶</a></dt>
-<dd><p>Given the eigenvalues of the coevolution matrix (Lsca), and the
-eigenvalues for the set of randomized matrices (Lrand), return
-the number of significant eigenmodes.
-Based on Rivoire et al. (2016)</p>
+<dd><p>Given the eigenvalues of the coevolution matrix (eigenvalues), and the
+eigenvalues for the set of randomized matrices (rand_eigenvalues), return
+the number of significant eigenmodes as those above the average first
+eigenvalue plus 3 standard deviations.
+Based on S1 text of Rivoire et al. (2016)</p>
 <section id="arguments">
 <h2>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">¶</a></h2>
 <dl class="simple">

@@ -143,7 +143,10 @@
 <td><p>ICA rotation (using _basicICA) with default parameters and normalization of outputs.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.choose_num_components.html#cocoatree.deconvolution.choose_num_components" title="cocoatree.deconvolution.choose_num_components"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.choose_num_components</span></code></a>(...)</p></td>
-<td><p>Given the eigenvalues of the coevolution matrix (Lsca), and the eigenvalues for the set of randomized matrices (Lrand), return the number of significant eigenmodes.</p></td>
+<td><p>Given the eigenvalues of the coevolution matrix (eigenvalues), and the eigenvalues for the set of randomized matrices (rand_eigenvalues), return the number of significant eigenmodes as those above the average first eigenvalue plus 3 standard deviations.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.extract_positions_from_IC.html#cocoatree.deconvolution.extract_positions_from_IC" title="cocoatree.deconvolution.extract_positions_from_IC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.extract_positions_from_IC</span></code></a>(...)</p></td>
+<td><p>Produces a list of positions contributing to each independent component (IC) above a defined statistical cutoff (p_cut, the cutoff on the CDF of the t-distribution fit to the histogram of each IC).</p></td>
 </tr>
 </tbody>
 </table>

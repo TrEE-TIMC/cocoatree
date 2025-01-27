@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>cocoatree.deconvolution.extract_positions_from_IC &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="../../_static/documentation_options.js?v=837179f8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  </head><body><div class="navbar related">
+      <a href="../../index.html">
+        
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="../../auto_examples/index.html">Gallery</a> </li>
+      <li class="right"><a href="../classes.html">Documentation</a> | </li>
+      <li class="right"><a href="../../install.html">Installation</a> | </li>
+      <li class="right"><a href="../../index.html">Home</a> | </li>
+      
+    </ul>
+  </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cocoatree-deconvolution-extract-positions-from-ic">
+<h1>cocoatree.deconvolution.extract_positions_from_IC<a class="headerlink" href="#cocoatree-deconvolution-extract-positions-from-ic" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="cocoatree.deconvolution.extract_positions_from_IC">
+<span class="sig-prename descclassname"><span class="pre">cocoatree.deconvolution.</span></span><span class="sig-name descname"><span class="pre">extract_positions_from_IC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Vica</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_component</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cij</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_cut</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.deconvolution.extract_positions_from_IC" title="Link to this definition">¶</a></dt>
+<dd><p>Produces a list of positions contributing to each independent component
+(IC) above a defined statistical cutoff (p_cut, the cutoff on the CDF of
+the t-distribution fit to the histogram of each IC). Any position above the
+cutoff on more than one IC are assigned to one IC based on which group of
+positions to which it shows a higher degree of coevolution. Additionally
+returns the numeric value of the cutoff for each IC, and the pdf fit, which
+can be used for plotting/evaluation.
+Based on Rivoire et al. (2016):         <a class="reference external" href="https://doi.org/10.1371/journal.pcbi.1004817">https://doi.org/10.1371/journal.pcbi.1004817</a></p>
+<section id="arguments">
+<h2>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>Vica<span class="classifier">ndarray,</span></dt><dd><p>independent components</p>
+</dd>
+<dt>n_component<span class="classifier">int,</span></dt><dd><p>number of independent components chosen</p>
+</dd>
+<dt>Cij<span class="classifier">numpy.ndarray,</span></dt><dd><p>coevolution matrix</p>
+</dd>
+<dt>p_cut<span class="classifier">int,</span></dt><dd><p>cutoff on the CDF of the t-distribution fit to the histogran of each IC</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>selected_res<span class="classifier">list of cocoatree.deconvolution.Unit,</span></dt><dd><p>positions of the selected residues for each independent component.
+Beware that if the alignment used for the analysis has been filtered,
+those are the positions on the filtered alignment and not on the
+original alignment, a mapping of the positions may be needed.</p>
+</dd>
+<dt>ic_size<span class="classifier">list,</span></dt><dd><p>number of selected residues for each component.</p>
+</dd>
+<dt>sorted_pos<span class="classifier">list,</span></dt><dd><p>positions of the residues sorted by decreasing contribution for each
+component.</p>
+</dd>
+<dt>cutoff<span class="classifier">list,</span></dt><dd><p>numeric value of the cutoff for each component.</p>
+</dd>
+<dt>scaled_pdf<span class="classifier">list of np.ndarrays,</span></dt><dd><p>scaled probability distribution function for each component.</p>
+</dd>
+<dt>all_fits<span class="classifier">list,</span></dt><dd><p>t-distribution fits for each component.</p>
+</dd>
+<dt><strong>Example</strong>::</dt><dd><p>selected_res, ic_size, sorted_pos, cutoff, scaled_pdf, all_fits =             icList(Vica, n_component, Cij, p_cut=0.95)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<section id="examples-using-cocoatree-deconvolution-extract-positions-from-ic">
+<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.deconvolution.extract_positions_from_IC</span></code><a class="headerlink" href="#examples-using-cocoatree-deconvolution-extract-positions-from-ic" title="Link to this heading">¶</a></h2>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete coevolution analysis in order to detect protein sectors from data importation, MSA filtering, computation of positional and joint amino acid frequencies, and computation of the SCA coevolution matrix."><img alt="" src="../../_images/sphx_glr_plot_full_SCA_analysis_thumb.png" />
+<p><a class="reference internal" href="../../auto_examples/plot_full_SCA_analysis.html#sphx-glr-auto-examples-plot-full-sca-analysis-py"><span class="std std-ref">Perform full SCA analysis on the S1A serine protease dataset</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Perform full SCA analysis on the S1A serine protease dataset</div>
+</div></div><div class="sphx-glr-clear"></div></section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

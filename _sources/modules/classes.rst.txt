@@ -134,7 +134,7 @@ Functions
     deconvolution.eigen_decomp
     deconvolution.compute_ica
     deconvolution.choose_num_components
-
+    deconvolution.extract_positions_from_IC
 
 
 .. _deconvolution_ref:

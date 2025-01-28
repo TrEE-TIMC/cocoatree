@@ -1,6 +1,7 @@
 import numpy as np
 import sklearn.metrics as sn
 from ..__params import lett2num
+from .sequence import compute_seq_weights
 
 
 def compute_seq_identity(sequences):
@@ -144,8 +145,8 @@ def compute_sca_matrix(joint_freqs, joint_freqs_ind, aa_freq, background_freq):
     return Cijab_raw, Cij
 
 
-def compute_mutual_information_matrix(joint_freqs, joint_freqs_ind):
-    """Compute the mutual information matrix
+def compute_mutual_information_matrix(sequences, pseudo_count_val=0.03):
+    r"""Compute the mutual information matrix
 
     .. math::
 
@@ -153,17 +154,24 @@ def compute_mutual_information_matrix(joint_freqs, joint_freqs_ind):
 
     Arguments
     ----------
-    joint_freqs : amino acid joint frequencies
+    sequences : list of sequences
 
-    joint_freqs_ind : independent aa joint frequencies
+    pseudo_count_val : float
+        Pseudo count value, to add to expected frequences (in order to have
+        non-zero elements)
 
     Returns
     -------
-    MIij: np.ndarray,
+    mi_matrix : np.ndarray,
         the matrix of mutual information
     """
+    sim_matrix = compute_seq_identity(sequences)
+    weights, _ = compute_seq_weights(sim_matrix)
+    joint_freqs, joint_freqs_ind = aa_joint_freq(
+        sequences, weights, lambda_coef=pseudo_count_val)
 
-    MIij = np.sum(joint_freqs * np.log(joint_freqs / joint_freqs_ind),
-                  axis=(2, 3))
+    mi_matrix = np.sum(
+        joint_freqs * np.log(joint_freqs / joint_freqs_ind),
+        axis=(2, 3))
 
-    return MIij
+    return mi_matrix

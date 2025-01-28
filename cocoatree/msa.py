@@ -255,7 +255,7 @@ def filter_seq_id(seq_id, sequences, list_id):
     return [new_msa, id_list, seq_list]
 
 
-def map_to_pdb(pdb_seq, pdb_pos, sequences, ref_seq_id):
+def map_to_pdb(pdb_seq, pdb_pos, sequences, seq_id, ref_seq_id):
     """
     Mapping of the unfiltered MSA positions on a PDB structure.
 
@@ -270,6 +270,9 @@ def map_to_pdb(pdb_seq, pdb_pos, sequences, ref_seq_id):
     sequences: list,
         List of sequences of the unfiltered MSA
 
+    seq_id: list,
+        List of sequence identifiers in the unfiltered MSA
+
     ref_seq_id: str,
         identifier of the sequence the positions are mapped onto. Should be
         included in seq_list.
@@ -283,8 +286,9 @@ def map_to_pdb(pdb_seq, pdb_pos, sequences, ref_seq_id):
         acids in the unfiltered MSA
     """
     msa_pos = []
-    for aa_index in range(len(sequences[ref_seq_id])):
-        if sequences[ref_seq_id][aa_index] != '-':
+    ref_seq_idx = seq_id.index(ref_seq_id)
+    for aa_index in range(len(sequences[ref_seq_idx])):
+        if sequences[ref_seq_idx][aa_index] != '-':
             msa_pos.append(aa_index)
 
     mapping = np.array((list(pdb_seq), pdb_pos, msa_pos))

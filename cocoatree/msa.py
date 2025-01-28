@@ -3,7 +3,7 @@ from Bio.SeqRecord import SeqRecord
 from Bio.Align import MultipleSeqAlignment
 from .__params import lett2num
 import numpy as np
-from .statistics.pairwise import compute_seq_identity
+from .statistics.sequence import compute_seq_identity
 
 
 def _clean_msa(msa):

@@ -16,7 +16,7 @@ import matplotlib.cm as cmx
 import matplotlib.pyplot as plt
 
 from .msa import filter_seq_id
-from .statistics.pairwise import compute_seq_identity
+from .statistics.sequence import compute_seq_identity
 
 
 def _annot_to_color(attribute, tree, df_annot, cmap='jet'):

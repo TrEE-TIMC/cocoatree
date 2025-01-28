@@ -1,32 +1,8 @@
 import numpy as np
-import sklearn.metrics as sn
 from ..__params import lett2num
-from .sequence import compute_seq_weights
+from .sequence import compute_sequences_weights
 
 from .position import aa_freq_at_pos
-
-
-def compute_seq_identity(sequences):
-    """
-    Computes the identity between sequences in a MSA (as Hamming's pairwise
-    distance)
-
-    Arguments
-    ---------
-    sequences : list of sequences
-
-    Returns
-    -------
-    sim_matrix : identity matrix of shape (Nseq, Nseq)
-    """
-
-    separated_aa = np.array([[lett2num[char] for char in row]
-                             for row in sequences])
-
-    sim_matrix = 1 - sn.DistanceMetric.get_metric(
-        "hamming").pairwise(separated_aa)
-
-    return sim_matrix
 
 
 def aa_joint_freq(sequences, weights, lambda_coef=0.03):
@@ -226,17 +202,21 @@ def compute_entropy_correction(coevolution_matrix, s):
     return coevolution_matrix - alpha * np.sqrt(s_prod)
 
 
-def compute_mutual_information_matrix(sequences, pseudo_count_val=0.03,
+def compute_mutual_information_matrix(sequences, seq_weights=None,
+                                      pseudo_count_val=0.03,
                                       normalize=True):
-    r"""Compute the mutual information matrix
+    """Compute the mutual information matrix
 
     .. math::
 
-        I(X, Y) = \sum_{x,y} p(x, y) \log \frac{p(x, y)}{p(x)p(y)}
+        I(X, Y) = \\sum_{x,y} p(x, y) \\log \\frac{p(x, y)}{p(x)p(y)}
 
     Arguments
     ----------
     sequences : list of sequences
+
+    seq_weights : ndarray (nseq), optional, default: None
+        if None, will compute sequence weights
 
     pseudo_count_val : float, default : 0.03
         Pseudo count value, to add to expected frequences (in order to have
@@ -250,8 +230,7 @@ def compute_mutual_information_matrix(sequences, pseudo_count_val=0.03,
     mi_matrix : np.ndarray of shape (nseq, nseq)
         the matrix of mutual information
     """
-    sim_matrix = compute_seq_identity(sequences)
-    weights, _ = compute_seq_weights(sim_matrix)
+    weights, _ = compute_sequences_weights(sequences)
     joint_freqs = aa_joint_freq(
         sequences, weights, lambda_coef=pseudo_count_val)
 

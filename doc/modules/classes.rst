@@ -104,7 +104,6 @@ Functions
 
    statistics.compute_all_frequencies
    statistics.pairwise.aa_joint_freq
-   statistics.pairwise.compute_seq_identity
    statistics.pairwise.compute_sca_matrix
    statistics.pairwise.compute_mutual_information_matrix
    statistics.pairwise.compute_apc
@@ -116,7 +115,8 @@ Functions
    statistics.position.aa_freq_at_pos
    statistics.position.compute_background_frequencies
    statistics.position.compute_rel_entropy
-   statistics.sequence.compute_seq_weights
+   statistics.sequence.compute_seq_identity
+   statistics.sequence.compute_sequence_weights
 
 
 .. _statistics_ref:

@@ -108,15 +108,14 @@ fijab, fijab_ind = aa_joint_freq(seq_kept, weights=weights, lambda_coef=0.03)
 # ----------------------------------
 Dia, Di = compute_rel_entropy(aa_freq, background_frequencies)
 
-fig, axs = plt.subplots(1, 1, figsize=(9, 4))
+fig, ax = plt.subplots(figsize=(9, 4))
 xvals = [i+1 for i in range(len(Di))]
 xticks = [0, 50, 100, 150, 200, 250]
-plt.bar(xvals, Di, color='k')
+ax.bar(xvals, Di, color='k')
 plt.tick_params(labelsize=11)
-plt.grid()
-axs.set_xticks(xticks)
-plt.xlabel('Residue position', fontsize=14)
-plt.ylabel('Di', fontsize=14)
+ax.set_xticks(xticks)
+ax.set_xlabel('Residue position', fontsize=14)
+ax.set_ylabel('Di', fontsize=14)
 
 # %%
 # Compute the SCA coevolution matrix

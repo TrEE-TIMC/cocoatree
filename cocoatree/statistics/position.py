@@ -116,8 +116,9 @@ def compute_entropy(aa_freq):
 
 
 def compute_rel_entropy(aa_freq, background_freq):
+    """Compute the relative entropy
 
-    """Kullback-Leibler relative entropy
+    Also know as the Kullback-Leibler divergence
 
     .. math::
 

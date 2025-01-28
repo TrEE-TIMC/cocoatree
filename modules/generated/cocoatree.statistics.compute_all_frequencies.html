@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>cocoatree.statistics.position.aa_freq_at_pos &#8212; cocoatree 0.0 documentation</title>
+    <title>cocoatree.statistics.compute_all_frequencies &#8212; cocoatree 0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
     <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
@@ -40,35 +40,41 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="cocoatree-statistics-position-aa-freq-at-pos">
-<h1>cocoatree.statistics.position.aa_freq_at_pos<a class="headerlink" href="#cocoatree-statistics-position-aa-freq-at-pos" title="Link to this heading">¶</a></h1>
+  <section id="cocoatree-statistics-compute-all-frequencies">
+<h1>cocoatree.statistics.compute_all_frequencies<a class="headerlink" href="#cocoatree-statistics-compute-all-frequencies" title="Link to this heading">¶</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="cocoatree.statistics.position.aa_freq_at_pos">
-<span class="sig-prename descclassname"><span class="pre">cocoatree.statistics.position.</span></span><span class="sig-name descname"><span class="pre">aa_freq_at_pos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_coef</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.03</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.statistics.position.aa_freq_at_pos" title="Link to this definition">¶</a></dt>
-<dd><p>Computes frequencies of aminoacids at each position of the alignment.</p>
-<div class="math">
-<p><span class="math">f_i^a = (1 - \lambda) \sum_s w_s \frac{x_{si}^a}{M^a} +             \frac{\lambda}{21}</span></p>
-</div><section id="arguments">
-<h2>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">¶</a></h2>
-<p>sequences : list of sequences as imported by load_msa()</p>
-<p>lambda_coef : regularization parameter lambda (default=0.03)</p>
+<dt class="sig sig-object py" id="cocoatree.statistics.compute_all_frequencies">
+<span class="sig-prename descclassname"><span class="pre">cocoatree.statistics.</span></span><span class="sig-name descname"><span class="pre">compute_all_frequencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pseudo_counts_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.03</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.statistics.compute_all_frequencies" title="Link to this definition">¶</a></dt>
+<dd><p>Compute frequencies on sequences</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<p>sequences : list of sequences</p>
 <dl class="simple">
-<dt>weights<span class="classifier">numpy 1D array, optional</span></dt><dd><p>Gives more or less importance to certain sequences.
-If weights=None, all sequences are attributed an equal weight of 1.</p>
+<dt>seq_weights<span class="classifier">{None, np.ndarray (n_seq)}</span></dt><dd><p>if None, will re-compute the sequence weights.</p>
+</dd>
+<dt>pseudo_counts_val<span class="classifier">float, default</span><span class="classifier">0.03</span></dt><dd><p>pseudo counts value in order to avoid null entries in the estimation
+of the amino acid frequencies.</p>
 </dd>
 </dl>
 </section>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
 <dl class="simple">
-<dt>aa_freq<span class="classifier">np.ndarray of shape (Npos, aa_count)</span></dt><dd><p>frequency of amino acid <em>a</em> at position <em>i</em></p>
+<dt>aa_frequencies<span class="classifier">np.ndarray (nseq, 21)</span></dt><dd><p>A (nseq, 21) ndarray containing the amino acid frequencies at each
+positions.</p>
+</dd>
+<dt>background_frequencies<span class="classifier">np.ndarray (21, )</span></dt><dd><p>A (21,) vector containing the average use of amino acid in the list of
+provided sequences.</p>
+</dd>
+<dt>pairwise_frequencies<span class="classifier">np.ndarray (nseq, nseq, 21, 21)</span></dt><dd><p>An ndarray containing the pairwise frequencies for each pairs of
+positions in the list of provided sequences.</p>
 </dd>
 </dl>
 </section>
 </dd></dl>
 
-<section id="examples-using-cocoatree-statistics-position-aa-freq-at-pos">
-<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.statistics.position.aa_freq_at_pos</span></code><a class="headerlink" href="#examples-using-cocoatree-statistics-position-aa-freq-at-pos" title="Link to this heading">¶</a></h2>
+<section id="examples-using-cocoatree-statistics-compute-all-frequencies">
+<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.statistics.compute_all_frequencies</span></code><a class="headerlink" href="#examples-using-cocoatree-statistics-compute-all-frequencies" title="Link to this heading">¶</a></h2>
 <div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="In this example, we are comparing the results of the co-evolution analysis on serine proteases using SCA and the mutual information."><img alt="" src="../../_images/sphx_glr_plot_sca_vs_mi_thumb.png" />
 <p><a class="reference internal" href="../../auto_examples/plot_sca_vs_mi.html#sphx-glr-auto-examples-plot-sca-vs-mi-py"><span class="std std-ref">Mutual information versus SCA</span></a></p>
   <div class="sphx-glr-thumbnail-title">Mutual information versus SCA</div>

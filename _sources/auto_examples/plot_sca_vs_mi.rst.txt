@@ -31,9 +31,9 @@ serine proteases using SCA and the mutual information.
 
 
     from cocoatree.datasets import load_S1A_serine_proteases
-    from cocoatree.msa import filter_gap_seq, filter_gap_pos
+    from cocoatree.msa import filter_sequences
 
-    from cocoatree.statistics import compute_all_frequencies
+    from cocoatree.statistics import compute_frequencies
     from cocoatree.statistics.pairwise import compute_sca_matrix
     from cocoatree.statistics.pairwise import compute_mutual_information_matrix
 
@@ -78,13 +78,11 @@ Filtering of the multiple sequence alignment
 
 We are going to filter and clean the MSA
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-40
+.. GENERATED FROM PYTHON SOURCE LINES 36-38
 
 .. code-block:: Python
 
-    filt_seqs, pos_kept = filter_gap_pos(sequences, threshold=0.4)
-    seq_id_kept, seq_kept = filter_gap_seq(seq_id, filt_seqs, threshold=0.2,
-                                           filtrefseq=False)
+    seq_id_kept, seq_kept, pos_kept = filter_sequences(seq_id, sequences)
 
 
 
@@ -93,17 +91,17 @@ We are going to filter and clean the MSA
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-43
+.. GENERATED FROM PYTHON SOURCE LINES 39-41
 
 Compute the SCA matrix
 ----------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-50
+.. GENERATED FROM PYTHON SOURCE LINES 41-48
 
 .. code-block:: Python
 
 
-    aa_freq, background_frequencies, joint_frequencies = compute_all_frequencies(
+    aa_freq, background_frequencies, joint_frequencies = compute_frequencies(
         seq_kept, seq_weights=None)
     Cijab_raw, sca = compute_sca_matrix(joint_freqs=joint_frequencies,
                                         aa_freq=aa_freq,
@@ -116,12 +114,12 @@ Compute the SCA matrix
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 51-53
+.. GENERATED FROM PYTHON SOURCE LINES 49-51
 
 Compute the Mutual information matrix
 -------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 53-56
+.. GENERATED FROM PYTHON SOURCE LINES 51-54
 
 .. code-block:: Python
 
@@ -135,11 +133,11 @@ Compute the Mutual information matrix
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 57-58
+.. GENERATED FROM PYTHON SOURCE LINES 55-56
 
 Compare MI versus SCA
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-72
+.. GENERATED FROM PYTHON SOURCE LINES 56-70
 
 .. code-block:: Python
 
@@ -178,7 +176,7 @@ Compare MI versus SCA
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 30.384 seconds)
+   **Total running time of the script:** (0 minutes 30.491 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_sca_vs_mi.py:

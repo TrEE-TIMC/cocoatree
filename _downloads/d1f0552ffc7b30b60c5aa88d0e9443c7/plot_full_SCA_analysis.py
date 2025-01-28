@@ -25,10 +25,10 @@ independent component.
 # Import necessary
 from cocoatree.datasets import load_S1A_serine_proteases
 from cocoatree.io import export_fasta, load_pdb, export_sector_for_pymol
-from cocoatree.msa import filter_gap_seq, filter_gap_pos, \
+from cocoatree.msa import filter_sequences, \
     compute_sequences_weights, map_to_pdb
 from cocoatree.msa import compute_seq_identity
-from cocoatree.statistics import compute_all_frequencies
+from cocoatree.statistics import compute_frequencies
 from cocoatree.statistics.position import compute_rel_entropy
 from cocoatree.statistics.pairwise import compute_sca_matrix
 
@@ -59,19 +59,11 @@ print(f"The loaded MSA has {n_seq} sequences and {n_pos} positions.")
 # We are going to clean a bit the loaded MSA by filtering both sequences and
 # positions.
 #
-# Filter overly gapped positions
-# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-filt_seqs, pos_kept = filter_gap_pos(sequences, threshold=0.4)
+seq_id_kept, seq_kept, pos_kept = filter_sequences(
+    seq_id, sequences, gap_threshold=0.4, seq_threshold=0.2)
 n_pos_kept = len(pos_kept)
 print(f"After filtering, we have {n_pos_kept} remaining positions.")
-
-# %%
-# Filter overly gapped sequences
-# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-seq_id_kept, seq_kept = filter_gap_seq(seq_id, filt_seqs, threshold=0.2,
-                                       filtrefseq=False)
 print(f"After filtering, we have {len(seq_kept)} remaining sequences.")
 
 # %%
@@ -103,7 +95,7 @@ print(f"Number of effective sequences {n_eff_seq}")
 #    - pairwise_freq corresponds to pairwise frequencies of amino acid for all
 #      pairs of positions. It thus corresponds to an ndarray of shape (nseq,
 #      nseq, 21, 21).
-aa_freq, background_frequencies, pairwise_freq = compute_all_frequencies(
+aa_freq, background_frequencies, pairwise_freq = compute_frequencies(
     seq_kept,
     seq_weights=weights)
 

@@ -60,10 +60,10 @@ Import necessary
 
     from cocoatree.datasets import load_S1A_serine_proteases
     from cocoatree.io import export_fasta, load_pdb, export_sector_for_pymol
-    from cocoatree.msa import filter_gap_seq, filter_gap_pos, \
+    from cocoatree.msa import filter_sequences, \
         compute_sequences_weights, map_to_pdb
     from cocoatree.msa import compute_seq_identity
-    from cocoatree.statistics import compute_all_frequencies
+    from cocoatree.statistics import compute_frequencies
     from cocoatree.statistics.position import compute_rel_entropy
     from cocoatree.statistics.pairwise import compute_sca_matrix
 
@@ -113,7 +113,7 @@ dataset, you can use the :fun:`cocoatree.io.load_msa` function.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-64
+.. GENERATED FROM PYTHON SOURCE LINES 56-62
 
 MSA filtering
 -------------
@@ -121,43 +121,16 @@ MSA filtering
 We are going to clean a bit the loaded MSA by filtering both sequences and
 positions.
 
-Filter overly gapped positions
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. GENERATED FROM PYTHON SOURCE LINES 64-69
+.. GENERATED FROM PYTHON SOURCE LINES 62-69
 
 .. code-block:: Python
 
 
-    filt_seqs, pos_kept = filter_gap_pos(sequences, threshold=0.4)
+    seq_id_kept, seq_kept, pos_kept = filter_sequences(
+        seq_id, sequences, gap_threshold=0.4, seq_threshold=0.2)
     n_pos_kept = len(pos_kept)
     print(f"After filtering, we have {n_pos_kept} remaining positions.")
-
-
-
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    After filtering, we have 226 remaining positions.
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 70-72
-
-Filter overly gapped sequences
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. GENERATED FROM PYTHON SOURCE LINES 72-77
-
-.. code-block:: Python
-
-
-    seq_id_kept, seq_kept = filter_gap_seq(seq_id, filt_seqs, threshold=0.2,
-                                           filtrefseq=False)
     print(f"After filtering, we have {len(seq_kept)} remaining sequences.")
 
 
@@ -168,17 +141,18 @@ Filter overly gapped sequences
 
  .. code-block:: none
 
+    After filtering, we have 226 remaining positions.
     After filtering, we have 6965 remaining sequences.
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-80
+.. GENERATED FROM PYTHON SOURCE LINES 70-72
 
 Compute the matrix of pairwise sequence identity
 ------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-91
+.. GENERATED FROM PYTHON SOURCE LINES 72-83
 
 .. code-block:: Python
 
@@ -205,11 +179,11 @@ Compute the matrix of pairwise sequence identity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 92-93
+.. GENERATED FROM PYTHON SOURCE LINES 84-85
 
 Compute sequence weights
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-96
+.. GENERATED FROM PYTHON SOURCE LINES 85-88
 
 .. code-block:: Python
 
@@ -229,7 +203,7 @@ Compute sequence weights
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 97-106
+.. GENERATED FROM PYTHON SOURCE LINES 89-98
 
 Compute different kind of frequencies from the list of sequences.
 
@@ -241,11 +215,11 @@ Compute different kind of frequencies from the list of sequences.
      pairs of positions. It thus corresponds to an ndarray of shape (nseq,
      nseq, 21, 21).
 
-.. GENERATED FROM PYTHON SOURCE LINES 106-110
+.. GENERATED FROM PYTHON SOURCE LINES 98-102
 
 .. code-block:: Python
 
-    aa_freq, background_frequencies, pairwise_freq = compute_all_frequencies(
+    aa_freq, background_frequencies, pairwise_freq = compute_frequencies(
         seq_kept,
         seq_weights=weights)
 
@@ -256,12 +230,12 @@ Compute different kind of frequencies from the list of sequences.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 111-113
+.. GENERATED FROM PYTHON SOURCE LINES 103-105
 
 Compute conservation along the MSA
 ----------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 113-124
+.. GENERATED FROM PYTHON SOURCE LINES 105-116
 
 .. code-block:: Python
 
@@ -294,12 +268,12 @@ Compute conservation along the MSA
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 125-127
+.. GENERATED FROM PYTHON SOURCE LINES 117-119
 
 Compute the SCA coevolution matrix
 ----------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 127-140
+.. GENERATED FROM PYTHON SOURCE LINES 119-132
 
 .. code-block:: Python
 
@@ -330,16 +304,16 @@ Compute the SCA coevolution matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7f98de556e10>
+    <matplotlib.colorbar.Colorbar object at 0x7f2592fbf090>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 141-143
+.. GENERATED FROM PYTHON SOURCE LINES 133-135
 
 Decomposition of the matrix into principal components
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. GENERATED FROM PYTHON SOURCE LINES 143-146
+.. GENERATED FROM PYTHON SOURCE LINES 135-138
 
 .. code-block:: Python
 
@@ -353,11 +327,11 @@ Decomposition of the matrix into principal components
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 147-148
+.. GENERATED FROM PYTHON SOURCE LINES 139-140
 
 Plot distribution of eigenvalues
 
-.. GENERATED FROM PYTHON SOURCE LINES 148-153
+.. GENERATED FROM PYTHON SOURCE LINES 140-145
 
 .. code-block:: Python
 
@@ -384,7 +358,7 @@ Plot distribution of eigenvalues
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 154-162
+.. GENERATED FROM PYTHON SOURCE LINES 146-154
 
 Select number of significant components
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -395,7 +369,7 @@ pipeline on randomized version of the MSA. Make sure that weights and lambda
 coefficient are set the same way as the when performing the analysis on the
 real dataset.
 
-.. GENERATED FROM PYTHON SOURCE LINES 162-178
+.. GENERATED FROM PYTHON SOURCE LINES 154-170
 
 .. code-block:: Python
 
@@ -428,18 +402,18 @@ real dataset.
 
  .. code-block:: none
 
-    n_components = 7
+    n_components = 6
 
     Text(47.097222222222214, 0.5, 'Numbers')
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 179-181
+.. GENERATED FROM PYTHON SOURCE LINES 171-173
 
 Independent component analysis (ICA)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. GENERATED FROM PYTHON SOURCE LINES 181-207
+.. GENERATED FROM PYTHON SOURCE LINES 173-199
 
 .. code-block:: Python
 
@@ -478,20 +452,14 @@ Independent component analysis (ICA)
    :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    Uneven number of axes, discard the last one for visual           representation
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 208-209
+.. GENERATED FROM PYTHON SOURCE LINES 200-201
 
 Select residues that significantly contribute to each independent component
 
-.. GENERATED FROM PYTHON SOURCE LINES 209-215
+.. GENERATED FROM PYTHON SOURCE LINES 201-207
 
 .. code-block:: Python
 
@@ -509,19 +477,19 @@ Select residues that significantly contribute to each independent component
 
  .. code-block:: none
 
-    Sizes of the 6 ICs: [30, 20, 19, 14, 12, 12]
+    Sizes of the 6 ICs: [32, 18, 19, 14, 16, 12]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 216-220
+.. GENERATED FROM PYTHON SOURCE LINES 208-212
 
 Plot coevolution within and between the sectors
 Each white square corresponds to a sector, with the residues ordered in
 decreasing contribution to the independent component associated from top to
 bottom and from left to right.
 
-.. GENERATED FROM PYTHON SOURCE LINES 220-235
+.. GENERATED FROM PYTHON SOURCE LINES 212-227
 
 .. code-block:: Python
 
@@ -552,13 +520,13 @@ bottom and from left to right.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 236-239
+.. GENERATED FROM PYTHON SOURCE LINES 228-231
 
 Export fasta files of the sectors for all the sequences
 Those fasta can then be used for visualization along a phylogenetic tree
 as implemented in the cocoatree.visualization module
 
-.. GENERATED FROM PYTHON SOURCE LINES 239-266
+.. GENERATED FROM PYTHON SOURCE LINES 231-258
 
 .. code-block:: Python
 
@@ -612,7 +580,7 @@ as implemented in the cocoatree.visualization module
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 44.285 seconds)
+   **Total running time of the script:** (1 minutes 44.095 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_full_SCA_analysis.py:

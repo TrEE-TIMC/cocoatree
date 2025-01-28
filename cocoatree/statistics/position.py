@@ -97,8 +97,11 @@ def compute_background_frequencies(aa_freq, lambda_coef=0.03):
 
 def compute_entropy(aa_freq):
     """Computes  Shannon's entropy for each position in the alignment
+
     .. math::
+
         H(a) = -\\sum_i f_{ia} \\log f_{ia}
+
     where *H(a)* is the relative entropy of amino acid *a*,
         *fia* is the frequency of amino acid *a* at position *i*
     Arguments

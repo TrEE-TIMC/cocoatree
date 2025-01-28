@@ -17,6 +17,8 @@ from cocoatree.statistics.pairwise import aa_joint_freq, compute_sca_matrix, \
     compute_seq_identity
 from cocoatree.statistics.pairwise import compute_mutual_information_matrix
 
+import matplotlib.pyplot as plt
+
 
 # %%
 # Load the dataset
@@ -55,4 +57,22 @@ Cijab_raw, sca = compute_sca_matrix(joint_freqs=fijab,
 # %%
 # Compute the Mutual information matrix
 # -------------------------------------
-mi = compute_mutual_information_matrix(seq_kept)
+normalized_mi = compute_mutual_information_matrix(seq_kept)
+mi = compute_mutual_information_matrix(seq_kept, normalize=False)
+
+# %%
+# Compare MI versus SCA
+
+
+fig, axes = plt.subplots(ncols=3, figsize=(8, 4), tight_layout=True)
+ax = axes[0]
+ax.matshow(sca)
+ax.set_title("SCA matrix")
+
+ax = axes[1]
+ax.matshow(normalized_mi)
+ax.set_title("Normalized Mutual Information")
+
+ax = axes[2]
+ax.matshow(mi)
+ax.set_title("Mutual Information")

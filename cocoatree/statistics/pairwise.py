@@ -3,6 +3,8 @@ import sklearn.metrics as sn
 from ..__params import lett2num
 from .sequence import compute_seq_weights
 
+from .position import aa_freq_at_pos, compute_entropy
+
 
 def compute_seq_identity(sequences):
     """
@@ -145,7 +147,8 @@ def compute_sca_matrix(joint_freqs, joint_freqs_ind, aa_freq, background_freq):
     return Cijab_raw, Cij
 
 
-def compute_mutual_information_matrix(sequences, pseudo_count_val=0.03):
+def compute_mutual_information_matrix(sequences, pseudo_count_val=0.03,
+                                      normalize=True):
     r"""Compute the mutual information matrix
 
     .. math::
@@ -160,6 +163,9 @@ def compute_mutual_information_matrix(sequences, pseudo_count_val=0.03):
         Pseudo count value, to add to expected frequences (in order to have
         non-zero elements)
 
+    normalize : boolean, default : True
+        Whether to normalize the mutual information
+
     Returns
     -------
     mi_matrix : np.ndarray,
@@ -167,11 +173,22 @@ def compute_mutual_information_matrix(sequences, pseudo_count_val=0.03):
     """
     sim_matrix = compute_seq_identity(sequences)
     weights, _ = compute_seq_weights(sim_matrix)
-    joint_freqs, joint_freqs_ind = aa_joint_freq(
+    joint_freqs, _ = aa_joint_freq(
         sequences, weights, lambda_coef=pseudo_count_val)
 
+    ind_freqs = aa_freq_at_pos(
+        sequences, lambda_coef=pseudo_count_val,
+        weights=weights)
+
     mi_matrix = np.sum(
-        joint_freqs * np.log(joint_freqs / joint_freqs_ind),
+        joint_freqs * np.log(
+            joint_freqs / np.dot(
+                ind_freqs[:, :, np.newaxis],
+                ind_freqs.T[:, np.newaxis]).transpose([0, 3, 2, 1])),
         axis=(2, 3))
+
+    if normalize:
+        entropy = compute_entropy(ind_freqs)
+        mi_matrix /= np.dot(entropy[:, np.newaxis], entropy[np.newaxis])
 
     return mi_matrix

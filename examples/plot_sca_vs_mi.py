@@ -8,7 +8,7 @@ serine proteases using SCA and the mutual information.
 """
 
 from cocoatree.datasets import load_S1A_serine_proteases
-from cocoatree.msa import filter_gap_seq, filter_gap_pos
+from cocoatree.msa import filter_sequences
 
 from cocoatree.statistics import compute_all_frequencies
 from cocoatree.statistics.pairwise import compute_sca_matrix
@@ -33,9 +33,7 @@ n_pos, n_seq = len(sequences[0]), len(sequences)
 # --------------------------------------------
 #
 # We are going to filter and clean the MSA
-filt_seqs, pos_kept = filter_gap_pos(sequences, threshold=0.4)
-seq_id_kept, seq_kept = filter_gap_seq(seq_id, filt_seqs, threshold=0.2,
-                                       filtrefseq=False)
+seq_id_kept, seq_kept, pos_kept = filter_sequences(seq_id, sequences)
 
 # %%
 # Compute the SCA matrix

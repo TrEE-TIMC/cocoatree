@@ -76,9 +76,7 @@ Functions
    :toctree: generated/
    :template: function.rst
 
-   msa.filter_gap_pos
-   msa.filter_gap_seq
-   msa.filter_ref_seq
+   msa.filter_sequences
    msa.filter_seq_id
    msa.choose_ref_seq
    msa.map_to_pdb

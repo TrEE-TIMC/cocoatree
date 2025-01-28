@@ -28,7 +28,7 @@ from cocoatree.io import export_fasta, load_pdb, export_sector_for_pymol
 from cocoatree.msa import filter_sequences, \
     compute_sequences_weights, map_to_pdb
 from cocoatree.msa import compute_seq_identity
-from cocoatree.statistics import compute_all_frequencies
+from cocoatree.statistics import compute_frequencies
 from cocoatree.statistics.position import compute_rel_entropy
 from cocoatree.statistics.pairwise import compute_sca_matrix
 
@@ -95,7 +95,7 @@ print(f"Number of effective sequences {n_eff_seq}")
 #    - pairwise_freq corresponds to pairwise frequencies of amino acid for all
 #      pairs of positions. It thus corresponds to an ndarray of shape (nseq,
 #      nseq, 21, 21).
-aa_freq, background_frequencies, pairwise_freq = compute_all_frequencies(
+aa_freq, background_frequencies, pairwise_freq = compute_frequencies(
     seq_kept,
     seq_weights=weights)
 

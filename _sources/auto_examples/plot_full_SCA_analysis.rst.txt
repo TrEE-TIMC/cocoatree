@@ -59,13 +59,13 @@ Import necessary
 .. code-block:: Python
 
     from cocoatree.datasets import load_S1A_serine_proteases
-    from cocoatree.io import export_fasta
-    from cocoatree.msa import filter_gap_seq, filter_gap_pos
+    from cocoatree.io import export_fasta, load_pdb, export_sector_for_pymol
+    from cocoatree.msa import filter_gap_seq, filter_gap_pos, \
+        compute_sequences_weights, map_to_pdb
+    from cocoatree.msa import compute_seq_identity
+    from cocoatree.statistics import compute_all_frequencies
     from cocoatree.statistics.position import compute_rel_entropy
     from cocoatree.statistics.pairwise import compute_sca_matrix
-    from cocoatree.msa import compute_seq_identity
-    from cocoatree.msa import compute_sequences_weights
-    from cocoatree.statistics import compute_all_frequencies
 
     from cocoatree.deconvolution import eigen_decomp, compute_ica, \
         choose_num_components, extract_positions_from_IC
@@ -330,7 +330,7 @@ Compute the SCA coevolution matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7f3e9f7c2ed0>
+    <matplotlib.colorbar.Colorbar object at 0x7f4a659f3290>
 
 
 
@@ -428,7 +428,7 @@ real dataset.
 
  .. code-block:: none
 
-    n_components = 6
+    n_components = 7
 
     Text(47.097222222222214, 0.5, 'Numbers')
 
@@ -444,7 +444,7 @@ Independent component analysis (ICA)
 .. code-block:: Python
 
 
-    independant_components, W = compute_ica(
+    independent_components, W = compute_ica(
         eigenvectors, kmax=n_components, learnrate=0.1,
         iterations=100000)
 
@@ -465,7 +465,7 @@ Independent component analysis (ICA)
         ax.set_ylabel("eigenvector %i" % (k2+1), fontsize=16)
 
         ax = axes[1, k]
-        ax.plot(independant_components[:, k1], independant_components[:, k2], 'ok')
+        ax.plot(independent_components[:, k1], independent_components[:, k2], 'ok')
         ax.set_xlabel("independent component %i" % (k1+1), fontsize=16)
         ax.set_ylabel("independent component %i" % (k2+1), fontsize=16)
 
@@ -477,6 +477,12 @@ Independent component analysis (ICA)
    :srcset: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_006.png
    :class: sphx-glr-single-img
 
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Uneven number of axes, discard the last one for visual           representation
 
 
 
@@ -490,7 +496,7 @@ Select residues that significantly contribute to each independent component
 .. code-block:: Python
 
     ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits = \
-        extract_positions_from_IC(independant_components, n_components, Cij,
+        extract_positions_from_IC(independent_components, n_components, Cij,
                                   p_cut=0.95)
 
     print(f"Sizes of the {n_components} ICs: {icsize}")
@@ -503,7 +509,7 @@ Select residues that significantly contribute to each independent component
 
  .. code-block:: none
 
-    Sizes of the 6 ICs: [32, 18, 19, 14, 16, 12]
+    Sizes of the 6 ICs: [30, 20, 19, 14, 12, 12]
 
 
 
@@ -546,11 +552,13 @@ bottom and from left to right.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 236-237
+.. GENERATED FROM PYTHON SOURCE LINES 236-239
 
 Export fasta files of the sectors for all the sequences
+Those fasta can then be used for visualization along a phylogenetic tree
+as implemented in the cocoatree.visualization module
 
-.. GENERATED FROM PYTHON SOURCE LINES 237-247
+.. GENERATED FROM PYTHON SOURCE LINES 239-266
 
 .. code-block:: Python
 
@@ -565,8 +573,38 @@ Export fasta files of the sectors for all the sequences
 
     export_fasta(sector_1, seq_id, 'sector_1.fasta')
 
+    # %
+    # Export files necessary for Pymol visualization
+    # Load PDB file of rat's trypsin
+    pdb_seq, pdb_pos = load_pdb('data/3TGI.pdb', pdb_id='TRIPSIN', chain='E')
+    # Map PDB positions on the MSA sequence corresponding to rat's trypsin:
+    # seq_id='14719441'
+    pdb_mapping = map_to_pdb(pdb_seq, pdb_pos, sequences, seq_id,
+                             ref_seq_id='14719441')
+    # Export lists of the first sector positions and each residue's contribution
+    # to the independent component to use for visualization on Pymol.
+    # The residues are ordered in the list by decreasing contribution score (the
+    # first residue in the list is the highest contributing)
+    export_sector_for_pymol(pdb_mapping, independent_components, axis=0,
+                            sector_pos=sector_1_pos,
+                            ics=ics,
+                            outpath='color_sector_1_pymol.npy')
 
 
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain E is discontinuous at line 2569.
+      warnings.warn(
+    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain I is discontinuous at line 2570.
+      warnings.warn(
+    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain E is discontinuous at line 2580.
+      warnings.warn(
+    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain I is discontinuous at line 2758.
+      warnings.warn(
 
 
 
@@ -574,7 +612,7 @@ Export fasta files of the sectors for all the sequences
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 44.008 seconds)
+   **Total running time of the script:** (1 minutes 44.453 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_full_SCA_analysis.py:

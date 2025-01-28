@@ -57,6 +57,12 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.io.export_fasta.html#cocoatree.io.export_fasta" title="cocoatree.io.export_fasta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">io.export_fasta</span></code></a>(sequences, seq_id, outpath)</p></td>
 <td><p>Function to export intermediate files in fasta format</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.io.load_pdb.html#cocoatree.io.load_pdb" title="cocoatree.io.load_pdb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">io.load_pdb</span></code></a>(path2pdb, pdb_id, chain)</p></td>
+<td><p>Import a PDB file and extract the associated sequence along with the amino acid positions</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.io.export_sector_for_pymol.html#cocoatree.io.export_sector_for_pymol" title="cocoatree.io.export_sector_for_pymol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">io.export_sector_for_pymol</span></code></a>(mapping, ...)</p></td>
+<td><p>Export numpy arrays of a sector's residue positions and their contribution for coloring in PyMol.</p></td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -98,7 +104,10 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.msa.choose_ref_seq.html#cocoatree.msa.choose_ref_seq" title="cocoatree.msa.choose_ref_seq"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.choose_ref_seq</span></code></a>(msa)</p></td>
 <td><p>This function chooses a default reference sequence for the alignment by taking the sequence which has the mean pairwise sequence identity closest to that of the entire sequence alignment.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.msa.compute_seq_identity.html#cocoatree.msa.compute_seq_identity" title="cocoatree.msa.compute_seq_identity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.compute_seq_identity</span></code></a>(sequences)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.msa.map_to_pdb.html#cocoatree.msa.map_to_pdb" title="cocoatree.msa.map_to_pdb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.map_to_pdb</span></code></a>(pdb_seq, pdb_pos, sequences, ...)</p></td>
+<td><p>Mapping of the unfiltered MSA positions on a PDB structure.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.msa.compute_seq_identity.html#cocoatree.msa.compute_seq_identity" title="cocoatree.msa.compute_seq_identity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.compute_seq_identity</span></code></a>(sequences)</p></td>
 <td><p>Computes the identity between sequences in a MSA (as Hamming's pairwise distance)</p></td>
 </tr>
 </tbody>

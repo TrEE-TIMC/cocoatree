@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Color sector residues on 3D structure in Pymol &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="_static/nameko.css?v=2296cfae" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="_static/documentation_options.js?v=837179f8"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  </head><body><div class="navbar related">
+      <a href="index.html">
+        
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="auto_examples/index.html">Gallery</a> </li>
+      <li class="right"><a href="modules/classes.html">Documentation</a> | </li>
+      <li class="right"><a href="install.html">Installation</a> | </li>
+      <li class="right"><a href="index.html">Home</a> | </li>
+      
+    </ul>
+  </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="color-sector-residues-on-3d-structure-in-pymol">
+<h1>Color sector residues on 3D structure in Pymol<a class="headerlink" href="#color-sector-residues-on-3d-structure-in-pymol" title="Link to this heading">¶</a></h1>
+<p>This example shows how to color a set of residues on a 3D protein structure
+based on their contribution to the independent component of the sector that is
+considered using the Pymol software.</p>
+<p>Pymol should be installed on your computer.</p>
+<section id="open-the-pdb-in-pymol">
+<h2>Open the PDB in Pymol<a class="headerlink" href="#open-the-pdb-in-pymol" title="Link to this heading">¶</a></h2>
+<p>After performing your coevolution analysis such as in the example
+plot_full_SCA_analysis.py, you should have a .npy object with the positions of
+the residues corresponding to a given sector mapped on the sequence of your
+reference PDB file.</p>
+<p>In the case of the S1A serine proteases, we use the rat’s trypsin PDB
+<cite>3TGI.pdb</cite>.</p>
+<p>Open a Pymol window, then click on ‘file’ -&gt; ‘open’ and select the PDB file
+that is locally present on your computer.</p>
+<a class="reference internal image-reference" href="_images/pymol_open_pdb.png"><img alt="Pymol window with 3D structure of rat's trypsin" class="align-center" src="_images/pymol_open_pdb.png" style="width: 600px; height: 600px;" />
+</a>
+</section>
+<section id="adapt-pymol-code-to-your-local-path">
+<h2>Adapt Pymol code to your local path<a class="headerlink" href="#adapt-pymol-code-to-your-local-path" title="Link to this heading">¶</a></h2>
+<p>Save the pymol code that is displayed below and modify it so that it works on
+your local environment :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>change the path <strong>line 20</strong> to your local path towards your numpy object</p></li>
+<li><p><strong>line 24</strong>, you can change the <cite>cmap</cite> parameter to any matplotlib’s</p></li>
+</ul>
+</div></blockquote>
+<p>colormap</p>
+</section>
+<section id="execute-pymol-code">
+<h2>Execute Pymol code<a class="headerlink" href="#execute-pymol-code" title="Link to this heading">¶</a></h2>
+<p>In Pymol’s terminal prompt, copy the following line with the appropriate path
+to your pymol code :
+<cite>&#64;path_to_pymol_code</cite></p>
+<p>The sector residues should appear as colored spheres on the 3D protein
+structure such as in the following image.</p>
+<a class="reference internal image-reference" href="_images/pymol_structure_after_color.png"><img alt="Pymol window with a colored set of residues" class="align-center" src="_images/pymol_structure_after_color.png" style="width: 600px; height: 600px;" />
+</a>
+</section>
+<section id="pymol-code-to-save-locally">
+<h2>Pymol code to save locally<a class="headerlink" href="#pymol-code-to-save-locally" title="Link to this heading">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span><span class="n">python</span>
+<span class="linenos"> 2</span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="linenos"> 3</span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">colors</span>
+<span class="linenos"> 4</span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="linenos"> 5</span>
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span><span class="k">def</span><span class="w"> </span><span class="nf">_generate_colors_from_colormaps</span><span class="p">(</span><span class="n">n_colors</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;jet&quot;</span><span class="p">,</span> <span class="n">as_hex</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="linenos"> 8</span><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="linenos"> 9</span><span class="sd">    Generate a list of n colors from colormap</span>
+<span class="linenos">10</span><span class="sd">    &quot;&quot;&quot;</span>
+<span class="linenos">11</span>
+<span class="linenos">12</span>    <span class="n">colormap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cmap</span><span class="p">))</span>
+<span class="linenos">13</span>    <span class="n">indx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_colors</span><span class="p">)</span>
+<span class="linenos">14</span>    <span class="n">indexed_colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">colormap</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indx</span><span class="p">]</span>
+<span class="linenos">15</span>    <span class="k">if</span> <span class="n">as_hex</span><span class="p">:</span>
+<span class="linenos">16</span>        <span class="n">indexed_colors</span> <span class="o">=</span> <span class="p">[</span><span class="n">colors</span><span class="o">.</span><span class="n">to_hex</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indexed_colors</span><span class="p">]</span>
+<span class="linenos">17</span>    <span class="k">return</span> <span class="n">indexed_colors</span>
+<span class="linenos">18</span>
+<span class="linenos">19</span>
+<span class="linenos">20</span><span class="n">residue_swap</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;your/path/to/color_sector_1_pymol.npy&#39;</span><span class="p">))</span>
+<span class="linenos">21</span><span class="n">residue_pos</span> <span class="o">=</span> <span class="n">residue_swap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+<span class="linenos">22</span>
+<span class="linenos">23</span><span class="n">nvals</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">residue_pos</span><span class="p">)</span>
+<span class="linenos">24</span><span class="n">colormap</span> <span class="o">=</span> <span class="n">_generate_colors_from_colormaps</span><span class="p">(</span><span class="n">nvals</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet&#39;</span><span class="p">,</span> <span class="n">as_hex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="linenos">25</span>
+<span class="linenos">26</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">residue_pos</span><span class="p">)):</span>
+<span class="linenos">27</span>    <span class="n">residue</span> <span class="o">=</span> <span class="n">residue_pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="linenos">28</span>    <span class="n">r</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="linenos">29</span>    <span class="n">g</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+<span class="linenos">30</span>    <span class="n">b</span> <span class="o">=</span> <span class="n">colormap</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+<span class="linenos">31</span>
+<span class="linenos">32</span>    <span class="n">color_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;residue_</span><span class="si">{</span><span class="n">residue</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="linenos">33</span>    <span class="n">cmd</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="n">color_name</span><span class="p">,</span> <span class="p">[</span><span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+<span class="linenos">34</span>    <span class="n">cmd</span><span class="o">.</span><span class="n">color</span><span class="p">(</span><span class="n">color_name</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;resi </span><span class="si">{</span><span class="n">residue</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">35</span>    <span class="n">cmd</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s2">&quot;spheres&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;resi </span><span class="si">{</span><span class="n">residue</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="linenos">36</span><span class="n">python</span> <span class="n">end</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

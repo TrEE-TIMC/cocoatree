@@ -1,10 +1,10 @@
 import numpy as np
 from ..__params import lett2num
 from ..msa import compute_sequences_weights
-from .position import compute_aa_freq_at_pos
+from .position import _compute_aa_freq_at_pos
 
 
-def aa_joint_freq(sequences, weights, lambda_coef=0.03):
+def _aa_joint_freq(sequences, weights, lambda_coef=0.03):
     """Computes the joint frequencies of each pair of amino acids in a MSA
 
     .. math::
@@ -230,10 +230,10 @@ def compute_mutual_information_matrix(sequences, seq_weights=None,
         the matrix of mutual information
     """
     weights, _ = compute_sequences_weights(sequences)
-    joint_freqs = aa_joint_freq(
+    joint_freqs = _aa_joint_freq(
         sequences, weights, lambda_coef=pseudo_count_val)
 
-    ind_freqs = compute_aa_freq_at_pos(
+    ind_freqs = _compute_aa_freq_at_pos(
         sequences, lambda_coef=pseudo_count_val,
         weights=weights)
 

@@ -38,15 +38,15 @@ def compute_all_frequencies(sequences,
     if seq_weights is None:
         seq_weights, _ = msa.compute_sequences_weights(sequences)
 
-    aa_frequencies = position.compute_aa_freq_at_pos(
+    aa_frequencies = position._compute_aa_freq_at_pos(
         sequences,
         lambda_coef=pseudo_counts_val,
         weights=seq_weights)
 
-    background_frequencies = position.compute_background_frequencies(
+    background_frequencies = position._compute_background_frequencies(
         aa_frequencies)
 
-    pairwise_frequencies = pairwise.aa_joint_freq(
+    pairwise_frequencies = pairwise._aa_joint_freq(
         sequences,
         weights=seq_weights,
         lambda_coef=pseudo_counts_val)

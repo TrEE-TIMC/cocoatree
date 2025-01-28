@@ -22,7 +22,7 @@ def _generate_colors_from_colormaps(n_colors, cmap="jet", as_hex=True):
 
 
 residue_swap = list(np.load('/home/jullimar/Documents/Postdoc_TIMC/cocoatree/examples/color_sector_1_pymol.npy'))
-residue_pos = residues_swap[0].astype('int')
+residue_pos = residue_swap[0].astype('int')
 
 nvals = len(residue_pos)
 colormap = _generate_colors_from_colormaps(nvals, cmap='jet', as_hex=False)

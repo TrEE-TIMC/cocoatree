@@ -4,7 +4,7 @@
 import numpy as np
 from .__params import lett2num
 from .statistics.position import _compute_aa_freq_at_pos, \
-    _compute_background_frequencies
+    _compute_regularized_background_frequencies
 from .statistics.pairwise import _aa_joint_freq, compute_sca_matrix
 from .deconvolution import eigen_decomp
 from sklearn.utils import check_random_state
@@ -101,8 +101,8 @@ def randomization(sequences, n_rep, weights=1, lambda_coef=0.03, kmax=6,
     fia = _compute_aa_freq_at_pos(
         sequences,
         lambda_coef=lambda_coef, weights=weights)
-    background_freq = _compute_background_frequencies(fia,
-                                                      lambda_coef=lambda_coef)
+    background_freq = _compute_regularized_background_frequencies(
+        fia, lambda_coef=lambda_coef)
 
     # initialize for eigenvectors
     vect_rand = np.zeros((n_rep, n_pos, kmax))

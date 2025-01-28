@@ -51,6 +51,7 @@ Functions
    :template: function.rst
 
    datasets.load_S1A_serine_proteases
+   datasets.load_rhomboid_proteases
 
 .. _datasets_ref:
 

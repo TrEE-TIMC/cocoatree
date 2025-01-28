@@ -159,16 +159,16 @@ def compute_mutual_information_matrix(sequences, pseudo_count_val=0.03,
     ----------
     sequences : list of sequences
 
-    pseudo_count_val : float
+    pseudo_count_val : float, default : 0.03
         Pseudo count value, to add to expected frequences (in order to have
         non-zero elements)
 
     normalize : boolean, default : True
-        Whether to normalize the mutual information
+        Whether to normalize the mutual information by the entropy.
 
     Returns
     -------
-    mi_matrix : np.ndarray,
+    mi_matrix : np.ndarray of shape (nseq, nseq)
         the matrix of mutual information
     """
     sim_matrix = compute_seq_identity(sequences)

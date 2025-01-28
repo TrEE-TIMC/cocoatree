@@ -1,7 +1,6 @@
 import numpy as np
 from ..__params import lett2num
-from .sequence import compute_sequences_weights
-
+from ..msa import compute_sequences_weights
 from .position import aa_freq_at_pos
 
 

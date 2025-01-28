@@ -79,6 +79,7 @@ Functions
    msa.filter_seq_id
    msa.choose_ref_seq
    msa.compute_seq_identity
+   msa.compute_sequence_weights
 
 
 .. _msa_ref:
@@ -115,8 +116,6 @@ Functions
    statistics.position.aa_freq_at_pos
    statistics.position.compute_background_frequencies
    statistics.position.compute_rel_entropy
-   statistics.sequence.compute_seq_identity
-   statistics.sequence.compute_sequence_weights
 
 
 .. _statistics_ref:

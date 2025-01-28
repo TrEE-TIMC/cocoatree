@@ -1,6 +1,5 @@
 from . import position
 from . import pairwise
-from . import sequence
 from .. import msa
 
 
@@ -37,7 +36,7 @@ def compute_all_frequencies(sequences,
         positions in the list of provided sequences.
     """
     if seq_weights is None:
-        seq_weights, _ = sequence.compute_sequences_weights(sequences)
+        seq_weights, _ = msa.compute_sequences_weights(sequences)
 
     aa_frequencies = position.aa_freq_at_pos(
         sequences,

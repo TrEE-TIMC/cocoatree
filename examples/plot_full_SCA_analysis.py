@@ -27,9 +27,9 @@ from cocoatree.datasets import load_S1A_serine_proteases
 from cocoatree.io import export_fasta
 from cocoatree.msa import filter_gap_seq, filter_gap_pos
 from cocoatree.statistics.position import compute_rel_entropy
-from cocoatree.statistics.pairwise import compute_sca_matrix, \
-    compute_seq_identity
-from cocoatree.statistics.sequence import compute_sequences_weights
+from cocoatree.statistics.pairwise import compute_sca_matrix
+from cocoatree.msa import compute_seq_identity
+from cocoatree.msa import compute_sequences_weights
 from cocoatree.statistics import compute_all_frequencies
 
 from cocoatree.deconvolution import eigen_decomp, compute_ica, \
@@ -90,7 +90,7 @@ cb.set_label("Pairwise sequence identity", fontweight="bold")
 
 # %%
 # Compute sequence weights
-weights, n_eff_seq = compute_sequences_weights(sequences)
+weights, n_eff_seq = compute_sequences_weights(seq_kept)
 print(f"Number of effective sequences {n_eff_seq}")
 
 # %%

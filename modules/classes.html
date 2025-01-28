@@ -98,9 +98,6 @@
 <tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.msa.compute_seq_identity.html#cocoatree.msa.compute_seq_identity" title="cocoatree.msa.compute_seq_identity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.compute_seq_identity</span></code></a>(sequences)</p></td>
 <td><p>Computes the identity between sequences in a MSA (as Hamming's pairwise distance)</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.msa.seq_weights.html#cocoatree.msa.seq_weights" title="cocoatree.msa.seq_weights"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.seq_weights</span></code></a>(sim_matrix[, threshold])</p></td>
-<td><p>Each sequence s is given a weight ws = 1/Ns where Ns is the number of sequences with an identity to s above a specified threshold.</p></td>
-</tr>
 </tbody>
 </table>
 </section>
@@ -120,14 +117,20 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.statistics.pairwise.compute_sca_matrix.html#cocoatree.statistics.pairwise.compute_sca_matrix" title="cocoatree.statistics.pairwise.compute_sca_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">statistics.pairwise.compute_sca_matrix</span></code></a>(...)</p></td>
 <td><p>Compute the SCA coevolution matrix</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.statistics.position.aa_freq_at_pos.html#cocoatree.statistics.position.aa_freq_at_pos" title="cocoatree.statistics.position.aa_freq_at_pos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">statistics.position.aa_freq_at_pos</span></code></a>(sequences)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.statistics.pairwise.compute_mutual_information_matrix.html#cocoatree.statistics.pairwise.compute_mutual_information_matrix" title="cocoatree.statistics.pairwise.compute_mutual_information_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">statistics.pairwise.compute_mutual_information_matrix</span></code></a>(...)</p></td>
+<td><p>Compute the mutual information matrix</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.statistics.position.aa_freq_at_pos.html#cocoatree.statistics.position.aa_freq_at_pos" title="cocoatree.statistics.position.aa_freq_at_pos"><code class="xref py py-obj docutils literal notranslate"><span class="pre">statistics.position.aa_freq_at_pos</span></code></a>(sequences)</p></td>
 <td><p>Computes frequencies of aminoacids at each position of the alignment.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.statistics.position.compute_background_frequencies.html#cocoatree.statistics.position.compute_background_frequencies" title="cocoatree.statistics.position.compute_background_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">statistics.position.compute_background_frequencies</span></code></a>(aa_freq)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.statistics.position.compute_background_frequencies.html#cocoatree.statistics.position.compute_background_frequencies" title="cocoatree.statistics.position.compute_background_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">statistics.position.compute_background_frequencies</span></code></a>(aa_freq)</p></td>
 <td><p>Computes regularized background frequencies of amino acids</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.statistics.position.compute_rel_entropy.html#cocoatree.statistics.position.compute_rel_entropy" title="cocoatree.statistics.position.compute_rel_entropy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">statistics.position.compute_rel_entropy</span></code></a>(...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.statistics.position.compute_rel_entropy.html#cocoatree.statistics.position.compute_rel_entropy" title="cocoatree.statistics.position.compute_rel_entropy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">statistics.position.compute_rel_entropy</span></code></a>(...)</p></td>
 <td><p>Compute the relative entropy</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.statistics.sequence.compute_seq_weights.html#cocoatree.statistics.sequence.compute_seq_weights" title="cocoatree.statistics.sequence.compute_seq_weights"><code class="xref py py-obj docutils literal notranslate"><span class="pre">statistics.sequence.compute_seq_weights</span></code></a>(...)</p></td>
+<td><p>Compute sequence weights</p></td>
 </tr>
 </tbody>
 </table>
@@ -162,6 +165,12 @@
 <h3>Functions<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.eigen_decomp.html#cocoatree.deconvolution.eigen_decomp" title="cocoatree.deconvolution.eigen_decomp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.eigen_decomp</span></code></a>(mat)</p></td>
+<td><p>Performs eigenvalue decomposition of a square matrix</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.compute_ica.html#cocoatree.deconvolution.compute_ica" title="cocoatree.deconvolution.compute_ica"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.compute_ica</span></code></a>(V[, kmax, ...])</p></td>
+<td><p>ICA rotation (using _basicICA) with default parameters and normalization of outputs.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.randomize.randomization.html#cocoatree.randomize.randomization" title="cocoatree.randomize.randomization"><code class="xref py py-obj docutils literal notranslate"><span class="pre">randomize.randomization</span></code></a>(sequences, n_rep[, ...])</p></td>
 <td><p>Randomize the alignment while preserving the frequencies of amino acids at each position and compute the resulting spectrum of coevolution matrix.</p></td>
 </tr>

@@ -25,11 +25,12 @@ independent component.
 # Import necessary
 from cocoatree.datasets import load_S1A_serine_proteases
 from cocoatree.io import export_fasta
-from cocoatree.msa import filter_gap_seq, filter_gap_pos, seq_weights
+from cocoatree.msa import filter_gap_seq, filter_gap_pos
 from cocoatree.statistics.position import aa_freq_at_pos, \
     compute_background_frequencies, compute_rel_entropy
 from cocoatree.statistics.pairwise import aa_joint_freq, compute_sca_matrix, \
     compute_seq_identity
+from cocoatree.statistics.sequence import compute_seq_weights
 from cocoatree.deconvolution import eigen_decomp, compute_ica, \
     choose_num_components, extract_positions_from_IC
 from cocoatree.randomize import randomization
@@ -88,7 +89,7 @@ cb.set_label("Pairwise sequence identity", fontweight="bold")
 
 # %%
 # Compute sequence weights
-weights, n_eff_seq = seq_weights(sim_matrix)
+weights, n_eff_seq = compute_seq_weights(sim_matrix)
 print(f"Number of effective sequences {n_eff_seq}")
 
 # %%

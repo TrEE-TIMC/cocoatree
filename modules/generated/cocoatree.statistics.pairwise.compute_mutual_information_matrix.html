@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>cocoatree.statistics.pairwise.compute_sca_matrix &#8212; cocoatree 0.0 documentation</title>
+    <title>cocoatree.statistics.pairwise.compute_mutual_information_matrix &#8212; cocoatree 0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
     <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
@@ -40,38 +40,39 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="cocoatree-statistics-pairwise-compute-sca-matrix">
-<h1>cocoatree.statistics.pairwise.compute_sca_matrix<a class="headerlink" href="#cocoatree-statistics-pairwise-compute-sca-matrix" title="Link to this heading">¶</a></h1>
+  <section id="cocoatree-statistics-pairwise-compute-mutual-information-matrix">
+<h1>cocoatree.statistics.pairwise.compute_mutual_information_matrix<a class="headerlink" href="#cocoatree-statistics-pairwise-compute-mutual-information-matrix" title="Link to this heading">¶</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="cocoatree.statistics.pairwise.compute_sca_matrix">
-<span class="sig-prename descclassname"><span class="pre">cocoatree.statistics.pairwise.</span></span><span class="sig-name descname"><span class="pre">compute_sca_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">joint_freqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">joint_freqs_ind</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aa_freq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_freq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.statistics.pairwise.compute_sca_matrix" title="Link to this definition">¶</a></dt>
-<dd><p>Compute the SCA coevolution matrix</p>
+<dt class="sig sig-object py" id="cocoatree.statistics.pairwise.compute_mutual_information_matrix">
+<span class="sig-prename descclassname"><span class="pre">cocoatree.statistics.pairwise.</span></span><span class="sig-name descname"><span class="pre">compute_mutual_information_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pseudo_count_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.03</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.statistics.pairwise.compute_mutual_information_matrix" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the mutual information matrix</p>
 <div class="math">
-<p><span class="math">C_{ij}^{ab} = f_{ij}^{ab} - f_i^a f_j^b</span></p>
-</div><div class="math">
-<p><span class="math">\tilde{C_{ij}} = \sqrt{sum_{a,b} \tilde{(C_{ij}^{ab})^2}}</span></p>
+<p><span class="math">I(X, Y) = \sum_{x,y} p(x, y) \log \frac{p(x, y)}{p(x)p(y)}</span></p>
 </div><section id="arguments">
 <h2>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">¶</a></h2>
-<p>joint_freqs : amino acid joint frequencies</p>
-<p>joint_freqs_ind : amino acid joint frequencies if independent</p>
-<p>aa_freq : frequency of amino acid <em>a</em> at position <em>i</em></p>
-<p>background_freq : background frequency of amino acid <em>a</em></p>
+<p>sequences : list of sequences</p>
+<dl class="simple">
+<dt>pseudo_count_val<span class="classifier">float, default</span><span class="classifier">0.03</span></dt><dd><p>Pseudo count value, to add to expected frequences (in order to have
+non-zero elements)</p>
+</dd>
+<dt>normalize<span class="classifier">boolean, default</span><span class="classifier">True</span></dt><dd><p>Whether to normalize the mutual information by the entropy.</p>
+</dd>
+</dl>
 </section>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
-<p>Cijab : SCA coevolution matrix</p>
-<p>Cij : Frobenius norm of Cijab</p>
+<dl class="simple">
+<dt>mi_matrix<span class="classifier">np.ndarray of shape (nseq, nseq)</span></dt><dd><p>the matrix of mutual information</p>
+</dd>
+</dl>
 </section>
 </dd></dl>
 
-<section id="examples-using-cocoatree-statistics-pairwise-compute-sca-matrix">
-<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.statistics.pairwise.compute_sca_matrix</span></code><a class="headerlink" href="#examples-using-cocoatree-statistics-pairwise-compute-sca-matrix" title="Link to this heading">¶</a></h2>
+<section id="examples-using-cocoatree-statistics-pairwise-compute-mutual-information-matrix">
+<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.statistics.pairwise.compute_mutual_information_matrix</span></code><a class="headerlink" href="#examples-using-cocoatree-statistics-pairwise-compute-mutual-information-matrix" title="Link to this heading">¶</a></h2>
 <div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="In this example, we are comparing the results of the co-evolution analysis on serine proteases using SCA and the mutual information."><img alt="" src="../../_images/sphx_glr_plot_sca_vs_mi_thumb.png" />
 <p><a class="reference internal" href="../../auto_examples/plot_sca_vs_mi.html#sphx-glr-auto-examples-plot-sca-vs-mi-py"><span class="std std-ref">Mutual information versus SCA</span></a></p>
   <div class="sphx-glr-thumbnail-title">Mutual information versus SCA</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete coevolution analysis in order to detect protein sectors from data importation, MSA filtering, computation of positional and joint amino acid frequencies, and computation of the SCA coevolution matrix."><img alt="" src="../../_images/sphx_glr_plot_full_SCA_analysis_thumb.png" />
-<p><a class="reference internal" href="../../auto_examples/plot_full_SCA_analysis.html#sphx-glr-auto-examples-plot-full-sca-analysis-py"><span class="std std-ref">Perform full SCA analysis on the S1A serine protease dataset</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Perform full SCA analysis on the S1A serine protease dataset</div>
 </div></div><div class="sphx-glr-clear"></div></section>
 </section>
 

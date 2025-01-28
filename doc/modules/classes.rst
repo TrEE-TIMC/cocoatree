@@ -79,7 +79,6 @@ Functions
    msa.filter_seq_id
    msa.choose_ref_seq
    msa.compute_seq_identity
-   msa.seq_weights
 
 
 .. _msa_ref:
@@ -106,13 +105,17 @@ Functions
    statistics.pairwise.aa_joint_freq
    statistics.pairwise.compute_seq_identity
    statistics.pairwise.compute_sca_matrix
-   statistics.pairwise.compute_mi_matrix
+   statistics.pairwise.compute_mutual_information_matrix
    statistics.pairwise.compute_apc
    statistics.pairwise.compute_entropy_correction
    statistics.position.aa_freq_at_pos
    statistics.position.compute_background_frequencies
    statistics.position.compute_entropy
    statistics.position.compute_rel_entropy
+   statistics.position.aa_freq_at_pos
+   statistics.position.compute_background_frequencies
+   statistics.position.compute_rel_entropy
+   statistics.sequence.compute_seq_weights
 
 
 .. _statistics_ref:
@@ -139,7 +142,7 @@ Functions
     deconvolution.eigen_decomp
     deconvolution.compute_ica
     deconvolution.choose_num_components
-
+    deconvolution.extract_positions_from_IC
 
 
 .. _deconvolution_ref:
@@ -160,8 +163,11 @@ Functions
 
 .. autosummary::
 
-    :toctree: generated/
-    :template: function.rst
+  :toctree: generated/
+  :template: function.rst
+
+  deconvolution.eigen_decomp
+  deconvolution.compute_ica
 
     randomize.randomization
 
@@ -190,3 +196,4 @@ Functions
 
 
 .. _visualization_ref:
+

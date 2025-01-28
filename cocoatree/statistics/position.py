@@ -105,9 +105,9 @@ def compute_entropy(aa_freq):
     where *H(a)* is the relative entropy of amino acid *a*,
         *fia* is the frequency of amino acid *a* at position *i*
 
-    Arguments
+    Parameters
     ----------
-    aa_freq: np.ndarray,
+    aa_freq : np.ndarray,
         amino acid frequencies per position
 
     Returns
@@ -121,7 +121,9 @@ def compute_entropy(aa_freq):
 
 
 def compute_rel_entropy(aa_freq, background_freq):
-    """Kullback-Leibler relative entropy
+    """Compute the relative entropy
+
+    Also know as the Kullback-Leibler divergence
 
     .. math::
 
@@ -130,6 +132,7 @@ def compute_rel_entropy(aa_freq, background_freq):
 
     where f_i^a is the observed frequency of amino acid *a* at position *i*,
         q^a is the background expectation
+
     D_i^a is known as the Kullback-Leibler relative entropy (Cover and Thomas,
     2012) and indicates how unlikely the observed frequencies of amino acid
     *a* at position *i* would be if *a* occurred randomly with probability q^a.

@@ -28,7 +28,38 @@ def _clean_msa(msa):
     return msa
 
 
-def filter_gap_pos(sequences, threshold=0.4, verbose=False):
+def filter_sequences(seq_id, sequences, gap_threshold=0.4, seq_threshold=0.2,
+                     verbose=False):
+    """
+    Filter sequences
+
+    Filter (1) overly gapped sequences; (2) overly gapped positions overly
+    gapped positions..
+
+    Parameters
+    ----------
+    sequences : list of the MSA sequences to filter
+
+    threshold : max proportion of gaps tolerated (default=0.4)
+
+    Returns
+    -------
+    filt_seqs : list of the sequences after filter
+
+    pos_kept : numpy.ndarray of the positions that were conserved
+    """
+
+    sequences, pos_kept = _filter_gap_pos(
+        sequences, threshold=gap_threshold,
+        verbose=verbose)
+    seq_id, sequences = _filter_gap_seq(
+        seq_id, sequences,
+        threshold=seq_threshold, verbose=verbose)
+
+    return seq_id, sequences, pos_kept
+
+
+def _filter_gap_pos(sequences, threshold=0.4, verbose=False):
     """Filter the sequences for overly gapped positions.
 
     Arguments
@@ -65,8 +96,8 @@ def filter_gap_pos(sequences, threshold=0.4, verbose=False):
     return filt_seqs, pos_kept
 
 
-def filter_gap_seq(seq_id, sequences, threshold=0.2, filtrefseq=False,
-                   refseq_id=None, verbose=False):
+def _filter_gap_seq(seq_id, sequences, threshold=0.2, filtrefseq=False,
+                    refseq_id=None, verbose=False):
     """
     Remove sequences with a fraction of gaps greater than a specified
     value.

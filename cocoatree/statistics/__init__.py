@@ -3,9 +3,9 @@ from . import pairwise
 from .. import msa
 
 
-def compute_all_frequencies(sequences,
-                            seq_weights=None,
-                            pseudo_counts_val=0.03):
+def compute_frequencies(sequences,
+                        seq_weights=None,
+                        pseudo_counts_val=0.03):
     """
     Compute frequencies on sequences
 

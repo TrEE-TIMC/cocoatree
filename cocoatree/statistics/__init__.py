@@ -38,7 +38,7 @@ def compute_all_frequencies(sequences,
     if seq_weights is None:
         seq_weights, _ = msa.compute_sequences_weights(sequences)
 
-    aa_frequencies = position.aa_freq_at_pos(
+    aa_frequencies = position.compute_aa_freq_at_pos(
         sequences,
         lambda_coef=pseudo_counts_val,
         weights=seq_weights)

@@ -1,7 +1,7 @@
 import numpy as np
 from ..__params import lett2num
 from ..msa import compute_sequences_weights
-from .position import aa_freq_at_pos
+from .position import compute_aa_freq_at_pos
 
 
 def aa_joint_freq(sequences, weights, lambda_coef=0.03):
@@ -233,7 +233,7 @@ def compute_mutual_information_matrix(sequences, seq_weights=None,
     joint_freqs = aa_joint_freq(
         sequences, weights, lambda_coef=pseudo_count_val)
 
-    ind_freqs = aa_freq_at_pos(
+    ind_freqs = compute_aa_freq_at_pos(
         sequences, lambda_coef=pseudo_count_val,
         weights=weights)
 

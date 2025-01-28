@@ -2,7 +2,7 @@ import numpy as np
 from ..__params import lett2num, __freq0
 
 
-def aa_freq_at_pos(sequences, lambda_coef=0.03, weights=None):
+def compute_aa_freq_at_pos(sequences, lambda_coef=0.03, weights=None):
     """Computes frequencies of aminoacids at each position of the alignment.
 
     .. math::

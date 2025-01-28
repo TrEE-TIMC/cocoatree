@@ -102,6 +102,7 @@ Functions
    :toctree: generated/
    :template: function.rst
 
+   statistics.compute_all_frequencies
    statistics.pairwise.aa_joint_freq
    statistics.pairwise.compute_seq_identity
    statistics.pairwise.compute_sca_matrix

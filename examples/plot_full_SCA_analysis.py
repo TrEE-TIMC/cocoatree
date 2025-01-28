@@ -26,11 +26,12 @@ independent component.
 from cocoatree.datasets import load_S1A_serine_proteases
 from cocoatree.io import export_fasta
 from cocoatree.msa import filter_gap_seq, filter_gap_pos
-from cocoatree.statistics.position import aa_freq_at_pos, \
-    compute_background_frequencies, compute_rel_entropy
-from cocoatree.statistics.pairwise import aa_joint_freq, compute_sca_matrix, \
+from cocoatree.statistics.position import compute_rel_entropy
+from cocoatree.statistics.pairwise import compute_sca_matrix, \
     compute_seq_identity
 from cocoatree.statistics.sequence import compute_seq_weights
+from cocoatree.statistics import compute_all_frequencies
+
 from cocoatree.deconvolution import eigen_decomp, compute_ica, \
     choose_num_components, extract_positions_from_IC
 from cocoatree.randomize import randomization
@@ -93,16 +94,18 @@ weights, n_eff_seq = compute_seq_weights(sim_matrix)
 print(f"Number of effective sequences {n_eff_seq}")
 
 # %%
-# compute allele frequencies
-aa_freq = aa_freq_at_pos(seq_kept, lambda_coef=0.03, weights=weights)
-
-# %%
-# Compute background frequencies
-background_frequencies = compute_background_frequencies(aa_freq)
-
-# %%
-# Compute joint allele frequencies
-fijab, fijab_ind = aa_joint_freq(seq_kept, weights=weights, lambda_coef=0.03)
+# Compute different kind of frequencies from the list of sequences.
+#
+#    - aa_freq corresponds to the frequencies of amino acid at each position,
+#      and is thus a ndarray of size (nseq, 21)
+#    - background_frequencies corresponds to the overall distribution of amino
+#      acids in this MSA. It is a ndarray of size (21, )
+#    - pairwise_freq corresponds to pairwise frequencies of amino acid for all
+#      pairs of positions. It thus corresponds to an ndarray of shape (nseq,
+#      nseq, 21, 21).
+aa_freq, background_frequencies, pairwise_freq = compute_all_frequencies(
+    seq_kept,
+    seq_weights=weights)
 
 # %%
 # Compute conservation along the MSA
@@ -122,8 +125,7 @@ ax.set_ylabel('Di', fontsize=14)
 # Compute the SCA coevolution matrix
 # ----------------------------------
 
-Cijab_raw, Cij = compute_sca_matrix(joint_freqs=fijab,
-                                    joint_freqs_ind=fijab_ind,
+Cijab_raw, Cij = compute_sca_matrix(joint_freqs=pairwise_freq,
                                     aa_freq=aa_freq,
                                     background_freq=background_frequencies)
 

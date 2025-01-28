@@ -107,10 +107,10 @@ def randomization(sequences, n_rep, weights=1, lambda_coef=0.03, kmax=6,
     val_rand = np.zeros((n_rep, n_pos))
     for rep in range(n_rep):
         msa_random = _random_aln(fia, n_seq, random_state=random_state)[0]
-        fijab, fijab_ind = aa_joint_freq(msa_random, weights,
-                                         lambda_coef=lambda_coef)
+        fijab = aa_joint_freq(msa_random, weights,
+                              lambda_coef=lambda_coef)
         # Compute coevolution matrix for the randomized alignment
-        Coev_rand = compute_sca_matrix(fijab, fijab_ind, fia,
+        Coev_rand = compute_sca_matrix(fijab, fia,
                                        background_freq)[1]
 
         eig_val, eig_vec = eigen_decomp(Coev_rand)

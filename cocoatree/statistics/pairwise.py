@@ -92,9 +92,6 @@ def aa_joint_freq(sequences, weights, lambda_coef=0.03):
     joint_freqs = (1 - lambda_coef**2) * joint_freqs +\
         lambda_coef**2 / (aa_count)**2
 
-    # joint_freqs_ind = np.multiply.outer(simple_freq, simple_freq)
-    #joint_freqs_ind = np.moveaxis(joint_freqs_ind, [0, 1, 2, 3], [2, 0, 3, 1])
-
     return joint_freqs
 
 

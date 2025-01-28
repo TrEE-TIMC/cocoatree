@@ -80,8 +80,9 @@ Functions
    msa.filter_ref_seq
    msa.filter_seq_id
    msa.choose_ref_seq
-   msa.seq_weights
    msa.map_to_pdb
+   msa.compute_seq_identity
+   msa.compute_sequence_weights
 
 
 .. _msa_ref:
@@ -105,11 +106,12 @@ Functions
    :toctree: generated/
    :template: function.rst
 
-   statistics.pairwise.aa_joint_freq
-   statistics.pairwise.compute_seq_identity
+   statistics.compute_all_frequencies
    statistics.pairwise.compute_sca_matrix
-   statistics.position.aa_freq_at_pos
-   statistics.position.compute_background_frequencies
+   statistics.pairwise.compute_mutual_information_matrix
+   statistics.pairwise.compute_apc
+   statistics.pairwise.compute_entropy_correction
+   statistics.position.compute_entropy
    statistics.position.compute_rel_entropy
 
 
@@ -158,8 +160,11 @@ Functions
 
 .. autosummary::
 
-    :toctree: generated/
-    :template: function.rst
+  :toctree: generated/
+  :template: function.rst
+
+  deconvolution.eigen_decomp
+  deconvolution.compute_ica
 
     randomize.randomization
 
@@ -188,3 +193,4 @@ Functions
 
 
 .. _visualization_ref:
+

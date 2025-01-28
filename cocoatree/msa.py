@@ -1,9 +1,9 @@
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio.Align import MultipleSeqAlignment
-from .__params import lett2num
 import numpy as np
-from .statistics.pairwise import compute_seq_identity
+import sklearn.metrics as sn
+from .__params import lett2num
 
 
 def _clean_msa(msa):
@@ -167,7 +167,6 @@ def filter_ref_seq(seq_id, sequences, delta=0.2, refseq_id=None,
 
 
 def choose_ref_seq(msa):
-
     """This function chooses a default reference sequence for the alignment by
     taking the sequence which has the mean pairwise sequence identity closest
     to that of the entire sequence alignment.
@@ -188,29 +187,6 @@ def choose_ref_seq(msa):
     ref_seq = np.argmin(mean_pairwise_seq_sim)
 
     return ref_seq
-
-
-def seq_weights(sim_matrix, threshold=0.8):
-    """Each sequence s is given a weight ws = 1/Ns where Ns is the number of
-    sequences with an identity to s above a specified threshold.
-
-    Parameters
-    ----------
-    sim_matrix : similarity matrix (e.g. output from seq_similarity() function)
-
-    threshold : percentage identity above which the sequences are considered
-                identical (default=0.8)
-
-    Returns
-    -------
-    weights : np.array of each sequence weight
-    """
-
-    weights = (1 / np.sum(sim_matrix >= threshold, axis=0))
-
-    Nseq_eff = sum(weights)
-
-    return weights, Nseq_eff
 
 
 def filter_seq_id(seq_id, sequences, list_id):
@@ -294,3 +270,62 @@ def map_to_pdb(pdb_seq, pdb_pos, sequences, seq_id, ref_seq_id):
     mapping = np.array((list(pdb_seq), pdb_pos, msa_pos))
 
     return mapping
+
+
+def compute_seq_identity(sequences):
+    """
+    Computes the identity between sequences in a MSA (as Hamming's pairwise
+    distance)
+
+    Arguments
+    ---------
+    sequences : list of sequences
+
+    Returns
+    -------
+    sim_matrix : identity matrix of shape (Nseq, Nseq)
+    """
+
+    separated_aa = np.array([[lett2num[char] for char in row]
+                             for row in sequences])
+
+    sim_matrix = 1 - sn.DistanceMetric.get_metric(
+        "hamming").pairwise(separated_aa)
+
+    return sim_matrix
+
+
+def compute_sequences_weights(sequences, threshold=0.8):
+    """
+    Compute sequence weights
+
+    Each sequence s is given a weight ws = 1/Ns where Ns is the number of
+    sequences with an identity to s above a specified threshold.
+
+    Parameters
+    ----------
+    sequences : list of sequences
+
+    threshold : float, optional, default: 0.8
+
+        percentage identity above which the sequences are considered identical
+        (default=0.8)
+
+    Returns
+    -------
+    weights : np.array (nseq, ) of each sequence weight
+
+    n_seq_effective : float
+        the number of effective sequences
+    """
+    if threshold < 0 or threshold > 1:
+        raise ValueError(
+            "The threshold needs to be between 0 and 1." +
+            f" Value provided {threshold}")
+
+    sim_matrix = compute_seq_identity(sequences)
+    weights = (1 / np.sum(sim_matrix >= threshold, axis=0))
+
+    n_seq_effective = sum(weights)
+
+    return weights, n_seq_effective

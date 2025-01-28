@@ -2,7 +2,7 @@ import numpy as np
 from ..__params import lett2num, __freq0
 
 
-def aa_freq_at_pos(sequences, lambda_coef=0.03, weights=None):
+def _compute_aa_freq_at_pos(sequences, lambda_coef=0.03, weights=None):
     """Computes frequencies of aminoacids at each position of the alignment.
 
     .. math::
@@ -64,7 +64,7 @@ def aa_freq_at_pos(sequences, lambda_coef=0.03, weights=None):
     return aa_freq
 
 
-def compute_background_frequencies(aa_freq, lambda_coef=0.03):
+def _compute_background_frequencies(aa_freq, lambda_coef=0.03):
     """Computes regularized background frequencies of amino acids
 
     Arguments
@@ -97,14 +97,19 @@ def compute_background_frequencies(aa_freq, lambda_coef=0.03):
 
 def compute_entropy(aa_freq):
     """Computes  Shannon's entropy for each position in the alignment
+
     .. math::
+
         H(a) = -\\sum_i f_{ia} \\log f_{ia}
+
     where *H(a)* is the relative entropy of amino acid *a*,
         *fia* is the frequency of amino acid *a* at position *i*
-    Arguments
+
+    Parameters
     ----------
-    aa_freq: np.ndarray,
+    aa_freq : np.ndarray,
         amino acid frequencies per position
+
     Returns
     -------
     s: array of shape (N_pos)
@@ -127,10 +132,10 @@ def compute_rel_entropy(aa_freq, background_freq):
 
     where f_i^a is the observed frequency of amino acid *a* at position *i*,
         q^a is the background expectation
-        D_i^a is known as the Kullback-Leibler relative entropy (Cover and
-        Thomas, 2012) and indicates how unlikely the observed frequencies of
-        amino acid *a* at position *i* would be if *a* occurred randomly with
-        probability q^a.
+
+    D_i^a is known as the Kullback-Leibler relative entropy (Cover and Thomas,
+    2012) and indicates how unlikely the observed frequencies of amino acid
+    *a* at position *i* would be if *a* occurred randomly with probability q^a.
 
     Arguments
     ----------

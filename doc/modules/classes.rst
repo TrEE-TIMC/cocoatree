@@ -27,6 +27,8 @@ Functions
   io.load_MSA
   io.load_tree_ete3
   io.export_fasta
+  io.load_pdb
+  io.export_sector_for_pymol
 
 .. _io_ref:
 
@@ -79,6 +81,7 @@ Functions
    msa.filter_ref_seq
    msa.filter_seq_id
    msa.choose_ref_seq
+   msa.map_to_pdb
    msa.compute_seq_identity
    msa.compute_sequence_weights
 

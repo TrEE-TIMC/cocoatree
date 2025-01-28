@@ -171,3 +171,4 @@ doc/sg_execution_times.rst
 
 # Example outputs
 examples/*.fasta
+examples/*.npy

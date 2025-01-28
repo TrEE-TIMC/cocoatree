@@ -1,0 +1,14 @@
+﻿:orphan:
+
+cocoatree.statistics.position.compute_entropy
+=============================================
+
+.. currentmodule:: cocoatree.statistics.position
+
+.. autofunction:: compute_entropy
+
+.. include:: ../../generated/backreferences/cocoatree.statistics.position.compute_entropy.examples
+
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>

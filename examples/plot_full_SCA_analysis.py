@@ -27,10 +27,10 @@ from cocoatree.datasets import load_S1A_serine_proteases
 from cocoatree.io import export_fasta, load_pdb, export_sector_for_pymol
 from cocoatree.msa import filter_gap_seq, filter_gap_pos, \
     compute_sequences_weights, map_to_pdb
+from cocoatree.msa import compute_seq_identity
 from cocoatree.statistics import compute_all_frequencies
 from cocoatree.statistics.position import compute_rel_entropy
-from cocoatree.statistics.pairwise import compute_sca_matrix, \
-    compute_seq_identity
+from cocoatree.statistics.pairwise import compute_sca_matrix
 
 from cocoatree.deconvolution import eigen_decomp, compute_ica, \
     choose_num_components, extract_positions_from_IC

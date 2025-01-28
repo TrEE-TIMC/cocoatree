@@ -254,7 +254,9 @@ pdb_seq, pdb_pos = load_pdb('data/3TGI.pdb', pdb_id='TRIPSIN', chain='E')
 pdb_mapping = map_to_pdb(pdb_seq, pdb_pos, sequences, seq_id,
                          ref_seq_id='14719441')
 # Export lists of the first sector positions and each residue's contribution
-# to the independent component to use for visualization on Pymol
+# to the independent component to use for visualization on Pymol.
+# The residues are ordered in the list by decreasing contribution score (the
+# first residue in the list is the highest contributing)
 export_sector_for_pymol(pdb_mapping, independent_components, axis=0,
                         sector_pos=sector_1_pos,
                         ics=ics,

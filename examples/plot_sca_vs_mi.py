@@ -48,9 +48,8 @@ sim_matrix = compute_seq_identity(seq_kept)
 weights, n_eff_seq = compute_seq_weights(sim_matrix)
 aa_freq = aa_freq_at_pos(seq_kept, lambda_coef=0.03, weights=weights)
 background_frequencies = compute_background_frequencies(aa_freq)
-fijab, fijab_ind = aa_joint_freq(seq_kept, weights=weights, lambda_coef=0.03)
+fijab = aa_joint_freq(seq_kept, weights=weights, lambda_coef=0.03)
 Cijab_raw, sca = compute_sca_matrix(joint_freqs=fijab,
-                                    joint_freqs_ind=fijab_ind,
                                     aa_freq=aa_freq,
                                     background_freq=background_frequencies)
 

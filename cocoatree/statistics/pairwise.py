@@ -252,7 +252,7 @@ def compute_mutual_information_matrix(sequences, pseudo_count_val=0.03,
     """
     sim_matrix = compute_seq_identity(sequences)
     weights, _ = compute_seq_weights(sim_matrix)
-    joint_freqs, _ = aa_joint_freq(
+    joint_freqs = aa_joint_freq(
         sequences, weights, lambda_coef=pseudo_count_val)
 
     ind_freqs = aa_freq_at_pos(

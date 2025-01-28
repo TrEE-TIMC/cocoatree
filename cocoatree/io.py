@@ -161,7 +161,7 @@ def export_sector_for_pymol(mapping, independent_components, axis, sector_pos,
 
     sector_pdb_pos = []
     for residue in sector_pos:
-        index = np.where(mapping[2] == residue)[0][0]
+        index = np.where(mapping[2] == str(residue))[0][0]
         sector_pdb_pos.append(mapping[1][index])
 
     ic_contributions = []

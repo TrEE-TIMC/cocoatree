@@ -24,8 +24,9 @@ independent component.
 # %%
 # Import necessary
 from cocoatree.datasets import load_S1A_serine_proteases
-from cocoatree.io import export_fasta
-from cocoatree.msa import filter_gap_seq, filter_gap_pos, seq_weights
+from cocoatree.io import export_fasta, load_pdb, export_sector_for_pymol
+from cocoatree.msa import filter_gap_seq, filter_gap_pos, seq_weights, \
+    map_to_pdb
 from cocoatree.statistics.position import aa_freq_at_pos, \
     compute_background_frequencies, compute_rel_entropy
 from cocoatree.statistics.pairwise import aa_joint_freq, compute_sca_matrix, \
@@ -176,7 +177,7 @@ ax.set_ylabel('Numbers', fontweight="bold")
 # Independent component analysis (ICA)
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-independant_components, W = compute_ica(
+independent_components, W = compute_ica(
     eigenvectors, kmax=n_components, learnrate=0.1,
     iterations=100000)
 
@@ -197,14 +198,14 @@ for k, [k1, k2] in enumerate(pairs):
     ax.set_ylabel("eigenvector %i" % (k2+1), fontsize=16)
 
     ax = axes[1, k]
-    ax.plot(independant_components[:, k1], independant_components[:, k2], 'ok')
+    ax.plot(independent_components[:, k1], independent_components[:, k2], 'ok')
     ax.set_xlabel("independent component %i" % (k1+1), fontsize=16)
     ax.set_ylabel("independent component %i" % (k2+1), fontsize=16)
 
 # %%
 # Select residues that significantly contribute to each independent component
 ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits = \
-    extract_positions_from_IC(independant_components, n_components, Cij,
+    extract_positions_from_IC(independent_components, n_components, Cij,
                               p_cut=0.95)
 
 print(f"Sizes of the {n_components} ICs: {icsize}")
@@ -231,6 +232,8 @@ for i in range(n_components):
 
 # %%
 # Export fasta files of the sectors for all the sequences
+# Those fasta can then be used for visualization along a phylogenetic tree
+# as implemented in the cocoatree.visualization module
 
 sector_1_pos = list(pos_kept[ics[0].items])
 sector_1 = []
@@ -241,3 +244,18 @@ for sequence in range(len(seq_id)):
     sector_1.append(seq)
 
 export_fasta(sector_1, seq_id, 'sector_1.fasta')
+
+# %
+# Export files necessary for Pymol visualization
+# Load PDB file of rat's trypsin
+pdb_seq, pdb_pos = load_pdb('data/3TGI.pdb', pdb_id='TRIPSIN', chain='E')
+# Map PDB positions on the MSA sequence corresponding to rat's trypsin:
+# seq_id='14719441'
+pdb_mapping = map_to_pdb(pdb_seq, pdb_pos, sequences, seq_id,
+                         ref_seq_id='14719441')
+# Export lists of the first sector positions and each residue's contribution
+# to the independent component to use for visualization on Pymol
+export_sector_for_pymol(pdb_mapping, independent_components, axis=0,
+                        sector_pos=sector_1_pos,
+                        ics=ics,
+                        outpath='color_sector_1_pymol.npy')

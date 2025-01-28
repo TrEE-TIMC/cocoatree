@@ -185,9 +185,7 @@ def compute_mutual_information_matrix(sequences, pseudo_count_val=0.03,
 
     mi_matrix = np.sum(
         joint_freqs * np.log(
-            joint_freqs / np.dot(
-                ind_freqs[:, :, np.newaxis],
-                ind_freqs.T[:, np.newaxis]).transpose([0, 3, 2, 1])),
+            joint_freqs / joint_freqs_ind),
         axis=(2, 3))
 
     if normalize:

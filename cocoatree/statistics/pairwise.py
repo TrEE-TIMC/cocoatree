@@ -3,7 +3,7 @@ import sklearn.metrics as sn
 from ..__params import lett2num
 from .sequence import compute_seq_weights
 
-from .position import aa_freq_at_pos, compute_entropy
+from .position import aa_freq_at_pos
 
 
 def compute_seq_identity(sequences):
@@ -180,6 +180,9 @@ def compute_mutual_information_matrix(sequences, pseudo_count_val=0.03,
         sequences, lambda_coef=pseudo_count_val,
         weights=weights)
 
+    joint_freqs_ind = np.multiply.outer(ind_freqs, ind_freqs)
+    joint_freqs_ind = np.moveaxis(joint_freqs_ind, [0, 1, 2, 3], [0, 2, 1, 3])
+
     mi_matrix = np.sum(
         joint_freqs * np.log(
             joint_freqs / np.dot(
@@ -188,7 +191,7 @@ def compute_mutual_information_matrix(sequences, pseudo_count_val=0.03,
         axis=(2, 3))
 
     if normalize:
-        entropy = compute_entropy(ind_freqs)
-        mi_matrix /= np.dot(entropy[:, np.newaxis], entropy[np.newaxis])
+        joint_entropy = -np.sum(joint_freqs * np.log(joint_freqs), axis=(2, 3))
+        mi_matrix /= joint_entropy
 
     return mi_matrix

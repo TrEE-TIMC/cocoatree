@@ -106,6 +106,7 @@ Functions
    statistics.pairwise.aa_joint_freq
    statistics.pairwise.compute_seq_identity
    statistics.pairwise.compute_sca_matrix
+   statistics.pairwise.compute_mutual_information_matrix
    statistics.position.aa_freq_at_pos
    statistics.position.compute_background_frequencies
    statistics.position.compute_rel_entropy
@@ -156,8 +157,11 @@ Functions
 
 .. autosummary::
 
-    :toctree: generated/
-    :template: function.rst
+  :toctree: generated/
+  :template: function.rst
+
+  deconvolution.eigen_decomp
+  deconvolution.compute_ica
 
     randomize.randomization
 
@@ -186,3 +190,4 @@ Functions
 
 
 .. _visualization_ref:
+

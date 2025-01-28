@@ -1,10 +1,12 @@
 import numpy as np
 import sklearn.metrics as sn
 from ..__params import lett2num
+from .sequence import compute_seq_weights
+
+from .position import aa_freq_at_pos
 
 
 def compute_seq_identity(sequences):
-
     """
     Computes the identity between sequences in a MSA (as Hamming's pairwise
     distance)
@@ -143,3 +145,53 @@ def compute_sca_matrix(joint_freqs, joint_freqs_ind, aa_freq, background_freq):
     Cij = np.sqrt(np.sum(Cijab_tilde ** 2, axis=(2, 3)))
 
     return Cijab_raw, Cij
+
+
+def compute_mutual_information_matrix(sequences, pseudo_count_val=0.03,
+                                      normalize=True):
+    r"""Compute the mutual information matrix
+
+    .. math::
+
+        I(X, Y) = \sum_{x,y} p(x, y) \log \frac{p(x, y)}{p(x)p(y)}
+
+    Arguments
+    ----------
+    sequences : list of sequences
+
+    pseudo_count_val : float, default : 0.03
+        Pseudo count value, to add to expected frequences (in order to have
+        non-zero elements)
+
+    normalize : boolean, default : True
+        Whether to normalize the mutual information by the entropy.
+
+    Returns
+    -------
+    mi_matrix : np.ndarray of shape (nseq, nseq)
+        the matrix of mutual information
+    """
+    sim_matrix = compute_seq_identity(sequences)
+    weights, _ = compute_seq_weights(sim_matrix)
+    joint_freqs, _ = aa_joint_freq(
+        sequences, weights, lambda_coef=pseudo_count_val)
+
+    ind_freqs = aa_freq_at_pos(
+        sequences, lambda_coef=pseudo_count_val,
+        weights=weights)
+
+    joint_freqs_ind = np.multiply.outer(ind_freqs, ind_freqs)
+    joint_freqs_ind = np.moveaxis(joint_freqs_ind, [0, 1, 2, 3], [0, 2, 1, 3])
+
+    mi_matrix = np.sum(
+        joint_freqs * np.log(
+            joint_freqs / np.dot(
+                ind_freqs[:, :, np.newaxis],
+                ind_freqs.T[:, np.newaxis]).transpose([0, 3, 2, 1])),
+        axis=(2, 3))
+
+    if normalize:
+        joint_entropy = -np.sum(joint_freqs * np.log(joint_freqs), axis=(2, 3))
+        mi_matrix /= joint_entropy
+
+    return mi_matrix

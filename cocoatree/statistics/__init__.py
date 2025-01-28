@@ -37,7 +37,8 @@ def compute_all_frequencies(sequences,
         positions in the list of provided sequences.
     """
     if seq_weights is None:
-        raise NotImplementedError("Not implemented yet")
+        sim_matrix = pairwise.compute_seq_identity(sequences)
+        seq_weights = sequence.compute_seq_weights(sim_matrix)
 
     aa_frequencies = position.aa_freq_at_pos(
         sequences,

@@ -27,3 +27,29 @@ def load_S1A_serine_proteases():
 
     return {"sequence_ids": sequence_ids,
             "alignment": sequences}
+
+
+def load_rhomboid_proteases():
+    """
+    Load the rhomboid protease dataset
+
+    This dataset comes from Mihaljevic & Urban, Cell, 2020
+    (DOI: https://doi.org/10.1016/j.str.2020.07.015).
+
+    Returns
+    -------
+
+    a dictionnary containing :
+        - `sequences_ids`: a list of strings corresponding to sequence names
+        - `alignment`: a list of strings corresponding to sequences. Because it
+          is an MSA, all the strings are of same length.
+    """
+
+    module_path = os.path.dirname(__file__)
+    filename = os.path.join(
+        module_path,
+        "data/rhomboid_proteases/Data_S1_Rhomboid_MSA.fasta")
+    sequence_ids, sequences = load_MSA(filename, format="fasta")
+
+    return {"sequence_ids": sequence_ids,
+            "alignment": sequences}

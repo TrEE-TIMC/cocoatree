@@ -43,8 +43,9 @@ def compute_all_frequencies(sequences,
         lambda_coef=pseudo_counts_val,
         weights=seq_weights)
 
-    background_frequencies = position._compute_regularized_background_frequencies(
-        aa_frequencies)
+    background_frequencies = \
+        position._compute_regularized_background_frequencies(
+            aa_frequencies)
 
     pairwise_frequencies = pairwise._aa_joint_freq(
         sequences,

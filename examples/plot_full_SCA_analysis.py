@@ -27,7 +27,7 @@ from cocoatree.datasets import load_S1A_serine_proteases
 from cocoatree.io import export_fasta
 from cocoatree.msa import filter_gap_seq, filter_gap_pos, seq_weights
 from cocoatree.statistics.position import aa_freq_at_pos, \
-    compute_background_frequencies
+    compute_background_frequencies, compute_rel_entropy
 from cocoatree.statistics.pairwise import aa_joint_freq, compute_sca_matrix, \
     compute_seq_identity
 from cocoatree.deconvolution import eigen_decomp, compute_ica, \
@@ -62,7 +62,7 @@ print(f"The loaded MSA has {n_seq} sequences and {n_pos} positions.")
 
 filt_seqs, pos_kept = filter_gap_pos(sequences, threshold=0.4)
 n_pos_kept = len(pos_kept)
-print(f"After filtering, we have {n_pos_kept} remaining sequences.")
+print(f"After filtering, we have {n_pos_kept} remaining positions.")
 
 # %%
 # Filter overly gapped sequences
@@ -70,6 +70,7 @@ print(f"After filtering, we have {n_pos_kept} remaining sequences.")
 
 seq_id_kept, seq_kept = filter_gap_seq(seq_id, filt_seqs, threshold=0.2,
                                        filtrefseq=False)
+print(f"After filtering, we have {len(seq_kept)} remaining sequences.")
 
 # %%
 # Compute the matrix of pairwise sequence identity
@@ -101,6 +102,21 @@ background_frequencies = compute_background_frequencies(aa_freq)
 # %%
 # Compute joint allele frequencies
 fijab, fijab_ind = aa_joint_freq(seq_kept, weights=weights, lambda_coef=0.03)
+
+# %%
+# Compute conservation along the MSA
+# ----------------------------------
+Dia, Di = compute_rel_entropy(aa_freq, background_frequencies)
+
+fig, axs = plt.subplots(1, 1, figsize=(9, 4))
+xvals = [i+1 for i in range(len(Di))]
+xticks = [0, 50, 100, 150, 200, 250]
+plt.bar(xvals, Di, color='k')
+plt.tick_params(labelsize=11)
+plt.grid()
+axs.set_xticks(xticks)
+plt.xlabel('Residue position', fontsize=14)
+plt.ylabel('Di', fontsize=14)
 
 # %%
 # Compute the SCA coevolution matrix
@@ -169,8 +185,6 @@ independant_components, W = compute_ica(
 if n_components % 2 != 0:
     print('Uneven number of axes, discard the last one for visual \
           representation')
-    n_components -= 2
-else:
     n_components -= 1
 
 pairs = [[x, x+1] for x in range(0, n_components, 2)]
@@ -185,8 +199,8 @@ for k, [k1, k2] in enumerate(pairs):
 
     ax = axes[1, k]
     ax.plot(independant_components[:, k1], independant_components[:, k2], 'ok')
-    ax.set_xlabel("independant component %i" % (k1+1), fontsize=16)
-    ax.set_ylabel("independant component %i" % (k2+1), fontsize=16)
+    ax.set_xlabel("independent component %i" % (k1+1), fontsize=16)
+    ax.set_ylabel("independent component %i" % (k2+1), fontsize=16)
 
 # %%
 # Select residues that significantly contribute to each independent component
@@ -198,6 +212,9 @@ print(f"Sizes of the {n_components} ICs: {icsize}")
 
 # %%
 # Plot coevolution within and between the sectors
+# Each white square corresponds to a sector, with the residues ordered in
+# decreasing contribution to the independent component associated from top to
+# bottom and from left to right.
 fig, ax = plt.subplots(tight_layout=True)
 im = ax.imshow(Cij[np.ix_(sortedpos, sortedpos)], vmin=0, vmax=2,
                interpolation='none', aspect='equal',
@@ -225,4 +242,3 @@ for sequence in range(len(seq_id)):
     sector_1.append(seq)
 
 export_fasta(sector_1, seq_id, 'sector_1.fasta')
-# outpath needs to be defined properly

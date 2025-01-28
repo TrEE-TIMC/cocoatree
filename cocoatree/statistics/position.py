@@ -126,9 +126,10 @@ def compute_rel_entropy(aa_freq, background_freq):
 
     where f_i^a is the observed frequency of amino acid *a* at position *i*,
         q^a is the background expectation
-        D_i^a is known as the Kullback-Leibler relative entropy (Cover and Thomas,
-    2012) and indicates how unlikely the observed frequencies of amino acid
-    *a* at position *i* would be if *a* occurred randomly with probability q^a.
+        D_i^a is known as the Kullback-Leibler relative entropy (Cover and
+        Thomas, 2012) and indicates how unlikely the observed frequencies of
+        amino acid *a* at position *i* would be if *a* occurred randomly with
+        probability q^a.
 
     Arguments
     ----------

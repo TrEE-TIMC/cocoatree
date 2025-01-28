@@ -108,6 +108,7 @@ Functions
    statistics.pairwise.compute_sca_matrix
    statistics.position.aa_freq_at_pos
    statistics.position.compute_background_frequencies
+   statistics.position.compute_rel_entropy
 
 
 .. _statistics_ref:

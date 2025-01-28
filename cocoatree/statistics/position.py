@@ -2,7 +2,7 @@ import numpy as np
 from ..__params import lett2num, __freq0
 
 
-def aa_freq_at_pos(sequences, lambda_coef=0.03, weights=None):
+def _compute_aa_freq_at_pos(sequences, lambda_coef=0.03, weights=None):
     """Computes frequencies of aminoacids at each position of the alignment.
 
     .. math::
@@ -64,7 +64,7 @@ def aa_freq_at_pos(sequences, lambda_coef=0.03, weights=None):
     return aa_freq
 
 
-def compute_background_frequencies(aa_freq, lambda_coef=0.03):
+def _compute_background_frequencies(aa_freq, lambda_coef=0.03):
     """Computes regularized background frequencies of amino acids
 
     Arguments

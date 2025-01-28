@@ -9,12 +9,9 @@ serine proteases using SCA and the mutual information.
 
 from cocoatree.datasets import load_S1A_serine_proteases
 from cocoatree.msa import filter_gap_seq, filter_gap_pos
-from cocoatree.statistics.position import aa_freq_at_pos, \
-    compute_background_frequencies
 
-from cocoatree.statistics.sequence import compute_seq_weights
-from cocoatree.statistics.pairwise import aa_joint_freq, compute_sca_matrix, \
-    compute_seq_identity
+from cocoatree.statistics import compute_all_frequencies
+from cocoatree.statistics.pairwise import compute_sca_matrix
 from cocoatree.statistics.pairwise import compute_mutual_information_matrix
 
 import matplotlib.pyplot as plt
@@ -44,13 +41,9 @@ seq_id_kept, seq_kept = filter_gap_seq(seq_id, filt_seqs, threshold=0.2,
 # Compute the SCA matrix
 # ----------------------
 
-sim_matrix = compute_seq_identity(seq_kept)
-weights, n_eff_seq = compute_seq_weights(sim_matrix)
-aa_freq = aa_freq_at_pos(seq_kept, lambda_coef=0.03, weights=weights)
-background_frequencies = compute_background_frequencies(aa_freq)
-fijab, fijab_ind = aa_joint_freq(seq_kept, weights=weights, lambda_coef=0.03)
-Cijab_raw, sca = compute_sca_matrix(joint_freqs=fijab,
-                                    joint_freqs_ind=fijab_ind,
+aa_freq, background_frequencies, joint_frequencies = compute_all_frequencies(
+    seq_kept, seq_weights=None)
+Cijab_raw, sca = compute_sca_matrix(joint_freqs=joint_frequencies,
                                     aa_freq=aa_freq,
                                     background_freq=background_frequencies)
 

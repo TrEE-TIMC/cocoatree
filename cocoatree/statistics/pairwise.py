@@ -1,35 +1,10 @@
 import numpy as np
-import sklearn.metrics as sn
 from ..__params import lett2num
-from .sequence import compute_seq_weights
-
-from .position import aa_freq_at_pos
-
-
-def compute_seq_identity(sequences):
-    """
-    Computes the identity between sequences in a MSA (as Hamming's pairwise
-    distance)
-
-    Arguments
-    ---------
-    sequences : list of sequences
-
-    Returns
-    -------
-    sim_matrix : identity matrix of shape (Nseq, Nseq)
-    """
-
-    separated_aa = np.array([[lett2num[char] for char in row]
-                             for row in sequences])
-
-    sim_matrix = 1 - sn.DistanceMetric.get_metric(
-        "hamming").pairwise(separated_aa)
-
-    return sim_matrix
+from ..msa import compute_sequences_weights
+from .position import _compute_aa_freq_at_pos
 
 
-def aa_joint_freq(sequences, weights, lambda_coef=0.03):
+def _aa_joint_freq(sequences, weights, lambda_coef=0.03):
     """Computes the joint frequencies of each pair of amino acids in a MSA
 
     .. math::
@@ -60,9 +35,6 @@ def aa_joint_freq(sequences, weights, lambda_coef=0.03):
     -------
     joint_freqs : ndarray of shape (Nseq, Nseq)
                 amino acid joint frequencies
-
-    joint_freqs_ind : ndarray of shape (Nseq, Nseq)
-                amino acid joint frequencies if independent
     """
 
     # Convert sequences to binary format
@@ -75,7 +47,6 @@ def aa_joint_freq(sequences, weights, lambda_coef=0.03):
     joint_freqs = np.zeros((seq_length, seq_length, aa_count, aa_count))
 
     # Frequencies if AAs are present independently at positions i & j
-    joint_freqs_ind = np.zeros((seq_length, seq_length, aa_count, aa_count))
 
     # Adding weights
     weighted_binary_array = binary_array * weights[np.newaxis, :, np.newaxis]
@@ -96,14 +67,10 @@ def aa_joint_freq(sequences, weights, lambda_coef=0.03):
     joint_freqs = (1 - lambda_coef**2) * joint_freqs +\
         lambda_coef**2 / (aa_count)**2
 
-    joint_freqs_ind = np.multiply.outer(simple_freq, simple_freq)
-
-    joint_freqs_ind = np.moveaxis(joint_freqs_ind, [0, 1, 2, 3], [2, 0, 3, 1])
-
-    return joint_freqs, joint_freqs_ind
+    return joint_freqs
 
 
-def compute_sca_matrix(joint_freqs, joint_freqs_ind, aa_freq, background_freq):
+def compute_sca_matrix(joint_freqs, aa_freq, background_freq):
     """Compute the SCA coevolution matrix
 
     .. math::
@@ -118,8 +85,6 @@ def compute_sca_matrix(joint_freqs, joint_freqs_ind, aa_freq, background_freq):
     ----------
     joint_freqs : amino acid joint frequencies
 
-    joint_freqs_ind : amino acid joint frequencies if independent
-
     aa_freq : frequency of amino acid *a* at position *i*
 
     background_freq : background frequency of amino acid *a*
@@ -130,6 +95,8 @@ def compute_sca_matrix(joint_freqs, joint_freqs_ind, aa_freq, background_freq):
 
     Cij : Frobenius norm of Cijab
     """
+    joint_freqs_ind = np.multiply.outer(aa_freq, aa_freq)
+    joint_freqs_ind = np.moveaxis(joint_freqs_ind, [0, 1, 2, 3],  [0, 2, 1, 3])
 
     Cijab_raw = joint_freqs - joint_freqs_ind
 
@@ -234,17 +201,21 @@ def compute_entropy_correction(coevolution_matrix, s):
     return coevolution_matrix - alpha * np.sqrt(s_prod)
 
 
-def compute_mutual_information_matrix(sequences, pseudo_count_val=0.03,
+def compute_mutual_information_matrix(sequences, seq_weights=None,
+                                      pseudo_count_val=0.03,
                                       normalize=True):
-    r"""Compute the mutual information matrix
+    """Compute the mutual information matrix
 
     .. math::
 
-        I(X, Y) = \sum_{x,y} p(x, y) \log \frac{p(x, y)}{p(x)p(y)}
+        I(X, Y) = \\sum_{x,y} p(x, y) \\log \\frac{p(x, y)}{p(x)p(y)}
 
     Arguments
     ----------
     sequences : list of sequences
+
+    seq_weights : ndarray (nseq), optional, default: None
+        if None, will compute sequence weights
 
     pseudo_count_val : float, default : 0.03
         Pseudo count value, to add to expected frequences (in order to have
@@ -258,12 +229,11 @@ def compute_mutual_information_matrix(sequences, pseudo_count_val=0.03,
     mi_matrix : np.ndarray of shape (nseq, nseq)
         the matrix of mutual information
     """
-    sim_matrix = compute_seq_identity(sequences)
-    weights, _ = compute_seq_weights(sim_matrix)
-    joint_freqs, _ = aa_joint_freq(
+    weights, _ = compute_sequences_weights(sequences)
+    joint_freqs = _aa_joint_freq(
         sequences, weights, lambda_coef=pseudo_count_val)
 
-    ind_freqs = aa_freq_at_pos(
+    ind_freqs = _compute_aa_freq_at_pos(
         sequences, lambda_coef=pseudo_count_val,
         weights=weights)
 

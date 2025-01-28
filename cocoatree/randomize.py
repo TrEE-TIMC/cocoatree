@@ -3,8 +3,9 @@
 
 import numpy as np
 from .__params import lett2num
-from .statistics.position import aa_freq_at_pos, compute_background_frequencies
-from .statistics.pairwise import aa_joint_freq, compute_sca_matrix
+from .statistics.position import _compute_aa_freq_at_pos, \
+    _compute_background_frequencies
+from .statistics.pairwise import _aa_joint_freq, compute_sca_matrix
 from .deconvolution import eigen_decomp
 from sklearn.utils import check_random_state
 
@@ -97,9 +98,11 @@ def randomization(sequences, n_rep, weights=1, lambda_coef=0.03, kmax=6,
     if isinstance(weights, int) and weights == 1:
         weights = np.ones(n_seq)
 
-    fia = aa_freq_at_pos(sequences, lambda_coef=lambda_coef, weights=weights)
-    background_freq = compute_background_frequencies(fia,
-                                                     lambda_coef=lambda_coef)
+    fia = _compute_aa_freq_at_pos(
+        sequences,
+        lambda_coef=lambda_coef, weights=weights)
+    background_freq = _compute_background_frequencies(fia,
+                                                      lambda_coef=lambda_coef)
 
     # initialize for eigenvectors
     vect_rand = np.zeros((n_rep, n_pos, kmax))
@@ -107,10 +110,10 @@ def randomization(sequences, n_rep, weights=1, lambda_coef=0.03, kmax=6,
     val_rand = np.zeros((n_rep, n_pos))
     for rep in range(n_rep):
         msa_random = _random_aln(fia, n_seq, random_state=random_state)[0]
-        fijab, fijab_ind = aa_joint_freq(msa_random, weights,
-                                         lambda_coef=lambda_coef)
+        fijab = _aa_joint_freq(msa_random, weights,
+                               lambda_coef=lambda_coef)
         # Compute coevolution matrix for the randomized alignment
-        Coev_rand = compute_sca_matrix(fijab, fijab_ind, fia,
+        Coev_rand = compute_sca_matrix(fijab, fia,
                                        background_freq)[1]
 
         eig_val, eig_vec = eigen_decomp(Coev_rand)

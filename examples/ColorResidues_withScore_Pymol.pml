@@ -21,14 +21,14 @@ def _generate_colors_from_colormaps(n_colors, cmap="jet", as_hex=True):
     return indexed_colors
 
 
-residues_swap = list(np.load('/home/jullimar/Documents/Postdoc_TIMC/test_color_residues.npy').astype('int'))
-Scores =  list(np.load('/home/jullimar/Documents/Postdoc_TIMC/test_color_residues_contributions.npy'))
+residue_swap = list(np.load('/home/jullimar/Documents/Postdoc_TIMC/cocoatree/examples/color_sector_1_pymol.npy'))
+residue_pos = residues_swap[0].astype('int')
 
-nvals = len(residues_swap)
+nvals = len(residue_pos)
 colormap = _generate_colors_from_colormaps(nvals, cmap='jet', as_hex=False)
 
-for i in range(len(residues_swap)):
-    residue = residues_swap[i]
+for i in range(len(residue_pos)):
+    residue = residue_pos[i]
     r = colormap[i][0]
     g = colormap[i][1]
     b = colormap[i][2]

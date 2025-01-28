@@ -330,7 +330,7 @@ Compute the SCA coevolution matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7faf10313650>
+    <matplotlib.colorbar.Colorbar object at 0x7f3e9f7c2ed0>
 
 
 
@@ -428,7 +428,7 @@ real dataset.
 
  .. code-block:: none
 
-    n_components = 7
+    n_components = 6
 
     Text(47.097222222222214, 0.5, 'Numbers')
 
@@ -478,12 +478,6 @@ Independent component analysis (ICA)
    :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    Uneven number of axes, discard the last one for visual           representation
-
 
 
 
@@ -509,7 +503,7 @@ Select residues that significantly contribute to each independent component
 
  .. code-block:: none
 
-    Sizes of the 6 ICs: [30, 20, 19, 14, 12, 12]
+    Sizes of the 6 ICs: [32, 18, 19, 14, 16, 12]
 
 
 
@@ -580,7 +574,7 @@ Export fasta files of the sectors for all the sequences
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 45.501 seconds)
+   **Total running time of the script:** (1 minutes 44.008 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_full_SCA_analysis.py:

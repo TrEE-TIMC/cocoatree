@@ -38,7 +38,7 @@ def _aa_joint_freq(sequences, weights, lambda_coef=0.03):
     """
 
     # Convert sequences to binary format
-    tmp = np.array([[char for char in row] for row in sequences])
+    tmp = np.array([list(row) for row in sequences])
     binary_array = np.array([tmp == aa for aa in lett2num.keys()]).astype(int)
 
     aa_count, seq_nb, seq_length = binary_array.shape
@@ -52,19 +52,12 @@ def _aa_joint_freq(sequences, weights, lambda_coef=0.03):
     weighted_binary_array = binary_array * weights[np.newaxis, :, np.newaxis]
 
     m_eff = np.sum(weights)
-    simple_freq = weighted_binary_array / m_eff
-    # Sum on the number of sequences
-    simple_freq = np.sum(simple_freq, axis=1)
-
-    simple_freq = (1 - lambda_coef**2) * simple_freq +\
-        (lambda_coef / aa_count)**2
-
     joint_freq_aibj = np.tensordot(weighted_binary_array, binary_array,
                                    axes=([1], [1])) / m_eff
 
     joint_freqs = joint_freq_aibj.transpose(1, 3, 0, 2)
 
-    joint_freqs = (1 - lambda_coef**2) * joint_freqs +\
+    joint_freqs = (1 - lambda_coef)**2 * joint_freqs +\
         lambda_coef**2 / (aa_count)**2
 
     return joint_freqs

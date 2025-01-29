@@ -3,7 +3,7 @@ from ..__params import lett2num, __freq0
 
 
 def _compute_aa_freq_at_pos(sequences, lambda_coef=0.03, weights=None):
-    """Computes frequencies of aminoacids at each position of the alignment.
+  **2  """Computes frequencies of aminoacids at each position of the alignment.
 
     .. math::
         f_i^a = (1 - \\lambda) \\sum_s w_s \\frac{x_{si}^a}{M^a} +\
@@ -24,42 +24,22 @@ def _compute_aa_freq_at_pos(sequences, lambda_coef=0.03, weights=None):
     aa_freq : np.ndarray of shape (Npos, aa_count)
             frequency of amino acid *a* at position *i*
     """
-
-    separated_aa = np.array([[char for char in row] for row in sequences])
-    N_seq, N_pos = separated_aa.shape
+    separated_aa = np.array([list(row) for row in sequences])
+    n_seq, n_pos = separated_aa.shape
     if weights is None:
-        weights = np.ones(N_seq)
+        weights = np.ones(n_seq)
     if lambda_coef > 0:
-        Neff_seq = np.sum(weights)
+        n_eff_seq = np.sum(weights)
     else:
-        Neff_seq = N_seq
-    N_pos = separated_aa.shape[1]
+        n_eff_seq = n_seq
 
-    separated_aa_num = []
-    # Convert amino acids to numerical values
-    for seq in range(N_seq):
-        num_aa = []
-        for residue in separated_aa[seq]:
-            code = lett2num[residue]
-            num_aa.append(code)
-
-        num_aa = np.array(num_aa)
-        separated_aa_num.append(num_aa)
-    # array of the amino acids as numericals
-    separated_aa_num = np.array(separated_aa_num)
-
-    # np.bincount : Count number of occurrences of each value in array of
-    # non-negative ints.
-    aa_freq = []
-    # consider gaps as a 21st amino acid
     aa_count = 21
-    for pos in range(N_pos):
-        tmp = np.bincount(separated_aa_num[:, pos], weights=weights,
-                          minlength=aa_count) / Neff_seq
-        if lambda_coef >= 0:
-            tmp = (1 - lambda_coef) * tmp + lambda_coef / aa_count
-        aa_freq.append(tmp)
-    aa_freq = np.array(aa_freq)
+    aa_freq = np.array(
+        [np.sum((separated_aa == i)*weights[:, np.newaxis], axis=0) / n_eff_seq
+         for i in lett2num.keys()]).T
+
+    aa_freq *= 1 - lambda_coef
+    aa_freq += lambda_coef / aa_count
 
     return aa_freq
 

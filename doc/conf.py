@@ -42,8 +42,9 @@ extensions = [
     "sphinx.ext.doctest",
     "sphinx.ext.intersphinx",
     "sphinx.ext.imgconverter",
-
 ]
+
+mathjax_path = 'https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
 
 autosummary_generate = True
 autodoc_default_options = {"members": True, "inherited-members": True}

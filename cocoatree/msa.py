@@ -101,6 +101,7 @@ def _filter_gap_seq(seq_id, sequences, threshold=0.2, filtrefseq=False,
     """
     Remove sequences with a fraction of gaps greater than a specified
     value.
+
     Also possibility to remove sequences with sequence identity too high
     with a given reference sequence.
 
@@ -157,8 +158,8 @@ def filter_ref_seq(seq_id, sequences, delta=0.2, refseq_id=None,
     Remove sequences r with Sr < delta, where Sr is the fractional identity
     between r and a specified reference sequence.
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     seq_id : list of sequence identifiers in the MSA
 
     sequences : list of sequences in the MSA
@@ -180,7 +181,7 @@ def filter_ref_seq(seq_id, sequences, delta=0.2, refseq_id=None,
     if refseq_id is None:
         if verbose:
             print('Choose a default reference sequence within the alignment')
-        refseq_idx = choose_ref_seq(sequences)
+        refseq_idx = _choose_ref_seq(sequences)
     else:
         if verbose:
             print('Reference sequence is: %i' % refseq_id)
@@ -197,21 +198,21 @@ def filter_ref_seq(seq_id, sequences, delta=0.2, refseq_id=None,
     return seq_id_kept, seq_kept
 
 
-def choose_ref_seq(msa):
+def _choose_ref_seq(sequences):
     """This function chooses a default reference sequence for the alignment by
     taking the sequence which has the mean pairwise sequence identity closest
     to that of the entire sequence alignment.
 
     Parameters
     ----------
-    msa : the multiple sequence alignment as a list of sequences
+    sequences : the multiple sequence alignment as a list of sequences
 
     Returns
     -------
     The index of the reference sequence in the given alignment
     """
 
-    sim_matrix = compute_seq_identity(msa)
+    sim_matrix = compute_seq_identity(sequences)
 
     mean_pairwise_seq_sim = np.mean(sim_matrix, axis=0)
 

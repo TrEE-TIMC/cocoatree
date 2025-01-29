@@ -78,7 +78,6 @@ Functions
 
    msa.filter_sequences
    msa.filter_seq_id
-   msa.choose_ref_seq
    msa.map_to_pdb
    msa.compute_seq_identity
    msa.compute_sequence_weights

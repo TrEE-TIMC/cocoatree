@@ -15,6 +15,7 @@
     <script src="../../_static/documentation_options.js?v=837179f8"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -47,9 +48,9 @@
 <span class="sig-prename descclassname"><span class="pre">cocoatree.statistics.position.</span></span><span class="sig-name descname"><span class="pre">compute_rel_entropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aa_freq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_freq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.statistics.position.compute_rel_entropy" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the relative entropy</p>
 <p>Also know as the Kullback-Leibler divergence</p>
-<div class="math">
-<p><span class="math">D_i^a = f_i^a \ln \frac{f_i^a}{q^a} + (1 - f_i^a) \ln             \frac{1 - f_i^a}{1 - q^a}</span></p>
-</div><dl class="simple">
+<div class="math notranslate nohighlight">
+\[D_i^a = f_i^a \ln \frac{f_i^a}{q^a} + (1 - f_i^a) \ln             \frac{1 - f_i^a}{1 - q^a}\]</div>
+<dl class="simple">
 <dt>where f_i^a is the observed frequency of amino acid <em>a</em> at position <em>i</em>,</dt><dd><p>q^a is the background expectation</p>
 </dd>
 </dl>

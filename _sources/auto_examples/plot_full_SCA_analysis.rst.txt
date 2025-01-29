@@ -304,7 +304,7 @@ Compute the SCA coevolution matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7f2592fbf090>
+    <matplotlib.colorbar.Colorbar object at 0x7fce8938f5d0>
 
 
 
@@ -580,7 +580,7 @@ as implemented in the cocoatree.visualization module
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 44.095 seconds)
+   **Total running time of the script:** (1 minutes 44.178 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_full_SCA_analysis.py:

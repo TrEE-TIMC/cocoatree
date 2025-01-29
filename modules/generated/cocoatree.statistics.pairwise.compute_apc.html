@@ -15,6 +15,7 @@
     <script src="../../_static/documentation_options.js?v=837179f8"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -47,55 +48,14 @@
 <span class="sig-prename descclassname"><span class="pre">cocoatree.statistics.pairwise.</span></span><span class="sig-name descname"><span class="pre">compute_apc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">MIij</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.statistics.pairwise.compute_apc" title="Link to this definition">¶</a></dt>
 <dd><p>Computes the average product correction (APC) as described in Dunn et
 al. (2008).</p>
-<aside class="system-message">
-<p class="system-message-title">System Message: WARNING/2 (<span class="docutils literal">APC(a, b) = \frac{MI(a, \bar{x}) MI(b, \bar{x}){\overline{MI}}</span>)</p>
-<p>latex exited with error
-[stdout]
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=latex)
- restricted \write18 enabled.
-entering extended mode
-(./math.tex
-LaTeX2e &lt;2023-11-01&gt; patch level 1
-L3 programming layer &lt;2024-01-22&gt;
-(/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size12.clo))
-(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty)
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
-For additional information on amsmath, use the `?' option.
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty))
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty)
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty))
-(/usr/share/texlive/texmf-dist/tex/latex/amscls/amsthm.sty)
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
-(/usr/share/texlive/texmf-dist/tex/latex/anyfontsize/anyfontsize.sty)
-(/usr/share/texlive/texmf-dist/tex/latex/tools/bm.sty)
-(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-dvips.def)
-No file math.aux.
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd)
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd))
-Runaway argument?
-APC(a, b) = \frac {MI(a, \bar {x}) MI(b, \bar {x}){\overline {MI}}\end \ETC.
-! File ended while scanning use of \split.
-&lt;inserted text&gt; 
-                \par 
-&lt;*&gt; math.tex
-            
-! Emergency stop.
-&lt;*&gt; math.tex
-            
-No pages of output.
-Transcript written on math.log.
-</p>
-</aside>
-<p>where <span class="math">MI(a, \bar{x})</span> is the mean mutual information of column <em>a</em>
-and <span class="math">\overline{MI}</span> is the overall mean mutual information</p>
+<div class="math notranslate nohighlight">
+\[APC(a, b) = \frac{MI(a, \bar{x}) MI(b, \bar{x}){\overline{MI}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(MI(a, \bar{x})\)</span> is the mean mutual information of column <em>a</em>
+and <span class="math notranslate nohighlight">\(\overline{MI}\)</span> is the overall mean mutual information</p>
 <p>The corrected mutual information is then:</p>
-<div class="math">
-<p><span class="math">MIp(a, b) = MI(a, b) - APC(a, b)</span></p>
-</div><section id="arguments">
+<div class="math notranslate nohighlight">
+\[MIp(a, b) = MI(a, b) - APC(a, b)\]</div>
+<section id="arguments">
 <h2>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">¶</a></h2>
 <dl class="simple">
 <dt>MIij<span class="classifier">np.ndarray,</span></dt><dd><p>the mutual information matrix</p>

@@ -15,6 +15,7 @@
     <script src="../../_static/documentation_options.js?v=837179f8"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -46,11 +47,11 @@
 <dt class="sig sig-object py" id="cocoatree.statistics.pairwise.compute_sca_matrix">
 <span class="sig-prename descclassname"><span class="pre">cocoatree.statistics.pairwise.</span></span><span class="sig-name descname"><span class="pre">compute_sca_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">joint_freqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aa_freq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_freq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.statistics.pairwise.compute_sca_matrix" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the SCA coevolution matrix</p>
-<div class="math">
-<p><span class="math">C_{ij}^{ab} = f_{ij}^{ab} - f_i^a f_j^b</span></p>
-</div><div class="math">
-<p><span class="math">\tilde{C_{ij}} = \sqrt{sum_{a,b} \tilde{(C_{ij}^{ab})^2}}</span></p>
-</div><section id="arguments">
+<div class="math notranslate nohighlight">
+\[C_{ij}^{ab} = f_{ij}^{ab} - f_i^a f_j^b\]</div>
+<div class="math notranslate nohighlight">
+\[\tilde{C_{ij}} = \sqrt{sum_{a,b} \tilde{(C_{ij}^{ab})^2}}\]</div>
+<section id="arguments">
 <h2>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">¶</a></h2>
 <p>joint_freqs : amino acid joint frequencies</p>
 <p>aa_freq : frequency of amino acid <em>a</em> at position <em>i</em></p>

@@ -35,15 +35,15 @@ release = '0.0'
 extensions = [
     "sphinx_gallery.gen_gallery",
     "sphinx.ext.autodoc",
-    "sphinx.ext.imgmath",
     "sphinx.ext.mathjax",
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.doctest",
     "sphinx.ext.intersphinx",
     "sphinx.ext.imgconverter",
-
 ]
+
+mathjax_path = 'https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'
 
 autosummary_generate = True
 autodoc_default_options = {"members": True, "inherited-members": True}

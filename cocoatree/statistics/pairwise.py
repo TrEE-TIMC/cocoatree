@@ -72,7 +72,7 @@ def compute_sca_matrix(joint_freqs, aa_freq, background_freq):
 
     .. math::
 
-        \\tilde{C_{ij}} = \\sqrt{sum_{a,b} \\tilde{(C_{ij}^{ab})^2}}
+        \\tilde{C_{ij}} = \\sqrt{\\sum_{a,b} \\tilde{(C_{ij}^{ab})^2}}
 
     Arguments
     ----------

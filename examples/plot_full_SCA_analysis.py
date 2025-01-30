@@ -26,10 +26,10 @@ independent component.
 from cocoatree.datasets import load_S1A_serine_proteases
 from cocoatree.io import export_fasta, load_pdb, export_sector_for_pymol
 from cocoatree.msa import filter_sequences, \
-    compute_sequences_weights, map_to_pdb
+    compute_seq_weights, map_to_pdb
 from cocoatree.msa import compute_seq_identity
-from cocoatree.statistics import compute_frequencies
-from cocoatree.statistics.position import compute_rel_entropy
+from cocoatree.statistics import compute_all_frequencies
+from cocoatree.statistics.position import _compute_rel_entropy
 from cocoatree.statistics.pairwise import compute_sca_matrix
 
 from cocoatree.deconvolution import eigen_decomp, compute_ica, \
@@ -82,7 +82,7 @@ cb.set_label("Pairwise sequence identity", fontweight="bold")
 
 # %%
 # Compute sequence weights
-weights, n_eff_seq = compute_sequences_weights(seq_kept)
+weights, n_eff_seq = compute_seq_weights(seq_kept)
 print(f"Number of effective sequences {n_eff_seq}")
 
 # %%
@@ -95,14 +95,14 @@ print(f"Number of effective sequences {n_eff_seq}")
 #    - pairwise_freq corresponds to pairwise frequencies of amino acid for all
 #      pairs of positions. It thus corresponds to an ndarray of shape (nseq,
 #      nseq, 21, 21).
-aa_freq, background_frequencies, pairwise_freq = compute_frequencies(
+aa_freq, background_frequencies, pairwise_freq = compute_all_frequencies(
     seq_kept,
     seq_weights=weights)
 
 # %%
 # Compute conservation along the MSA
 # ----------------------------------
-Dia, Di = compute_rel_entropy(aa_freq, background_frequencies)
+Dia, Di = _compute_rel_entropy(aa_freq, background_frequencies)
 
 fig, ax = plt.subplots(figsize=(9, 4))
 xvals = [i+1 for i in range(len(Di))]
@@ -117,9 +117,9 @@ ax.set_ylabel('Di', fontsize=14)
 # Compute the SCA coevolution matrix
 # ----------------------------------
 
-Cijab_raw, Cij = compute_sca_matrix(joint_freqs=pairwise_freq,
-                                    aa_freq=aa_freq,
-                                    background_freq=background_frequencies)
+Cij = compute_sca_matrix(aa_joint_freqs=pairwise_freq,
+                         aa_freqs=aa_freq,
+                         bkgd_freqs=background_frequencies)
 
 fig, ax = plt.subplots()
 im = ax.imshow(Cij, vmin=0, vmax=1.4, cmap='inferno')
@@ -152,7 +152,7 @@ ax.set_xlabel('Eigenvalue', fontweight="bold")
 # coefficient are set the same way as the when performing the analysis on the
 # real dataset.
 v_rand, l_rand = randomization(seq_kept, n_rep=10,
-                               weights=weights, lambda_coef=0.03, kmax=10)
+                               seq_weights=weights, pseudo_count=0.03, kmax=10)
 n_components = choose_num_components(eigenvalues, l_rand)
 print('n_components = ' + str(n_components))
 

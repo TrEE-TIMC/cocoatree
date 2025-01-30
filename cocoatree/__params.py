@@ -2,6 +2,8 @@
 
 import numpy as np
 
+__pseudo_count_ref = 0.5
+
 __freq0 = np.array(
     [
         0.073,
@@ -49,6 +51,8 @@ lett2num = {
     'V': 18,
     'W': 19,
     'Y': 20}
+
+__aa_count = len(lett2num)
 
 aatable = {
     "ALA": "A",

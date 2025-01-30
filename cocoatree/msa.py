@@ -326,7 +326,7 @@ def compute_seq_identity(sequences):
     return sim_matrix
 
 
-def compute_sequences_weights(sequences, threshold=0.8):
+def compute_seq_weights(sequences, threshold=0.8):
     """
     Compute sequence weights
 
@@ -346,8 +346,8 @@ def compute_sequences_weights(sequences, threshold=0.8):
     -------
     weights : np.array (nseq, ) of each sequence weight
 
-    n_seq_effective : float
-        the number of effective sequences
+    m_eff : float
+        number of effective sequences
     """
     if threshold < 0 or threshold > 1:
         raise ValueError(
@@ -355,8 +355,8 @@ def compute_sequences_weights(sequences, threshold=0.8):
             f" Value provided {threshold}")
 
     sim_matrix = compute_seq_identity(sequences)
-    weights = (1 / np.sum(sim_matrix >= threshold, axis=0))
+    seq_weights = (1 / np.sum(sim_matrix >= threshold, axis=0))
 
-    n_seq_effective = sum(weights)
+    m_eff = sum(seq_weights)
 
-    return weights, n_seq_effective
+    return seq_weights, m_eff

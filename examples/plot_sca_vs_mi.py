@@ -10,7 +10,7 @@ serine proteases using SCA and the mutual information.
 from cocoatree.datasets import load_S1A_serine_proteases
 from cocoatree.msa import filter_sequences
 
-from cocoatree.statistics import compute_frequencies
+from cocoatree.statistics import compute_all_frequencies
 from cocoatree.statistics.pairwise import compute_sca_matrix
 from cocoatree.statistics.pairwise import compute_mutual_information_matrix
 
@@ -39,11 +39,11 @@ seq_id_kept, seq_kept, pos_kept = filter_sequences(seq_id, sequences)
 # Compute the SCA matrix
 # ----------------------
 
-aa_freq, background_frequencies, joint_frequencies = compute_frequencies(
+aa_freq, bkgd_freqs, aa_joint_freqs = compute_all_frequencies(
     seq_kept, seq_weights=None)
-Cijab_raw, sca = compute_sca_matrix(joint_freqs=joint_frequencies,
-                                    aa_freq=aa_freq,
-                                    background_freq=background_frequencies)
+sca = compute_sca_matrix(aa_joint_freqs=aa_joint_freqs,
+                         aa_freqs=aa_freq,
+                         bkgd_freqs=bkgd_freqs)
 
 # %%
 # Compute the Mutual information matrix

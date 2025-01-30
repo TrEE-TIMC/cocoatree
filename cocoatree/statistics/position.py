@@ -1,98 +1,137 @@
 import numpy as np
-from ..__params import lett2num, __freq0
+from ..__params import lett2num, __pseudo_count_ref, __aa_count, __freq0
+from ..msa import compute_seq_weights
+import sys
 
-
-def _compute_aa_freq_at_pos(sequences, lambda_coef=0.03, weights=None):
-    """Computes frequencies of aminoacids at each position of the alignment.
+def _compute_aa_freqs(sequences, seq_weights=None,
+                      pseudo_count=__pseudo_count_ref):
+    """Computes frequencies of amino acids at each position of the alignment.
 
     .. math::
-        f_i^a = (1 - \\lambda) \\sum_s w_s \\frac{x_{si}^a}{M^a} +\
-             \\frac{\\lambda}{21}
+        f_i^a = (\\sum_s w_s x_{si}^a + \\lambda/21)/(M_{eff} + \\lambda)
+
+    where
+
+    .. math::
+
+        M_{eff} = \\sum_s w_s
+
+    represents the effective number of sequences in the alignment and *lambda*
+    is a regularization parameter (pseudocount).
 
     Arguments
     ----------
     sequences : list of sequences as imported by load_msa()
 
-    lambda_coef : regularization parameter lambda (default=0.03)
-
-    weights : numpy 1D array, optional
+    seq_weights : numpy 1D array, optional
             Gives more or less importance to certain sequences.
-            If weights=None, all sequences are attributed an equal weight of 1.
+            If seq_weights=None, all sequences are attributed an equal weight of 1.
 
+    pseudo_count : regularization parameter (default=__pseudo_count_ref)
+    
     Returns
     -------
     aa_freq : np.ndarray of shape (Npos, aa_count)
             frequency of amino acid *a* at position *i*
     """
 
-    separated_aa = np.array([[char for char in row] for row in sequences])
-    N_seq, N_pos = separated_aa.shape
-    if weights is None:
-        weights = np.ones(N_seq)
-    if lambda_coef > 0:
-        Neff_seq = np.sum(weights)
-    else:
-        Neff_seq = N_seq
-    N_pos = separated_aa.shape[1]
+    tmp = np.array([[char for char in row] for row in sequences])
+    binary_array = np.array([tmp == aa for aa in lett2num.keys()]).astype(int)
 
-    separated_aa_num = []
-    # Convert amino acids to numerical values
-    for seq in range(N_seq):
-        num_aa = []
-        for residue in separated_aa[seq]:
-            code = lett2num[residue]
-            num_aa.append(code)
+    # weights
+    if seq_weights is None:
+        seq_weights = np.ones(len(sequences))
+    m_eff = np.sum(seq_weights)
+    weighted_binary_array = \
+        binary_array * seq_weights[np.newaxis, :, np.newaxis]
 
-        num_aa = np.array(num_aa)
-        separated_aa_num.append(num_aa)
-    # array of the amino acids as numericals
-    separated_aa_num = np.array(separated_aa_num)
+    #aa_freq = (np.sum(weighted_binary_array, axis=1).T +
+    #           pseudo_count / __aa_count) / (m_eff + pseudo_count)
+    
+    aa_freq = np.sum(weighted_binary_array, axis=1).T
+    #aa_freq = (aa_freq + pseudo_count / __aa_count) / (m_eff + pseudo_count)
+    aa_freq = (1 - pseudo_count) * aa_freq + pseudo_count / __aa_count
 
-    # np.bincount : Count number of occurrences of each value in array of
-    # non-negative ints.
-    aa_freq = []
-    # consider gaps as a 21st amino acid
-    aa_count = 21
-    for pos in range(N_pos):
-        tmp = np.bincount(separated_aa_num[:, pos], weights=weights,
-                          minlength=aa_count) / Neff_seq
-        if lambda_coef >= 0:
-            tmp = (1 - lambda_coef) * tmp + lambda_coef / aa_count
-        aa_freq.append(tmp)
-    aa_freq = np.array(aa_freq)
+    # for i in range(aa_freq.shape[0]):
+    #    for j in range(aa_freq.shape[1]):
+    #        if aa_freq[i][j] < 0.03 / 21:
+    #            print(pseudo_count, __aa_count, pseudo_count / __aa_count)
+    #            print(i, j, np.sum(weighted_binary_array, axis=1).T[i, j],
+    #                  (1 - pseudo_count) * np.sum(weighted_binary_array, axis=1).T[i, j]
+    #                  + pseudo_count / __aa_count)
+    #            print(aa_freq[i, j])
+    #            sys.exit('erreur: %f' % aa_freq[i][j])
 
     return aa_freq
 
 
-def _compute_regularized_background_frequencies(aa_freq, lambda_coef=0.03):
-    """Computes regularized background frequencies of amino acids
+def _compute_background_freqs(aa_freqs, sequences, seq_weights=None,
+                              pseudo_count=__pseudo_count_ref):                             
+    """Computes (regularized) background frequencies of amino acids
 
     Arguments
     ---------
-    aa_freq : np.ndarray of the positional amino acid frequencies
+    aa_freqs : np.ndarray of the positional amino acid frequencies
 
-    lambda_coef : regularization parameter lambda (default=0.03)
+    sequences : list of sequences for which seq_weights give weights
+
+    seq_weights : numpy 1D array, optional
+            Gives more or less importance to certain sequences.
+            If seq_weights=None, all sequences are attributed an equal weight of 1.
+
+    pseudo_count : regularization parameter (default=__pseudo_count_ref)
+
 
     Returns
     -------
-    background_freq : np.array of the background frequencies
+    bkgd_freqs :  np.ndarray (21, )
+        A (21,) np.array containing the background amino acid frequencies
+        at each position; it is computed from the mean frequency of amino acid
+        a in all proteins in the NCBI non-redundant database
+        (see Rivoire et al., https://dx.plos.org/10.1371/journal.pcbi.1004817)
     """
 
     # q0 : fraction of gaps in the alignment
-    q0 = np.mean(aa_freq[:, 0])
+    q0 = np.mean(aa_freqs[:, 0])
     # background_freq : correction factor on __freq0 in order to take the
     # proportion of gaps into account
-    background_freq = list((1 - q0) * __freq0)
-    background_freq.insert(0, q0)
-    background_freq = np.array(background_freq)
+    bkgd_freqs = list((1 - q0) * __freq0)
+    bkgd_freqs.insert(0, q0)
+    bkgd_freqs = np.array(bkgd_freqs)
 
-    # consider gaps as 21st amino acid
-    aa_count = 21
-    if lambda_coef > 0:
-        background_freq = (1 - lambda_coef) * background_freq + \
-            lambda_coef / aa_count
+    # weights
+    if seq_weights is None:
+        seq_weights = np.ones(len(sequences))
+    m_eff = np.sum(seq_weights)
 
-    return background_freq
+    #regularization
+    bkgd_freqs = (bkgd_freqs * m_eff +
+                  pseudo_count / __aa_count) / (m_eff + pseudo_count)
+
+    return bkgd_freqs
+
+
+def _compute_first_order_freqs(sequences, seq_weights=None,
+                               pseudo_count=__pseudo_count_ref):
+    """
+    blabla
+    """
+
+    if seq_weights is None:
+        seq_weights, _ = compute_seq_weights(sequences)
+
+    aa_freqs = _compute_aa_freqs(
+        sequences,
+        pseudo_count=pseudo_count,
+        seq_weights=seq_weights)
+
+    bkgd_freqs = _compute_background_freqs(
+        aa_freqs,
+        sequences,
+        seq_weights=seq_weights,
+        pseudo_count=__pseudo_count_ref)
+    
+    return aa_freqs, bkgd_freqs
 
 
 def compute_entropy(aa_freq):
@@ -120,7 +159,21 @@ def compute_entropy(aa_freq):
     return s
 
 
-def compute_rel_entropy(aa_freq, background_freq):
+def compute_conservation(sequences, seq_weights=None,
+                         pseudo_count=__pseudo_count_ref):
+    """
+    blabla
+    """
+
+    aa_freqs, bkgd_freqs = _compute_first_order_freqs(sequences, seq_weights,
+                                                      pseudo_count)
+
+    _, Di = _compute_rel_entropy(aa_freqs, bkgd_freqs)
+
+    return Di
+
+
+def _compute_rel_entropy(aa_freqs, bkgd_freqs):
     """Compute the relative entropy
 
     Also know as the Kullback-Leibler divergence
@@ -139,8 +192,11 @@ def compute_rel_entropy(aa_freq, background_freq):
 
     Arguments
     ----------
-    aa_freq: np.ndarray,
+    aa_freqs: np.ndarray,
         amino acid frequencies per position
+
+    bck_freq: np.ndarray,
+        background frequenvies of amino acids
 
     returns
     -------
@@ -155,10 +211,10 @@ def compute_rel_entropy(aa_freq, background_freq):
         account
     """
 
-    Dia = aa_freq * np.log(aa_freq / background_freq) + \
-        (1 - aa_freq) * np.log((1 - aa_freq) / (1 - background_freq))
+    Dia = aa_freqs * np.log(aa_freqs / bkgd_freqs) + \
+        (1 - aa_freqs) * np.log((1 - aa_freqs) / (1 - bkgd_freqs))
 
     # sum on all amino acid at each position
-    Di = np.sum(aa_freq * np.log(aa_freq / background_freq), axis=1)
+    Di = np.sum(aa_freqs * np.log(aa_freqs / bkgd_freqs), axis=1)
 
     return Dia, Di

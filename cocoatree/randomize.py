@@ -2,10 +2,10 @@
 
 
 import numpy as np
-from .__params import lett2num
-from .statistics.position import _compute_aa_freq_at_pos, \
-    _compute_regularized_background_frequencies
-from .statistics.pairwise import _aa_joint_freq, compute_sca_matrix
+from .__params import lett2num, __pseudo_count_ref
+from .statistics.position import _compute_aa_freqs, \
+    _compute_background_freqs
+from .statistics.pairwise import _compute_aa_joint_freqs, compute_sca_matrix
 from .deconvolution import eigen_decomp
 from sklearn.utils import check_random_state
 
@@ -55,7 +55,9 @@ def _random_aln(fia, n_seq, random_state):
     return msa_str, binarray
 
 
-def randomization(sequences, n_rep, weights=1, lambda_coef=0.03, kmax=6,
+def randomization(sequences, n_rep, seq_weights=1,
+                  pseudo_count=__pseudo_count_ref,
+                  kmax=6,
                   random_state=None):
     """
     Randomize the alignment while preserving the frequencies of amino acids at
@@ -95,28 +97,31 @@ def randomization(sequences, n_rep, weights=1, lambda_coef=0.03, kmax=6,
     n_seq, n_pos = len(sequences), len(sequences[0])
 
     # Create a vector of sequence weights = 1 if equal weighting
-    if isinstance(weights, int) and weights == 1:
-        weights = np.ones(n_seq)
+    if isinstance(seq_weights, int) and seq_weights == 1:
+        seq_weights = np.ones(n_seq)
 
-    fia = _compute_aa_freq_at_pos(
-        sequences,
-        lambda_coef=lambda_coef, weights=weights)
-    background_freq = _compute_regularized_background_frequencies(
-        fia, lambda_coef=lambda_coef)
-
+    aa_freqs = _compute_aa_freqs(sequences,
+                                 seq_weights=seq_weights,
+                                 pseudo_count=pseudo_count)
+    bkgd_freqs = _compute_background_freqs(aa_freqs,
+                                           sequences,
+                                           seq_weights=seq_weights,
+                                           pseudo_count=pseudo_count)
+    
     # initialize for eigenvectors
     vect_rand = np.zeros((n_rep, n_pos, kmax))
     # initialize for eigenvalues
     val_rand = np.zeros((n_rep, n_pos))
     for rep in range(n_rep):
-        msa_random = _random_aln(fia, n_seq, random_state=random_state)[0]
-        fijab = _aa_joint_freq(msa_random, weights,
-                               lambda_coef=lambda_coef)
+        rand_sequences = _random_aln(aa_freqs, n_seq,
+                                     random_state=random_state)[0]
+        aa_joint_freqs = _compute_aa_joint_freqs(rand_sequences, seq_weights,
+                                                 pseudo_count=pseudo_count)
         # Compute coevolution matrix for the randomized alignment
-        Coev_rand = compute_sca_matrix(fijab, fia,
-                                       background_freq)[1]
+        sca_rand = compute_sca_matrix(aa_joint_freqs, aa_freqs,
+                                      bkgd_freqs)[1]
 
-        eig_val, eig_vec = eigen_decomp(Coev_rand)
+        eig_val, eig_vec = eigen_decomp(sca_rand)
         vect_rand[rep, :, :] = eig_vec[:, :kmax]
         val_rand[rep, :] = eig_val
 

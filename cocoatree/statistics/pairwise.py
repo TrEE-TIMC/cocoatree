@@ -57,7 +57,7 @@ def _aa_joint_freq(sequences, weights, lambda_coef=0.03):
 
     joint_freqs = joint_freq_aibj.transpose(1, 3, 0, 2)
 
-    joint_freqs = (1 - lambda_coef)**2 * joint_freqs +\
+    joint_freqs = (1 - lambda_coef**2) * joint_freqs +\
         lambda_coef**2 / (aa_count)**2
 
     return joint_freqs

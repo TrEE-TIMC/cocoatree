@@ -3,6 +3,7 @@ from ..__params import lett2num, __pseudo_count_ref, __aa_count, __freq0
 from ..msa import compute_seq_weights
 import sys
 
+
 def _compute_aa_freqs(sequences, seq_weights=None,
                       pseudo_count=__pseudo_count_ref):
     """Computes frequencies of amino acids at each position of the alignment.
@@ -44,23 +45,9 @@ def _compute_aa_freqs(sequences, seq_weights=None,
     m_eff = np.sum(seq_weights)
     weighted_binary_array = \
         binary_array * seq_weights[np.newaxis, :, np.newaxis]
-
-    #aa_freq = (np.sum(weighted_binary_array, axis=1).T +
-    #           pseudo_count / __aa_count) / (m_eff + pseudo_count)
     
-    aa_freq = np.sum(weighted_binary_array, axis=1).T
-    #aa_freq = (aa_freq + pseudo_count / __aa_count) / (m_eff + pseudo_count)
-    aa_freq = (1 - pseudo_count) * aa_freq + pseudo_count / __aa_count
-
-    # for i in range(aa_freq.shape[0]):
-    #    for j in range(aa_freq.shape[1]):
-    #        if aa_freq[i][j] < 0.03 / 21:
-    #            print(pseudo_count, __aa_count, pseudo_count / __aa_count)
-    #            print(i, j, np.sum(weighted_binary_array, axis=1).T[i, j],
-    #                  (1 - pseudo_count) * np.sum(weighted_binary_array, axis=1).T[i, j]
-    #                  + pseudo_count / __aa_count)
-    #            print(aa_freq[i, j])
-    #            sys.exit('erreur: %f' % aa_freq[i][j])
+    aa_freq = (np.sum(weighted_binary_array, axis=1).T
+               + pseudo_count / __aa_count) / (m_eff + pseudo_count)
 
     return aa_freq
 
@@ -104,7 +91,7 @@ def _compute_background_freqs(aa_freqs, sequences, seq_weights=None,
         seq_weights = np.ones(len(sequences))
     m_eff = np.sum(seq_weights)
 
-    #regularization
+    # regularization
     bkgd_freqs = (bkgd_freqs * m_eff +
                   pseudo_count / __aa_count) / (m_eff + pseudo_count)
 

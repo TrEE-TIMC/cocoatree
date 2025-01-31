@@ -52,13 +52,9 @@ def _compute_aa_joint_freqs(sequences, seq_weights=None,
 
     # Joint frequencies
     aa_joint_freqs = np.tensordot(weighted_binary_array, binary_array,
-                                  axes=([1], [1])) / m_eff
-    aa_joint_freqs = aa_joint_freqs.transpose(1, 3, 0, 2)
-    # aa_joint_freqs = (aa_joint_freqs + pseudo_count / __aa_count ** 2)\
-    #    / (m_eff + pseudo_count)
-    aa_joint_freqs = (1 - pseudo_count**2) * aa_joint_freqs +\
-        pseudo_count**2 / (__aa_count)**2
-
+                                  axes=([1], [1])).transpose(1, 3, 0, 2)
+    aa_joint_freqs = (aa_joint_freqs + pseudo_count / __aa_count ** 2)\
+        / (m_eff + pseudo_count)
     return aa_joint_freqs
 
 
@@ -95,8 +91,9 @@ def _compute_second_order_freqs(sequences, seq_weights=None,
     """
 
     # joint frequencies
-    aa_joint_freqs = _compute_aa_joint_freqs(sequences, seq_weights=None,
-                                             pseudo_count=__pseudo_count_ref)
+    aa_joint_freqs = _compute_aa_joint_freqs(sequences,
+                                             seq_weights=seq_weights,
+                                             pseudo_count=pseudo_count)
 
     aa_freqs, _ = _compute_first_order_freqs(
         sequences, seq_weights=seq_weights, pseudo_count=pseudo_count)
@@ -207,61 +204,6 @@ def compute_mutual_information_matrix(sequences, seq_weights=None,
     return mi_matrix
 
 
-def ref_compute_mutual_information_matrix(sequences, seq_weights=None,
-                                          pseudo_count=__pseudo_count_ref,
-                                          normalize=True):
-    """Compute the mutual information matrix
-
-    .. math::
-
-        I(X, Y) = \\sum_{x,y} p(x, y) \\log \\frac{p(x, y)}{p(x)p(y)}
-
-    Arguments
-    ----------
-    sequences : list of sequences
-
-    seq_weights : ndarray (nseq), optional, default: None
-        if None, will compute sequence weights
-
-    pseudo_count_val : float, default : 0.03
-        Pseudo count value, to add to expected frequences (in order to have
-        non-zero elements)
-
-    normalize : boolean, default : True
-        Whether to normalize the mutual information by the entropy.
-
-    Returns
-    -------
-    mi_matrix : np.ndarray of shape (nseq, nseq)
-        the matrix of mutual information
-    """
-    weights, _ = compute_seq_weights(sequences)
-    #joint_freqs = _compute_aa_joint_freqs(
-    #    sequences, weights, pseudo_count=pseudo_count)
-    joint_freqs = ref_aa_joint_freq(sequences, weights, lambda_coef=0.03)
-
-    #ind_freqs = _compute_aa_freqs(
-    #    sequences, weights, pseudo_count=pseudo_count)
-    
-    ind_freqs = ref_compute_aa_freq_at_pos(
-        sequences, lambda_coef=0.03,
-        weights=weights)
-    
-    joint_freqs_ind = np.multiply.outer(ind_freqs, ind_freqs)
-    joint_freqs_ind = np.moveaxis(joint_freqs_ind, [0, 1, 2, 3], [0, 2, 1, 3])
-
-    mi_matrix = np.sum(
-        joint_freqs * np.log(
-            joint_freqs / joint_freqs_ind),
-        axis=(2, 3))
-
-    if normalize:
-        joint_entropy = -np.sum(joint_freqs * np.log(joint_freqs), axis=(2, 3))
-        mi_matrix /= joint_entropy
-
-    return mi_matrix
-
-
 def compute_apc(MIij):
     """
     Computes the average product correction (APC) as described in Dunn et
@@ -347,130 +289,3 @@ def compute_entropy_correction(coevolution_matrix, s):
             (no_diag_eye * s_prod)))
 
     return coevolution_matrix - alpha * np.sqrt(s_prod)
-
-def ref_aa_joint_freq(sequences, weights, lambda_coef=0.03):
-    """Computes the joint frequencies of each pair of amino acids in a MSA
-
-    .. math::
-
-        f_{ij}^{ab} = (1 - \\lambda) \\sum_s w_s \\frac{x_{si}^a x_{sj}^b}{M'}\
-            + \\frac{\\lambda^2}{(21)^2}
-
-    where
-
-    .. math::
-
-        M' = \\sum_s w_s
-
-    represents the effective number of sequences in the alignment and *lambda*
-    is a small regularization parameter (default=0.03).
-
-    Arguments
-    ----------
-    sequences : list of sequences as imported by load_MSA()
-
-    weights : ndarray of shape (Nseq)
-            sequence weights as calculated by seq_weights()
-
-    lambda_coef : float
-        regularization parameter lambda (default=0.03)
-
-    Returns
-    -------
-    joint_freqs : ndarray of shape (Nseq, Nseq)
-                amino acid joint frequencies
-    """
-
-    # Convert sequences to binary format
-    tmp = np.array([[char for char in row] for row in sequences])
-    binary_array = np.array([tmp == aa for aa in lett2num.keys()]).astype(int)
-
-    aa_count, seq_nb, seq_length = binary_array.shape
-
-    # Joint frequencies
-    joint_freqs = np.zeros((seq_length, seq_length, aa_count, aa_count))
-
-    # Frequencies if AAs are present independently at positions i & j
-
-    # Adding weights
-    weighted_binary_array = binary_array * weights[np.newaxis, :, np.newaxis]
-
-    m_eff = np.sum(weights)
-    simple_freq = weighted_binary_array / m_eff
-    # Sum on the number of sequences
-    simple_freq = np.sum(simple_freq, axis=1)
-
-    simple_freq = (1 - lambda_coef**2) * simple_freq +\
-        (lambda_coef / aa_count)**2
-
-    joint_freq_aibj = np.tensordot(weighted_binary_array, binary_array,
-                                   axes=([1], [1])) / m_eff
-
-    joint_freqs = joint_freq_aibj.transpose(1, 3, 0, 2)
-
-    joint_freqs = (1 - lambda_coef**2) * joint_freqs +\
-        lambda_coef**2 / (aa_count)**2
-
-    return joint_freqs
-
-
-def ref_compute_aa_freq_at_pos(sequences, lambda_coef=0.03, weights=None):
-    """Computes frequencies of aminoacids at each position of the alignment.
-
-    .. math::
-        f_i^a = (1 - \\lambda) \\sum_s w_s \\frac{x_{si}^a}{M^a} +\
-             \\frac{\\lambda}{21}
-
-    Arguments
-    ----------
-    sequences : list of sequences as imported by load_msa()
-
-    lambda_coef : regularization parameter lambda (default=0.03)
-
-    weights : numpy 1D array, optional
-            Gives more or less importance to certain sequences.
-            If weights=None, all sequences are attributed an equal weight of 1.
-
-    Returns
-    -------
-    aa_freq : np.ndarray of shape (Npos, aa_count)
-            frequency of amino acid *a* at position *i*
-    """
-
-    separated_aa = np.array([[char for char in row] for row in sequences])
-    N_seq, N_pos = separated_aa.shape
-    if weights is None:
-        weights = np.ones(N_seq)
-    if lambda_coef > 0:
-        Neff_seq = np.sum(weights)
-    else:
-        Neff_seq = N_seq
-    N_pos = separated_aa.shape[1]
-
-    separated_aa_num = []
-    # Convert amino acids to numerical values
-    for seq in range(N_seq):
-        num_aa = []
-        for residue in separated_aa[seq]:
-            code = lett2num[residue]
-            num_aa.append(code)
-
-        num_aa = np.array(num_aa)
-        separated_aa_num.append(num_aa)
-    # array of the amino acids as numericals
-    separated_aa_num = np.array(separated_aa_num)
-
-    # np.bincount : Count number of occurrences of each value in array of
-    # non-negative ints.
-    aa_freq = []
-    # consider gaps as a 21st amino acid
-    aa_count = 21
-    for pos in range(N_pos):
-        tmp = np.bincount(separated_aa_num[:, pos], weights=weights,
-                          minlength=aa_count) / Neff_seq
-        if lambda_coef >= 0:
-            tmp = (1 - lambda_coef) * tmp + lambda_coef / aa_count
-        aa_freq.append(tmp)
-    aa_freq = np.array(aa_freq)
-
-    return aa_freq

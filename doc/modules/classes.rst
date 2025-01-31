@@ -81,7 +81,7 @@ Functions
    msa.choose_ref_seq
    msa.map_to_pdb
    msa.compute_seq_identity
-   msa.compute_sequence_weights
+   msa.compute_seq_weights
 
 
 .. _msa_ref:
@@ -105,13 +105,13 @@ Functions
    :toctree: generated/
    :template: function.rst
 
-   statistics.compute_frequencies
+   statistics.compute_all_frequencies
    statistics.pairwise.compute_sca_matrix
    statistics.pairwise.compute_mutual_information_matrix
    statistics.pairwise.compute_apc
    statistics.pairwise.compute_entropy_correction
    statistics.position.compute_entropy
-   statistics.position.compute_rel_entropy
+   statistics.position.compute_conservation
 
 
 .. _statistics_ref:

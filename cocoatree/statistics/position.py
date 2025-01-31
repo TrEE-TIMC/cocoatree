@@ -150,7 +150,38 @@ def compute_entropy(aa_freq):
 def compute_conservation(sequences, seq_weights=None,
                          pseudo_count=__pseudo_count_ref):
     """
-    blabla
+    Compute the conservation of aa at each position.
+
+    The conservation is computed as the relative entropy (e.g., the
+    Kullback-Leibler divergence)
+
+    .. math::
+
+        D_i^a = f_i^a \\ln \\frac{f_i^a}{q^a} + (1 - f_i^a) \\ln \
+            \\frac{1 - f_i^a}{1 - q^a}
+
+    where :math:`f_i^a` is the observed frequency of amino acid `a` at
+        position i`, :math:`q^a` is the background expectation
+
+    :math:`D_i^a` indicates how unlikely the observed frequencies of amino
+    acid `a` at position `i` would be if `a` occurred randomly with
+    probability :math:`q^a`.
+
+    Parameters
+    ----------
+    sequences : list of sequences
+
+    seq_weights : ndarray (nseq), optional, default: None
+        if None, will compute sequence weights
+
+    pseudo_count : regularization parameter (default=__pseudo_count_ref)
+
+    Returns
+    -------
+    Di : np.ndarray (npos,)
+        where each entry corresponds to the conservation at this position in
+        the sequences.
+
     """
 
     aa_freqs, bkgd_freqs = _compute_first_order_freqs(sequences, seq_weights,

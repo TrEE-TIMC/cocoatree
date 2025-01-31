@@ -138,7 +138,8 @@ Functions
     deconvolution.compute_ica
     deconvolution.choose_num_components
     deconvolution.extract_positions_from_IC
-
+    deconvolution.eigen_decomp
+    deconvolution.compute_ica
 
 .. _deconvolution_ref:
 
@@ -161,10 +162,8 @@ Functions
   :toctree: generated/
   :template: function.rst
 
-  deconvolution.eigen_decomp
-  deconvolution.compute_ica
 
-    randomize.randomization
+  randomize.randomization
 
 .. _randomize_ref:
 

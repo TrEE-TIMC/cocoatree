@@ -3,13 +3,45 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-COCOA-Tree: COllaborative Coevolution Analysis Toolbox
-======================================================
-
-An amazing package about co-evolution!
-
 .. toctree::
   :hidden:
   :glob:
   :caption: Contents
+
+######################################################
+COCOA-Tree: COllaborative Coevolution Analysis Toolbox
+######################################################
+
+COCOA-Tree is a `Python <https://www.python.org>` library to perform coevolution
+analysis of protein sequence data. It includes different coevolution metrics and
+corrections, and allows for an easy comparison of the methods.
+
+The specificity of COCOA-Tree is the inclusion of a visualization tool that allows
+the user to confront coevolution analyses with a phylogenetic tree and metadata
+to facilitate the understanding of protein sectors.
+
+COCOA-Tree also provides integration with the molecular visualization software
+`PyMOL <https://pymol.org>` allowing to map protein sector predictions on 3D
+structures.
+
+The software is organized in different modules detailed below:
+
+.. image:: auto_examples/images/sphx_glr_graphical_abstract.png
+	:width: 100%
+
+Citing COCOA-Tree
+-----------------
+
+If you use COCOA-Tree in a scientific publication, we would appreciate citations
+to the following paper:
+
+   BEST PAPER EVER
+
+License information
+-------------------
+
+Conditions on the use and redistribution of this package.
+
+.. literalinclude:: ../LICENSE
+
 

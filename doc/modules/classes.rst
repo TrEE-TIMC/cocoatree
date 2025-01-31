@@ -1,8 +1,14 @@
 :orphan:
 
-=========
-Reference
-=========
+=============
+API Reference
+=============
+
+
+.. contents:: Table of Contents
+   :depth: 1
+   :local:
+   :backlinks: none
 
 
 :mod:`cocoatree.io`: Functions to import and export files
@@ -34,8 +40,8 @@ Functions
 
 
 
-:mod:`cocoatree.datasets`: Datasets
-===================================
+:mod:`cocoatree.datasets`: Utilities to load popular datasets.
+==============================================================
 
 .. automodule:: cocoatree.datasets
     :no-members:
@@ -58,8 +64,8 @@ Functions
 .. _datasets_ref:
 
 
-:mod:`cocoatree.msa`: Multiple sequence alignment
-=================================================
+:mod:`cocoatree.msa`: Manipulating multiple sequence alignment and sequences
+============================================================================
 
 .. automodule:: cocoatree.msa
     :no-members:
@@ -86,8 +92,8 @@ Functions
 .. _msa_ref:
 
 
-:mod:`cocoatree.statistics`: Computation of statistics
-======================================================
+:mod:`cocoatree.statistics`: Computation of position-specific and pairwise statistics
+=====================================================================================
 
 .. automodule:: cocoatree.statistics
     :no-members:
@@ -116,8 +122,8 @@ Functions
 .. _statistics_ref:
 
 
-:mod:`cocoatree.deconvolution`: Matrix deconvolution
-=====================================================
+:mod:`cocoatree.deconvolution`: Co-evolution matrix deconvolution
+=================================================================
 
 .. automodule:: cocoatree.deconvolution
   :no-members:
@@ -168,8 +174,8 @@ Functions
 .. _randomize_ref:
 
 
-:mod:`cocoatree.visualization`: Visualization
-====================================================
+:mod:`cocoatree.visualization`: Visualization with ete3
+==========================================================
 
 .. automodule:: cocoatree.visualization
     :no-members:

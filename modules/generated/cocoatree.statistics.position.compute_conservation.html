@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>cocoatree.statistics.compute_frequencies &#8212; cocoatree 0.0 documentation</title>
+    <title>cocoatree.statistics.position.compute_conservation &#8212; cocoatree 0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
     <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
@@ -15,6 +15,7 @@
     <script src="../../_static/documentation_options.js?v=837179f8"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -40,41 +41,44 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="cocoatree-statistics-compute-frequencies">
-<h1>cocoatree.statistics.compute_frequencies<a class="headerlink" href="#cocoatree-statistics-compute-frequencies" title="Link to this heading">¶</a></h1>
+  <section id="cocoatree-statistics-position-compute-conservation">
+<h1>cocoatree.statistics.position.compute_conservation<a class="headerlink" href="#cocoatree-statistics-position-compute-conservation" title="Link to this heading">¶</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="cocoatree.statistics.compute_frequencies">
-<span class="sig-prename descclassname"><span class="pre">cocoatree.statistics.</span></span><span class="sig-name descname"><span class="pre">compute_frequencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pseudo_counts_val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.03</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.statistics.compute_frequencies" title="Link to this definition">¶</a></dt>
-<dd><p>Compute frequencies on sequences</p>
+<dt class="sig sig-object py" id="cocoatree.statistics.position.compute_conservation">
+<span class="sig-prename descclassname"><span class="pre">cocoatree.statistics.position.</span></span><span class="sig-name descname"><span class="pre">compute_conservation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pseudo_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.statistics.position.compute_conservation" title="Link to this definition">¶</a></dt>
+<dd><p>Compute the conservation of aa at each position.</p>
+<p>The conservation is computed as the relative entropy (e.g., the
+Kullback-Leibler divergence)</p>
+<div class="math notranslate nohighlight">
+\[D_i^a = f_i^a \ln \frac{f_i^a}{q^a} + (1 - f_i^a) \ln             \frac{1 - f_i^a}{1 - q^a}\]</div>
+<dl class="simple">
+<dt>where <span class="math notranslate nohighlight">\(f_i^a\)</span> is the observed frequency of amino acid <cite>a</cite> at</dt><dd><p>position i`, <span class="math notranslate nohighlight">\(q^a\)</span> is the background expectation</p>
+</dd>
+</dl>
+<p><span class="math notranslate nohighlight">\(D_i^a\)</span> indicates how unlikely the observed frequencies of amino
+acid <cite>a</cite> at position <cite>i</cite> would be if <cite>a</cite> occurred randomly with
+probability <span class="math notranslate nohighlight">\(q^a\)</span>.</p>
 <section id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
 <p>sequences : list of sequences</p>
 <dl class="simple">
-<dt>seq_weights<span class="classifier">{None, np.ndarray (n_seq)}</span></dt><dd><p>if None, will re-compute the sequence weights.</p>
-</dd>
-<dt>pseudo_counts_val<span class="classifier">float, default</span><span class="classifier">0.03</span></dt><dd><p>pseudo counts value in order to avoid null entries in the estimation
-of the amino acid frequencies.</p>
+<dt>seq_weights<span class="classifier">ndarray (nseq), optional, default: None</span></dt><dd><p>if None, will compute sequence weights</p>
 </dd>
 </dl>
+<p>pseudo_count : regularization parameter (default=__pseudo_count_ref)</p>
 </section>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
 <dl class="simple">
-<dt>aa_frequencies<span class="classifier">np.ndarray (nseq, 21)</span></dt><dd><p>A (nseq, 21) ndarray containing the amino acid frequencies at each
-positions.</p>
-</dd>
-<dt>background_frequencies<span class="classifier">np.ndarray (21, )</span></dt><dd><p>A (21,) vector containing the average use of amino acid in the list of
-provided sequences.</p>
-</dd>
-<dt>pairwise_frequencies<span class="classifier">np.ndarray (nseq, nseq, 21, 21)</span></dt><dd><p>An ndarray containing the pairwise frequencies for each pairs of
-positions in the list of provided sequences.</p>
+<dt>Di<span class="classifier">np.ndarray (npos,)</span></dt><dd><p>where each entry corresponds to the conservation at this position in
+the sequences.</p>
 </dd>
 </dl>
 </section>
 </dd></dl>
 
-<section id="examples-using-cocoatree-statistics-compute-frequencies">
-<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.statistics.compute_frequencies</span></code><a class="headerlink" href="#examples-using-cocoatree-statistics-compute-frequencies" title="Link to this heading">¶</a></h2>
+<section id="examples-using-cocoatree-statistics-position-compute-conservation">
+<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.statistics.position.compute_conservation</span></code><a class="headerlink" href="#examples-using-cocoatree-statistics-position-compute-conservation" title="Link to this heading">¶</a></h2>
 <div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="In this example, we are comparing the results of the co-evolution analysis on serine proteases using SCA and the mutual information."><img alt="" src="../../_images/sphx_glr_plot_sca_vs_mi_thumb.png" />
 <p><a class="reference internal" href="../../auto_examples/plot_sca_vs_mi.html#sphx-glr-auto-examples-plot-sca-vs-mi-py"><span class="std std-ref">Mutual information versus SCA</span></a></p>
   <div class="sphx-glr-thumbnail-title">Mutual information versus SCA</div>

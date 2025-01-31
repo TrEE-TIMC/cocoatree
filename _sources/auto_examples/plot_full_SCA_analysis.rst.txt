@@ -54,17 +54,15 @@ independent component.
 
 Import necessary
 
-.. GENERATED FROM PYTHON SOURCE LINES 26-41
+.. GENERATED FROM PYTHON SOURCE LINES 26-40
 
 .. code-block:: Python
 
     from cocoatree.datasets import load_S1A_serine_proteases
     from cocoatree.io import export_fasta, load_pdb, export_sector_for_pymol
-    from cocoatree.msa import filter_sequences, \
-        compute_sequences_weights, map_to_pdb
-    from cocoatree.msa import compute_seq_identity
-    from cocoatree.statistics import compute_frequencies
-    from cocoatree.statistics.position import compute_rel_entropy
+    from cocoatree.msa import filter_sequences, compute_seq_identity, \
+        compute_seq_weights, map_to_pdb
+    from cocoatree.statistics.position import compute_conservation
     from cocoatree.statistics.pairwise import compute_sca_matrix
 
     from cocoatree.deconvolution import eigen_decomp, compute_ica, \
@@ -80,16 +78,17 @@ Import necessary
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 42-48
+
+.. GENERATED FROM PYTHON SOURCE LINES 41-47
 
 Load the dataset
 ----------------
 
 We start by importing the dataset. In this case, we can directly load the S1
 serine protease dataset provided in :mod:`cocoatree`. To work on your on
-dataset, you can use the :fun:`cocoatree.io.load_msa` function.
+dataset, you can use the `cocoatree.io.load_msa` function.
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-55
+.. GENERATED FROM PYTHON SOURCE LINES 47-54
 
 .. code-block:: Python
 
@@ -113,7 +112,7 @@ dataset, you can use the :fun:`cocoatree.io.load_msa` function.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-62
+.. GENERATED FROM PYTHON SOURCE LINES 55-61
 
 MSA filtering
 -------------
@@ -122,7 +121,7 @@ We are going to clean a bit the loaded MSA by filtering both sequences and
 positions.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-69
+.. GENERATED FROM PYTHON SOURCE LINES 61-68
 
 .. code-block:: Python
 
@@ -147,12 +146,12 @@ positions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-72
+.. GENERATED FROM PYTHON SOURCE LINES 69-71
 
 Compute the matrix of pairwise sequence identity
 ------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-83
+.. GENERATED FROM PYTHON SOURCE LINES 71-82
 
 .. code-block:: Python
 
@@ -179,16 +178,16 @@ Compute the matrix of pairwise sequence identity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-85
+.. GENERATED FROM PYTHON SOURCE LINES 83-84
 
 Compute sequence weights
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-88
+.. GENERATED FROM PYTHON SOURCE LINES 84-87
 
 .. code-block:: Python
 
-    weights, n_eff_seq = compute_sequences_weights(seq_kept)
-    print(f"Number of effective sequences {n_eff_seq}")
+    seq_weights, m_eff = compute_seq_weights(seq_kept)
+    print(f"Number of effective sequences {m_eff}")
 
 
 
@@ -203,43 +202,16 @@ Compute sequence weights
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 89-98
-
-Compute different kind of frequencies from the list of sequences.
-
-   - aa_freq corresponds to the frequencies of amino acid at each position,
-     and is thus a ndarray of size (nseq, 21)
-   - background_frequencies corresponds to the overall distribution of amino
-     acids in this MSA. It is a ndarray of size (21, )
-   - pairwise_freq corresponds to pairwise frequencies of amino acid for all
-     pairs of positions. It thus corresponds to an ndarray of shape (nseq,
-     nseq, 21, 21).
-
-.. GENERATED FROM PYTHON SOURCE LINES 98-102
-
-.. code-block:: Python
-
-    aa_freq, background_frequencies, pairwise_freq = compute_frequencies(
-        seq_kept,
-        seq_weights=weights)
-
-
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 103-105
+.. GENERATED FROM PYTHON SOURCE LINES 88-90
 
 Compute conservation along the MSA
 ----------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 105-116
+.. GENERATED FROM PYTHON SOURCE LINES 90-101
 
 .. code-block:: Python
 
-    Dia, Di = compute_rel_entropy(aa_freq, background_frequencies)
+    Di = compute_conservation(seq_kept, seq_weights)
 
     fig, ax = plt.subplots(figsize=(9, 4))
     xvals = [i+1 for i in range(len(Di))]
@@ -268,22 +240,20 @@ Compute conservation along the MSA
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 117-119
+.. GENERATED FROM PYTHON SOURCE LINES 102-104
 
 Compute the SCA coevolution matrix
 ----------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-132
+.. GENERATED FROM PYTHON SOURCE LINES 104-115
 
 .. code-block:: Python
 
 
-    Cijab_raw, Cij = compute_sca_matrix(joint_freqs=pairwise_freq,
-                                        aa_freq=aa_freq,
-                                        background_freq=background_frequencies)
+    SCA_matrix = compute_sca_matrix(seq_kept, seq_weights)
 
     fig, ax = plt.subplots()
-    im = ax.imshow(Cij, vmin=0, vmax=1.4, cmap='inferno')
+    im = ax.imshow(SCA_matrix, vmin=0, vmax=1.4, cmap='inferno')
 
     ax.set_xlabel('Residue', fontsize=10)
     ax.set_ylabel(None)
@@ -304,21 +274,21 @@ Compute the SCA coevolution matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7ff699160b90>
+    <matplotlib.colorbar.Colorbar object at 0x7f23f1f8fb10>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 133-135
+.. GENERATED FROM PYTHON SOURCE LINES 116-118
 
 Decomposition of the matrix into principal components
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. GENERATED FROM PYTHON SOURCE LINES 135-138
+.. GENERATED FROM PYTHON SOURCE LINES 118-121
 
 .. code-block:: Python
 
 
-    eigenvalues, eigenvectors = eigen_decomp(Cij)
+    eigenvalues, eigenvectors = eigen_decomp(SCA_matrix)
 
 
 
@@ -327,11 +297,11 @@ Decomposition of the matrix into principal components
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 139-140
+.. GENERATED FROM PYTHON SOURCE LINES 122-123
 
 Plot distribution of eigenvalues
 
-.. GENERATED FROM PYTHON SOURCE LINES 140-145
+.. GENERATED FROM PYTHON SOURCE LINES 123-128
 
 .. code-block:: Python
 
@@ -358,62 +328,52 @@ Plot distribution of eigenvalues
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 146-154
+.. GENERATED FROM PYTHON SOURCE LINES 129-137
 
 Select number of significant components
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-We use a randomization strategy in order to select the number of components.
-The function :fun:cocoatree.randomize.randomization runs the full SCA
+A randomization strategy is used in order to select the number of components.
+The function `cocoatree.randomize.randomization` runs the full SCA
 pipeline on randomized version of the MSA. Make sure that weights and lambda
 coefficient are set the same way as the when performing the analysis on the
 real dataset.
 
-.. GENERATED FROM PYTHON SOURCE LINES 154-170
+.. GENERATED FROM PYTHON SOURCE LINES 137-155
 
 .. code-block:: Python
 
-    v_rand, l_rand = randomization(seq_kept, n_rep=10,
-                                   weights=weights, lambda_coef=0.03, kmax=10)
-    n_components = choose_num_components(eigenvalues, l_rand)
-    print('n_components = ' + str(n_components))
+    if False:
+        v_rand, l_rand = randomization(seq_kept, n_rep=10,
+                                       seq_weights=seq_weights, kmax=10)
+        n_components = choose_num_components(eigenvalues, l_rand)
+        print('n_components = ' + str(n_components))
 
-    hist0, bins = np.histogram(l_rand.flatten(), bins=n_pos_kept,
-                               range=(0, eigenvalues.max()))
-    hist1, bins = np.histogram(eigenvalues, bins=n_pos_kept,
-                               range=(0, eigenvalues.max()))
+        hist0, bins = np.histogram(l_rand.flatten(), bins=n_pos_kept,
+                                   range=(0, eigenvalues.max()))
+        hist1, bins = np.histogram(eigenvalues, bins=n_pos_kept,
+                                   range=(0, eigenvalues.max()))
 
-    fig, ax = plt.subplots()
-    ax.bar(bins[:-1], hist1, np.diff(bins), color='k')
-    ax.plot(bins[:-1], hist0/10, 'r', linewidth=3)
-    ax.set_xlabel('Eigenvalues', fontweight="bold")
-    ax.set_ylabel('Numbers', fontweight="bold")
-
-
-
-
-.. image-sg:: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_005.png
-   :alt: plot full SCA analysis
-   :srcset: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_005.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    n_components = 6
-
-    Text(47.097222222222214, 0.5, 'Numbers')
+        fig, ax = plt.subplots()
+        ax.bar(bins[:-1], hist1, np.diff(bins), color='k')
+        ax.plot(bins[:-1], hist0/10, 'r', linewidth=3)
+        ax.set_xlabel('Eigenvalues', fontweight="bold")
+        ax.set_ylabel('Numbers', fontweight="bold")
+    n_components = 7
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 171-173
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 156-158
 
 Independent component analysis (ICA)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. GENERATED FROM PYTHON SOURCE LINES 173-199
+.. GENERATED FROM PYTHON SOURCE LINES 158-184
 
 .. code-block:: Python
 
@@ -446,25 +406,31 @@ Independent component analysis (ICA)
 
 
 
-.. image-sg:: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_006.png
+.. image-sg:: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_005.png
    :alt: plot full SCA analysis
-   :srcset: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_006.png
+   :srcset: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_005.png
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Uneven number of axes, discard the last one for visual           representation
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 200-201
+
+.. GENERATED FROM PYTHON SOURCE LINES 185-186
 
 Select residues that significantly contribute to each independent component
 
-.. GENERATED FROM PYTHON SOURCE LINES 201-207
+.. GENERATED FROM PYTHON SOURCE LINES 186-192
 
 .. code-block:: Python
 
     ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits = \
-        extract_positions_from_IC(independent_components, n_components, Cij,
+        extract_positions_from_IC(independent_components, n_components, SCA_matrix,
                                   p_cut=0.95)
 
     print(f"Sizes of the {n_components} ICs: {icsize}")
@@ -477,24 +443,24 @@ Select residues that significantly contribute to each independent component
 
  .. code-block:: none
 
-    Sizes of the 6 ICs: [32, 18, 19, 14, 16, 12]
+    Sizes of the 6 ICs: [15, 16, 22, 10, 13, 15]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 208-212
+.. GENERATED FROM PYTHON SOURCE LINES 193-197
 
 Plot coevolution within and between the sectors
 Each white square corresponds to a sector, with the residues ordered in
 decreasing contribution to the independent component associated from top to
 bottom and from left to right.
 
-.. GENERATED FROM PYTHON SOURCE LINES 212-227
+.. GENERATED FROM PYTHON SOURCE LINES 197-212
 
 .. code-block:: Python
 
     fig, ax = plt.subplots(tight_layout=True)
-    im = ax.imshow(Cij[np.ix_(sortedpos, sortedpos)], vmin=0, vmax=2,
+    im = ax.imshow(SCA_matrix[np.ix_(sortedpos, sortedpos)], vmin=0, vmax=2,
                    interpolation='none', aspect='equal',
                    extent=[0, sum(icsize), 0, sum(icsize)], cmap='inferno')
     cb = fig.colorbar(im)
@@ -511,22 +477,22 @@ bottom and from left to right.
 
 
 
-.. image-sg:: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_007.png
+.. image-sg:: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_006.png
    :alt: plot full SCA analysis
-   :srcset: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_007.png
+   :srcset: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_006.png
    :class: sphx-glr-single-img
 
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 228-231
+.. GENERATED FROM PYTHON SOURCE LINES 213-216
 
 Export fasta files of the sectors for all the sequences
 Those fasta can then be used for visualization along a phylogenetic tree
 as implemented in the cocoatree.visualization module
 
-.. GENERATED FROM PYTHON SOURCE LINES 231-258
+.. GENERATED FROM PYTHON SOURCE LINES 216-243
 
 .. code-block:: Python
 
@@ -580,7 +546,7 @@ as implemented in the cocoatree.visualization module
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (1 minutes 44.937 seconds)
+   **Total running time of the script:** (0 minutes 16.550 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_full_SCA_analysis.py:

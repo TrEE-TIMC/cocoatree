@@ -45,7 +45,7 @@
 <h1>cocoatree.statistics.pairwise.compute_sca_matrix<a class="headerlink" href="#cocoatree-statistics-pairwise-compute-sca-matrix" title="Link to this heading">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="cocoatree.statistics.pairwise.compute_sca_matrix">
-<span class="sig-prename descclassname"><span class="pre">cocoatree.statistics.pairwise.</span></span><span class="sig-name descname"><span class="pre">compute_sca_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">joint_freqs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aa_freq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">background_freq</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.statistics.pairwise.compute_sca_matrix" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cocoatree.statistics.pairwise.</span></span><span class="sig-name descname"><span class="pre">compute_sca_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pseudo_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.statistics.pairwise.compute_sca_matrix" title="Link to this definition">¶</a></dt>
 <dd><p>Compute the SCA coevolution matrix</p>
 <div class="math notranslate nohighlight">
 \[C_{ij}^{ab} = f_{ij}^{ab} - f_i^a f_j^b\]</div>
@@ -53,14 +53,16 @@
 \[\tilde{C_{ij}} = \sqrt{sum_{a,b} \tilde{(C_{ij}^{ab})^2}}\]</div>
 <section id="arguments">
 <h2>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">¶</a></h2>
-<p>joint_freqs : amino acid joint frequencies</p>
-<p>aa_freq : frequency of amino acid <em>a</em> at position <em>i</em></p>
-<p>background_freq : background frequency of amino acid <em>a</em></p>
+<p>sequences : list of sequences</p>
+<dl class="simple">
+<dt>seq_weights<span class="classifier">ndarray (nseq), optional, default: None</span></dt><dd><p>if None, will compute sequence weights</p>
+</dd>
+</dl>
+<p>pseudo_count : regularization parameter (default=__pseudo_count_ref)</p>
 </section>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
-<p>Cijab : SCA coevolution matrix</p>
-<p>Cij : Frobenius norm of Cijab</p>
+<p>SCA_matrix : SCA coevolution matrix</p>
 </section>
 </dd></dl>
 

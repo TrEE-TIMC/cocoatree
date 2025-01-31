@@ -8,6 +8,8 @@
   :glob:
   :caption: Contents
 
+  interface_cocoatree_pymol.rst
+
 ######################################################
 COCOA-Tree: COllaborative Coevolution Analysis Toolbox
 ######################################################
@@ -43,5 +45,3 @@ License information
 Conditions on the use and redistribution of this package.
 
 .. literalinclude:: ../LICENSE
-
-

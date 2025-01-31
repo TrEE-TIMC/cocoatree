@@ -7,6 +7,8 @@ In this example, we are comparing the results of the co-evolution analysis on
 serine proteases using SCA and the mutual information.
 """
 
+# %%
+# Import necessary
 from cocoatree.datasets import load_S1A_serine_proteases
 from cocoatree.msa import filter_sequences
 
@@ -16,7 +18,7 @@ from cocoatree.statistics.pairwise import compute_mutual_information_matrix
 
 import matplotlib.pyplot as plt
 
-import np as np
+import numpy as np
 
 # %%
 # Load the dataset

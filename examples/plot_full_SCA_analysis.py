@@ -116,7 +116,7 @@ fig.colorbar(im, shrink=0.7)
 # Decomposition of the matrix into principal components
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-eigenvalues, eigenvectors = eigen_decomp(Cij)
+eigenvalues, eigenvectors = eigen_decomp(SCA_matrix)
 
 # %%
 # Plot distribution of eigenvalues
@@ -184,7 +184,7 @@ for k, [k1, k2] in enumerate(pairs):
 # %%
 # Select residues that significantly contribute to each independent component
 ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits = \
-    extract_positions_from_IC(independent_components, n_components, Cij,
+    extract_positions_from_IC(independent_components, n_components, SCA_matrix,
                               p_cut=0.95)
 
 print(f"Sizes of the {n_components} ICs: {icsize}")
@@ -195,7 +195,7 @@ print(f"Sizes of the {n_components} ICs: {icsize}")
 # decreasing contribution to the independent component associated from top to
 # bottom and from left to right.
 fig, ax = plt.subplots(tight_layout=True)
-im = ax.imshow(Cij[np.ix_(sortedpos, sortedpos)], vmin=0, vmax=2,
+im = ax.imshow(SCA_matrix[np.ix_(sortedpos, sortedpos)], vmin=0, vmax=2,
                interpolation='none', aspect='equal',
                extent=[0, sum(icsize), 0, sum(icsize)], cmap='inferno')
 cb = fig.colorbar(im)

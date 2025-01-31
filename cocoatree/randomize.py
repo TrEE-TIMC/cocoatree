@@ -71,7 +71,7 @@ def randomization(sequences, n_rep, seq_weights=1,
         number of iterations of randomization
 
     weights : {1, np.array (n_seq)}, default : 1
-        weights provided to :fun:`cocoatree.statistics.pairwise.aa_joint_freq`
+        weights provided to cocoatree.statistics.pairwise.aa_joint_freq`
 
             - If int, assumes equal weights on all sequences
             - If, vector of sequence weights for each sequence

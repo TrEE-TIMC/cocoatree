@@ -43,7 +43,7 @@ import numpy as np
 #
 # We start by importing the dataset. In this case, we can directly load the S1
 # serine protease dataset provided in :mod:`cocoatree`. To work on your on
-# dataset, you can use the :fun:`cocoatree.io.load_msa` function.
+# dataset, you can use the `cocoatree.io.load_msa` function.
 
 serine_dataset = load_S1A_serine_proteases()
 seq_id = serine_dataset["sequence_ids"]
@@ -130,7 +130,7 @@ ax.set_xlabel('Eigenvalue', fontweight="bold")
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
 # A randomization strategy is used in order to select the number of components.
-# The function :fun:cocoatree.randomize.randomization runs the full SCA
+# The function `cocoatree.randomize.randomization` runs the full SCA
 # pipeline on randomized version of the MSA. Make sure that weights and lambda
 # coefficient are set the same way as the when performing the analysis on the
 # real dataset.

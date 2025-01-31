@@ -35,9 +35,10 @@ Adapt Pymol code to your local path
 
 Save the pymol code that is displayed below and modify it so that it works on
 your local environment :
+
     - change the path **line 20** to your local path towards your numpy object
     - **line 24**, you can change the `cmap` parameter to any matplotlib's
-colormap
+      colormap
 
 
 Execute Pymol code

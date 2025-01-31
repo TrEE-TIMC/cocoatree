@@ -95,16 +95,13 @@
 <tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.msa.filter_seq_id.html#cocoatree.msa.filter_seq_id" title="cocoatree.msa.filter_seq_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.filter_seq_id</span></code></a>(seq_id, sequences, list_id)</p></td>
 <td><p>Filter sequences based on list</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.msa.choose_ref_seq.html#cocoatree.msa.choose_ref_seq" title="cocoatree.msa.choose_ref_seq"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.choose_ref_seq</span></code></a>(msa)</p></td>
-<td><p>This function chooses a default reference sequence for the alignment by taking the sequence which has the mean pairwise sequence identity closest to that of the entire sequence alignment.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.msa.map_to_pdb.html#cocoatree.msa.map_to_pdb" title="cocoatree.msa.map_to_pdb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.map_to_pdb</span></code></a>(pdb_seq, pdb_pos, sequences, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.msa.map_to_pdb.html#cocoatree.msa.map_to_pdb" title="cocoatree.msa.map_to_pdb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.map_to_pdb</span></code></a>(pdb_seq, pdb_pos, sequences, ...)</p></td>
 <td><p>Mapping of the unfiltered MSA positions on a PDB structure.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.msa.compute_seq_identity.html#cocoatree.msa.compute_seq_identity" title="cocoatree.msa.compute_seq_identity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.compute_seq_identity</span></code></a>(sequences)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.msa.compute_seq_identity.html#cocoatree.msa.compute_seq_identity" title="cocoatree.msa.compute_seq_identity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.compute_seq_identity</span></code></a>(sequences)</p></td>
 <td><p>Computes the identity between sequences in a MSA (as Hamming's pairwise distance)</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.msa.compute_seq_weights.html#cocoatree.msa.compute_seq_weights" title="cocoatree.msa.compute_seq_weights"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.compute_seq_weights</span></code></a>(sequences[, threshold])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.msa.compute_seq_weights.html#cocoatree.msa.compute_seq_weights" title="cocoatree.msa.compute_seq_weights"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.compute_seq_weights</span></code></a>(sequences[, threshold])</p></td>
 <td><p>Compute sequence weights</p></td>
 </tr>
 </tbody>
@@ -160,6 +157,12 @@
 <tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.extract_positions_from_IC.html#cocoatree.deconvolution.extract_positions_from_IC" title="cocoatree.deconvolution.extract_positions_from_IC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.extract_positions_from_IC</span></code></a>(...)</p></td>
 <td><p>Produces a list of positions contributing to each independent component (IC) above a defined statistical cutoff (p_cut, the cutoff on the CDF of the t-distribution fit to the histogram of each IC).</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.eigen_decomp.html#cocoatree.deconvolution.eigen_decomp" title="cocoatree.deconvolution.eigen_decomp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.eigen_decomp</span></code></a>(mat)</p></td>
+<td><p>Performs eigenvalue decomposition of a square matrix</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.compute_ica.html#cocoatree.deconvolution.compute_ica" title="cocoatree.deconvolution.compute_ica"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.compute_ica</span></code></a>(V[, kmax, ...])</p></td>
+<td><p>ICA rotation (using _basicICA) with default parameters and normalization of outputs.</p></td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -171,12 +174,6 @@
 <h3>Functions<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.eigen_decomp.html#cocoatree.deconvolution.eigen_decomp" title="cocoatree.deconvolution.eigen_decomp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.eigen_decomp</span></code></a>(mat)</p></td>
-<td><p>Performs eigenvalue decomposition of a square matrix</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.compute_ica.html#cocoatree.deconvolution.compute_ica" title="cocoatree.deconvolution.compute_ica"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.compute_ica</span></code></a>(V[, kmax, ...])</p></td>
-<td><p>ICA rotation (using _basicICA) with default parameters and normalization of outputs.</p></td>
-</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.randomize.randomization.html#cocoatree.randomize.randomization" title="cocoatree.randomize.randomization"><code class="xref py py-obj docutils literal notranslate"><span class="pre">randomize.randomization</span></code></a>(sequences, n_rep[, ...])</p></td>
 <td><p>Randomize the alignment while preserving the frequencies of amino acids at each position and compute the resulting spectrum of coevolution matrix.</p></td>
 </tr>

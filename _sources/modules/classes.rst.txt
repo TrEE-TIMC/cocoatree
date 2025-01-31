@@ -78,7 +78,6 @@ Functions
 
    msa.filter_sequences
    msa.filter_seq_id
-   msa.choose_ref_seq
    msa.map_to_pdb
    msa.compute_seq_identity
    msa.compute_seq_weights
@@ -139,7 +138,8 @@ Functions
     deconvolution.compute_ica
     deconvolution.choose_num_components
     deconvolution.extract_positions_from_IC
-
+    deconvolution.eigen_decomp
+    deconvolution.compute_ica
 
 .. _deconvolution_ref:
 
@@ -162,10 +162,8 @@ Functions
   :toctree: generated/
   :template: function.rst
 
-  deconvolution.eigen_decomp
-  deconvolution.compute_ica
 
-    randomize.randomization
+  randomize.randomization
 
 .. _randomize_ref:
 

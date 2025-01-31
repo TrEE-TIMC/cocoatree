@@ -25,11 +25,9 @@ independent component.
 # Import necessary
 from cocoatree.datasets import load_S1A_serine_proteases
 from cocoatree.io import export_fasta, load_pdb, export_sector_for_pymol
-from cocoatree.msa import filter_sequences, \
-    compute_sequences_weights, map_to_pdb
-from cocoatree.msa import compute_seq_identity
-from cocoatree.statistics import compute_frequencies
-from cocoatree.statistics.position import compute_rel_entropy
+from cocoatree.msa import filter_sequences, compute_seq_identity, \
+    compute_seq_weights, map_to_pdb
+from cocoatree.statistics.position import compute_conservation
 from cocoatree.statistics.pairwise import compute_sca_matrix
 
 from cocoatree.deconvolution import eigen_decomp, compute_ica, \
@@ -38,13 +36,14 @@ from cocoatree.randomize import randomization
 import matplotlib.pyplot as plt
 import numpy as np
 
+
 # %%
 # Load the dataset
 # ----------------
 #
 # We start by importing the dataset. In this case, we can directly load the S1
 # serine protease dataset provided in :mod:`cocoatree`. To work on your on
-# dataset, you can use the :fun:`cocoatree.io.load_msa` function.
+# dataset, you can use the `cocoatree.io.load_msa` function.
 
 serine_dataset = load_S1A_serine_proteases()
 seq_id = serine_dataset["sequence_ids"]
@@ -82,27 +81,13 @@ cb.set_label("Pairwise sequence identity", fontweight="bold")
 
 # %%
 # Compute sequence weights
-weights, n_eff_seq = compute_sequences_weights(seq_kept)
-print(f"Number of effective sequences {n_eff_seq}")
-
-# %%
-# Compute different kind of frequencies from the list of sequences.
-#
-#    - aa_freq corresponds to the frequencies of amino acid at each position,
-#      and is thus a ndarray of size (nseq, 21)
-#    - background_frequencies corresponds to the overall distribution of amino
-#      acids in this MSA. It is a ndarray of size (21, )
-#    - pairwise_freq corresponds to pairwise frequencies of amino acid for all
-#      pairs of positions. It thus corresponds to an ndarray of shape (nseq,
-#      nseq, 21, 21).
-aa_freq, background_frequencies, pairwise_freq = compute_frequencies(
-    seq_kept,
-    seq_weights=weights)
+seq_weights, m_eff = compute_seq_weights(seq_kept)
+print(f"Number of effective sequences {m_eff}")
 
 # %%
 # Compute conservation along the MSA
 # ----------------------------------
-Dia, Di = compute_rel_entropy(aa_freq, background_frequencies)
+Di = compute_conservation(seq_kept, seq_weights)
 
 fig, ax = plt.subplots(figsize=(9, 4))
 xvals = [i+1 for i in range(len(Di))]
@@ -117,12 +102,10 @@ ax.set_ylabel('Di', fontsize=14)
 # Compute the SCA coevolution matrix
 # ----------------------------------
 
-Cijab_raw, Cij = compute_sca_matrix(joint_freqs=pairwise_freq,
-                                    aa_freq=aa_freq,
-                                    background_freq=background_frequencies)
+SCA_matrix = compute_sca_matrix(seq_kept, seq_weights)
 
 fig, ax = plt.subplots()
-im = ax.imshow(Cij, vmin=0, vmax=1.4, cmap='inferno')
+im = ax.imshow(SCA_matrix, vmin=0, vmax=1.4, cmap='inferno')
 
 ax.set_xlabel('Residue', fontsize=10)
 ax.set_ylabel(None)
@@ -133,7 +116,7 @@ fig.colorbar(im, shrink=0.7)
 # Decomposition of the matrix into principal components
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-eigenvalues, eigenvectors = eigen_decomp(Cij)
+eigenvalues, eigenvectors = eigen_decomp(SCA_matrix)
 
 # %%
 # Plot distribution of eigenvalues
@@ -146,26 +129,28 @@ ax.set_xlabel('Eigenvalue', fontweight="bold")
 # Select number of significant components
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
-# We use a randomization strategy in order to select the number of components.
-# The function :fun:cocoatree.randomize.randomization runs the full SCA
+# A randomization strategy is used in order to select the number of components.
+# The function `cocoatree.randomize.randomization` runs the full SCA
 # pipeline on randomized version of the MSA. Make sure that weights and lambda
 # coefficient are set the same way as the when performing the analysis on the
 # real dataset.
-v_rand, l_rand = randomization(seq_kept, n_rep=10,
-                               weights=weights, lambda_coef=0.03, kmax=10)
-n_components = choose_num_components(eigenvalues, l_rand)
-print('n_components = ' + str(n_components))
+if False:
+    v_rand, l_rand = randomization(seq_kept, n_rep=10,
+                                   seq_weights=seq_weights, kmax=10)
+    n_components = choose_num_components(eigenvalues, l_rand)
+    print('n_components = ' + str(n_components))
 
-hist0, bins = np.histogram(l_rand.flatten(), bins=n_pos_kept,
-                           range=(0, eigenvalues.max()))
-hist1, bins = np.histogram(eigenvalues, bins=n_pos_kept,
-                           range=(0, eigenvalues.max()))
+    hist0, bins = np.histogram(l_rand.flatten(), bins=n_pos_kept,
+                               range=(0, eigenvalues.max()))
+    hist1, bins = np.histogram(eigenvalues, bins=n_pos_kept,
+                               range=(0, eigenvalues.max()))
 
-fig, ax = plt.subplots()
-ax.bar(bins[:-1], hist1, np.diff(bins), color='k')
-ax.plot(bins[:-1], hist0/10, 'r', linewidth=3)
-ax.set_xlabel('Eigenvalues', fontweight="bold")
-ax.set_ylabel('Numbers', fontweight="bold")
+    fig, ax = plt.subplots()
+    ax.bar(bins[:-1], hist1, np.diff(bins), color='k')
+    ax.plot(bins[:-1], hist0/10, 'r', linewidth=3)
+    ax.set_xlabel('Eigenvalues', fontweight="bold")
+    ax.set_ylabel('Numbers', fontweight="bold")
+n_components = 7
 
 # %%
 # Independent component analysis (ICA)
@@ -199,7 +184,7 @@ for k, [k1, k2] in enumerate(pairs):
 # %%
 # Select residues that significantly contribute to each independent component
 ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits = \
-    extract_positions_from_IC(independent_components, n_components, Cij,
+    extract_positions_from_IC(independent_components, n_components, SCA_matrix,
                               p_cut=0.95)
 
 print(f"Sizes of the {n_components} ICs: {icsize}")
@@ -210,7 +195,7 @@ print(f"Sizes of the {n_components} ICs: {icsize}")
 # decreasing contribution to the independent component associated from top to
 # bottom and from left to right.
 fig, ax = plt.subplots(tight_layout=True)
-im = ax.imshow(Cij[np.ix_(sortedpos, sortedpos)], vmin=0, vmax=2,
+im = ax.imshow(SCA_matrix[np.ix_(sortedpos, sortedpos)], vmin=0, vmax=2,
                interpolation='none', aspect='equal',
                extent=[0, sum(icsize), 0, sum(icsize)], cmap='inferno')
 cb = fig.colorbar(im)

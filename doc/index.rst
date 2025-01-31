@@ -12,7 +12,7 @@
 COCOA-Tree: COllaborative Coevolution Analysis Toolbox
 ######################################################
 
-COCOA-Tree is a `Python <https://www.python.org>` library to perform coevolution
+COCOA-Tree is a `Python <https://www.python.org>`_ library to perform coevolution
 analysis of protein sequence data. It includes different coevolution metrics and
 corrections, and allows for an easy comparison of the methods.
 
@@ -21,12 +21,12 @@ the user to confront coevolution analyses with a phylogenetic tree and metadata
 to facilitate the understanding of protein sectors.
 
 COCOA-Tree also provides integration with the molecular visualization software
-`PyMOL <https://pymol.org>` allowing to map protein sector predictions on 3D
+`PyMOL <https://pymol.org>`_ allowing to map protein sector predictions on 3D
 structures.
 
 The software is organized in different modules detailed below:
 
-.. image:: auto_examples/images/sphx_glr_graphical_abstract.png
+.. image:: schemas/graphical_abstract.png
 	:width: 100%
 
 Citing COCOA-Tree

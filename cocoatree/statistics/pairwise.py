@@ -1,7 +1,7 @@
 import numpy as np
 from ..__params import lett2num, __pseudo_count_ref, __aa_count
 from ..msa import compute_seq_weights
-from .position import _compute_aa_freqs, _compute_first_order_freqs
+from .position import _compute_first_order_freqs
 
 
 def _compute_aa_joint_freqs(sequences, seq_weights=None,
@@ -10,7 +10,8 @@ def _compute_aa_joint_freqs(sequences, seq_weights=None,
 
     .. math::
 
-        f_{ij}^{ab} = (\\sum_s w_s x_{si}^a x_{sj}^b + \\lambda/(21)^2)/(M_{eff} + \\lambda)
+        f_{ij}^{ab} = (\\sum_s w_s x_{si}^a x_{sj}^b +
+            \\lambda/(21)^2)/(M_{eff} + \\lambda)
 
     where
 
@@ -26,16 +27,17 @@ def _compute_aa_joint_freqs(sequences, seq_weights=None,
     sequences : list of sequences as imported by load_MSA()
 
     seq_weights : numpy 1D array, optional
-            Gives more or less importance to certain sequences.
-            If seq_weights=None, all sequences are attributed an equal weight of 1.
+            Gives more or less importance to certain sequences. If
+            seq_weights=None, all sequences are attributed an equal weighti
+            of 1.
 
     pseudo_count : regularization parameter (default=__pseudo_count_ref)
 
     Returns
     -------
     aa_joint_freqs : np.ndarray of shape (Npos, Npos, aa_count, aa_count)
-    joint frequency of amino acids *a* and $b$ 
-    at respective positions *i* and *j*
+        joint frequency of amino acids `a` and `b`
+        at respective positions `i` and `j`
     """
 
     # Convert sequences to binary format
@@ -59,8 +61,8 @@ def _compute_aa_joint_freqs(sequences, seq_weights=None,
 
 
 def _compute_aa_product_freqs(aa_freqs_1, aa_freqs_2):
-
     """Computes the product of frequencies
+
     (joint frequencies if residues are independent)
 
     Arguments
@@ -68,12 +70,12 @@ def _compute_aa_product_freqs(aa_freqs_1, aa_freqs_2):
     aa_freqs_1 : frequency of amino acid *a* at position *i* (set 1)
 
     aa_freqs_2 : frequency of amino acid *a* at position *i* (set 2)
-    
+
     Returns
     -------
     aa_prod_freqs : np.ndarray of shape (Npos, Npos, aa_count, aa_count)
-    product of frequency of amino acids *a* and $b$ 
-    at respective positions *i* and *j*
+        product of frequency of amino acids *a* and $b$
+        at respective positions *i* and *j*
     """
 
     aa_product_freqs = np.multiply.outer(aa_freqs_1, aa_freqs_2)
@@ -136,12 +138,12 @@ def compute_sca_matrix(sequences, seq_weights=None,
     aa_joint_freqs, aa_product_freqs = _compute_second_order_freqs(
         sequences, seq_weights=seq_weights, pseudo_count=pseudo_count)
 
-    # Cijab    
+    # Cijab
     Cijab = aa_joint_freqs - aa_product_freqs
 
     # derivative of relative entropy
     aa_freqs, bkgd_freqs = _compute_first_order_freqs(
-        sequences, seq_weights=seq_weights, pseudo_count=pseudo_count)    
+        sequences, seq_weights=seq_weights, pseudo_count=pseudo_count)
     aa_freqs = aa_freqs.transpose([1, 0])
     phi = np.log(
         aa_freqs * (1 - bkgd_freqs[:, np.newaxis]) / (

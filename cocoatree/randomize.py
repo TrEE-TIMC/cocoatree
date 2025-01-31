@@ -107,7 +107,7 @@ def randomization(sequences, n_rep, seq_weights=1,
                                            sequences,
                                            seq_weights=seq_weights,
                                            pseudo_count=pseudo_count)
-    
+
     # initialize for eigenvectors
     vect_rand = np.zeros((n_rep, n_pos, kmax))
     # initialize for eigenvalues

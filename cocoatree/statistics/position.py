@@ -1,7 +1,6 @@
 import numpy as np
 from ..__params import lett2num, __pseudo_count_ref, __aa_count, __freq0
 from ..msa import compute_seq_weights
-import sys
 
 
 def _compute_aa_freqs(sequences, seq_weights=None,
@@ -25,11 +24,12 @@ def _compute_aa_freqs(sequences, seq_weights=None,
     sequences : list of sequences as imported by load_msa()
 
     seq_weights : numpy 1D array, optional
-            Gives more or less importance to certain sequences.
-            If seq_weights=None, all sequences are attributed an equal weight of 1.
+            Gives more or less importance to certain sequences. If
+            seq_weights=None, all sequences are attributed an equal weight
+            of 1.
 
     pseudo_count : regularization parameter (default=__pseudo_count_ref)
-    
+
     Returns
     -------
     aa_freq : np.ndarray of shape (Npos, aa_count)
@@ -45,7 +45,7 @@ def _compute_aa_freqs(sequences, seq_weights=None,
     m_eff = np.sum(seq_weights)
     weighted_binary_array = \
         binary_array * seq_weights[np.newaxis, :, np.newaxis]
-    
+
     aa_freq = (np.sum(weighted_binary_array, axis=1).T
                + pseudo_count / __aa_count) / (m_eff + pseudo_count)
 
@@ -53,7 +53,7 @@ def _compute_aa_freqs(sequences, seq_weights=None,
 
 
 def _compute_background_freqs(aa_freqs, sequences, seq_weights=None,
-                              pseudo_count=__pseudo_count_ref):                             
+                              pseudo_count=__pseudo_count_ref):
     """Computes (regularized) background frequencies of amino acids
 
     Arguments
@@ -64,7 +64,8 @@ def _compute_background_freqs(aa_freqs, sequences, seq_weights=None,
 
     seq_weights : numpy 1D array, optional
             Gives more or less importance to certain sequences.
-            If seq_weights=None, all sequences are attributed an equal weight of 1.
+            If seq_weights=None, all sequences are attributed an equal weight
+            of 1.
 
     pseudo_count : regularization parameter (default=__pseudo_count_ref)
 
@@ -117,7 +118,7 @@ def _compute_first_order_freqs(sequences, seq_weights=None,
         sequences,
         seq_weights=seq_weights,
         pseudo_count=__pseudo_count_ref)
-    
+
     return aa_freqs, bkgd_freqs
 
 

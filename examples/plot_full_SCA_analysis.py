@@ -136,14 +136,14 @@ ax.set_xlabel('Eigenvalue', fontweight="bold")
 # real dataset.
 if False:
     v_rand, l_rand = randomization(seq_kept, n_rep=10,
-                                seq_weights=seq_weights, kmax=10)
+                                   seq_weights=seq_weights, kmax=10)
     n_components = choose_num_components(eigenvalues, l_rand)
     print('n_components = ' + str(n_components))
 
     hist0, bins = np.histogram(l_rand.flatten(), bins=n_pos_kept,
-                            range=(0, eigenvalues.max()))
+                               range=(0, eigenvalues.max()))
     hist1, bins = np.histogram(eigenvalues, bins=n_pos_kept,
-                            range=(0, eigenvalues.max()))
+                               range=(0, eigenvalues.max()))
 
     fig, ax = plt.subplots()
     ax.bar(bins[:-1], hist1, np.diff(bins), color='k')

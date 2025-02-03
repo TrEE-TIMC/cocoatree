@@ -1,7 +1,10 @@
 import numpy as np
 from ..__params import lett2num, __pseudo_count_ref, __aa_count, __freq0
 from ..msa import compute_seq_weights
+<<<<<<< HEAD
 import sys
+=======
+>>>>>>> main
 
 
 def _compute_aa_freqs(sequences, seq_weights=None,
@@ -25,8 +28,16 @@ def _compute_aa_freqs(sequences, seq_weights=None,
     sequences : list of sequences as imported by load_msa()
 
     seq_weights : numpy 1D array, optional
+<<<<<<< HEAD
             Gives more or less importance to certain sequences.
             If seq_weights=None, all sequences are attributed an equal weight of 1.
+=======
+            Gives more or less importance to certain sequences. If
+            seq_weights=None, all sequences are attributed an equal weight
+            of 1.
+
+    pseudo_count : regularization parameter (default=__pseudo_count_ref)
+>>>>>>> main
 
     pseudo_count : regularization parameter (default=__pseudo_count_ref)
     
@@ -35,6 +46,7 @@ def _compute_aa_freqs(sequences, seq_weights=None,
     aa_freq : np.ndarray of shape (Npos, aa_count)
             frequency of amino acid *a* at position *i*
     """
+<<<<<<< HEAD
 
     tmp = np.array([[char for char in row] for row in sequences])
     binary_array = np.array([tmp == aa for aa in lett2num.keys()]).astype(int)
@@ -48,12 +60,35 @@ def _compute_aa_freqs(sequences, seq_weights=None,
     
     aa_freq = (np.sum(weighted_binary_array, axis=1).T
                + pseudo_count / __aa_count) / (m_eff + pseudo_count)
+=======
+    separated_aa = np.array([list(row) for row in sequences])
+    n_seq, n_pos = separated_aa.shape
+    if seq_weights is None:
+        seq_weights = np.ones(n_seq)
+    if pseudo_count > 0:
+        n_eff_seq = np.sum(seq_weights)
+    else:
+        n_eff_seq = n_seq
+
+    aa_count = 21
+    aa_freq = np.array(
+        [np.sum(
+            (separated_aa == i)*seq_weights[:, np.newaxis], axis=0) / n_eff_seq
+         for i in lett2num.keys()]).T
+
+    aa_freq *= 1 - pseudo_count
+    aa_freq += pseudo_count / aa_count
+>>>>>>> main
 
     return aa_freq
 
 
 def _compute_background_freqs(aa_freqs, sequences, seq_weights=None,
+<<<<<<< HEAD
                               pseudo_count=__pseudo_count_ref):                             
+=======
+                              pseudo_count=__pseudo_count_ref):
+>>>>>>> main
     """Computes (regularized) background frequencies of amino acids
 
     Arguments
@@ -64,7 +99,12 @@ def _compute_background_freqs(aa_freqs, sequences, seq_weights=None,
 
     seq_weights : numpy 1D array, optional
             Gives more or less importance to certain sequences.
+<<<<<<< HEAD
             If seq_weights=None, all sequences are attributed an equal weight of 1.
+=======
+            If seq_weights=None, all sequences are attributed an equal weight
+            of 1.
+>>>>>>> main
 
     pseudo_count : regularization parameter (default=__pseudo_count_ref)
 
@@ -117,7 +157,11 @@ def _compute_first_order_freqs(sequences, seq_weights=None,
         sequences,
         seq_weights=seq_weights,
         pseudo_count=__pseudo_count_ref)
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> main
     return aa_freqs, bkgd_freqs
 
 
@@ -149,7 +193,42 @@ def compute_entropy(aa_freq):
 def compute_conservation(sequences, seq_weights=None,
                          pseudo_count=__pseudo_count_ref):
     """
+<<<<<<< HEAD
     blabla
+=======
+    Compute the conservation of aa at each position.
+
+    The conservation is computed as the relative entropy (e.g., the
+    Kullback-Leibler divergence)
+
+    .. math::
+
+        D_i^a = f_i^a \\ln \\frac{f_i^a}{q^a} + (1 - f_i^a) \\ln \
+            \\frac{1 - f_i^a}{1 - q^a}
+
+    where :math:`f_i^a` is the observed frequency of amino acid `a` at
+        position i`, :math:`q^a` is the background expectation
+
+    :math:`D_i^a` indicates how unlikely the observed frequencies of amino
+    acid `a` at position `i` would be if `a` occurred randomly with
+    probability :math:`q^a`.
+
+    Parameters
+    ----------
+    sequences : list of sequences
+
+    seq_weights : ndarray (nseq), optional, default: None
+        if None, will compute sequence weights
+
+    pseudo_count : regularization parameter (default=__pseudo_count_ref)
+
+    Returns
+    -------
+    Di : np.ndarray (npos,)
+        where each entry corresponds to the conservation at this position in
+        the sequences.
+
+>>>>>>> main
     """
 
     aa_freqs, bkgd_freqs = _compute_first_order_freqs(sequences, seq_weights,

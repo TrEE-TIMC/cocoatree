@@ -180,7 +180,7 @@ def filter_ref_seq(seq_id, sequences, delta=0.2, refseq_id=None,
     if refseq_id is None:
         if verbose:
             print('Choose a default reference sequence within the alignment')
-        refseq_idx = choose_ref_seq(sequences)
+        refseq_idx = _choose_ref_seq(sequences)
     else:
         if verbose:
             print('Reference sequence is: %i' % refseq_id)
@@ -197,7 +197,7 @@ def filter_ref_seq(seq_id, sequences, delta=0.2, refseq_id=None,
     return seq_id_kept, seq_kept
 
 
-def choose_ref_seq(msa):
+def _choose_ref_seq(msa):
     """This function chooses a default reference sequence for the alignment by
     taking the sequence which has the mean pairwise sequence identity closest
     to that of the entire sequence alignment.

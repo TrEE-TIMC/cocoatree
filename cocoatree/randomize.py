@@ -71,7 +71,7 @@ def randomization(sequences, n_rep, seq_weights=1,
         number of iterations of randomization
 
     weights : {1, np.array (n_seq)}, default : 1
-        weights provided to :fun:`cocoatree.statistics.pairwise.aa_joint_freq`
+        weights provided to cocoatree.statistics.pairwise.aa_joint_freq`
 
             - If int, assumes equal weights on all sequences
             - If, vector of sequence weights for each sequence
@@ -99,6 +99,17 @@ def randomization(sequences, n_rep, seq_weights=1,
     # Create a vector of sequence weights = 1 if equal weighting
     if isinstance(seq_weights, int) and seq_weights == 1:
         seq_weights = np.ones(n_seq)
+<<<<<<< HEAD
+=======
+
+    aa_freqs = _compute_aa_freqs(sequences,
+                                 seq_weights=seq_weights,
+                                 pseudo_count=pseudo_count)
+    bkgd_freqs = _compute_background_freqs(aa_freqs,
+                                           sequences,
+                                           seq_weights=seq_weights,
+                                           pseudo_count=pseudo_count)
+>>>>>>> main
 
     aa_freqs = _compute_aa_freqs(sequences,
                                  seq_weights=seq_weights,

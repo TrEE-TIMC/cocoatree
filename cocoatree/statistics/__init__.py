@@ -31,7 +31,7 @@ def compute_all_frequencies(sequences,
         at each position; it is computed from the mean frequency of amino acid
         a in all proteins in the NCBI non-redundant database
         (see Rivoire et al., https://dx.plos.org/10.1371/journal.pcbi.1004817)
-    
+
     aa_joint_freqs : np.ndarray (nseq, nseq, 21, 21)
         An ndarray containing the pairwise joint frequencies of amino acids
         for each pair of positions in the list of provided sequences.

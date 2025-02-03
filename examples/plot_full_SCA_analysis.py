@@ -43,7 +43,7 @@ import numpy as np
 #
 # We start by importing the dataset. In this case, we can directly load the S1
 # serine protease dataset provided in :mod:`cocoatree`. To work on your on
-# dataset, you can use the :fun:`cocoatree.io.load_msa` function.
+# dataset, you can use the `cocoatree.io.load_msa` function.
 
 serine_dataset = load_S1A_serine_proteases()
 seq_id = serine_dataset["sequence_ids"]
@@ -130,20 +130,34 @@ ax.set_xlabel('Eigenvalue', fontweight="bold")
 # ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 #
 # A randomization strategy is used in order to select the number of components.
+<<<<<<< HEAD
 # The function :fun:cocoatree.randomize.randomization runs the full SCA
+=======
+# The function `cocoatree.randomize.randomization` runs the full SCA
+>>>>>>> main
 # pipeline on randomized version of the MSA. Make sure that weights and lambda
 # coefficient are set the same way as the when performing the analysis on the
 # real dataset.
 if False:
     v_rand, l_rand = randomization(seq_kept, n_rep=10,
+<<<<<<< HEAD
                                 seq_weights=seq_weights, kmax=10)
+=======
+                                   seq_weights=seq_weights, kmax=10)
+>>>>>>> main
     n_components = choose_num_components(eigenvalues, l_rand)
     print('n_components = ' + str(n_components))
 
     hist0, bins = np.histogram(l_rand.flatten(), bins=n_pos_kept,
+<<<<<<< HEAD
                             range=(0, eigenvalues.max()))
     hist1, bins = np.histogram(eigenvalues, bins=n_pos_kept,
                             range=(0, eigenvalues.max()))
+=======
+                               range=(0, eigenvalues.max()))
+    hist1, bins = np.histogram(eigenvalues, bins=n_pos_kept,
+                               range=(0, eigenvalues.max()))
+>>>>>>> main
 
     fig, ax = plt.subplots()
     ax.bar(bins[:-1], hist1, np.diff(bins), color='k')

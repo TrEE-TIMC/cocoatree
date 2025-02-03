@@ -35,23 +35,17 @@ def _compute_aa_freqs(sequences, seq_weights=None,
     aa_freq : np.ndarray of shape (Npos, aa_count)
             frequency of amino acid *a* at position *i*
     """
-    separated_aa = np.array([list(row) for row in sequences])
-    n_seq, n_pos = separated_aa.shape
+
+    tmp = np.array([[char for char in row] for row in sequences])
+    binary_array = np.array([tmp == aa for aa in lett2num.keys()]).astype(int)
+    # weights
     if seq_weights is None:
-        seq_weights = np.ones(n_seq)
-    if pseudo_count > 0:
-        n_eff_seq = np.sum(seq_weights)
-    else:
-        n_eff_seq = n_seq
-
-    aa_count = 21
-    aa_freq = np.array(
-        [np.sum(
-            (separated_aa == i)*seq_weights[:, np.newaxis], axis=0) / n_eff_seq
-         for i in lett2num.keys()]).T
-
-    aa_freq *= 1 - pseudo_count
-    aa_freq += pseudo_count / aa_count
+        seq_weights = np.ones(len(sequences))
+    m_eff = np.sum(seq_weights)
+    weighted_binary_array = \
+        binary_array * seq_weights[np.newaxis, :, np.newaxis]
+    aa_freq = (np.sum(weighted_binary_array, axis=1).T
+               + pseudo_count / __aa_count) / (m_eff + pseudo_count)
 
     return aa_freq
 

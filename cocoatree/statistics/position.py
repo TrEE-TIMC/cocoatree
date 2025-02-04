@@ -73,7 +73,7 @@ def _compute_background_freqs(aa_freqs, sequences, seq_weights=None,
     bkgd_freqs :  np.ndarray (21, )
         A (21,) np.array containing the background amino acid frequencies
         at each position; it is computed from the mean frequency of amino acid
-        a in all proteins in the NCBI non-redundant database
+        *a* in all proteins in the NCBI non-redundant database
         (see Rivoire et al., https://dx.plos.org/10.1371/journal.pcbi.1004817)
     """
 
@@ -100,7 +100,27 @@ def _compute_background_freqs(aa_freqs, sequences, seq_weights=None,
 def _compute_first_order_freqs(sequences, seq_weights=None,
                                pseudo_count=__pseudo_count_ref):
     """
-    blabla
+    Computes amino acid frequencies at each position and background frequencies
+
+    Arguments
+    ---------
+    sequences : list of sequences for which seq_weights give weights
+
+    seq_weights : numpy 1D array, optional, default: None
+            Gives more or less importance to certain sequences.
+            If seq_weights=None, will compute sequence weights
+
+    pseudo_count : regularization parameter (default=__pseudo_count_ref)
+
+    Returns
+    -------
+    aa_freqs : np.ndarray of the positional amino acid frequencies
+
+    bkdg_freqs : np.ndarray (21, )
+        A (21,) np.array containing the background amino acid frequencies
+        at each position; it is computed from the mean frequency of amino acid
+        *a* in all proteins in the NCBI non-redundant database
+        (see Rivoire et al., https://dx.plos.org/10.1371/journal.pcbi.1004817)
     """
 
     if seq_weights is None:
@@ -148,7 +168,7 @@ def compute_entropy(aa_freq):
 def compute_conservation(sequences, seq_weights=None,
                          pseudo_count=__pseudo_count_ref):
     """
-    Compute the conservation of aa at each position.
+    Compute the conservation of amino acid at each position.
 
     The conservation is computed as the relative entropy (e.g., the
     Kullback-Leibler divergence)

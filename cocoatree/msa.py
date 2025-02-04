@@ -33,18 +33,23 @@ def filter_sequences(seq_id, sequences, gap_threshold=0.4, seq_threshold=0.2,
     """
     Filter sequences
 
-    Filter (1) overly gapped sequences; (2) overly gapped positions overly
-    gapped positions..
+    Filter (1) overly gapped positions; (2) overly gapped sequences.
 
-    Parameters
+    Arguments
     ----------
+    seq_id : list of sequence identifiers
+
     sequences : list of the MSA sequences to filter
 
-    threshold : max proportion of gaps tolerated (default=0.4)
+    gap_threshold : max proportion of gaps tolerated per position (default=0.4)
+
+    seq_threshold : max proportion of gaps tolerated per sequence (default=0.2)
 
     Returns
     -------
-    filt_seqs : list of the sequences after filter
+    seq_id : list of sequence identifiers after filter
+
+    sequences : list of the sequences after filter
 
     pos_kept : numpy.ndarray of the positions that were conserved
     """
@@ -96,13 +101,10 @@ def _filter_gap_pos(sequences, threshold=0.4, verbose=False):
     return filt_seqs, pos_kept
 
 
-def _filter_gap_seq(seq_id, sequences, threshold=0.2, filtrefseq=False,
-                    refseq_id=None, verbose=False):
+def _filter_gap_seq(seq_id, sequences, threshold=0.2, verbose=False):
     """
     Remove sequences with a fraction of gaps greater than a specified
     value.
-    Also possibility to remove sequences with sequence identity too high
-    with a given reference sequence.
 
     Arguments
     ---------
@@ -111,13 +113,6 @@ def _filter_gap_seq(seq_id, sequences, threshold=0.2, filtrefseq=False,
     sequences : list of MSA sequences
 
     threshold : maximum fraction of gaps per sequence (default 0.2)
-
-    filtrefseq : boolean, whether to filter based on a reference sequence
-                 (default False)
-
-    refseq_id : str, default = None
-                identifier of the reference sequence (only if filtrefseq=True)
-                If 'None', a default reference sequence is chosen
 
     Returns
     -------
@@ -142,18 +137,13 @@ def _filter_gap_seq(seq_id, sequences, threshold=0.2, filtrefseq=False,
     seq_kept = [sequences[seq] for seq in seq_kept_index]
     seq_id_kept = [seq_id[seq] for seq in seq_kept_index]
 
-    if filtrefseq:
-        if verbose:
-            print('Remove sequences too similar to the reference sequence')
-        seq_id_kept, seq_kept = filter_ref_seq(seq_id_kept, seq_kept,
-                                               delta=0.2, refseq_id=refseq_id)
-
     return seq_id_kept, seq_kept
 
 
 def filter_ref_seq(seq_id, sequences, delta=0.2, refseq_id=None,
                    verbose=False):
-    '''
+    '''Filter the alignment based on identity with a reference sequence
+
     Remove sequences r with Sr < delta, where Sr is the fractional identity
     between r and a specified reference sequence.
 
@@ -198,7 +188,10 @@ def filter_ref_seq(seq_id, sequences, delta=0.2, refseq_id=None,
 
 
 def _choose_ref_seq(msa):
-    """This function chooses a default reference sequence for the alignment by
+    """
+    Compute a reference sequence for the alignment.
+
+    This function chooses a default reference sequence for the alignment by
     taking the sequence which has the mean pairwise sequence identity closest
     to that of the entire sequence alignment.
 

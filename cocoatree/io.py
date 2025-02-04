@@ -62,7 +62,7 @@ def load_tree_ete3(file_path):
 
 def export_fasta(sequences, seq_id, outpath):
     """
-    Function to export intermediate files in fasta format
+    Export intermediate files in fasta format
 
     Arguments
     ---------
@@ -84,6 +84,8 @@ def export_fasta(sequences, seq_id, outpath):
 def load_pdb(path2pdb, pdb_id, chain):
 
     '''
+    Read in a PDB file.
+
     Import a PDB file and extract the associated sequence along with the
     amino acid positions
 
@@ -127,8 +129,10 @@ def load_pdb(path2pdb, pdb_id, chain):
 def export_sector_for_pymol(mapping, independent_components, axis, sector_pos,
                             ics, outpath):
     """
+    Export sector informations for mapping on 3D structure in PyMOL
+
     Export numpy arrays of a sector's residue positions and their contribution
-    for coloring in PyMol.
+    for coloring in PyMOL.
 
     Arguments
     ---------

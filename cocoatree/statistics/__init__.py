@@ -1,12 +1,12 @@
 from . import position
 from . import pairwise
 from .. import msa
-from ..__params import __pseudo_count_ref
+from ..__params import __freq_regularization_ref
 
 
 def compute_all_frequencies(sequences,
                             seq_weights=None,
-                            pseudo_count=__pseudo_count_ref):
+                            freq_regul=__freq_regularization_ref):
     """
     Compute frequencies on sequences
 
@@ -18,7 +18,7 @@ def compute_all_frequencies(sequences,
     seq_weights : {None, np.ndarray (n_seq)}
         if None, will re-compute the sequence weights.
 
-    pseudo_count : regularization parameter (default=__pseudo_count_ref)
+    pseudo_count : regularization parameter (default=__freq_regularization_ref)
 
     Returns
     -------
@@ -41,18 +41,18 @@ def compute_all_frequencies(sequences,
 
     aa_freqs = position._compute_aa_freqs(
         sequences,
-        pseudo_count=pseudo_count,
+        freq_regul=freq_regul,
         seq_weights=seq_weights)
 
     bkgd_freqs = position._compute_background_freqs(
         aa_freqs,
         sequences,
         seq_weights=seq_weights,
-        pseudo_count=__pseudo_count_ref)
+        freq_regul=__freq_regularization_ref)
 
     aa_joint_freqs = pairwise._compute_aa_joint_freqs(
         sequences,
         seq_weights=seq_weights,
-        pseudo_count=pseudo_count)
+        freq_regul=freq_regul)
 
     return aa_freqs, bkgd_freqs, aa_joint_freqs

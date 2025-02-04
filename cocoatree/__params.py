@@ -2,7 +2,9 @@
 
 import numpy as np
 
-__pseudo_count_ref = 0.5
+# in pySCA, the defautl value is 0.03 (default here)
+# in mean-field DCA, the default value is 0.5
+__freq_regularization_ref = 0.03
 
 __freq0 = np.array(
     [

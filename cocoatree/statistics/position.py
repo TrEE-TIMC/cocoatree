@@ -1,10 +1,10 @@
 import numpy as np
-from ..__params import lett2num, __pseudo_count_ref, __aa_count, __freq0
+from ..__params import lett2num, __freq_regularization_ref, __aa_count, __freq0
 from ..msa import compute_seq_weights
 
 
 def _compute_aa_freqs(sequences, seq_weights=None,
-                      pseudo_count=__pseudo_count_ref):
+                      freq_regul=__freq_regularization_ref):
     """Computes frequencies of amino acids at each position of the alignment.
 
     .. math::
@@ -28,7 +28,7 @@ def _compute_aa_freqs(sequences, seq_weights=None,
             seq_weights=None, all sequences are attributed an equal weight
             of 1.
 
-    pseudo_count : regularization parameter (default=__pseudo_count_ref)
+    freq_regul : regularization parameter (default=__freq_regularization_ref)
 
     Returns
     -------
@@ -45,13 +45,13 @@ def _compute_aa_freqs(sequences, seq_weights=None,
     weighted_binary_array = \
         binary_array * seq_weights[np.newaxis, :, np.newaxis]
     aa_freq = (np.sum(weighted_binary_array, axis=1).T
-               + pseudo_count / __aa_count) / (m_eff + pseudo_count)
+               + freq_regul * m_eff / __aa_count) / ((1 + freq_regul) * m_eff)
 
     return aa_freq
 
 
 def _compute_background_freqs(aa_freqs, sequences, seq_weights=None,
-                              pseudo_count=__pseudo_count_ref):
+                              freq_regul=__freq_regularization_ref):
     """Computes (regularized) background frequencies of amino acids
 
     Arguments
@@ -65,7 +65,7 @@ def _compute_background_freqs(aa_freqs, sequences, seq_weights=None,
             If seq_weights=None, all sequences are attributed an equal weight
             of 1.
 
-    pseudo_count : regularization parameter (default=__pseudo_count_ref)
+    freq_regul : regularization parameter (default=__freq_regularization_ref)
 
 
     Returns
@@ -92,13 +92,13 @@ def _compute_background_freqs(aa_freqs, sequences, seq_weights=None,
 
     # regularization
     bkgd_freqs = (bkgd_freqs * m_eff +
-                  pseudo_count / __aa_count) / (m_eff + pseudo_count)
+                  freq_regul * m_eff / __aa_count) / ((1 + freq_regul) * m_eff)
 
     return bkgd_freqs
 
 
 def _compute_first_order_freqs(sequences, seq_weights=None,
-                               pseudo_count=__pseudo_count_ref):
+                               freq_regul=__freq_regularization_ref):
     """
     blabla
     """
@@ -108,14 +108,14 @@ def _compute_first_order_freqs(sequences, seq_weights=None,
 
     aa_freqs = _compute_aa_freqs(
         sequences,
-        pseudo_count=pseudo_count,
+        freq_regul=freq_regul,
         seq_weights=seq_weights)
 
     bkgd_freqs = _compute_background_freqs(
         aa_freqs,
         sequences,
         seq_weights=seq_weights,
-        pseudo_count=__pseudo_count_ref)
+        freq_regul=__freq_regularization_ref)
 
     return aa_freqs, bkgd_freqs
 
@@ -146,7 +146,7 @@ def compute_entropy(aa_freq):
 
 
 def compute_conservation(sequences, seq_weights=None,
-                         pseudo_count=__pseudo_count_ref):
+                         freq_regul=__freq_regularization_ref):
     """
     Compute the conservation of aa at each position.
 
@@ -172,7 +172,7 @@ def compute_conservation(sequences, seq_weights=None,
     seq_weights : ndarray (nseq), optional, default: None
         if None, will compute sequence weights
 
-    pseudo_count : regularization parameter (default=__pseudo_count_ref)
+    freq_regul : regularization parameter (default=__freq_regularization_ref)
 
     Returns
     -------
@@ -183,7 +183,7 @@ def compute_conservation(sequences, seq_weights=None,
     """
 
     aa_freqs, bkgd_freqs = _compute_first_order_freqs(sequences, seq_weights,
-                                                      pseudo_count)
+                                                      freq_regul)
 
     _, Di = _compute_rel_entropy(aa_freqs, bkgd_freqs)
 

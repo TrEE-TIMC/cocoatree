@@ -28,7 +28,8 @@ def _clean_msa(msa):
     return msa
 
 
-def filter_sequences(seq_id, sequences, gap_threshold=0.4, seq_threshold=0.2,
+def filter_sequences(sequences, sequences_id,
+                     gap_threshold=0.4, seq_threshold=0.2,
                      verbose=False):
     """
     Filter sequences
@@ -38,25 +39,30 @@ def filter_sequences(seq_id, sequences, gap_threshold=0.4, seq_threshold=0.2,
 
     Parameters
     ----------
-    sequences : list of the MSA sequences to filter
+    sequences : list of MSA sequences to filter
 
-    threshold : max proportion of gaps tolerated (default=0.4)
+    sequences_id : list of the MSA's sequence identifiers
+
+    gap_threshold : max proportion of gaps tolerated (default=0.4)
+
+    seq_threshold : maximum fraction of gaps per sequence (default 0.2)
 
     Returns
     -------
     filt_seqs : list of the sequences after filter
 
-    pos_kept : numpy.ndarray of the positions that were conserved
+    remaining_pos : numpy.ndarray
+        remaining positions after filtering
     """
 
-    sequences, pos_kept = _filter_gap_pos(
+    updated_sequences, remaining_pos = _filter_gap_pos(
         sequences, threshold=gap_threshold,
         verbose=verbose)
-    seq_id, sequences = _filter_gap_seq(
-        seq_id, sequences,
+    filtered_seqs, filtered_seqs_id,  = _filter_gap_seq(
+        updated_sequences, sequences_id,
         threshold=seq_threshold, verbose=verbose)
 
-    return seq_id, sequences, pos_kept
+    return filtered_seqs, filtered_seqs_id, remaining_pos
 
 
 def _filter_gap_pos(sequences, threshold=0.4, verbose=False):
@@ -70,9 +76,10 @@ def _filter_gap_pos(sequences, threshold=0.4, verbose=False):
 
     Returns
     -------
-    filt_seqs : list of the sequences after filter
+    updated_seqs : updated_list of sequences with filtered gaps 
 
-    pos_kept : numpy.ndarray of the positions that were conserved
+    remaining_pos : numpy.ndarray
+        remaining positions after filtering
     """
 
     if verbose:
@@ -85,18 +92,18 @@ def _filter_gap_pos(sequences, threshold=0.4, verbose=False):
 
     freq_gap_per_pos = np.sum(gaps, axis=0) / Nseq
 
-    pos_kept = np.where(freq_gap_per_pos <= threshold)[0]
+    remaining_pos = np.where(freq_gap_per_pos <= threshold)[0]
 
     if verbose:
-        print("Keeping %i out of %i positions" % (len(pos_kept), Npos))
+        print("Keeping %i out of %i positions" % (len(remaining_pos), Npos))
 
-    filt_seqs = ["".join([sequences[seq][pos] for pos in pos_kept])
+    updated_seqs = ["".join([sequences[seq][pos] for pos in remaining_pos])
                  for seq in range(Nseq)]
 
-    return filt_seqs, pos_kept
+    return updated_seqs, remaining_pos
 
 
-def _filter_gap_seq(seq_id, sequences, threshold=0.2, filtrefseq=False,
+def _filter_gap_seq(sequences, sequences_id, threshold=0.2, filtrefseq=False,
                     refseq_id=None, verbose=False):
     """
     Remove sequences with a fraction of gaps greater than a specified
@@ -106,10 +113,10 @@ def _filter_gap_seq(seq_id, sequences, threshold=0.2, filtrefseq=False,
 
     Arguments
     ---------
-    seq_id : list of the MSA's sequence identifiers
-
     sequences : list of MSA sequences
 
+    sequences_id : list of the MSA's sequence identifiers
+    
     threshold : maximum fraction of gaps per sequence (default 0.2)
 
     filtrefseq : boolean, whether to filter based on a reference sequence
@@ -120,10 +127,10 @@ def _filter_gap_seq(seq_id, sequences, threshold=0.2, filtrefseq=False,
                 If 'None', a default reference sequence is chosen
 
     Returns
-    -------
-    seq_id_kept : list of conserved sequence identifiers
+    -------    
+    filt_seqs : filtered list of sequences
 
-    seq_kept : list of kept sequences
+    filt_seqs_id : corresponding list of sequence identifiers
     """
 
     if verbose:
@@ -134,24 +141,25 @@ def _filter_gap_seq(seq_id, sequences, threshold=0.2, filtrefseq=False,
     freq_gap_per_seq = np.array([sequences[seq].count('-') / Npos
                                  for seq in range(Nseq)])
 
-    seq_kept_index = np.where(freq_gap_per_seq <= threshold)[0]
+    filt_seqs_ix = np.where(freq_gap_per_seq <= threshold)[0]
     if verbose:
         print('Keeping %i sequences out of %i sequences' %
-              (len(seq_kept_index), Nseq))
+              (len(filt_seqs_ix), Nseq))
 
-    seq_kept = [sequences[seq] for seq in seq_kept_index]
-    seq_id_kept = [seq_id[seq] for seq in seq_kept_index]
+    filt_seqs = [sequences[seq] for seq in filt_seqs_ix]
+    filt_seqs_id = [sequences_id[seq] for seq in filt_seqs_ix]
 
     if filtrefseq:
         if verbose:
             print('Remove sequences too similar to the reference sequence')
-        seq_id_kept, seq_kept = filter_ref_seq(seq_id_kept, seq_kept,
-                                               delta=0.2, refseq_id=refseq_id)
+        filt_seqs_id, filt_seqs = filter_ref_seq(filt_seqs, filt_seqs_id,
+                                                 delta=0.2,
+                                                 refseq_id=refseq_id)
 
-    return seq_id_kept, seq_kept
+    return filt_seqs, filt_seqs_id
 
 
-def filter_ref_seq(seq_id, sequences, delta=0.2, refseq_id=None,
+def filter_ref_seq(sequences, sequences_id, delta=0.2, refseq_id=None,
                    verbose=False):
     '''
     Remove sequences r with Sr < delta, where Sr is the fractional identity
@@ -170,9 +178,9 @@ def filter_ref_seq(seq_id, sequences, delta=0.2, refseq_id=None,
 
     Returns
     -------
-    seq_id_kept : list of identifiers of the kept sequences
+    filt_seqs : filtered list of sequences
 
-    seq_kept : list of the kept sequences
+    filt_seqs_id : corresponding list of sequence identifiers
     '''
 
     Nseq = len(sequences)
@@ -184,17 +192,17 @@ def filter_ref_seq(seq_id, sequences, delta=0.2, refseq_id=None,
     else:
         if verbose:
             print('Reference sequence is: %i' % refseq_id)
-        refseq_idx = seq_id.index(refseq_id)
+        refseq_idx = sequences_id.index(refseq_id)
 
     sim_matrix = compute_seq_identity(sequences, graphic=False)
-    seq_kept_index = np.where(sim_matrix[refseq_idx] >= delta)[0]
-    seq_kept = [sequences[seq] for seq in seq_kept_index]
-    seq_id_kept = [seq_id[seq] for seq in seq_kept_index]
+    filt_seqs_ix = np.where(sim_matrix[refseq_idx] >= delta)[0]
+    filt_seqs = [sequences[seq] for seq in filt_seqs_ix]
+    filt_seqs_id = [sequences_id[seq] for seq in filt_seqs_ix]
 
     if verbose:
-        print('Keeping %i out of %i sequences' % (len(seq_kept), Nseq))
+        print('Keeping %i out of %i sequences' % (len(filt_seqs), Nseq))
 
-    return seq_id_kept, seq_kept
+    return filt_seqs, filt_seqs_id
 
 
 def _choose_ref_seq(msa):

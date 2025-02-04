@@ -36,7 +36,7 @@ n_pos, n_seq = len(sequences[0]), len(sequences)
 # --------------------------------------------
 #
 # We are going to filter and clean the MSA
-seq_id_kept, seq_kept, pos_kept = filter_sequences(seq_id, sequences)
+seq_kept, seq_id_kept, pos_kept = filter_sequences(sequences, seq_id)
 
 # %%
 # Compute the SCA matrix
@@ -118,3 +118,5 @@ for ih, (heatmap, title) in enumerate(zip([SCA_matrix, MI, normalized_MI],
     if ih == 0:
         plt.ylabel('cumulative score')
     plt.title(title)
+
+# %%

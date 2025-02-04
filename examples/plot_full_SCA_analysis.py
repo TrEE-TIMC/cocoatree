@@ -3,17 +3,11 @@
 Perform full SCA analysis on the S1A serine protease dataset
 ============================================================
 
-This example shows the full process to perform a complete coevolution
-analysis in order to detect protein sectors from data importation, MSA
-filtering, computation of positional and joint amino acid frequencies,
-and computation of the SCA coevolution matrix.
+This example shows the full process to perform a complete SCA analysis
+and detect protein sectors from data importation, MSA filtering.
 
-The matrix is then decomposed into principal components and independent
-component analysis is performed.
-
-In the end, we export a fasta file of the residues contributing to the first
-independent component.
-
+Finally, we export a fasta file of the residues contributing to the first
+sector.
 """
 
 # Author: Margaux Jullien <margaux.jullien@univ-grenoble-alpes.fr>
@@ -23,19 +17,15 @@ independent component.
 
 # %%
 # Import necessary
-from cocoatree.datasets import load_S1A_serine_proteases
-from cocoatree.io import export_fasta, load_pdb, export_sector_for_pymol
-from cocoatree.msa import filter_sequences, compute_seq_identity, \
-    compute_seq_weights, map_to_pdb
-from cocoatree.statistics.position import compute_conservation
-from cocoatree.statistics.pairwise import compute_sca_matrix
+import cocoatree.datasets as c_data
+import cocoatree.io as c_io
+import cocoatree.msa as c_msa
+import cocoatree.statistics.position as c_pos
+import cocoatree.statistics.pairwise as c_pw
+import cocoatree.deconvolution as c_deconv
 
-from cocoatree.deconvolution import eigen_decomp, compute_ica, \
-    choose_num_components, extract_positions_from_IC
-from cocoatree.randomize import randomization
 import matplotlib.pyplot as plt
 import numpy as np
-
 
 # %%
 # Load the dataset
@@ -45,34 +35,34 @@ import numpy as np
 # serine protease dataset provided in :mod:`cocoatree`. To work on your on
 # dataset, you can use the `cocoatree.io.load_msa` function.
 
-serine_dataset = load_S1A_serine_proteases()
-seq_id = serine_dataset["sequence_ids"]
-sequences = serine_dataset["alignment"]
-n_pos, n_seq = len(sequences[0]), len(sequences)
+serine_dataset = c_data.load_S1A_serine_proteases()
+loaded_seqs = serine_dataset["alignment"]
+loaded_seqs_id = serine_dataset["sequence_ids"]
+n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
 
-print(f"The loaded MSA has {n_seq} sequences and {n_pos} positions.")
+print(f"The loaded MSA has {n_loaded_seqs} sequences and {n_loaded_pos} positions.")
+
 # %%
 # MSA filtering
 # -------------
 #
-# We are going to clean a bit the loaded MSA by filtering both sequences and
-# positions.
+# We clean the loaded MSA by filtering both sequences and positions.
 #
 
-seq_id_kept, seq_kept, pos_kept = filter_sequences(
-    seq_id, sequences, gap_threshold=0.4, seq_threshold=0.2)
-n_pos_kept = len(pos_kept)
-print(f"After filtering, we have {n_pos_kept} remaining positions.")
-print(f"After filtering, we have {len(seq_kept)} remaining sequences.")
+sequences, sequences_id, positions = c_msa.filter_sequences(
+    loaded_seqs, loaded_seqs_id, gap_threshold=0.4, seq_threshold=0.2)
+n_pos = len(positions)
+print(f"After filtering, we have {n_pos} remaining positions.")
+print(f"After filtering, we have {len(sequences)} remaining sequences.")
 
 # %%
 # Compute the matrix of pairwise sequence identity
 # ------------------------------------------------
 
-sim_matrix = compute_seq_identity(seq_kept)
+identity_matrix = c_msa.compute_seq_identity(sequences)
 
 fig, ax = plt.subplots()
-m = ax.imshow(sim_matrix, vmin=0, vmax=1, cmap='inferno')
+m = ax.imshow(identity_matrix, vmin=0, vmax=1, cmap='inferno')
 ax.set_xlabel("sequences", fontsize=10)
 ax.set_ylabel("sequences", fontsize=10)
 ax.set_title('Matrix of pairwise sequence identity', fontweight="bold")
@@ -81,13 +71,14 @@ cb.set_label("Pairwise sequence identity", fontweight="bold")
 
 # %%
 # Compute sequence weights
-seq_weights, m_eff = compute_seq_weights(seq_kept)
-print(f"Number of effective sequences {m_eff}")
+seq_weights, m_eff = c_pos.compute_seq_weights(sequences)
+print('Number of effective sequences %d' % 
+      np.round(m_eff))
 
 # %%
 # Compute conservation along the MSA
 # ----------------------------------
-Di = compute_conservation(seq_kept, seq_weights)
+Di = c_pos.compute_conservation(sequences, seq_weights)
 
 fig, ax = plt.subplots(figsize=(9, 4))
 xvals = [i+1 for i in range(len(Di))]
@@ -95,99 +86,69 @@ xticks = [0, 50, 100, 150, 200, 250]
 ax.bar(xvals, Di, color='k')
 plt.tick_params(labelsize=11)
 ax.set_xticks(xticks)
-ax.set_xlabel('Residue position', fontsize=14)
+ax.set_xlabel('residues', fontsize=14)
 ax.set_ylabel('Di', fontsize=14)
 
 # %%
 # Compute the SCA coevolution matrix
 # ----------------------------------
 
-SCA_matrix = compute_sca_matrix(seq_kept, seq_weights)
+SCA_matrix = c_pw.compute_sca_matrix(sequences, seq_weights)
 
 fig, ax = plt.subplots()
 im = ax.imshow(SCA_matrix, vmin=0, vmax=1.4, cmap='inferno')
 
-ax.set_xlabel('Residue', fontsize=10)
+ax.set_xlabel('residues', fontsize=10)
 ax.set_ylabel(None)
-ax.set_title('Coevolution matrix')
+ax.set_title('SCA matrix')
 fig.colorbar(im, shrink=0.7)
 
 # %%
-# Decomposition of the matrix into principal components
-# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# Extraction of principal components (PCA analysis)
+# and of independent components (ICA analysis)
+# (this can take some time because of randomization)
+# -------------------------------------------------
 
-eigenvalues, eigenvectors = eigen_decomp(SCA_matrix)
+principal_components = c_deconv.extract_principal_components(SCA_matrix)
+idpt_components = c_deconv.extract_independent_components(sequences,
+                                                          SCA_matrix)
 
-# %%
-# Plot distribution of eigenvalues
-fig, ax = plt.subplots()
-ax.hist(eigenvalues, bins=100, color="black")
-ax.set_ylabel('Number', fontweight="bold")
-ax.set_xlabel('Eigenvalue', fontweight="bold")
-
-# %%
-# Select number of significant components
-# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-#
-# A randomization strategy is used in order to select the number of components.
-# The function `cocoatree.randomize.randomization` runs the full SCA
-# pipeline on randomized version of the MSA. Make sure that weights and lambda
-# coefficient are set the same way as the when performing the analysis on the
-# real dataset.
-if False:
-    v_rand, l_rand = randomization(seq_kept, n_rep=10,
-                                   seq_weights=seq_weights, kmax=10)
-    n_components = choose_num_components(eigenvalues, l_rand)
-    print('n_components = ' + str(n_components))
-
-    hist0, bins = np.histogram(l_rand.flatten(), bins=n_pos_kept,
-                               range=(0, eigenvalues.max()))
-    hist1, bins = np.histogram(eigenvalues, bins=n_pos_kept,
-                               range=(0, eigenvalues.max()))
-
-    fig, ax = plt.subplots()
-    ax.bar(bins[:-1], hist1, np.diff(bins), color='k')
-    ax.plot(bins[:-1], hist0/10, 'r', linewidth=3)
-    ax.set_xlabel('Eigenvalues', fontweight="bold")
-    ax.set_ylabel('Numbers', fontweight="bold")
-n_components = 7
+n_idpt_components = len(idpt_components)
+print('\nNumber of idpt components: %d' % n_idpt_components)
 
 # %%
-# Independent component analysis (ICA)
-# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# Plot components
+# ---------------
 
-independent_components, W = compute_ica(
-    eigenvectors, kmax=n_components, learnrate=0.1,
-    iterations=100000)
+n_components_to_plot = n_idpt_components
+if n_components_to_plot % 2:
+    print('Odd number of components: the last one is discarded for visualization')
+    n_components_to_plot -= 1
 
-# Plot results
-if n_components % 2 != 0:
-    print('Uneven number of axes, discard the last one for visual \
-          representation')
-    n_components -= 1
-
-pairs = [[x, x+1] for x in range(0, n_components, 2)]
+pairs = [[x, x+1] for x in range(0, n_components_to_plot, 2)]
 ncols = len(pairs)
 plt.rcParams['figure.figsize'] = 14, 8
 fig, axes = plt.subplots(nrows=2, ncols=len(pairs), tight_layout=True)
 for k, [k1, k2] in enumerate(pairs):
     ax = axes[0, k]
-    ax.plot(eigenvectors[:, k1], eigenvectors[:, k2], 'ok')
-    ax.set_xlabel("eigenvector %i" % (k1+1), fontsize=16)
-    ax.set_ylabel("eigenvector %i" % (k2+1), fontsize=16)
+    ax.plot(principal_components[k1], principal_components[k2], 'ok')
+    ax.set_xlabel("PC %i" % (k1+1), fontsize=16)
+    ax.set_ylabel("PC %i" % (k2+1), fontsize=16)
 
     ax = axes[1, k]
-    ax.plot(independent_components[:, k1], independent_components[:, k2], 'ok')
-    ax.set_xlabel("independent component %i" % (k1+1), fontsize=16)
-    ax.set_ylabel("independent component %i" % (k2+1), fontsize=16)
+    ax.plot(idpt_components[k1], idpt_components[k2], 'ok')
+    ax.set_xlabel("IC %i" % (k1+1), fontsize=16)
+    ax.set_ylabel("IC %i" % (k2+1), fontsize=16)
 
 # %%
-# Select residues that significantly contribute to each independent component
-ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits = \
-    extract_positions_from_IC(independent_components, n_components, SCA_matrix,
-                              p_cut=0.95)
+# Extract sectors
+# ---------------
 
-print(f"Sizes of the {n_components} ICs: {icsize}")
+sectors = c_deconv.extract_sectors(idpt_components, SCA_matrix)
+
+print('Sector positions on (filtered) sequences:')
+for isec, sec in enumerate(sectors):
+    print('sector %d: %s' % (isec+1, sec))
 
 # %%
 # Plot coevolution within and between the sectors
@@ -195,48 +156,85 @@ print(f"Sizes of the {n_components} ICs: {icsize}")
 # decreasing contribution to the independent component associated from top to
 # bottom and from left to right.
 fig, ax = plt.subplots(tight_layout=True)
-im = ax.imshow(SCA_matrix[np.ix_(sortedpos, sortedpos)], vmin=0, vmax=2,
+
+sector_sizes = [len(sec) for sec in sectors]
+cumul_sizes = sum(sector_sizes)
+sorted_pos = [s for sec in sectors for s in sec]
+
+im = ax.imshow(SCA_matrix[np.ix_(sorted_pos, sorted_pos)],
+               vmin=0, vmax=2,
                interpolation='none', aspect='equal',
-               extent=[0, sum(icsize), 0, sum(icsize)], cmap='inferno')
+               extent=[0, cumul_sizes, 0, cumul_sizes], cmap='inferno')
+ax.set_title('SCA matrix, sorted according to sectors')
 cb = fig.colorbar(im)
-cb.set_label("Coevolution measure")
+cb.set_label("coevolution level")
 
 line_index = 0
-for i in range(n_components):
-    ax.plot([line_index + icsize[i], line_index + icsize[i]],
-            [0, sum(icsize)], 'w', linewidth=2)
-    ax.plot([0, sum(icsize)], [sum(icsize) - line_index,
-                               sum(icsize) - line_index], 'w', linewidth=2)
-    line_index += icsize[i]
+for i in range(n_idpt_components):
+    ax.plot([line_index + sector_sizes[i], line_index + sector_sizes[i]],
+            [0, cumul_sizes], 'w', linewidth=2)
+    ax.plot([0, cumul_sizes], [cumul_sizes - line_index,
+                               cumul_sizes - line_index], 'w', linewidth=2)
+    line_index += sector_sizes[i]
 
 # %%
-# Export fasta files of the sectors for all the sequences
-# Those fasta can then be used for visualization along a phylogenetic tree
+# Do the same but for the SCA matrix where the global correlation mode has
+# been removed and, hence, such that sectors are better highlighted.
+# See Rivoire et al., PLOSCB, 2016
+    
+# removing global model (ngm = no global mode), 
+# i.e., removing first principal component
+SCA_matrix_ngm = c_deconv.substract_first_principal_component(SCA_matrix)
+
+# plotting
+fig, ax = plt.subplots(tight_layout=True)
+im = ax.imshow(SCA_matrix_ngm[np.ix_(sorted_pos, sorted_pos)], vmin=0, vmax=1,
+               interpolation='none', aspect='equal',
+               extent=[0, sum(sector_sizes), 0, sum(sector_sizes)], cmap='inferno')
+ax.set_title('SCA matrix without global mode, sorted according to sectors')
+cb = fig.colorbar(im)
+cb.set_label("coevolution level")
+
+line_index = 0
+for i in range(n_idpt_components):
+    ax.plot([line_index + sector_sizes[i], line_index + sector_sizes[i]],
+            [0, sum(sector_sizes)], 'w', linewidth=2)
+    ax.plot([0, sum(sector_sizes)], [sum(sector_sizes) - line_index,
+                               sum(sector_sizes) - line_index], 'w', linewidth=2)
+    line_index += sector_sizes[i]
+
+
+# %%
+# Export sector sequences for all sequences as a fasta file
+# The file can then be used for visualization along a phylogenetic tree
 # as implemented in the cocoatree.visualization module
 
-sector_1_pos = list(pos_kept[ics[0].items])
-sector_1 = []
-for sequence in range(len(seq_id)):
-    seq = ''
-    for pos in sector_1_pos:
-        seq += sequences[sequence][pos]
-    sector_1.append(seq)
+if False: # need to be revised
+    sector_1_pos = list(positions[ics[0].items])
+    sector_1 = []
+    for sequence in range(len(sequences_id)):
+        seq = ''
+        for pos in sector_1_pos:
+            seq += sequences[sequence][pos]
+        sector_1.append(seq)
 
-export_fasta(sector_1, seq_id, 'sector_1.fasta')
+    c_io.export_fasta(sector_1, sequences_id, 'sector_1.fasta')
 
-# %
-# Export files necessary for Pymol visualization
-# Load PDB file of rat's trypsin
-pdb_seq, pdb_pos = load_pdb('data/3TGI.pdb', pdb_id='TRIPSIN', chain='E')
-# Map PDB positions on the MSA sequence corresponding to rat's trypsin:
-# seq_id='14719441'
-pdb_mapping = map_to_pdb(pdb_seq, pdb_pos, sequences, seq_id,
-                         ref_seq_id='14719441')
-# Export lists of the first sector positions and each residue's contribution
-# to the independent component to use for visualization on Pymol.
-# The residues are ordered in the list by decreasing contribution score (the
-# first residue in the list is the highest contributing)
-export_sector_for_pymol(pdb_mapping, independent_components, axis=0,
-                        sector_pos=sector_1_pos,
-                        ics=ics,
-                        outpath='color_sector_1_pymol.npy')
+    # %
+    # Export files necessary for Pymol visualization
+    # Load PDB file of rat's trypsin
+    pdb_seq, pdb_pos = c_io.load_pdb('data/3TGI.pdb', pdb_id='TRIPSIN', chain='E')
+    # Map PDB positions on the MSA sequence corresponding to rat's trypsin:
+    # seq_id='14719441'
+    pdb_mapping = c_msa.map_to_pdb(pdb_seq, pdb_pos, sequences, sequences_id,
+                                   ref_seq_id='14719441')
+    # Export lists of the first sector positions and each residue's contribution
+    # to the independent component to use for visualization on Pymol.
+    # The residues are ordered in the list by decreasing contribution score (the
+    # first residue in the list is the highest contributing)
+    c_io.export_sector_for_pymol(pdb_mapping, idpt_components.T, axis=0,
+                                 sector_pos=sector_1_pos,
+                                 ics=ics,
+                                 outpath='color_sector_1_pymol.npy')
+    
+# %%

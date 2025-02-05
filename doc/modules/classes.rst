@@ -140,12 +140,11 @@ Functions
     :toctree: generated/
     :template: function.rst
 
-    deconvolution.eigen_decomp
-    deconvolution.compute_ica
-    deconvolution.choose_num_components
-    deconvolution.extract_positions_from_IC
-    deconvolution.eigen_decomp
-    deconvolution.compute_ica
+    deconvolution.extract_independent_components
+    deconvolution.extract_principal_components
+    deconvolution.extract_sectors
+    deconvolution.substract_first_principal_component
+
 
 .. _deconvolution_ref:
 
@@ -168,8 +167,6 @@ Functions
   :toctree: generated/
   :template: function.rst
 
-
-  randomize.randomization
 
 .. _randomize_ref:
 

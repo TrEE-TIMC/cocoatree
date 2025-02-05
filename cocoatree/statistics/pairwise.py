@@ -89,7 +89,26 @@ def _compute_aa_product_freqs(aa_freqs_1, aa_freqs_2):
 def _compute_second_order_freqs(sequences, seq_weights=None,
                                 freq_regul=__freq_regularization_ref):
     """
-    balabla
+    Computes joint frequencies and the product of frequencies
+
+    Parameters
+    ----------
+    sequences : list of sequences
+
+    seq_weights : np.ndarray
+        weight values for each sequence of the alignment
+
+    pseudo_count : regularization parameter (default=_pseudo_count_ref)
+
+    Returns
+    -------
+    aa_joint_freqs : np.ndarray of shape (Npos, Npos, aa_count, aa_count)
+        joint frequency of amino acids `a` and `b` at respective positions
+        `i` and `j`
+
+    aa_product_freqs : np.ndarray of shape (Npos, Npos, aa_count, aa_count)
+        product of frequency of amino acids `a` and `b` at respective
+        positions `i` and `j`
     """
 
     # joint frequencies

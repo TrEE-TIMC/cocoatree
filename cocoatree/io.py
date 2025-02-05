@@ -32,7 +32,7 @@ def load_MSA(file_path, format, clean=True, verbose=False):
 
     seq_id = [record.id for record in alignment]
     sequences = [str(record.seq) for record in alignment]
-    
+
     if verbose:
         print('Number of sequences: %i' % len(alignment))
         print('Alignment of length: %i' % len(alignment[0]))
@@ -59,7 +59,7 @@ def load_tree_ete3(file_path):
 
 def export_fasta(sequences, seq_id, outpath):
     """
-    Function to export intermediate files in fasta format
+    Export intermediate files in fasta format
 
     Arguments
     ---------
@@ -81,6 +81,8 @@ def export_fasta(sequences, seq_id, outpath):
 def load_pdb(path2pdb, pdb_id, chain):
 
     '''
+    Read in a PDB file.
+
     Import a PDB file and extract the associated sequence along with the
     amino acid positions
 
@@ -126,8 +128,10 @@ def export_sector_for_pymol(mapping, independent_components, axis,
                             sector_pos_in_filtered_msa,
                             outpath):
     """
+    Export sector information for mapping on 3D structure in PyMOL.
+
     Export numpy arrays of a sector's residue positions and their contribution
-    for coloring in PyMol.
+    for coloring in PyMOL.
 
     Arguments
     ---------

@@ -44,7 +44,7 @@ def extract_independent_components(sequences, coevo_matrix, method='pySCA',
 
     Returns
     -------
-    idpt_components : ndarray
+    idpt_components : ndarray of shape (n_components, n_pos)
         corresponding to a list of independent components
     """
 
@@ -73,6 +73,8 @@ def _compute_n_components_as_pySCA(sequences, coevo_matrix,
                                    freq_regul=__freq_regularization_ref,
                                    verbose_random_iter=True):
     """
+    Compute the number of independent components as in pySCA
+
     Given the eigenvalues of the coevolution matrix, and the
     eigenvalues for the set of randomized matrices, return
     the number of significant eigenmodes as those above the average second
@@ -81,6 +83,28 @@ def _compute_n_components_as_pySCA(sequences, coevo_matrix,
 
     Rem: it concerns only SCA metrics
     For other merics (MI, adding corrections) this should be adapted
+
+    Arguments
+    ---------
+    sequences : list of sequences
+
+    coevo_matrix : np.ndarray of shape (n_pos, n_pos)
+        coevolution matrix
+
+    seq_weights : np.array (nseq, ) of each sequence weight
+
+    nrandom : int
+        Number of randomizations performed
+
+    freq_regul : regularization parameter (default=__freq_regularization_ref)
+
+    verbose_random_iter : boolean, default=True
+        Print the advance of the randomization procedure
+
+    Returns
+    -------
+    n_components : int
+        Number of independent components to select
     """
 
     if seq_weights is None:
@@ -129,7 +153,8 @@ def extract_principal_components(coevo_matrix):
 
     Returns
     -------
-    principal_components : np.ndarray
+    principal_components : np.ndarray (n_pos, n_pos)
+        Principal components obtained from the PCA of the coevolution matrix
     """
 
     _, _, principal_components = np.linalg.svd(coevo_matrix)
@@ -149,7 +174,8 @@ def extract_sectors(idpt_components, coevo_matrix):
 
     Returns
     -------
-    sectors : list of residue positions
+    sectors : lists of residue positions on the filtered MSA for each of the
+        n_components sector
     """
     Vica = idpt_components.T
     _, sector_sizes, sorted_pos, _, _, _ = _icList(
@@ -167,19 +193,19 @@ def extract_sectors(idpt_components, coevo_matrix):
 
 def substract_first_principal_component(coevo_matrix):
     """
-    Remove component linked to global correlations
+    Remove global correlations
 
     In the sector literature (and data analysis), this corresponds
     to removing global correlations (from e.g. phylogenetic effects)
 
     Arguments
     ---------
-    coevo_matrix : np.ndarray,
+    coevo_matrix : np.ndarray (n_pos, n_pos),
         coevolution matrix
 
     Returns
     -------
-    coevo_matrix_sub : np.ndarray,
+    coevo_matrix_sub : np.ndarray (n_pos, n_pos),
         coevolution matrix without global correlations
     """
     U, S, Vt = np.linalg.svd(coevo_matrix)

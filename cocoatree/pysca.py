@@ -133,7 +133,7 @@ def _icList(Vica, n_component, Cij, p_cut=0.95):
     positions to which it shows a higher degree of coevolution. Additionally
     returns the numeric value of the cutoff for each IC, and the pdf fit, which
     can be used for plotting/evaluation.
-    
+
     Arguments
     ---------
     Vica : ndarray,
@@ -236,4 +236,3 @@ def _icList(Vica, n_component, Cij, p_cut=0.95):
         s.vect = -Vica[s.items, k]
         selected_res.append(s)
     return selected_res, ic_size, sorted_pos, cutoff, scaled_pdf, all_fits
-

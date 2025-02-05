@@ -40,7 +40,8 @@ loaded_seqs = serine_dataset["alignment"]
 loaded_seqs_id = serine_dataset["sequence_ids"]
 n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
 
-print(f"The loaded MSA has {n_loaded_seqs} sequences and {n_loaded_pos} positions.")
+print(f"The loaded MSA has {n_loaded_seqs} sequences and {n_loaded_pos} \
+      positions.")
 
 # %%
 # MSA filtering
@@ -72,7 +73,7 @@ cb.set_label("Pairwise sequence identity", fontweight="bold")
 # %%
 # Compute sequence weights
 seq_weights, m_eff = c_pos.compute_seq_weights(sequences)
-print('Number of effective sequences %d' % 
+print('Number of effective sequences %d' %
       np.round(m_eff))
 
 # %%
@@ -122,7 +123,8 @@ print('\nNumber of idpt components: %d' % n_idpt_components)
 
 n_components_to_plot = n_idpt_components
 if n_components_to_plot % 2:
-    print('Odd number of components: the last one is discarded for visualization')
+    print('Odd number of components: the last one is discarded for \
+          visualization')
     n_components_to_plot -= 1
 
 pairs = [[x, x+1] for x in range(0, n_components_to_plot, 2)]
@@ -181,8 +183,8 @@ for i in range(n_idpt_components):
 # Do the same but for the SCA matrix where the global correlation mode has
 # been removed and, hence, such that sectors are better highlighted.
 # See Rivoire et al., PLOSCB, 2016
-    
-# removing global model (ngm = no global mode), 
+
+# removing global model (ngm = no global mode),
 # i.e., removing first principal component
 SCA_matrix_ngm = c_deconv.substract_first_principal_component(SCA_matrix)
 
@@ -190,7 +192,8 @@ SCA_matrix_ngm = c_deconv.substract_first_principal_component(SCA_matrix)
 fig, ax = plt.subplots(tight_layout=True)
 im = ax.imshow(SCA_matrix_ngm[np.ix_(sorted_pos, sorted_pos)], vmin=0, vmax=1,
                interpolation='none', aspect='equal',
-               extent=[0, sum(sector_sizes), 0, sum(sector_sizes)], cmap='inferno')
+               extent=[0, sum(sector_sizes), 0, sum(sector_sizes)],
+               cmap='inferno')
 ax.set_title('SCA matrix without global mode, sorted according to sectors')
 cb = fig.colorbar(im)
 cb.set_label("coevolution level")
@@ -200,7 +203,8 @@ for i in range(n_idpt_components):
     ax.plot([line_index + sector_sizes[i], line_index + sector_sizes[i]],
             [0, sum(sector_sizes)], 'w', linewidth=2)
     ax.plot([0, sum(sector_sizes)], [sum(sector_sizes) - line_index,
-                               sum(sector_sizes) - line_index], 'w', linewidth=2)
+                                     sum(sector_sizes) - line_index],
+            'w', linewidth=2)
     line_index += sector_sizes[i]
 
 
@@ -209,8 +213,8 @@ for i in range(n_idpt_components):
 # The file can then be used for visualization along a phylogenetic tree
 # as implemented in the cocoatree.visualization module
 
-if False: # need to be revised
-    sector_1_pos = list(positions[ics[0].items])
+if False:  # need to be revised
+    sector_1_pos = list(positions[sectors[0].items])
     sector_1 = []
     for sequence in range(len(sequences_id)):
         seq = ''
@@ -223,18 +227,20 @@ if False: # need to be revised
     # %
     # Export files necessary for Pymol visualization
     # Load PDB file of rat's trypsin
-    pdb_seq, pdb_pos = c_io.load_pdb('data/3TGI.pdb', pdb_id='TRIPSIN', chain='E')
+    pdb_seq, pdb_pos = c_io.load_pdb('data/3TGI.pdb', pdb_id='TRIPSIN',
+                                     chain='E')
     # Map PDB positions on the MSA sequence corresponding to rat's trypsin:
     # seq_id='14719441'
     pdb_mapping = c_msa.map_to_pdb(pdb_seq, pdb_pos, sequences, sequences_id,
                                    ref_seq_id='14719441')
-    # Export lists of the first sector positions and each residue's contribution
-    # to the independent component to use for visualization on Pymol.
-    # The residues are ordered in the list by decreasing contribution score (the
-    # first residue in the list is the highest contributing)
+    # Export lists of the first sector positions and each residue's
+    # contribution to the independent component to use for visualization on
+    # Pymol.
+    # The residues are ordered in the list by decreasing contribution score
+    # (the first residue in the list is the highest contributing)
     c_io.export_sector_for_pymol(pdb_mapping, idpt_components.T, axis=0,
                                  sector_pos=sector_1_pos,
-                                 ics=ics,
+                                 ics=sectors,
                                  outpath='color_sector_1_pymol.npy')
-    
+
 # %%

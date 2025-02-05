@@ -15,12 +15,12 @@ def _randomize_seqs_conserving_col_compo(sequences=[], seed=None):
     seed : int
         to generate exact same list of random numbers
         (mostly for testing )
-    
+
     Returns
     -------
     rand_seqs : list of sequences where the columns have been shuffled
     """
-    
+
     seq_array = np.array([list(seq) for seq in sequences])
     T = seq_array.T
     rng = np.random.default_rng(seed)

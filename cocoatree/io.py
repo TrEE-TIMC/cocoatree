@@ -15,6 +15,9 @@ def load_MSA(file_path, format, clean=True, verbose=False):
 
     format : format of the alignment file (e.g. 'fasta', 'phylip', etc.)
 
+    clean : boolean, default=True
+        whether to remove ambiguous amino acids (e.g. B, X etc.)
+
     verbose : boolean,
             whether to print informations about the MSA
 

@@ -24,8 +24,8 @@ sector_id, sector_seq = load_MSA(sector_file, 'fasta')
 tree_style = update_tree_ete3_and_return_style(
     tree_ete3, df_annot, sector_id, sector_seq,
     meta_data=('class', 'HMM_annotation', 'superkingdom'),
-    fig_title='Test HMM annot',
-    t_sector_seq=False,
+    fig_title='Visualization example',
+    t_sector_seq=True,
     t_sector_heatmap=True,
     colormap='inferno'
     )

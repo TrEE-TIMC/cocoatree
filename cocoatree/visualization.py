@@ -180,7 +180,8 @@ def update_tree_ete3_and_return_style(
 
                     rect_faces[i] = RectFace(50, 20,
                                              fgcolor=colors[name],
-                                             bgcolor=colors[name])
+                                             bgcolor=colors[name],
+                                             label=meta_data[i])
                     rect_faces[i].margin_left = 15
                     rect_faces[i].margin_right = 15
                     if i == len(meta_data) - 1:

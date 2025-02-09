@@ -282,7 +282,7 @@ Relationship between coevolution metrics and conservation
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 32.654 seconds)
+   **Total running time of the script:** (0 minutes 32.245 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_sca_vs_mi.py:

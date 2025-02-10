@@ -23,7 +23,7 @@ def load_MSA(file_path, format, clean=True, verbose=False):
 
     Returns
     -------
-    seq_id : list of sequence identifiers
+    sequences_id : list of sequence identifiers
 
     sequences : list of sequences as strings
     """
@@ -33,17 +33,14 @@ def load_MSA(file_path, format, clean=True, verbose=False):
     if clean:
         alignment = _clean_msa(alignment)
 
-    seq_id = list()
-    sequences = list()
-    for record in alignment:
-        seq_id.append(record.id)
-        sequences.append(str(record.seq))
+    sequences_id = [record.id for record in alignment]
+    sequences = [str(record.seq) for record in alignment]
 
     if verbose:
         print('Number of sequences: %i' % len(alignment))
         print('Alignment of length: %i' % len(alignment[0]))
 
-    return seq_id, sequences
+    return sequences_id, sequences
 
 
 def load_tree_ete3(file_path):
@@ -63,15 +60,15 @@ def load_tree_ete3(file_path):
     return tree_ete3
 
 
-def export_fasta(sequences, seq_id, outpath):
+def export_fasta(sequences, sequences_id, outpath):
     """
-    Function to export intermediate files in fasta format
+    Export intermediate files in fasta format
 
     Arguments
     ---------
     sequences : list of sequences as strings (as imported by load_MSA)
 
-    seq_id : list of sequences identifiers (as imported by load_MSA)
+    sequences_id : list of sequences identifiers (as imported by load_MSA)
 
     outpath : path to the output file
     """
@@ -80,13 +77,15 @@ def export_fasta(sequences, seq_id, outpath):
     Nseq = len(sequences)
     with open(outpath, 'w') as outfile:
         for record in range(0, Nseq):
-            outfile.write('>' + str(seq_id[record]) + '\n')
+            outfile.write('>' + str(sequences_id[record]) + '\n')
             outfile.write(str(sequences[record]) + '\n')
 
 
 def load_pdb(path2pdb, pdb_id, chain):
 
     '''
+    Read in a PDB file.
+
     Import a PDB file and extract the associated sequence along with the
     amino acid positions
 
@@ -127,11 +126,15 @@ def load_pdb(path2pdb, pdb_id, chain):
     return pdb_seq, pdb_pos
 
 
-def export_sector_for_pymol(mapping, independent_components, axis, sector_pos,
-                            ics, outpath):
+def export_sector_for_pymol(mapping, independent_components, axis,
+                            sector_pos_in_loaded_msa,
+                            sector_pos_in_filtered_msa,
+                            outpath):
     """
+    Export sector information for mapping on 3D structure in PyMOL.
+
     Export numpy arrays of a sector's residue positions and their contribution
-    for coloring in PyMol.
+    for coloring in PyMOL.
 
     Arguments
     ---------
@@ -145,10 +148,10 @@ def export_sector_for_pymol(mapping, independent_components, axis, sector_pos,
     axis : int,
         rank of the independent component associated with the desired sector
 
-    sector_pos : list,
+    sector_pos_in_loaded_msa : list,
         positions of the sector's residues in the unfiltered MSA
 
-    ics : numpy.ndarray,
+    sector_pos_in_filtered_msa : numpy.ndarray,
         positions of the sector's residues in the filtered MSA, output from
         cocoatree.deconvolution.icList() function
 
@@ -163,12 +166,12 @@ def export_sector_for_pymol(mapping, independent_components, axis, sector_pos,
     """
 
     sector_pdb_pos = []
-    for residue in sector_pos:
+    for residue in sector_pos_in_loaded_msa:
         index = np.where(mapping[2] == str(residue))[0][0]
         sector_pdb_pos.append(mapping[1][index])
 
     ic_contributions = []
-    for residue in ics[0].items:
+    for residue in sector_pos_in_filtered_msa:
         ic_contributions.append(independent_components[residue, axis])
 
     np.save(outpath, np.array([sector_pdb_pos, ic_contributions]))

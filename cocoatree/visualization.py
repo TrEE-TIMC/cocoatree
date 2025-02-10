@@ -242,7 +242,7 @@ def update_tree_ete3_and_return_style(
         ProfileFace.get_color_gradient = _get_color_gradient
         # Check that sequences in the similarity matrix are ordered as in the
         # tree leaves and keep only sequences that are present in the tree
-        reorder_msa = filter_seq_id(sector_id, sector_seq, leaves_id)
+        reorder_msa = filter_seq_id(sector_seq, sector_id, leaves_id)
         id_mat = compute_seq_identity(reorder_msa[2])
 
         count = 0

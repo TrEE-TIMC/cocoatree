@@ -1,293 +1,218 @@
-import scipy.linalg as sp
 import numpy as np
-import sys
-from scipy.stats import t, scoreatpercentile
+from .__params import __freq_regularization_ref
+from cocoatree.randomize import _randomize_seqs_conserving_col_compo
+from cocoatree.msa import compute_seq_weights
+from cocoatree.statistics.pairwise import compute_sca_matrix
+from cocoatree.pysca import _compute_ica, _icList
 
 
-def eigen_decomp(mat):
+def extract_independent_components(sequences, coevo_matrix, method=None,
+                                   n_components=3, nrandom_pySCA=10,
+                                   learnrate_ICA=0.1, nb_iterations_ICA=100000,
+                                   freq_regul=__freq_regularization_ref,
+                                   verbose_random_iter=True):
     """
-    Performs eigenvalue decomposition of a square matrix
+    Extract independent components from a coevolution matrix
+
+    The current method is fully applicable to SCA analysis. For other metrics,
+    we set n_components = 3 (to improve)
 
     Arguments
     ---------
-    mat : square coevolution matrix of shape (Npos, Npos)
+    sequences : list of sequences
 
-    Returns
-    -------
-    eigenvalues : ndarray of shape (Npos)
-
-    eigenvectors : ndarray of shape (Npos, Npos)
-    """
-
-    eigenvalues, eigenvectors = sp.eigh(mat)
-    eigenvalues = np.sort(eigenvalues)
-    eigenvectors = eigenvectors[:, np.arange(eigenvalues.shape[0] - 1, -1, -1)]
-
-    return eigenvalues, eigenvectors
-
-
-def _basicICA(x, r0, Niter, tolerance=1e-15):
-    """
-    Basic ICA algorithm, based on work by Bell & Sejnowski (infomax). The input
-    data should preferentially be sphered, i.e., x.T.dot(x) = 1
-    Source: https://github.com/ranganathanlab/pySCA/
-
-    Arguments
-    ---------
-    x : LxM input matrix where L = # features and M = # samples
-
-    r : learning rate / relaxation parameter (e.g. r=.0001)
-
-    Niter : number of iterations (e.g. 1000)
-
-    Returns
-    -------
-    w : unmixing matrix
-
-    change: record of incremental changes during the iterations.
-
-    **Note** r and Niter should be adjusted to achieve convergence, which
-    should be assessed by visualizing 'change' with plot(range(iter), change)
-    **Example**::
-      [w, change] = basicICA(x, r, Niter)
-    """
-
-    [L, M] = x.shape
-    w = np.eye(L)
-    change = list()
-    r = r0 / M
-    with np.errstate(over="raise"):
-        try:
-            for _ in range(Niter):
-                w_old = np.copy(w)
-                u = w.dot(x)
-                w += r * (
-                    M * np.eye(L) + (1.0 - 2.0 / (1.0 + np.exp(-u))).dot(u.T)
-                ).dot(w)
-                delta = (w - w_old).ravel()
-                val = delta.dot(delta.T)
-                change.append(val)
-                if np.isclose(val, 0, atol=tolerance):
-                    break
-                if _ == Niter - 1:
-                    print("basicICA failed to converge: " + str(val))
-        except FloatingPointError as e:
-            sys.exit("Error: basicICA " + str(e))
-    return [w, change]
-
-
-def compute_ica(V, kmax=6, learnrate=0.1, iterations=10000):
-    """
-    ICA rotation (using _basicICA) with default parameters and normalization of
-    outputs.
-    Basic ICA algorithm, based on work by Bell & Sejnowski (infomax). The input
-    data should preferentially be sphered, i.e., x.T.dot(x) = 1
-
-    Source: https://github.com/ranganathanlab/pySCA/
-
-    Arguments
-    ---------
-    V : ndarray,
-        eigenvectors obtained after matrix decomposition
-
-    kmax : integer,
-        number of independent components to retrieve
-
-    learnrate : integer,
-        learning rate / relaxation parameter
-
-    iterations : integer,
-        number of iterations
-
-    **Note** r and Niter should be adjusted to achieve convergence, which
-    should be assessed by visualizing 'change' with plot(range(iter), change)
-
-    Returns
-    -------
-    Vica : ndarray,
-        contributions along each independent components
-
-    W : ndarray of shape (kmax, kmax),
-        unmixing matrix
-
-    **Example**::
-       Vica, W = rotICA(V, kmax=6, learnrate=.0001, iterations=10000)
-    """
-
-    V1 = V[:, :kmax].T
-    [W, changes] = _basicICA(V1, learnrate, iterations)
-    Vica = (W.dot(V1)).T
-    for n in range(kmax):
-        imax = abs(Vica[:, n]).argmax()
-        Vica[:, n] = (
-            np.sign(Vica[imax, n]) * Vica[:, n] / np.linalg.norm(Vica[:, n])
-        )
-    return Vica, W
-
-
-class Unit:
-    """
-    A class for units (sectors, sequence families, etc.)
-
-    Attributes
-    ----------
-
-    name :  string describing the unit (ex: 'firmicutes')
-    items : set of member items (ex: indices for all firmicutes
-            sequence in an alignment)
-    col :   color code associated to the unit (for plotting)
-    vect :  an additional vector describing the member items (ex: a list
-            of sequence weights)
-    """
-
-    def __init__(self):
-        self.name = ""
-        self.items = set()
-        self.col = 0
-        self.vect = 0
-
-
-def extract_positions_from_IC(Vica, n_component, Cij, p_cut=0.95):
-    """
-    Produces a list of positions contributing to each independent component
-    (IC) above a defined statistical cutoff (p_cut, the cutoff on the CDF of
-    the t-distribution fit to the histogram of each IC). Any position above the
-    cutoff on more than one IC are assigned to one IC based on which group of
-    positions to which it shows a higher degree of coevolution. Additionally
-    returns the numeric value of the cutoff for each IC, and the pdf fit, which
-    can be used for plotting/evaluation.
-    Based on Rivoire et al. (2016): \
-        https://doi.org/10.1371/journal.pcbi.1004817
-
-    Arguments
-    ---------
-    Vica : ndarray,
-        independent components
-
-    n_component : int,
-        number of independent components chosen
-
-    Cij : numpy.ndarray,
+    coevo_matrix : np.ndarray
         coevolution matrix
 
-    p_cut : int,
-        cutoff on the CDF of the t-distribution fit to the histogran of each IC
+    method : {None, "pysca"}, default=None
+        Methods to use to estimate the number of components to extract. By
+        default, relies on the number of components provided by the user.
+
+    n_components : int, default=3,
+        Number of independent components to extract
+
+    nrandom_pySCA : int, default=10,
+        Number of MSA randomizations to perform if method='pySCA'
+
+    learnrate_ICA : int, default=0.1,
+        Learning rate / relaxation parameter used if method='pySCA'
+
+    nb_iteration_ICA : int, default=100000,
+        Number of iterations if method='pySCA'
+
+    freq_regul : regularization parameter (default=__freq_regularization_ref)
+
+    verbose_random_iter : Boolean
 
     Returns
     -------
-    selected_res : list of cocoatree.deconvolution.Unit,
-        positions of the selected residues for each independent component.
-        Beware that if the alignment used for the analysis has been filtered,
-        those are the positions on the filtered alignment and not on the
-        original alignment, a mapping of the positions may be needed.
-
-    ic_size : list,
-        number of selected residues for each component.
-
-    sorted_pos : list,
-        positions of the residues sorted by decreasing contribution for each
-        component.
-
-    cutoff : list,
-        numeric value of the cutoff for each component.
-
-    scaled_pdf : list of np.ndarrays,
-        scaled probability distribution function for each component.
-
-    all_fits : list,
-        t-distribution fits for each component.
-
-    **Example**::
-        selected_res, ic_size, sorted_pos, cutoff, scaled_pdf, all_fits = \
-            icList(Vica, n_component, Cij, p_cut=0.95)
+    idpt_components : ndarray of shape (n_components, n_pos)
+        corresponding to a list of independent components
     """
 
-    # do the PDF/CDF fit, and assign cutoffs
-    Npos = len(Vica)
-    cutoff = list()
-    scaled_pdf = list()
-    all_fits = list()
-    for k in range(n_component):
-        pd = t.fit(Vica[:, k])
-        all_fits.append(pd)
-        iqr = scoreatpercentile(Vica[:, k], 75) - scoreatpercentile(
-            Vica[:, k], 25
-        )
-        binwidth = 2 * iqr * (len(Vica[:, k]) ** (-0.33))
-        nbins = round((max(Vica[:, k]) - min(Vica[:, k])) / binwidth)
-        h_params = np.histogram(Vica[:, k], int(nbins))
-        x_dist = np.linspace(min(h_params[1]), max(h_params[1]), num=100)
-        area_hist = Npos * (h_params[1][2] - h_params[1][1])
-        scaled_pdf.append(area_hist * (t.pdf(x_dist, pd[0], pd[1], pd[2])))
-        cd = t.cdf(x_dist, pd[0], pd[1], pd[2])
-        tmp = scaled_pdf[k].argmax()
-        if abs(max(Vica[:, k])) > abs(min(Vica[:, k])):
-            tail = cd[tmp: len(cd)]
+    if method is not None:
+        if method == 'pySCA':
+            n_components = _compute_n_components_as_pySCA(
+                sequences, coevo_matrix,
+                nrandom=nrandom_pySCA, freq_regul=freq_regul,
+                verbose_random_iter=verbose_random_iter)
         else:
-            cd = 1 - cd
-            tail = cd[0:tmp]
-        diff = abs(tail - p_cut)
-        x_pos = diff.argmin()
-        cutoff.append(x_dist[x_pos + tmp])
+            raise ValueError(
+                f"{method} is not a valid method. Options are None, 'pySCA'")
 
-    # select the positions with significant contributions to each IC
-    ic_init = list()
-    for k in range(n_component):
-        ic_init.append([i for i in range(Npos) if Vica[i, k] > cutoff[k]])
+    V, S, Vt = np.linalg.svd(coevo_matrix)
+    Vica, _ = _compute_ica(V, n_components,
+                           learnrate=learnrate_ICA,
+                           iterations=nb_iterations_ICA)
 
-    # construct the sorted, non-redundant iclist
-    sorted_pos = list()
-    ic_size = list()
-    selected_res = list()
-    icpos_tmp = list()
-    Cij_nodiag = Cij.copy()
-    for i in range(Npos):
-        Cij_nodiag[i, i] = 0
-    for k in range(n_component):
-        icpos_tmp = list(ic_init[k])
-        for kprime in [kp for kp in range(n_component) if kp != k]:
-            tmp = [v for v in icpos_tmp if v in ic_init[kprime]]
-            for i in tmp:
-                remsec = np.linalg.norm(
-                    Cij_nodiag[i, ic_init[k]]
-                ) < np.linalg.norm(Cij_nodiag[i, ic_init[kprime]])
-                if remsec:
-                    icpos_tmp.remove(i)
-        sorted_pos += sorted(icpos_tmp, key=lambda i: -Vica[i, k])
-        ic_size.append(len(icpos_tmp))
-        s = Unit()
-        s.items = sorted(icpos_tmp, key=lambda i: -Vica[i, k])
-        s.col = k / n_component
-        s.vect = -Vica[s.items, k]
-        selected_res.append(s)
-    return selected_res, ic_size, sorted_pos, cutoff, scaled_pdf, all_fits
+    idpt_components = Vica.T
+
+    return idpt_components
 
 
-def choose_num_components(eigenvalues, rand_eigenvalues):
+def _compute_n_components_as_pySCA(sequences, coevo_matrix,
+                                   seq_weights=None,
+                                   nrandom=10,
+                                   freq_regul=__freq_regularization_ref,
+                                   verbose_random_iter=True):
     """
-    Given the eigenvalues of the coevolution matrix (eigenvalues), and the
-    eigenvalues for the set of randomized matrices (rand_eigenvalues), return
-    the number of significant eigenmodes as those above the average first
-    eigenvalue plus 3 standard deviations.
+    Compute the number of independent components as in pySCA
+
+    Given the eigenvalues of the coevolution matrix, and the
+    eigenvalues for the set of randomized matrices, return
+    the number of significant eigenmodes as those above the average second
+    eigenvalue plus 2 standard deviations.
     Based on S1 text of Rivoire et al. (2016)
+
+    Rem: it concerns only SCA metrics
+    For other merics (MI, adding corrections) this should be adapted
 
     Arguments
     ---------
-    eigenvalues : ndarray of shape (Npos),
-        list of eigenvalues of the coevolution matrix based on the real MSA
+    sequences : list of sequences
 
-    rand_eigenvalues : ndarray of shape (Nrep, Npos), where Nrep is the number
-        of randomization iterations
-        eigenvalues of all the iteartions of randomized alignments
+    coevo_matrix : np.ndarray of shape (n_pos, n_pos)
+        coevolution matrix
+
+    seq_weights : np.array (nseq, ) of each sequence weight
+
+    nrandom : int
+        Number of randomizations performed
+
+    freq_regul : regularization parameter (default=__freq_regularization_ref)
+
+    verbose_random_iter : boolean, default=True
+        Print the advance of the randomization procedure
 
     Returns
     -------
-    n_component : integer,
-        number of significant eigenmodes
+    n_components : int
+        Number of independent components to select
     """
 
-    n_component = eigenvalues[eigenvalues >
-                              (rand_eigenvalues[:, -2].mean() +
-                               (3 * rand_eigenvalues[:, -2].std()))].shape[0]
+    if seq_weights is None:
+        seq_weights, m_eff = compute_seq_weights(sequences)
+    else:
+        m_eff = np.sum(seq_weights)
 
-    return n_component
+    second_eigen_values_random = []
+    for irand in range(nrandom):
+        if verbose_random_iter:
+            print('%d/%d randomized msa (to compute number of\
+                  significant components) '
+                  % (irand+1, nrandom), end='\r')
+        rand_sequences = _randomize_seqs_conserving_col_compo(sequences)
+
+        seq_weights_rand, m_eff_rand = compute_seq_weights(rand_sequences)
+
+        # to get the correct m_eff
+        seq_weights_rand = seq_weights_rand / m_eff_rand * m_eff
+
+        SCA_rand = compute_sca_matrix(rand_sequences, seq_weights_rand,
+                                      freq_regul=freq_regul)
+
+        _, S, _ = np.linalg.svd(SCA_rand)
+        second_eigen_values_random.append(S[1])
+
+    mean_second_ev_rand = np.mean(second_eigen_values_random)
+    std_second_ev_rand = np.std(second_eigen_values_random)
+
+    _, S_input, _ = np.linalg.svd(coevo_matrix)
+
+    n_components = len(S_input[S_input > mean_second_ev_rand +
+                               2 * std_second_ev_rand])
+
+    return n_components
+
+
+def extract_principal_components(coevo_matrix):
+    """
+    Perform principal component decomposition of a coevolution matrix
+
+    Arguments
+    ---------
+    coevo_matrix : np.ndarray
+        coevolution matrix
+
+    Returns
+    -------
+    principal_components : np.ndarray (n_pos, n_pos)
+        Principal components obtained from the PCA of the coevolution matrix
+    """
+
+    _, _, principal_components = np.linalg.svd(coevo_matrix)
+
+    return principal_components
+
+
+def extract_sectors(idpt_components, coevo_matrix):
+    """
+    Extract residue positions of sectors
+
+    Arguments
+    ---------
+    idpt_components : independent components obtained from an ICA
+
+    coevo_matrix : coevolution matrix
+
+    Returns
+    -------
+    sectors : lists of residue positions on the filtered MSA for each of the
+        n_components sector
+    """
+    Vica = idpt_components.T
+    _, sector_sizes, sorted_pos, _, _, _ = _icList(
+        Vica, len(idpt_components), coevo_matrix)
+
+    sectors = [[sorted_pos[i] for i in range(sector_sizes[0])]]
+    ref_index = sector_sizes[0]
+    for isize in range(1, len(sector_sizes)):
+        sectors.append([sorted_pos[i]
+                        for i in range(ref_index,
+                                       ref_index + sector_sizes[isize])])
+        ref_index += sector_sizes[isize]
+    return sectors
+
+
+def substract_first_principal_component(coevo_matrix):
+    """
+    Remove global correlations
+
+    In the sector literature (and data analysis), this corresponds
+    to removing global correlations (from e.g. phylogenetic effects)
+
+    Arguments
+    ---------
+    coevo_matrix : np.ndarray (n_pos, n_pos),
+        coevolution matrix
+
+    Returns
+    -------
+    coevo_matrix_sub : np.ndarray (n_pos, n_pos),
+        coevolution matrix without global correlations
+    """
+    U, S, Vt = np.linalg.svd(coevo_matrix)
+    S[0] = 0
+    coevo_matrix_sub = np.maximum(np.linalg.multi_dot([U, np.diag(S), Vt]), 0)
+
+    return coevo_matrix_sub

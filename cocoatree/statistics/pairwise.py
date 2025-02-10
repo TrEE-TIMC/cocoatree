@@ -1,11 +1,11 @@
 import numpy as np
-from ..__params import lett2num, __pseudo_count_ref, __aa_count
+from ..__params import lett2num, __freq_regularization_ref, __aa_count
 from ..msa import compute_seq_weights
 from .position import _compute_first_order_freqs
 
 
 def _compute_aa_joint_freqs(sequences, seq_weights=None,
-                            pseudo_count=__pseudo_count_ref):
+                            freq_regul=__freq_regularization_ref):
     """Computes the joint frequencies of each pair of amino acids in a MSA
 
     .. math::
@@ -31,7 +31,7 @@ def _compute_aa_joint_freqs(sequences, seq_weights=None,
             seq_weights=None, all sequences are attributed an equal weighti
             of 1.
 
-    pseudo_count : regularization parameter (default=__pseudo_count_ref)
+    freq_regul : regularization parameter (default=__freq_regularization_ref)
 
     Returns
     -------
@@ -55,8 +55,8 @@ def _compute_aa_joint_freqs(sequences, seq_weights=None,
     # Joint frequencies
     aa_joint_freqs = np.tensordot(weighted_binary_array, binary_array,
                                   axes=([1], [1])).transpose(1, 3, 0, 2)
-    aa_joint_freqs = (aa_joint_freqs + pseudo_count / __aa_count ** 2)\
-        / (m_eff + pseudo_count)
+    aa_joint_freqs = (aa_joint_freqs + freq_regul * m_eff / __aa_count ** 2)\
+        / ((1 + freq_regul) * m_eff)
     return aa_joint_freqs
 
 
@@ -87,18 +87,37 @@ def _compute_aa_product_freqs(aa_freqs_1, aa_freqs_2):
 
 
 def _compute_second_order_freqs(sequences, seq_weights=None,
-                                pseudo_count=__pseudo_count_ref):
+                                freq_regul=__freq_regularization_ref):
     """
-    balabla
+    Computes joint frequencies and the product of frequencies
+
+    Parameters
+    ----------
+    sequences : list of sequences
+
+    seq_weights : np.ndarray
+        weight values for each sequence of the alignment
+
+    freq_regul : regularization parameter (default=__freq_regularization_ref)
+
+    Returns
+    -------
+    aa_joint_freqs : np.ndarray of shape (Npos, Npos, aa_count, aa_count)
+        joint frequency of amino acids `a` and `b` at respective positions
+        `i` and `j`
+
+    aa_product_freqs : np.ndarray of shape (Npos, Npos, aa_count, aa_count)
+        product of frequency of amino acids `a` and `b` at respective
+        positions `i` and `j`
     """
 
     # joint frequencies
     aa_joint_freqs = _compute_aa_joint_freqs(sequences,
                                              seq_weights=seq_weights,
-                                             pseudo_count=pseudo_count)
+                                             freq_regul=freq_regul)
 
     aa_freqs, _ = _compute_first_order_freqs(
-        sequences, seq_weights=seq_weights, pseudo_count=pseudo_count)
+        sequences, seq_weights=seq_weights, freq_regul=freq_regul)
 
     # joint frequencies if independence (product of frequencies)
     aa_product_freqs = _compute_aa_product_freqs(aa_freqs, aa_freqs)
@@ -107,7 +126,7 @@ def _compute_second_order_freqs(sequences, seq_weights=None,
 
 
 def compute_sca_matrix(sequences, seq_weights=None,
-                       pseudo_count=__pseudo_count_ref):
+                       freq_regul=__freq_regularization_ref):
     """Compute the SCA coevolution matrix
 
     .. math::
@@ -125,7 +144,7 @@ def compute_sca_matrix(sequences, seq_weights=None,
     seq_weights : ndarray (nseq), optional, default: None
         if None, will compute sequence weights
 
-    pseudo_count : regularization parameter (default=__pseudo_count_ref)
+    freq_regul : regularization parameter (default=__freq_regularization_ref)
 
     Returns
     -------
@@ -136,14 +155,14 @@ def compute_sca_matrix(sequences, seq_weights=None,
     if seq_weights is None:
         seq_weights, _ = compute_seq_weights(sequences)
     aa_joint_freqs, aa_product_freqs = _compute_second_order_freqs(
-        sequences, seq_weights=seq_weights, pseudo_count=pseudo_count)
+        sequences, seq_weights=seq_weights, freq_regul=freq_regul)
 
     # Cijab
     Cijab = aa_joint_freqs - aa_product_freqs
 
     # derivative of relative entropy
     aa_freqs, bkgd_freqs = _compute_first_order_freqs(
-        sequences, seq_weights=seq_weights, pseudo_count=pseudo_count)
+        sequences, seq_weights=seq_weights, freq_regul=freq_regul)
     aa_freqs = aa_freqs.transpose([1, 0])
     phi = np.log(
         aa_freqs * (1 - bkgd_freqs[:, np.newaxis]) / (
@@ -161,7 +180,7 @@ def compute_sca_matrix(sequences, seq_weights=None,
 
 
 def compute_mutual_information_matrix(sequences, seq_weights=None,
-                                      pseudo_count=__pseudo_count_ref,
+                                      freq_regul=__freq_regularization_ref,
                                       normalize=True):
     """Compute the mutual information matrix
 
@@ -176,7 +195,7 @@ def compute_mutual_information_matrix(sequences, seq_weights=None,
     seq_weights : ndarray (nseq), optional, default: None
         if None, will compute sequence weights
 
-    pseudo_count : regularization parameter (default=__pseudo_count_ref)
+    freq_regul : regularization parameter (default=__freq_regularization_ref)
 
     normalize : boolean, default : True
         Whether to normalize the mutual information by the entropy.
@@ -191,7 +210,8 @@ def compute_mutual_information_matrix(sequences, seq_weights=None,
     if seq_weights is None:
         seq_weights, _ = compute_seq_weights(sequences)
     aa_joint_freqs, aa_product_freqs = _compute_second_order_freqs(
-        sequences, seq_weights=seq_weights, pseudo_count=pseudo_count)
+        sequences, seq_weights=seq_weights,
+        freq_regul=freq_regul)
 
     # mutual information
     mi_matrix = np.sum(

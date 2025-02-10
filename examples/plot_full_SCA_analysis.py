@@ -110,18 +110,20 @@ fig.colorbar(im, shrink=0.7)
 # (this can take some time because of randomization)
 # -------------------------------------------------
 
-principal_components = c_deconv.extract_principal_components(SCA_matrix)
-idpt_components = c_deconv.extract_independent_components(sequences,
-                                                          SCA_matrix)
+n_components = 9
+principal_components = c_deconv.extract_principal_components(
+    SCA_matrix)
+idpt_components = c_deconv.extract_independent_components(
+    sequences,
+    SCA_matrix,
+    n_components=n_components)
 
-n_idpt_components = len(idpt_components)
-print('\nNumber of idpt components: %d' % n_idpt_components)
 
 # %%
 # Plot components
 # ---------------
 
-n_components_to_plot = n_idpt_components
+n_components_to_plot = n_components
 if n_components_to_plot % 2:
     print('Odd number of components: the last one is discarded for \
           visualization')
@@ -172,7 +174,7 @@ cb = fig.colorbar(im)
 cb.set_label("coevolution level")
 
 line_index = 0
-for i in range(n_idpt_components):
+for i in range(n_components):
     ax.plot([line_index + sector_sizes[i], line_index + sector_sizes[i]],
             [0, cumul_sizes], 'w', linewidth=2)
     ax.plot([0, cumul_sizes], [cumul_sizes - line_index,
@@ -199,7 +201,7 @@ cb = fig.colorbar(im)
 cb.set_label("coevolution level")
 
 line_index = 0
-for i in range(n_idpt_components):
+for i in range(n_components):
     ax.plot([line_index + sector_sizes[i], line_index + sector_sizes[i]],
             [0, sum(sector_sizes)], 'w', linewidth=2)
     ax.plot([0, sum(sector_sizes)], [sum(sector_sizes) - line_index,

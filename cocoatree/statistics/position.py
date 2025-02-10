@@ -110,7 +110,7 @@ def _compute_first_order_freqs(sequences, seq_weights=None,
         Gives more or less importance to certain sequences.
         If seq_weights=None, will compute sequence weights
 
-    pseudo_count : regularization parameter (default=_pseudo_count_ref)
+    freq_regul : regularization parameter (default=__freq_regularization_ref)
 
     Returns
     -------

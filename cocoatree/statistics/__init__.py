@@ -18,7 +18,7 @@ def compute_all_frequencies(sequences,
     seq_weights : {None, np.ndarray (n_seq)}
         if None, will re-compute the sequence weights.
 
-    pseudo_count : regularization parameter (default=__freq_regularization_ref)
+    freq_regul : regularization parameter (default=__freq_regularization_ref)
 
     Returns
     -------

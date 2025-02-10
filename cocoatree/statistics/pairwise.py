@@ -98,7 +98,7 @@ def _compute_second_order_freqs(sequences, seq_weights=None,
     seq_weights : np.ndarray
         weight values for each sequence of the alignment
 
-    pseudo_count : regularization parameter (default=_pseudo_count_ref)
+    freq_regul : regularization parameter (default=__freq_regularization_ref)
 
     Returns
     -------

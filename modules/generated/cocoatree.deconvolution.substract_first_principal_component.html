@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>cocoatree.deconvolution.eigen_decomp &#8212; cocoatree 0.0 documentation</title>
+    <title>cocoatree.deconvolution.substract_first_principal_component &#8212; cocoatree 0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
     <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
@@ -40,26 +40,33 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="cocoatree-deconvolution-eigen-decomp">
-<h1>cocoatree.deconvolution.eigen_decomp<a class="headerlink" href="#cocoatree-deconvolution-eigen-decomp" title="Link to this heading">¶</a></h1>
+  <section id="cocoatree-deconvolution-substract-first-principal-component">
+<h1>cocoatree.deconvolution.substract_first_principal_component<a class="headerlink" href="#cocoatree-deconvolution-substract-first-principal-component" title="Link to this heading">¶</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="cocoatree.deconvolution.eigen_decomp">
-<span class="sig-prename descclassname"><span class="pre">cocoatree.deconvolution.</span></span><span class="sig-name descname"><span class="pre">eigen_decomp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.deconvolution.eigen_decomp" title="Link to this definition">¶</a></dt>
-<dd><p>Performs eigenvalue decomposition of a square matrix</p>
+<dt class="sig sig-object py" id="cocoatree.deconvolution.substract_first_principal_component">
+<span class="sig-prename descclassname"><span class="pre">cocoatree.deconvolution.</span></span><span class="sig-name descname"><span class="pre">substract_first_principal_component</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coevo_matrix</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.deconvolution.substract_first_principal_component" title="Link to this definition">¶</a></dt>
+<dd><p>Remove global correlations</p>
+<p>In the sector literature (and data analysis), this corresponds
+to removing global correlations (from e.g. phylogenetic effects)</p>
 <section id="arguments">
 <h2>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">¶</a></h2>
-<p>mat : square coevolution matrix of shape (Npos, Npos)</p>
+<dl class="simple">
+<dt>coevo_matrix<span class="classifier">np.ndarray (n_pos, n_pos),</span></dt><dd><p>coevolution matrix</p>
+</dd>
+</dl>
 </section>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
-<p>eigenvalues : ndarray of shape (Npos)</p>
-<p>eigenvectors : ndarray of shape (Npos, Npos)</p>
+<dl class="simple">
+<dt>coevo_matrix_sub<span class="classifier">np.ndarray (n_pos, n_pos),</span></dt><dd><p>coevolution matrix without global correlations</p>
+</dd>
+</dl>
 </section>
 </dd></dl>
 
-<section id="examples-using-cocoatree-deconvolution-eigen-decomp">
-<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.deconvolution.eigen_decomp</span></code><a class="headerlink" href="#examples-using-cocoatree-deconvolution-eigen-decomp" title="Link to this heading">¶</a></h2>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete coevolution analysis in order to detect protein sectors from data importation, MSA filtering, computation of positional and joint amino acid frequencies, and computation of the SCA coevolution matrix."><img alt="" src="../../_images/sphx_glr_plot_full_SCA_analysis_thumb.png" />
+<section id="examples-using-cocoatree-deconvolution-substract-first-principal-component">
+<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.deconvolution.substract_first_principal_component</span></code><a class="headerlink" href="#examples-using-cocoatree-deconvolution-substract-first-principal-component" title="Link to this heading">¶</a></h2>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete SCA analysis and detect protein sectors from data importation, MSA filtering."><img alt="" src="../../_images/sphx_glr_plot_full_SCA_analysis_thumb.png" />
 <p><a class="reference internal" href="../../auto_examples/plot_full_SCA_analysis.html#sphx-glr-auto-examples-plot-full-sca-analysis-py"><span class="std std-ref">Perform full SCA analysis on the S1A serine protease dataset</span></a></p>
   <div class="sphx-glr-thumbnail-title">Perform full SCA analysis on the S1A serine protease dataset</div>
 </div></div><div class="sphx-glr-clear"></div></section>

@@ -22,18 +22,13 @@
 Perform full SCA analysis on the S1A serine protease dataset
 ============================================================
 
-This example shows the full process to perform a complete coevolution
-analysis in order to detect protein sectors from data importation, MSA
-filtering, computation of positional and joint amino acid frequencies,
-and computation of the SCA coevolution matrix.
+This example shows the full process to perform a complete SCA analysis
+and detect protein sectors from data importation, MSA filtering.
 
-The matrix is then decomposed into principal components and independent
-component analysis is performed.
+Finally, we export a fasta file of the residues contributing to the first
+sector.
 
-In the end, we export a fasta file of the residues contributing to the first
-independent component.
-
-.. GENERATED FROM PYTHON SOURCE LINES 18-24
+.. GENERATED FROM PYTHON SOURCE LINES 12-18
 
 .. code-block:: Python
 
@@ -50,24 +45,21 @@ independent component.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 25-26
+.. GENERATED FROM PYTHON SOURCE LINES 19-20
 
 Import necessary
 
-.. GENERATED FROM PYTHON SOURCE LINES 26-40
+.. GENERATED FROM PYTHON SOURCE LINES 20-30
 
 .. code-block:: Python
 
-    from cocoatree.datasets import load_S1A_serine_proteases
-    from cocoatree.io import export_fasta, load_pdb, export_sector_for_pymol
-    from cocoatree.msa import filter_sequences, compute_seq_identity, \
-        compute_seq_weights, map_to_pdb
-    from cocoatree.statistics.position import compute_conservation
-    from cocoatree.statistics.pairwise import compute_sca_matrix
+    import cocoatree.datasets as c_data
+    import cocoatree.io as c_io
+    import cocoatree.msa as c_msa
+    import cocoatree.statistics.position as c_pos
+    import cocoatree.statistics.pairwise as c_pw
+    import cocoatree.deconvolution as c_deconv
 
-    from cocoatree.deconvolution import eigen_decomp, compute_ica, \
-        choose_num_components, extract_positions_from_IC
-    from cocoatree.randomize import randomization
     import matplotlib.pyplot as plt
     import numpy as np
 
@@ -78,8 +70,7 @@ Import necessary
 
 
 
-
-.. GENERATED FROM PYTHON SOURCE LINES 41-47
+.. GENERATED FROM PYTHON SOURCE LINES 31-37
 
 Load the dataset
 ----------------
@@ -88,17 +79,19 @@ We start by importing the dataset. In this case, we can directly load the S1
 serine protease dataset provided in :mod:`cocoatree`. To work on your on
 dataset, you can use the `cocoatree.io.load_msa` function.
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-54
+.. GENERATED FROM PYTHON SOURCE LINES 37-46
 
 .. code-block:: Python
 
 
-    serine_dataset = load_S1A_serine_proteases()
-    seq_id = serine_dataset["sequence_ids"]
-    sequences = serine_dataset["alignment"]
-    n_pos, n_seq = len(sequences[0]), len(sequences)
+    serine_dataset = c_data.load_S1A_serine_proteases()
+    loaded_seqs = serine_dataset["alignment"]
+    loaded_seqs_id = serine_dataset["sequence_ids"]
+    n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
 
-    print(f"The loaded MSA has {n_seq} sequences and {n_pos} positions.")
+    print(f"The loaded MSA has {n_loaded_seqs} sequences and {n_loaded_pos} \
+          positions.")
+
 
 
 
@@ -107,30 +100,29 @@ dataset, you can use the `cocoatree.io.load_msa` function.
 
  .. code-block:: none
 
-    The loaded MSA has 6970 sequences and 296 positions.
+    The loaded MSA has 6970 sequences and 296       positions.
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 55-61
+.. GENERATED FROM PYTHON SOURCE LINES 47-52
 
 MSA filtering
 -------------
 
-We are going to clean a bit the loaded MSA by filtering both sequences and
-positions.
+We clean the loaded MSA by filtering both sequences and positions.
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 61-68
+.. GENERATED FROM PYTHON SOURCE LINES 52-59
 
 .. code-block:: Python
 
 
-    seq_id_kept, seq_kept, pos_kept = filter_sequences(
-        seq_id, sequences, gap_threshold=0.4, seq_threshold=0.2)
-    n_pos_kept = len(pos_kept)
-    print(f"After filtering, we have {n_pos_kept} remaining positions.")
-    print(f"After filtering, we have {len(seq_kept)} remaining sequences.")
+    sequences, sequences_id, positions = c_msa.filter_sequences(
+        loaded_seqs, loaded_seqs_id, gap_threshold=0.4, seq_threshold=0.2)
+    n_pos = len(positions)
+    print(f"After filtering, we have {n_pos} remaining positions.")
+    print(f"After filtering, we have {len(sequences)} remaining sequences.")
 
 
 
@@ -146,20 +138,20 @@ positions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-71
+.. GENERATED FROM PYTHON SOURCE LINES 60-62
 
 Compute the matrix of pairwise sequence identity
 ------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-82
+.. GENERATED FROM PYTHON SOURCE LINES 62-73
 
 .. code-block:: Python
 
 
-    sim_matrix = compute_seq_identity(seq_kept)
+    identity_matrix = c_msa.compute_seq_identity(sequences)
 
     fig, ax = plt.subplots()
-    m = ax.imshow(sim_matrix, vmin=0, vmax=1, cmap='inferno')
+    m = ax.imshow(identity_matrix, vmin=0, vmax=1, cmap='inferno')
     ax.set_xlabel("sequences", fontsize=10)
     ax.set_ylabel("sequences", fontsize=10)
     ax.set_title('Matrix of pairwise sequence identity', fontweight="bold")
@@ -178,16 +170,17 @@ Compute the matrix of pairwise sequence identity
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-84
+.. GENERATED FROM PYTHON SOURCE LINES 74-75
 
 Compute sequence weights
 
-.. GENERATED FROM PYTHON SOURCE LINES 84-87
+.. GENERATED FROM PYTHON SOURCE LINES 75-79
 
 .. code-block:: Python
 
-    seq_weights, m_eff = compute_seq_weights(seq_kept)
-    print(f"Number of effective sequences {m_eff}")
+    seq_weights, m_eff = c_pos.compute_seq_weights(sequences)
+    print('Number of effective sequences %d' %
+          np.round(m_eff))
 
 
 
@@ -197,21 +190,21 @@ Compute sequence weights
 
  .. code-block:: none
 
-    Number of effective sequences 1205.7209863932837
+    Number of effective sequences 1206
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 88-90
+.. GENERATED FROM PYTHON SOURCE LINES 80-82
 
 Compute conservation along the MSA
 ----------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 90-101
+.. GENERATED FROM PYTHON SOURCE LINES 82-93
 
 .. code-block:: Python
 
-    Di = compute_conservation(seq_kept, seq_weights)
+    Di = c_pos.compute_conservation(sequences, seq_weights)
 
     fig, ax = plt.subplots(figsize=(9, 4))
     xvals = [i+1 for i in range(len(Di))]
@@ -219,7 +212,7 @@ Compute conservation along the MSA
     ax.bar(xvals, Di, color='k')
     plt.tick_params(labelsize=11)
     ax.set_xticks(xticks)
-    ax.set_xlabel('Residue position', fontsize=14)
+    ax.set_xlabel('residues', fontsize=14)
     ax.set_ylabel('Di', fontsize=14)
 
 
@@ -240,31 +233,31 @@ Compute conservation along the MSA
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 102-104
+.. GENERATED FROM PYTHON SOURCE LINES 94-96
 
 Compute the SCA coevolution matrix
 ----------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 104-115
+.. GENERATED FROM PYTHON SOURCE LINES 96-107
 
 .. code-block:: Python
 
 
-    SCA_matrix = compute_sca_matrix(seq_kept, seq_weights)
+    SCA_matrix = c_pw.compute_sca_matrix(sequences, seq_weights)
 
     fig, ax = plt.subplots()
     im = ax.imshow(SCA_matrix, vmin=0, vmax=1.4, cmap='inferno')
 
-    ax.set_xlabel('Residue', fontsize=10)
+    ax.set_xlabel('residues', fontsize=10)
     ax.set_ylabel(None)
-    ax.set_title('Coevolution matrix')
+    ax.set_title('SCA matrix')
     fig.colorbar(im, shrink=0.7)
 
 
 
 
 .. image-sg:: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_003.png
-   :alt: Coevolution matrix
+   :alt: SCA matrix
    :srcset: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_003.png
    :class: sphx-glr-single-img
 
@@ -274,41 +267,68 @@ Compute the SCA coevolution matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7fe23ed73b50>
+    <matplotlib.colorbar.Colorbar object at 0x7f063d15e690>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 116-118
+.. GENERATED FROM PYTHON SOURCE LINES 108-112
 
-Decomposition of the matrix into principal components
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Extraction of principal components (PCA analysis)
+and of independent components (ICA analysis)
+(this can take some time because of randomization)
+-------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 118-121
+.. GENERATED FROM PYTHON SOURCE LINES 112-122
+
+.. code-block:: Python
+
+
+    n_components = 9
+    principal_components = c_deconv.extract_principal_components(
+        SCA_matrix)
+    idpt_components = c_deconv.extract_independent_components(
+        sequences,
+        SCA_matrix,
+        n_components=n_components)
+
+
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 123-125
+
+Plot components
+---------------
+
+.. GENERATED FROM PYTHON SOURCE LINES 125-147
 
 .. code-block:: Python
 
 
-    eigenvalues, eigenvectors = eigen_decomp(SCA_matrix)
+    n_components_to_plot = n_components
+    if n_components_to_plot % 2:
+        print('Odd number of components: the last one is discarded for \
+              visualization')
+        n_components_to_plot -= 1
 
+    pairs = [[x, x+1] for x in range(0, n_components_to_plot, 2)]
+    ncols = len(pairs)
+    plt.rcParams['figure.figsize'] = 14, 8
+    fig, axes = plt.subplots(nrows=2, ncols=len(pairs), tight_layout=True)
+    for k, [k1, k2] in enumerate(pairs):
+        ax = axes[0, k]
+        ax.plot(principal_components[k1], principal_components[k2], 'ok')
+        ax.set_xlabel("PC %i" % (k1+1), fontsize=16)
+        ax.set_ylabel("PC %i" % (k2+1), fontsize=16)
 
-
-
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 122-123
-
-Plot distribution of eigenvalues
-
-.. GENERATED FROM PYTHON SOURCE LINES 123-128
-
-.. code-block:: Python
-
-    fig, ax = plt.subplots()
-    ax.hist(eigenvalues, bins=100, color="black")
-    ax.set_ylabel('Number', fontweight="bold")
-    ax.set_xlabel('Eigenvalue', fontweight="bold")
+        ax = axes[1, k]
+        ax.plot(idpt_components[k1], idpt_components[k2], 'ok')
+        ax.set_xlabel("IC %i" % (k1+1), fontsize=16)
+        ax.set_ylabel("IC %i" % (k2+1), fontsize=16)
 
 
 
@@ -323,117 +343,26 @@ Plot distribution of eigenvalues
 
  .. code-block:: none
 
-
-    Text(0.5, 23.52222222222222, 'Eigenvalue')
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 129-137
-
-Select number of significant components
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-A randomization strategy is used in order to select the number of components.
-The function `cocoatree.randomize.randomization` runs the full SCA
-pipeline on randomized version of the MSA. Make sure that weights and lambda
-coefficient are set the same way as the when performing the analysis on the
-real dataset.
-
-.. GENERATED FROM PYTHON SOURCE LINES 137-155
-
-.. code-block:: Python
-
-    if False:
-        v_rand, l_rand = randomization(seq_kept, n_rep=10,
-                                       seq_weights=seq_weights, kmax=10)
-        n_components = choose_num_components(eigenvalues, l_rand)
-        print('n_components = ' + str(n_components))
-
-        hist0, bins = np.histogram(l_rand.flatten(), bins=n_pos_kept,
-                                   range=(0, eigenvalues.max()))
-        hist1, bins = np.histogram(eigenvalues, bins=n_pos_kept,
-                                   range=(0, eigenvalues.max()))
-
-        fig, ax = plt.subplots()
-        ax.bar(bins[:-1], hist1, np.diff(bins), color='k')
-        ax.plot(bins[:-1], hist0/10, 'r', linewidth=3)
-        ax.set_xlabel('Eigenvalues', fontweight="bold")
-        ax.set_ylabel('Numbers', fontweight="bold")
-    n_components = 7
+    Odd number of components: the last one is discarded for           visualization
 
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 148-150
 
+Extract sectors
+---------------
 
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 156-158
-
-Independent component analysis (ICA)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. GENERATED FROM PYTHON SOURCE LINES 158-184
+.. GENERATED FROM PYTHON SOURCE LINES 150-157
 
 .. code-block:: Python
 
 
-    independent_components, W = compute_ica(
-        eigenvectors, kmax=n_components, learnrate=0.1,
-        iterations=100000)
+    sectors = c_deconv.extract_sectors(idpt_components, SCA_matrix)
 
-    # Plot results
-    if n_components % 2 != 0:
-        print('Uneven number of axes, discard the last one for visual \
-              representation')
-        n_components -= 1
-
-    pairs = [[x, x+1] for x in range(0, n_components, 2)]
-    ncols = len(pairs)
-    plt.rcParams['figure.figsize'] = 14, 8
-    fig, axes = plt.subplots(nrows=2, ncols=len(pairs), tight_layout=True)
-    for k, [k1, k2] in enumerate(pairs):
-        ax = axes[0, k]
-        ax.plot(eigenvectors[:, k1], eigenvectors[:, k2], 'ok')
-        ax.set_xlabel("eigenvector %i" % (k1+1), fontsize=16)
-        ax.set_ylabel("eigenvector %i" % (k2+1), fontsize=16)
-
-        ax = axes[1, k]
-        ax.plot(independent_components[:, k1], independent_components[:, k2], 'ok')
-        ax.set_xlabel("independent component %i" % (k1+1), fontsize=16)
-        ax.set_ylabel("independent component %i" % (k2+1), fontsize=16)
-
-
-
-
-.. image-sg:: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_005.png
-   :alt: plot full SCA analysis
-   :srcset: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_005.png
-   :class: sphx-glr-single-img
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    Uneven number of axes, discard the last one for visual           representation
-
-
-
-
-.. GENERATED FROM PYTHON SOURCE LINES 185-186
-
-Select residues that significantly contribute to each independent component
-
-.. GENERATED FROM PYTHON SOURCE LINES 186-192
-
-.. code-block:: Python
-
-    ics, icsize, sortedpos, cutoff, scaled_pdf, all_fits = \
-        extract_positions_from_IC(independent_components, n_components, SCA_matrix,
-                                  p_cut=0.95)
-
-    print(f"Sizes of the {n_components} ICs: {icsize}")
+    print('Sector positions on (filtered) sequences:')
+    for isec, sec in enumerate(sectors):
+        print('sector %d: %s' % (isec+1, sec))
 
 
 
@@ -443,42 +372,105 @@ Select residues that significantly contribute to each independent component
 
  .. code-block:: none
 
-    Sizes of the 6 ICs: [15, 16, 22, 10, 13, 15]
+    Sector positions on (filtered) sequences:
+    sector 1: [184, 118, 64, 56, 43, 87, 48, 29, 101, 53, 10, 46, 9, 61, 8, 95, 63, 35, 130, 225]
+    sector 2: [41, 25, 149, 163, 40, 177, 123, 181, 179, 85, 122, 191, 124, 38, 180, 176, 178, 54, 3, 26, 136, 205, 194, 39, 12, 91, 2, 17]
+    sector 3: [208, 195, 153, 77, 172, 206, 196, 183, 189, 170, 141, 115, 81]
+    sector 4: [199, 174, 211, 14, 1, 28, 94, 114, 15, 89, 200]
+    sector 5: [217, 74, 218, 106, 88, 86, 34, 137, 23, 72, 107, 30, 97, 84, 16, 18, 90]
+    sector 6: [186, 11, 105, 193, 49, 120, 75, 71, 121]
+    sector 7: [0, 192, 154]
+    sector 8: [37, 68, 210, 51, 27, 212, 209, 157, 158, 143]
+    sector 9: [161, 165, 164, 207, 13, 175, 198, 169, 182, 139]
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 193-197
+.. GENERATED FROM PYTHON SOURCE LINES 158-162
 
 Plot coevolution within and between the sectors
 Each white square corresponds to a sector, with the residues ordered in
 decreasing contribution to the independent component associated from top to
 bottom and from left to right.
 
-.. GENERATED FROM PYTHON SOURCE LINES 197-212
+.. GENERATED FROM PYTHON SOURCE LINES 162-184
 
 .. code-block:: Python
 
     fig, ax = plt.subplots(tight_layout=True)
-    im = ax.imshow(SCA_matrix[np.ix_(sortedpos, sortedpos)], vmin=0, vmax=2,
+
+    sector_sizes = [len(sec) for sec in sectors]
+    cumul_sizes = sum(sector_sizes)
+    sorted_pos = [s for sec in sectors for s in sec]
+
+    im = ax.imshow(SCA_matrix[np.ix_(sorted_pos, sorted_pos)],
+                   vmin=0, vmax=2,
                    interpolation='none', aspect='equal',
-                   extent=[0, sum(icsize), 0, sum(icsize)], cmap='inferno')
+                   extent=[0, cumul_sizes, 0, cumul_sizes], cmap='inferno')
+    ax.set_title('SCA matrix, sorted according to sectors')
     cb = fig.colorbar(im)
-    cb.set_label("Coevolution measure")
+    cb.set_label("coevolution level")
 
     line_index = 0
     for i in range(n_components):
-        ax.plot([line_index + icsize[i], line_index + icsize[i]],
-                [0, sum(icsize)], 'w', linewidth=2)
-        ax.plot([0, sum(icsize)], [sum(icsize) - line_index,
-                                   sum(icsize) - line_index], 'w', linewidth=2)
-        line_index += icsize[i]
+        ax.plot([line_index + sector_sizes[i], line_index + sector_sizes[i]],
+                [0, cumul_sizes], 'w', linewidth=2)
+        ax.plot([0, cumul_sizes], [cumul_sizes - line_index,
+                                   cumul_sizes - line_index], 'w', linewidth=2)
+        line_index += sector_sizes[i]
+
+
+
+
+.. image-sg:: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_005.png
+   :alt: SCA matrix, sorted according to sectors
+   :srcset: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_005.png
+   :class: sphx-glr-single-img
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 185-188
+
+Do the same but for the SCA matrix where the global correlation mode has
+been removed and, hence, such that sectors are better highlighted.
+See Rivoire et al., PLOSCB, 2016
+
+.. GENERATED FROM PYTHON SOURCE LINES 188-213
+
+.. code-block:: Python
+
+
+    # removing global model (ngm = no global mode),
+    # i.e., removing first principal component
+    SCA_matrix_ngm = c_deconv.substract_first_principal_component(SCA_matrix)
+
+    # plotting
+    fig, ax = plt.subplots(tight_layout=True)
+    im = ax.imshow(SCA_matrix_ngm[np.ix_(sorted_pos, sorted_pos)], vmin=0, vmax=1,
+                   interpolation='none', aspect='equal',
+                   extent=[0, sum(sector_sizes), 0, sum(sector_sizes)],
+                   cmap='inferno')
+    ax.set_title('SCA matrix without global mode, sorted according to sectors')
+    cb = fig.colorbar(im)
+    cb.set_label("coevolution level")
+
+    line_index = 0
+    for i in range(n_components):
+        ax.plot([line_index + sector_sizes[i], line_index + sector_sizes[i]],
+                [0, sum(sector_sizes)], 'w', linewidth=2)
+        ax.plot([0, sum(sector_sizes)], [sum(sector_sizes) - line_index,
+                                         sum(sector_sizes) - line_index],
+                'w', linewidth=2)
+        line_index += sector_sizes[i]
+
 
 
 
 
 .. image-sg:: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_006.png
-   :alt: plot full SCA analysis
+   :alt: SCA matrix without global mode, sorted according to sectors
    :srcset: /auto_examples/images/sphx_glr_plot_full_SCA_analysis_006.png
    :class: sphx-glr-single-img
 
@@ -486,59 +478,50 @@ bottom and from left to right.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 213-216
+.. GENERATED FROM PYTHON SOURCE LINES 214-217
 
-Export fasta files of the sectors for all the sequences
-Those fasta can then be used for visualization along a phylogenetic tree
+Export sector sequences for all sequences as a fasta file
+The file can then be used for visualization along a phylogenetic tree
 as implemented in the cocoatree.visualization module
 
-.. GENERATED FROM PYTHON SOURCE LINES 216-243
+.. GENERATED FROM PYTHON SOURCE LINES 217-248
 
 .. code-block:: Python
 
 
-    sector_1_pos = list(pos_kept[ics[0].items])
-    sector_1 = []
-    for sequence in range(len(seq_id)):
-        seq = ''
-        for pos in sector_1_pos:
-            seq += sequences[sequence][pos]
-        sector_1.append(seq)
+    if False:  # need to be revised
+        sector_1_pos = list(positions[sectors[0].items])
+        sector_1 = []
+        for sequence in range(len(sequences_id)):
+            seq = ''
+            for pos in sector_1_pos:
+                seq += sequences[sequence][pos]
+            sector_1.append(seq)
 
-    export_fasta(sector_1, seq_id, 'sector_1.fasta')
+        c_io.export_fasta(sector_1, sequences_id, 'sector_1.fasta')
 
-    # %
-    # Export files necessary for Pymol visualization
-    # Load PDB file of rat's trypsin
-    pdb_seq, pdb_pos = load_pdb('data/3TGI.pdb', pdb_id='TRIPSIN', chain='E')
-    # Map PDB positions on the MSA sequence corresponding to rat's trypsin:
-    # seq_id='14719441'
-    pdb_mapping = map_to_pdb(pdb_seq, pdb_pos, sequences, seq_id,
-                             ref_seq_id='14719441')
-    # Export lists of the first sector positions and each residue's contribution
-    # to the independent component to use for visualization on Pymol.
-    # The residues are ordered in the list by decreasing contribution score (the
-    # first residue in the list is the highest contributing)
-    export_sector_for_pymol(pdb_mapping, independent_components, axis=0,
-                            sector_pos=sector_1_pos,
-                            ics=ics,
-                            outpath='color_sector_1_pymol.npy')
+        # %
+        # Export files necessary for Pymol visualization
+        # Load PDB file of rat's trypsin
+        pdb_seq, pdb_pos = c_io.load_pdb('data/3TGI.pdb', pdb_id='TRIPSIN',
+                                         chain='E')
+        # Map PDB positions on the MSA sequence corresponding to rat's trypsin:
+        # seq_id='14719441'
+        pdb_mapping = c_msa.map_to_pdb(pdb_seq, pdb_pos, sequences, sequences_id,
+                                       ref_seq_id='14719441')
+        # Export lists of the first sector positions and each residue's
+        # contribution to the independent component to use for visualization on
+        # Pymol.
+        # The residues are ordered in the list by decreasing contribution score
+        # (the first residue in the list is the highest contributing)
+        c_io.export_sector_for_pymol(pdb_mapping, idpt_components.T, axis=0,
+                                     sector_pos=sector_1_pos,
+                                     ics=sectors,
+                                     outpath='color_sector_1_pymol.npy')
 
 
 
 
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain E is discontinuous at line 2569.
-      warnings.warn(
-    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain I is discontinuous at line 2570.
-      warnings.warn(
-    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain E is discontinuous at line 2580.
-      warnings.warn(
-    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain I is discontinuous at line 2758.
-      warnings.warn(
 
 
 
@@ -546,7 +529,7 @@ as implemented in the cocoatree.visualization module
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 16.354 seconds)
+   **Total running time of the script:** (0 minutes 16.936 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_full_SCA_analysis.py:

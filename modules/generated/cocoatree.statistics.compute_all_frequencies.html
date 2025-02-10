@@ -44,7 +44,7 @@
 <h1>cocoatree.statistics.compute_all_frequencies<a class="headerlink" href="#cocoatree-statistics-compute-all-frequencies" title="Link to this heading">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="cocoatree.statistics.compute_all_frequencies">
-<span class="sig-prename descclassname"><span class="pre">cocoatree.statistics.</span></span><span class="sig-name descname"><span class="pre">compute_all_frequencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pseudo_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.statistics.compute_all_frequencies" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cocoatree.statistics.</span></span><span class="sig-name descname"><span class="pre">compute_all_frequencies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_weights</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq_regul</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.03</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.statistics.compute_all_frequencies" title="Link to this definition">¶</a></dt>
 <dd><p>Compute frequencies on sequences</p>
 <section id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
@@ -53,7 +53,7 @@
 <dt>seq_weights<span class="classifier">{None, np.ndarray (n_seq)}</span></dt><dd><p>if None, will re-compute the sequence weights.</p>
 </dd>
 </dl>
-<p>pseudo_count : regularization parameter (default=__pseudo_count_ref)</p>
+<p>freq_regul : regularization parameter (default=__freq_regularization_ref)</p>
 </section>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>

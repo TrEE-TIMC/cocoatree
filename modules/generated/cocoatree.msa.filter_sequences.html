@@ -44,19 +44,23 @@
 <h1>cocoatree.msa.filter_sequences<a class="headerlink" href="#cocoatree-msa-filter-sequences" title="Link to this heading">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="cocoatree.msa.filter_sequences">
-<span class="sig-prename descclassname"><span class="pre">cocoatree.msa.</span></span><span class="sig-name descname"><span class="pre">filter_sequences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.msa.filter_sequences" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cocoatree.msa.</span></span><span class="sig-name descname"><span class="pre">filter_sequences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequences_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.msa.filter_sequences" title="Link to this definition">¶</a></dt>
 <dd><p>Filter sequences</p>
-<p>Filter (1) overly gapped sequences; (2) overly gapped positions overly
-gapped positions..</p>
+<p>Filter (1) overly gapped positions; (2) overly gapped sequences.</p>
 <section id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
-<p>sequences : list of the MSA sequences to filter</p>
-<p>threshold : max proportion of gaps tolerated (default=0.4)</p>
+<p>sequences : list of MSA sequences to filter</p>
+<p>sequences_id : list of the MSA’s sequence identifiers</p>
+<p>gap_threshold : max proportion of gaps tolerated (default=0.4)</p>
+<p>seq_threshold : maximum fraction of gaps per sequence (default 0.2)</p>
 </section>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
 <p>filt_seqs : list of the sequences after filter</p>
-<p>pos_kept : numpy.ndarray of the positions that were conserved</p>
+<dl class="simple">
+<dt>remaining_pos<span class="classifier">numpy.ndarray</span></dt><dd><p>remaining positions after filtering</p>
+</dd>
+</dl>
 </section>
 </dd></dl>
 
@@ -65,7 +69,7 @@ gapped positions..</p>
 <div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="In this example, we are comparing the results of the co-evolution analysis on serine proteases using SCA and the mutual information."><img alt="" src="../../_images/sphx_glr_plot_sca_vs_mi_thumb.png" />
 <p><a class="reference internal" href="../../auto_examples/plot_sca_vs_mi.html#sphx-glr-auto-examples-plot-sca-vs-mi-py"><span class="std std-ref">Mutual information versus SCA</span></a></p>
   <div class="sphx-glr-thumbnail-title">Mutual information versus SCA</div>
-</div><div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete coevolution analysis in order to detect protein sectors from data importation, MSA filtering, computation of positional and joint amino acid frequencies, and computation of the SCA coevolution matrix."><img alt="" src="../../_images/sphx_glr_plot_full_SCA_analysis_thumb.png" />
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete SCA analysis and detect protein sectors from data importation, MSA filtering."><img alt="" src="../../_images/sphx_glr_plot_full_SCA_analysis_thumb.png" />
 <p><a class="reference internal" href="../../auto_examples/plot_full_SCA_analysis.html#sphx-glr-auto-examples-plot-full-sca-analysis-py"><span class="std std-ref">Perform full SCA analysis on the S1A serine protease dataset</span></a></p>
   <div class="sphx-glr-thumbnail-title">Perform full SCA analysis on the S1A serine protease dataset</div>
 </div></div><div class="sphx-glr-clear"></div></section>

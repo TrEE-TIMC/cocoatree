@@ -1,0 +1,14 @@
+﻿:orphan:
+
+cocoatree.deconvolution.extract_sectors
+=======================================
+
+.. currentmodule:: cocoatree.deconvolution
+
+.. autofunction:: extract_sectors
+
+.. include:: ../../generated/backreferences/cocoatree.deconvolution.extract_sectors.examples
+
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>

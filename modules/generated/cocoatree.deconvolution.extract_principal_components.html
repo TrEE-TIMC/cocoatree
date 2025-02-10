@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>cocoatree.deconvolution.choose_num_components &#8212; cocoatree 0.0 documentation</title>
+    <title>cocoatree.deconvolution.extract_principal_components &#8212; cocoatree 0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
     <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
@@ -40,38 +40,31 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="cocoatree-deconvolution-choose-num-components">
-<h1>cocoatree.deconvolution.choose_num_components<a class="headerlink" href="#cocoatree-deconvolution-choose-num-components" title="Link to this heading">¶</a></h1>
+  <section id="cocoatree-deconvolution-extract-principal-components">
+<h1>cocoatree.deconvolution.extract_principal_components<a class="headerlink" href="#cocoatree-deconvolution-extract-principal-components" title="Link to this heading">¶</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="cocoatree.deconvolution.choose_num_components">
-<span class="sig-prename descclassname"><span class="pre">cocoatree.deconvolution.</span></span><span class="sig-name descname"><span class="pre">choose_num_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eigenvalues</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rand_eigenvalues</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.deconvolution.choose_num_components" title="Link to this definition">¶</a></dt>
-<dd><p>Given the eigenvalues of the coevolution matrix (eigenvalues), and the
-eigenvalues for the set of randomized matrices (rand_eigenvalues), return
-the number of significant eigenmodes as those above the average first
-eigenvalue plus 3 standard deviations.
-Based on S1 text of Rivoire et al. (2016)</p>
+<dt class="sig sig-object py" id="cocoatree.deconvolution.extract_principal_components">
+<span class="sig-prename descclassname"><span class="pre">cocoatree.deconvolution.</span></span><span class="sig-name descname"><span class="pre">extract_principal_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coevo_matrix</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.deconvolution.extract_principal_components" title="Link to this definition">¶</a></dt>
+<dd><p>Perform principal component decomposition of a coevolution matrix</p>
 <section id="arguments">
 <h2>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">¶</a></h2>
 <dl class="simple">
-<dt>eigenvalues<span class="classifier">ndarray of shape (Npos),</span></dt><dd><p>list of eigenvalues of the coevolution matrix based on the real MSA</p>
-</dd>
-<dt>rand_eigenvalues<span class="classifier">ndarray of shape (Nrep, Npos), where Nrep is the number</span></dt><dd><p>of randomization iterations
-eigenvalues of all the iteartions of randomized alignments</p>
+<dt>coevo_matrix<span class="classifier">np.ndarray</span></dt><dd><p>coevolution matrix</p>
 </dd>
 </dl>
 </section>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
 <dl class="simple">
-<dt>n_component<span class="classifier">integer,</span></dt><dd><p>number of significant eigenmodes</p>
+<dt>principal_components<span class="classifier">np.ndarray (n_pos, n_pos)</span></dt><dd><p>Principal components obtained from the PCA of the coevolution matrix</p>
 </dd>
 </dl>
 </section>
 </dd></dl>
 
-<section id="examples-using-cocoatree-deconvolution-choose-num-components">
-<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.deconvolution.choose_num_components</span></code><a class="headerlink" href="#examples-using-cocoatree-deconvolution-choose-num-components" title="Link to this heading">¶</a></h2>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete coevolution analysis in order to detect protein sectors from data importation, MSA filtering, computation of positional and joint amino acid frequencies, and computation of the SCA coevolution matrix."><img alt="" src="../../_images/sphx_glr_plot_full_SCA_analysis_thumb.png" />
+<section id="examples-using-cocoatree-deconvolution-extract-principal-components">
+<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.deconvolution.extract_principal_components</span></code><a class="headerlink" href="#examples-using-cocoatree-deconvolution-extract-principal-components" title="Link to this heading">¶</a></h2>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete SCA analysis and detect protein sectors from data importation, MSA filtering."><img alt="" src="../../_images/sphx_glr_plot_full_SCA_analysis_thumb.png" />
 <p><a class="reference internal" href="../../auto_examples/plot_full_SCA_analysis.html#sphx-glr-auto-examples-plot-full-sca-analysis-py"><span class="std std-ref">Perform full SCA analysis on the S1A serine protease dataset</span></a></p>
   <div class="sphx-glr-thumbnail-title">Perform full SCA analysis on the S1A serine protease dataset</div>
 </div></div><div class="sphx-glr-clear"></div></section>

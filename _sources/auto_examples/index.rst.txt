@@ -50,7 +50,7 @@ General examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete coevolution analysis in order to detect protein sectors from data importation, MSA filtering, computation of positional and joint amino acid frequencies, and computation of the SCA coevolution matrix.">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete SCA analysis and detect protein sectors from data importation, MSA filtering.">
 
 .. only:: html
 

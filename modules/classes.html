@@ -45,13 +45,12 @@
 <nav class="contents local" id="table-of-contents">
 <p class="topic-title">Table of Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#module-cocoatree.io" id="id7"><a class="reference internal" href="#module-cocoatree.io" title="cocoatree.io"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.io</span></code></a>: Functions to import and export files</a></p></li>
-<li><p><a class="reference internal" href="#module-cocoatree.datasets" id="id8"><a class="reference internal" href="#module-cocoatree.datasets" title="cocoatree.datasets"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.datasets</span></code></a>: Utilities to load popular datasets.</a></p></li>
-<li><p><a class="reference internal" href="#module-cocoatree.msa" id="id9"><a class="reference internal" href="#module-cocoatree.msa" title="cocoatree.msa"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.msa</span></code></a>: Manipulating multiple sequence alignment and sequences</a></p></li>
-<li><p><a class="reference internal" href="#module-cocoatree.statistics" id="id10"><a class="reference internal" href="#module-cocoatree.statistics" title="cocoatree.statistics"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.statistics</span></code></a>: Computation of position-specific and pairwise statistics</a></p></li>
-<li><p><a class="reference internal" href="#module-cocoatree.deconvolution" id="id11"><a class="reference internal" href="#module-cocoatree.deconvolution" title="cocoatree.deconvolution"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.deconvolution</span></code></a>: Co-evolution matrix deconvolution</a></p></li>
-<li><p><a class="reference internal" href="#module-cocoatree.randomize" id="id12"><a class="reference internal" href="#module-cocoatree.randomize" title="cocoatree.randomize"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.randomize</span></code></a>: Alignment randomization</a></p></li>
-<li><p><a class="reference internal" href="#module-cocoatree.visualization" id="id13"><a class="reference internal" href="#module-cocoatree.visualization" title="cocoatree.visualization"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.visualization</span></code></a>: Visualization with ete3</a></p></li>
+<li><p><a class="reference internal" href="#module-cocoatree.io" id="id6"><a class="reference internal" href="#module-cocoatree.io" title="cocoatree.io"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.io</span></code></a>: Functions to import and export files</a></p></li>
+<li><p><a class="reference internal" href="#module-cocoatree.datasets" id="id7"><a class="reference internal" href="#module-cocoatree.datasets" title="cocoatree.datasets"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.datasets</span></code></a>: Utilities to load popular datasets.</a></p></li>
+<li><p><a class="reference internal" href="#module-cocoatree.msa" id="id8"><a class="reference internal" href="#module-cocoatree.msa" title="cocoatree.msa"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.msa</span></code></a>: Manipulating multiple sequence alignment and sequences</a></p></li>
+<li><p><a class="reference internal" href="#module-cocoatree.statistics" id="id9"><a class="reference internal" href="#module-cocoatree.statistics" title="cocoatree.statistics"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.statistics</span></code></a>: Computation of position-specific and pairwise statistics</a></p></li>
+<li><p><a class="reference internal" href="#module-cocoatree.deconvolution" id="id10"><a class="reference internal" href="#module-cocoatree.deconvolution" title="cocoatree.deconvolution"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.deconvolution</span></code></a>: Co-evolution matrix deconvolution</a></p></li>
+<li><p><a class="reference internal" href="#module-cocoatree.visualization" id="id11"><a class="reference internal" href="#module-cocoatree.visualization" title="cocoatree.visualization"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.visualization</span></code></a>: Visualization with ete3</a></p></li>
 </ul>
 </nav>
 <section id="module-cocoatree.io">
@@ -66,14 +65,14 @@
 <tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.io.load_tree_ete3.html#cocoatree.io.load_tree_ete3" title="cocoatree.io.load_tree_ete3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">io.load_tree_ete3</span></code></a>(file_path)</p></td>
 <td><p>From the loading of a Newick tree, generate a ete3.Tree object</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.io.export_fasta.html#cocoatree.io.export_fasta" title="cocoatree.io.export_fasta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">io.export_fasta</span></code></a>(sequences, seq_id, outpath)</p></td>
-<td><p>Function to export intermediate files in fasta format</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.io.export_fasta.html#cocoatree.io.export_fasta" title="cocoatree.io.export_fasta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">io.export_fasta</span></code></a>(sequences, sequences_id, outpath)</p></td>
+<td><p>Export intermediate files in fasta format</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.io.load_pdb.html#cocoatree.io.load_pdb" title="cocoatree.io.load_pdb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">io.load_pdb</span></code></a>(path2pdb, pdb_id, chain)</p></td>
-<td><p>Import a PDB file and extract the associated sequence along with the amino acid positions</p></td>
+<td><p>Read in a PDB file.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.io.export_sector_for_pymol.html#cocoatree.io.export_sector_for_pymol" title="cocoatree.io.export_sector_for_pymol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">io.export_sector_for_pymol</span></code></a>(mapping, ...)</p></td>
-<td><p>Export numpy arrays of a sector's residue positions and their contribution for coloring in PyMol.</p></td>
+<td><p>Export sector information for mapping on 3D structure in PyMOL.</p></td>
 </tr>
 </tbody>
 </table>
@@ -101,19 +100,22 @@
 <h3>Functions<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.msa.filter_sequences.html#cocoatree.msa.filter_sequences" title="cocoatree.msa.filter_sequences"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.filter_sequences</span></code></a>(seq_id, sequences[, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.msa.filter_sequences.html#cocoatree.msa.filter_sequences" title="cocoatree.msa.filter_sequences"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.filter_sequences</span></code></a>(sequences, sequences_id)</p></td>
 <td><p>Filter sequences</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.msa.filter_seq_id.html#cocoatree.msa.filter_seq_id" title="cocoatree.msa.filter_seq_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.filter_seq_id</span></code></a>(seq_id, sequences, list_id)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.msa.filter_seq_id.html#cocoatree.msa.filter_seq_id" title="cocoatree.msa.filter_seq_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.filter_seq_id</span></code></a>(sequences, sequences_id, ...)</p></td>
 <td><p>Filter sequences based on list</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.msa.map_to_pdb.html#cocoatree.msa.map_to_pdb" title="cocoatree.msa.map_to_pdb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.map_to_pdb</span></code></a>(pdb_seq, pdb_pos, sequences, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.msa.filter_ref_seq.html#cocoatree.msa.filter_ref_seq" title="cocoatree.msa.filter_ref_seq"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.filter_ref_seq</span></code></a>(sequences, sequences_id)</p></td>
+<td><p>Filter the alignment based on identity with a reference sequence</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.msa.map_to_pdb.html#cocoatree.msa.map_to_pdb" title="cocoatree.msa.map_to_pdb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.map_to_pdb</span></code></a>(pdb_seq, pdb_pos, sequences, ...)</p></td>
 <td><p>Mapping of the unfiltered MSA positions on a PDB structure.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.msa.compute_seq_identity.html#cocoatree.msa.compute_seq_identity" title="cocoatree.msa.compute_seq_identity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.compute_seq_identity</span></code></a>(sequences)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.msa.compute_seq_identity.html#cocoatree.msa.compute_seq_identity" title="cocoatree.msa.compute_seq_identity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.compute_seq_identity</span></code></a>(sequences)</p></td>
 <td><p>Computes the identity between sequences in a MSA (as Hamming's pairwise distance)</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.msa.compute_seq_weights.html#cocoatree.msa.compute_seq_weights" title="cocoatree.msa.compute_seq_weights"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.compute_seq_weights</span></code></a>(sequences[, threshold])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.msa.compute_seq_weights.html#cocoatree.msa.compute_seq_weights" title="cocoatree.msa.compute_seq_weights"><code class="xref py py-obj docutils literal notranslate"><span class="pre">msa.compute_seq_weights</span></code></a>(sequences[, threshold])</p></td>
 <td><p>Compute sequence weights</p></td>
 </tr>
 </tbody>
@@ -145,7 +147,7 @@
 <td><p>Computes  Shannon's entropy for each position in the alignment</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.statistics.position.compute_conservation.html#cocoatree.statistics.position.compute_conservation" title="cocoatree.statistics.position.compute_conservation"><code class="xref py py-obj docutils literal notranslate"><span class="pre">statistics.position.compute_conservation</span></code></a>(...)</p></td>
-<td><p>Compute the conservation of aa at each position.</p></td>
+<td><p>Compute the conservation of amino acid at each position.</p></td>
 </tr>
 </tbody>
 </table>
@@ -157,47 +159,27 @@
 <h3>Functions<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.eigen_decomp.html#cocoatree.deconvolution.eigen_decomp" title="cocoatree.deconvolution.eigen_decomp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.eigen_decomp</span></code></a>(mat)</p></td>
-<td><p>Performs eigenvalue decomposition of a square matrix</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.extract_independent_components.html#cocoatree.deconvolution.extract_independent_components" title="cocoatree.deconvolution.extract_independent_components"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.extract_independent_components</span></code></a>(...)</p></td>
+<td><p>Extract independent components from a coevolution matrix</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.compute_ica.html#cocoatree.deconvolution.compute_ica" title="cocoatree.deconvolution.compute_ica"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.compute_ica</span></code></a>(V[, kmax, ...])</p></td>
-<td><p>ICA rotation (using _basicICA) with default parameters and normalization of outputs.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.extract_principal_components.html#cocoatree.deconvolution.extract_principal_components" title="cocoatree.deconvolution.extract_principal_components"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.extract_principal_components</span></code></a>(...)</p></td>
+<td><p>Perform principal component decomposition of a coevolution matrix</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.choose_num_components.html#cocoatree.deconvolution.choose_num_components" title="cocoatree.deconvolution.choose_num_components"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.choose_num_components</span></code></a>(...)</p></td>
-<td><p>Given the eigenvalues of the coevolution matrix (eigenvalues), and the eigenvalues for the set of randomized matrices (rand_eigenvalues), return the number of significant eigenmodes as those above the average first eigenvalue plus 3 standard deviations.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.extract_sectors.html#cocoatree.deconvolution.extract_sectors" title="cocoatree.deconvolution.extract_sectors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.extract_sectors</span></code></a>(...)</p></td>
+<td><p>Extract residue positions of sectors</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.extract_positions_from_IC.html#cocoatree.deconvolution.extract_positions_from_IC" title="cocoatree.deconvolution.extract_positions_from_IC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.extract_positions_from_IC</span></code></a>(...)</p></td>
-<td><p>Produces a list of positions contributing to each independent component (IC) above a defined statistical cutoff (p_cut, the cutoff on the CDF of the t-distribution fit to the histogram of each IC).</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.eigen_decomp.html#cocoatree.deconvolution.eigen_decomp" title="cocoatree.deconvolution.eigen_decomp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.eigen_decomp</span></code></a>(mat)</p></td>
-<td><p>Performs eigenvalue decomposition of a square matrix</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.compute_ica.html#cocoatree.deconvolution.compute_ica" title="cocoatree.deconvolution.compute_ica"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.compute_ica</span></code></a>(V[, kmax, ...])</p></td>
-<td><p>ICA rotation (using _basicICA) with default parameters and normalization of outputs.</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="module-cocoatree.randomize">
-<span id="cocoatree-randomize-alignment-randomization"></span><span id="deconvolution-ref"></span><h2><a class="reference internal" href="#module-cocoatree.randomize" title="cocoatree.randomize"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.randomize</span></code></a>: Alignment randomization<a class="headerlink" href="#module-cocoatree.randomize" title="Link to this heading">¶</a></h2>
-<p>Module to perform randomization of alignments</p>
-<section id="id5">
-<h3>Functions<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.randomize.randomization.html#cocoatree.randomize.randomization" title="cocoatree.randomize.randomization"><code class="xref py py-obj docutils literal notranslate"><span class="pre">randomize.randomization</span></code></a>(sequences, n_rep[, ...])</p></td>
-<td><p>Randomize the alignment while preserving the frequencies of amino acids at each position and compute the resulting spectrum of coevolution matrix.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.substract_first_principal_component.html#cocoatree.deconvolution.substract_first_principal_component" title="cocoatree.deconvolution.substract_first_principal_component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.substract_first_principal_component</span></code></a>(...)</p></td>
+<td><p>Remove global correlations</p></td>
 </tr>
 </tbody>
 </table>
 </section>
 </section>
 <section id="module-cocoatree.visualization">
-<span id="cocoatree-visualization-visualization-with-ete3"></span><span id="randomize-ref"></span><h2><a class="reference internal" href="#module-cocoatree.visualization" title="cocoatree.visualization"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.visualization</span></code></a>: Visualization with ete3<a class="headerlink" href="#module-cocoatree.visualization" title="Link to this heading">¶</a></h2>
+<span id="cocoatree-visualization-visualization-with-ete3"></span><span id="deconvolution-ref"></span><h2><a class="reference internal" href="#module-cocoatree.visualization" title="cocoatree.visualization"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.visualization</span></code></a>: Visualization with ete3<a class="headerlink" href="#module-cocoatree.visualization" title="Link to this heading">¶</a></h2>
 <p>Module to visualize phylogenetic trees along with sectors</p>
-<section id="id6">
-<h3>Functions<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<section id="id5">
+<h3>Functions<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.visualization.update_tree_ete3_and_return_style.html#cocoatree.visualization.update_tree_ete3_and_return_style" title="cocoatree.visualization.update_tree_ete3_and_return_style"><code class="xref py py-obj docutils literal notranslate"><span class="pre">visualization.update_tree_ete3_and_return_style</span></code></a>(...)</p></td>

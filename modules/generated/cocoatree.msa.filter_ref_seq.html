@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>cocoatree.msa.compute_seq_weights &#8212; cocoatree 0.0 documentation</title>
+    <title>cocoatree.msa.filter_ref_seq &#8212; cocoatree 0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
     <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
@@ -40,30 +40,28 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="cocoatree-msa-compute-seq-weights">
-<h1>cocoatree.msa.compute_seq_weights<a class="headerlink" href="#cocoatree-msa-compute-seq-weights" title="Link to this heading">¶</a></h1>
+  <section id="cocoatree-msa-filter-ref-seq">
+<h1>cocoatree.msa.filter_ref_seq<a class="headerlink" href="#cocoatree-msa-filter-ref-seq" title="Link to this heading">¶</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="cocoatree.msa.compute_seq_weights">
-<span class="sig-prename descclassname"><span class="pre">cocoatree.msa.</span></span><span class="sig-name descname"><span class="pre">compute_seq_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.msa.compute_seq_weights" title="Link to this definition">¶</a></dt>
-<dd><p>Compute sequence weights</p>
-<p>Each sequence s is given a weight ws = 1/Ns where Ns is the number of
-sequences with an identity to s above a specified threshold.</p>
-<section id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
-<p>sequences : list of sequences</p>
-<p>threshold : float, optional, default: 0.8</p>
-<blockquote>
-<div><p>percentage identity above which the sequences are considered identical
-(default=0.8)</p>
-</div></blockquote>
+<dt class="sig sig-object py" id="cocoatree.msa.filter_ref_seq">
+<span class="sig-prename descclassname"><span class="pre">cocoatree.msa.</span></span><span class="sig-name descname"><span class="pre">filter_ref_seq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequences_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refseq_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.msa.filter_ref_seq" title="Link to this definition">¶</a></dt>
+<dd><p>Filter the alignment based on identity with a reference sequence</p>
+<p>Remove sequences r with Sr &lt; delta, where Sr is the fractional identity
+between r and a specified reference sequence.</p>
+<section id="arguments">
+<h2>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">¶</a></h2>
+<p>sequences : list of sequences in the MSA</p>
+<p>sequences_id : list of sequence identifiers in the MSA</p>
+<p>delta : identity threshold (default 0.2)</p>
+<dl class="simple">
+<dt>refseq_id<span class="classifier">identifier of the reference sequence, if ‘None’, a reference</span></dt><dd><p>sequence is computed (default ‘None’)</p>
+</dd>
+</dl>
 </section>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
-<p>weights : np.array (nseq, ) of each sequence weight</p>
-<dl class="simple">
-<dt>m_eff<span class="classifier">float</span></dt><dd><p>number of effective sequences</p>
-</dd>
-</dl>
+<p>filt_seqs : filtered list of sequences</p>
+<p>filt_seqs_id : corresponding list of sequence identifiers</p>
 </section>
 </dd></dl>
 

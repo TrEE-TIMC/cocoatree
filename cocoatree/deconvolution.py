@@ -6,8 +6,8 @@ from cocoatree.statistics.pairwise import compute_sca_matrix
 from cocoatree.pysca import _compute_ica, _icList
 
 
-def extract_independent_components(sequences, coevo_matrix, method='pySCA',
-                                   n_components=None, nrandom_pySCA=10,
+def extract_independent_components(sequences, coevo_matrix, method=None,
+                                   n_components=3, nrandom_pySCA=10,
                                    learnrate_ICA=0.1, nb_iterations_ICA=100000,
                                    freq_regul=__freq_regularization_ref,
                                    verbose_random_iter=True):
@@ -24,9 +24,11 @@ def extract_independent_components(sequences, coevo_matrix, method='pySCA',
     coevo_matrix : np.ndarray
         coevolution matrix
 
-    method : str, default='pySCA'
+    method : {None, "pysca"}, default=None
+        Methods to use to estimate the number of components to extract. By
+        default, relies on the number of components provided by the user.
 
-    n_components : int, default=None,
+    n_components : int, default=3,
         Number of independent components to extract
 
     nrandom_pySCA : int, default=10,
@@ -48,14 +50,15 @@ def extract_independent_components(sequences, coevo_matrix, method='pySCA',
         corresponding to a list of independent components
     """
 
-    if n_components is None:
+    if method is not None:
         if method == 'pySCA':
             n_components = _compute_n_components_as_pySCA(
                 sequences, coevo_matrix,
                 nrandom=nrandom_pySCA, freq_regul=freq_regul,
                 verbose_random_iter=verbose_random_iter)
         else:
-            n_components = 3
+            raise ValueError(
+                f"{method} is not a valid method. Options are None, 'pySCA'")
 
     V, S, Vt = np.linalg.svd(coevo_matrix)
     Vica, _ = _compute_ica(V, n_components,

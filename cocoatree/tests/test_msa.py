@@ -8,6 +8,7 @@ def test_filter_seq_id():
     sequences = sequences["alignment"]
 
     filtered_seq = msa.filter_seq_id(
-        sequence_ids, sequences,
+        sequences,
+        sequence_ids,
         sequence_ids[:100])
     assert len(filtered_seq) <= 100

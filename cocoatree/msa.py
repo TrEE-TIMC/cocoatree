@@ -151,9 +151,9 @@ def filter_ref_seq(sequences, sequences_id, delta=0.2, refseq_id=None,
 
     Arguments
     ---------
-    seq_id : list of sequence identifiers in the MSA
-
     sequences : list of sequences in the MSA
+
+    sequences_id : list of sequence identifiers in the MSA
 
     delta : identity threshold (default 0.2)
 
@@ -215,7 +215,7 @@ def _choose_ref_seq(msa):
     return ref_seq
 
 
-def filter_seq_id(seq_id, sequences, list_id):
+def filter_seq_id(sequences, sequences_id, list_id):
     """
     Filter sequences based on list
 
@@ -224,9 +224,9 @@ def filter_seq_id(seq_id, sequences, list_id):
 
     Parameters
     ----------
-    seq_id : list of the MSA's sequence identifiers
-
     sequences : list of MSA sequences
+
+    sequences_id : list of the MSA's sequence identifiers
 
     list_id : list of sequence identifiers the user wants to keep. The
     identifiers must be in the same format as in the input MSA
@@ -241,9 +241,9 @@ def filter_seq_id(seq_id, sequences, list_id):
     seq_list : list of sequences of the filtered MSA
     """
     new_msa = MultipleSeqAlignment([])
-    for ident in seq_id:
+    for ident in sequences_id:
         if ident in list_id:
-            new_record = SeqRecord(Seq(sequences[seq_id.index(ident)]),
+            new_record = SeqRecord(Seq(sequences[sequences_id.index(ident)]),
                                    id=ident)
             new_msa.append(new_record)
 
@@ -257,7 +257,7 @@ def filter_seq_id(seq_id, sequences, list_id):
     return [new_msa, id_list, seq_list]
 
 
-def map_to_pdb(pdb_seq, pdb_pos, sequences, seq_id, ref_seq_id):
+def map_to_pdb(pdb_seq, pdb_pos, sequences, sequences_id, ref_seq_id):
     """
     Mapping of the unfiltered MSA positions on a PDB structure.
 
@@ -272,7 +272,7 @@ def map_to_pdb(pdb_seq, pdb_pos, sequences, seq_id, ref_seq_id):
     sequences: list,
         List of sequences of the unfiltered MSA
 
-    seq_id: list,
+    sequences_id: list,
         List of sequence identifiers in the unfiltered MSA
 
     ref_seq_id: str,
@@ -288,7 +288,7 @@ def map_to_pdb(pdb_seq, pdb_pos, sequences, seq_id, ref_seq_id):
         acids in the unfiltered MSA
     """
     msa_pos = []
-    ref_seq_idx = seq_id.index(ref_seq_id)
+    ref_seq_idx = sequences_id.index(ref_seq_id)
     for aa_index in range(len(sequences[ref_seq_idx])):
         if sequences[ref_seq_idx][aa_index] != '-':
             msa_pos.append(aa_index)

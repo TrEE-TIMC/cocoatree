@@ -20,7 +20,7 @@ def load_MSA(file_path, format, clean=True, verbose=False):
 
     Returns
     -------
-    seq_id : list of sequence identifiers
+    sequences_id : list of sequence identifiers
 
     sequences : list of sequences as strings
     """
@@ -30,14 +30,14 @@ def load_MSA(file_path, format, clean=True, verbose=False):
     if clean:
         alignment = _clean_msa(alignment)
 
-    seq_id = [record.id for record in alignment]
+    sequences_id = [record.id for record in alignment]
     sequences = [str(record.seq) for record in alignment]
 
     if verbose:
         print('Number of sequences: %i' % len(alignment))
         print('Alignment of length: %i' % len(alignment[0]))
 
-    return seq_id, sequences
+    return sequences_id, sequences
 
 
 def load_tree_ete3(file_path):
@@ -57,7 +57,7 @@ def load_tree_ete3(file_path):
     return tree_ete3
 
 
-def export_fasta(sequences, seq_id, outpath):
+def export_fasta(sequences, sequences_id, outpath):
     """
     Export intermediate files in fasta format
 
@@ -65,7 +65,7 @@ def export_fasta(sequences, seq_id, outpath):
     ---------
     sequences : list of sequences as strings (as imported by load_MSA)
 
-    seq_id : list of sequences identifiers (as imported by load_MSA)
+    sequences_id : list of sequences identifiers (as imported by load_MSA)
 
     outpath : path to the output file
     """
@@ -74,7 +74,7 @@ def export_fasta(sequences, seq_id, outpath):
     Nseq = len(sequences)
     with open(outpath, 'w') as outfile:
         for record in range(0, Nseq):
-            outfile.write('>' + str(seq_id[record]) + '\n')
+            outfile.write('>' + str(sequences_id[record]) + '\n')
             outfile.write(str(sequences[record]) + '\n')
 
 

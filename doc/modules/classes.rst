@@ -84,6 +84,7 @@ Functions
 
    msa.filter_sequences
    msa.filter_seq_id
+   msa.filter_ref_seq
    msa.map_to_pdb
    msa.compute_seq_identity
    msa.compute_seq_weights
@@ -147,28 +148,6 @@ Functions
 
 
 .. _deconvolution_ref:
-
-
-:mod:`cocoatree.randomize`: Alignment randomization
-====================================================
-
-.. automodule:: cocoatree.randomize
-    :no-members:
-    :no-inherited-members:
-
-
-Functions
----------
-
-.. currentmodule:: cocoatree
-
-.. autosummary::
-
-  :toctree: generated/
-  :template: function.rst
-
-
-.. _randomize_ref:
 
 
 :mod:`cocoatree.visualization`: Visualization with ete3

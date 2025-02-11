@@ -355,3 +355,43 @@ def compute_seq_weights(sequences, threshold=0.8):
     m_eff = sum(seq_weights)
 
     return seq_weights, m_eff
+
+
+def map_msa_positions(n_loaded_pos, remaining_pos):
+    """
+    Maps positions between the original and the filtered MSA
+
+    Parameters
+    ----------
+    n_loaded_pos : int,
+        Number of positions in the original unfiltered MSA
+
+    remaining_pos : np.ndarray,
+        array containing the indexes of positions that have been conserved
+        after filtering the MSA (output from cocoatree.msa.filter_sequences)
+
+    Returns
+    -------
+    original2filtered : dictionnary,
+        the keys are the positions in the original MSA and the values are the
+        corresponding positions in the filtered MSA. When the original position
+        has been filtered, the value is set to 'None'.
+
+    filtered2original : dictionnary,
+        the keys are the positions in the filtered MSA and the values are the
+        corresponding positions in the original MSA.
+    """
+
+    original2filtered = dict()
+    filtered2original = dict()
+
+    for pos in range(n_loaded_pos):
+        if pos in remaining_pos:
+            original2filtered[pos] = np.where(remaining_pos == pos)[0][0]
+        else:
+            original2filtered[pos] = None
+
+    for pos in range(len(remaining_pos)):
+        filtered2original[pos] = remaining_pos[pos]
+
+    return original2filtered, filtered2original

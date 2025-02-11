@@ -267,7 +267,7 @@ Compute the SCA coevolution matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7f063d15e690>
+    <matplotlib.colorbar.Colorbar object at 0x7f5cb46e53d0>
 
 
 
@@ -278,7 +278,7 @@ and of independent components (ICA analysis)
 (this can take some time because of randomization)
 -------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 112-122
+.. GENERATED FROM PYTHON SOURCE LINES 112-121
 
 .. code-block:: Python
 
@@ -287,7 +287,6 @@ and of independent components (ICA analysis)
     principal_components = c_deconv.extract_principal_components(
         SCA_matrix)
     idpt_components = c_deconv.extract_independent_components(
-        sequences,
         SCA_matrix,
         n_components=n_components)
 
@@ -299,12 +298,12 @@ and of independent components (ICA analysis)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 123-125
+.. GENERATED FROM PYTHON SOURCE LINES 122-124
 
 Plot components
 ---------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 125-147
+.. GENERATED FROM PYTHON SOURCE LINES 124-146
 
 .. code-block:: Python
 
@@ -348,12 +347,12 @@ Plot components
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 148-150
+.. GENERATED FROM PYTHON SOURCE LINES 147-149
 
 Extract sectors
 ---------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 150-157
+.. GENERATED FROM PYTHON SOURCE LINES 149-156
 
 .. code-block:: Python
 
@@ -386,14 +385,14 @@ Extract sectors
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 158-162
+.. GENERATED FROM PYTHON SOURCE LINES 157-161
 
 Plot coevolution within and between the sectors
 Each white square corresponds to a sector, with the residues ordered in
 decreasing contribution to the independent component associated from top to
 bottom and from left to right.
 
-.. GENERATED FROM PYTHON SOURCE LINES 162-184
+.. GENERATED FROM PYTHON SOURCE LINES 161-183
 
 .. code-block:: Python
 
@@ -431,13 +430,13 @@ bottom and from left to right.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 185-188
+.. GENERATED FROM PYTHON SOURCE LINES 184-187
 
 Do the same but for the SCA matrix where the global correlation mode has
 been removed and, hence, such that sectors are better highlighted.
 See Rivoire et al., PLOSCB, 2016
 
-.. GENERATED FROM PYTHON SOURCE LINES 188-213
+.. GENERATED FROM PYTHON SOURCE LINES 187-212
 
 .. code-block:: Python
 
@@ -478,13 +477,13 @@ See Rivoire et al., PLOSCB, 2016
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 214-217
+.. GENERATED FROM PYTHON SOURCE LINES 213-216
 
 Export sector sequences for all sequences as a fasta file
 The file can then be used for visualization along a phylogenetic tree
 as implemented in the cocoatree.visualization module
 
-.. GENERATED FROM PYTHON SOURCE LINES 217-248
+.. GENERATED FROM PYTHON SOURCE LINES 216-247
 
 .. code-block:: Python
 
@@ -529,7 +528,7 @@ as implemented in the cocoatree.visualization module
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 16.936 seconds)
+   **Total running time of the script:** (0 minutes 16.577 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_full_SCA_analysis.py:

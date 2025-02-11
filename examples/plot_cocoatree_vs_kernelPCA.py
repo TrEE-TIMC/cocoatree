@@ -66,3 +66,11 @@ ax.scatter(sca_sklearn[:, 0], scac_principal_components[0])
 ax.set_xlabel("SCA with sklearn's kernelPCA - PC1")
 ax.set_ylabel("SCA centered with SVD - PC1")
 
+# %%
+# Now, let's look at the uncentered sca matrix with SVD's second component
+
+fig, ax = plt.subplots(figsize=(4, 4), ncols=1, tight_layout=True)
+ax.scatter(sca_sklearn[:, 0], sca_principal_components[1])
+ax.set_xlabel("SCA matrix with sklearn's kernelPCA - PC1")
+ax.set_ylabel("SCA matrix with SVD (C2)")
+

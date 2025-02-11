@@ -114,7 +114,6 @@ n_components = 9
 principal_components = c_deconv.extract_principal_components(
     SCA_matrix)
 idpt_components = c_deconv.extract_independent_components(
-    sequences,
     SCA_matrix,
     n_components=n_components)
 

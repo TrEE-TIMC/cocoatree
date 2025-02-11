@@ -6,8 +6,9 @@ from cocoatree.statistics.pairwise import compute_sca_matrix
 from cocoatree.pysca import _compute_ica, _icList
 
 
-def extract_independent_components(sequences, coevo_matrix, method=None,
+def extract_independent_components(coevo_matrix, method=None,
                                    n_components=3, nrandom_pySCA=10,
+                                   sequences=None,
                                    learnrate_ICA=0.1, nb_iterations_ICA=100000,
                                    freq_regul=__freq_regularization_ref,
                                    verbose_random_iter=True):
@@ -19,10 +20,13 @@ def extract_independent_components(sequences, coevo_matrix, method=None,
 
     Arguments
     ---------
-    sequences : list of sequences
-
     coevo_matrix : np.ndarray
         coevolution matrix
+
+    sequences : list of sequences, optional, default: None
+        when using pySCA's strategy to estimate the number of components,
+        sequences needs to be provided.
+
 
     method : {None, "pysca"}, default=None
         Methods to use to estimate the number of components to extract. By
@@ -52,6 +56,11 @@ def extract_independent_components(sequences, coevo_matrix, method=None,
 
     if method is not None:
         if method == 'pySCA':
+            if sequences is None:
+                raise ValueError(
+                    "Sequences need to be provided to estimate"
+                    "the number of components automatically")
+
             n_components = _compute_n_components_as_pySCA(
                 sequences, coevo_matrix,
                 nrandom=nrandom_pySCA, freq_regul=freq_regul,

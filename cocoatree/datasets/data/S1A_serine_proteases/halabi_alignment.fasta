@@ -516,6 +516,20 @@ ESSQEQSSVVRAVIHPDYDA------------------------ASHDQDIMLLRLARP-AKLS------
 ---PCGSKE-----KPGVYTNVCR------YTNWIQKTIQAK----------------------------
 --------------------------------------------------------------
 
+>gi|49258366|pdb|1OP0|A__vertebrate|cold|Deinagkistrodon acutus|Gnathostomata|Squamata|Viperidae|venom|
+----------------------------------------------------------------------
+------------------------------------------------------------VIGG------
+-------------------------NECDIN---------------------------------------
+--EHRFLVAFFNT-------------------TGFFCGGTLIN------PEWVVT------------AAH
+CDST-----------------------------DFQMQLGVHSKK-----------------------VL
+NEDEQTRNPKEKFICPNKNN-----------------------NEVLDKDIMLIKLDKP-ISNS------
+-----------------KHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-SITPVK---------------------------------------
+ETFPD----VP-YCANINLLD---------------------------HAVCQAGYPE------------
+----LLAEYRTLCAGIVQGG---------KDTCGGDSG-GPLICN----------GQFQGIVSYGAH---
+---PCGQGP-----KPGIYTNVFD------YTDWIQRNIAGNTDATCPP---------------------
+--------------------------------------------------------------
+
 >gi|88192901|pdb|2F9N|A__vertebrate|warm|Homo sapiens|Mammalia|Primates|Hominidae|tryptase|
 ----------------------------------------------------------------------
 ------------------------------------------------------------IVGG------
@@ -528,6 +542,20 @@ FPPG-----------MPCWVTGWG-DVDNDEP--------------------------------------
 LPPPF----PL-KQVKVPIME---------------------------NHICDAKYHLGAYT--------
 GDDVRIIRDDMLCAGNSQR-----------DSCQGDSG-GPLVCKVN------GTWLQAGVVSWGE----
 ---GCAQPN-----RPGIYTRVTY------YLDWIHHYVPKKP---------------------------
+--------------------------------------------------------------
+
+>gi|49258367|pdb|1OP2|A__vertebrate|cold|Deinagkistrodon acutus|Gnathostomata|Squamata|Viperidae|venom|
+----------------------------------------------------------------------
+------------------------------------------------------------VIGG------
+-------------------------NECDIN---------------------------------------
+--EHRFLVAFFNT-------------------TGFFCGGTLIN------PEWVVT------------AAH
+CDST-----------------------------NFQMQLGVHSKK-----------------------VL
+NEDEQTRNPKEKFICPNKNN-----------------------NEVLDKDIMLIKLDKP-ISNS------
+-----------------KHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-SITPVK---------------------------------------
+ETFPD----VP-YCANINLLD---------------------------HAVCQAGYPE------------
+----LLAEYRTLCAGIVQGG---------KDTCGGDSG-GPLICN----------GQFQGIVSYGAH---
+---PCGQGP-----KPGIYTNVFD------YTDWIQRNIAGNTDATCPP---------------------
 --------------------------------------------------------------
 
 >gi|75765443|pdb|1X7A|C__vertebrate|warm|Sus scrofa|Mammalia|Laurasiatheria|Suidae|f ixa|
@@ -570,6 +598,20 @@ KLG------------STCYTSGWGL--ISTFT--------------NRGS--------------------
 ----G----TL-QCVELRLQS---------------------------NEKCARAYP-------------
 ----EKMTEFVLCATHRDDS---------GSICLGDSG-GALICD----------GVFQGITSWGYS---
 ---ECADFN-----DNFVFTKVMP------HKKWIKETIEKNS---------------------------
+--------------------------------------------------------------
+
+>gi|5821881|pdb|1BQY|A__vertebrate|cold|Viridovipera stejnegeri|Gnathostomata|Squamata|Viperidae|plasminogen activator|
+----------------------------------------------------------------------
+------------------------------------------------------------VFGG------
+-------------------------DECNIN---------------------------------------
+--EHRSLVVLFNS-------------------NGFLCGGTLIN------QDWVVT------------AAH
+CDSN-----------------------------NFQLLFGVHSKK-----------------------IL
+NEDEQTRDPKEKFFCPNRKK-----------------------DDEVDKDIMLIKLDSS-VSNS------
+-----------------EHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-KTIPTK---------------------------------------
+EIYPD----VP-HCANINILD---------------------------HAVCRTAYSW------------
+----RQVANTTLCAGILQGG---------RDTCHFDSG-GPLICN----------GIFQGIVSWGGH---
+---PCGQPG-----EPGVYTKVFD------YLDWIKSIIAGNKDATCPP---------------------
 --------------------------------------------------------------
 
 >gi|5822045|pdb|1DIC|A__vertebrate|warm|Homo sapiens|Mammalia|Primates|Hominidae|cf d|
@@ -3092,6 +3134,20 @@ ETFQRQISVDRTIVHPRYNP------------------------QTHDNDIMMVHLKRP-VKFS------
 ---PCGSKE-----KPGVYTDVCT------HIRWIQNIIRNK----------------------------
 --------------------------------------------------------------
 
+>gi|6693854|AAF25008__vertebrate|cold|Gloydius blomhoffi brevicaudus|Gnathostomata|Squamata|Viperidae|salmonase|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLVNFLILQLSYAQKSSELVIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLALLYS--------------------ERFQCGGTLIN------EEWVLT------------AAH
+CDMR-----------------------------NMYIYLGVHNVS-----------------------VQ
+YDDEQRRYPKKKYFRLSSRN-----------------------YNQWDKDIMLIRLNRP-LRNS------
+-----------------AHIAPL----------------------SLP-----------------SNPPS
+-VG------------SVCRIMGWG-TITSPQ---------------------------------------
+VTFPD----VL-HCANINIFD---------------------------YEVCRAAYPE------------
+----LPATRRTLCAGILEGG---------KDSCNGDSG-GPLICN----------GQFQGIAYWGAD---
+---TCAQPR-----EPGLYTKVFD------YIDWIQSIIAGNTAVTCPP---------------------
+--------------------------------------------------------------
+
 >gi|76642379__vertebrate|warm|Bos taurus|Mammalia|Ruminantia|Bovidae|kallikrein|
 --------------------------MVAGGQHIQGPGPGWGVPPAPCPPGAKAGLGGQSSWARPGPPPA
 CSPSWCLPLQDLLHQPHCCPLSPSPSAQEPGACPSPLQAMMTLQLIMFALVTGHVGGETRIIKG------
@@ -3160,6 +3216,20 @@ KLG------------STCLASGWG-STTPIK---------------------------------------
 FKYPD----DL-QCVNLKLLP---------------------------NEDCDKAHE-------------
 ----MKVTDAMLCAGEMDGG---------SYTCEHDSG-GPLICD----------GILQGITSWGPE---
 ---PCGEPT-----EPSVYTKLIK------FSSWIRETMANNP---------------------------
+--------------------------------------------------------------
+
+>gi|6706013__vertebrate|cold|Gloydius blomhoffi|Gnathostomata|Squamata|Viperidae|fibrinogenase|
+----------------------------------------------------------------------
+------------------------------------------------------------VIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLALLYS--------------------ERFQCGGTLIN------EEWVLT------------AAH
+CDMG-----------------------------NMYIYLGVHNVS-----------------------VQ
+YDDEQRRYPKKKYFCLSSRN-----------------------YNQWDNDIMLIRLNRP-VRNS------
+-----------------AHIAPL----------------------SLP-----------------SGPPS
+-VG------------SVCRVMGWG-TITSPN---------------------------------------
+ETYPD----VP-HCANINILD---------------------------YEVCRAAYAG------------
+----LPATSRTLCAGILEGG---------KDSCRGDSG-GPLICN----------GEIQGIVSWGGN---
+---ICAQPR-----EPGLYTKVFD------YIDWIQSIIAGNTTVNCPP---------------------
 --------------------------------------------------------------
 
 >gi|2791548__vertebrate|warm|Ovis aries|Mammalia|Ruminantia|Bovidae|mcp|
@@ -3414,6 +3484,20 @@ NKTPD----KL-QQAALPLLS---------------------------NAECKKSWG-------------
 ---TCSTS------SPGVYARVTK------LIPWVQKILAAN----------------------------
 --------------------------------------------------------------
 
+>gi|17933274|AAL48221__vertebrate|cold|Gloydius ussuriensis|Gnathostomata|Squamata|Viperidae|thrombin|
+----------------------------------------------------------------------
+-----------------------------------------------------------MVIGG------
+-------------------------VECNIN---------------------------------------
+--EHRFLVALYTSR-----------------SRRFYCGGTLIN------QEWVLT------------AAH
+CDRK-----------------------------NIRIKLGMHSEK-----------------------VP
+NEDAQTRVPKEKFFCLSSKT-----------------------YTKWDKDIMLMRLKRP-VNNS------
+-----------------THIAPV----------------------SLP-----------------SNPPS
+-VG------------SVCRVMGWG-TITSSQ---------------------------------------
+ETHPD----VP-HCANINILD---------------------------YEVCRAAYPE------------
+----LPVTRRTLCAGILEGG---------KDSCNGDSG-GPLICN----------GQFQGIAYWGAD---
+---TCAQPR-----EPGLYTKVFD------YTDWIQSIISGNTDATCPQ---------------------
+--------------------------------------------------------------
+
 >gi|66553833__not vertebrate|cold|Apis mellifera|Insecta|Hymenoptera|Apidae|ELSE|
 ----------------------------------------------------------------------
 -----------------MADLPKFDMQIVTHVRRKPLAWMDAEVHSSQALGSKLPLPDTQIVGG------
@@ -3470,6 +3554,20 @@ PDTPA----LL-QQAALPLLT---------------------------NDDCKRYWG-------------
 ---TCSTS------TPAVYARVTK------LRAWVDQTIASN----------------------------
 --------------------------------------------------------------
 
+>gi|38146946|AAR11859__vertebrate|cold|Gloydius shedaoensis|Gnathostomata|Squamata|Viperidae|thrombin|
+----------------------------------------------------------------------
+-----------------------------------------------------------MVIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVALYTSR-----------------FRTLFCGGTLIN------QEWVLT------------AAH
+CDRK-----------------------------NFRIKLGIHSKK-----------------------VP
+NEDEQTRVPKEKFFCLSSKN-----------------------YTLWDKDIMLIRLDSP-VKNS------
+-----------------THIAPF----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-RISPTE---------------------------------------
+ETYPD----VP-HCVNINLLE---------------------------YEMCRVPYPEF-----------
+---GLPATSRTLCAGILEGG---------KDTCRGDSG-GPLICN----------GQFQGIASWGDD---
+---PCAQPH-----KPAAYTKVFD------HLDWIKSIIAGNTDASCPP---------------------
+--------------------------------------------------------------
+
 >gi|60551965|AAH90827__vertebrate|cold|danio rerio|Actinopterygii|Cypriniformes|Cyprinidae|ELSE|
 ----------------------------------------------------------------------
 ---------------------------MWRLTCATLTLLICVKGSLSQLNVCGQAPLNSRIVGG------
@@ -3483,6 +3581,20 @@ LPAPG----IL-QETMIPVVA---------------------------NDRCNALLGS------------
 ----GTVTNNMICAGLAKGG---------KDTCQGDSG-GPMVTRLC------TVWIQAGITSWGY----
 ---GCADPN-----SPGVYTRVSQ------YQSWISSKISQNQPGFILFTPPSSCTSSSLTSSSCSGRCN
 EVYNTLNRCNCNANCATKCCTDYKQRCAS---------------------------------
+
+>gi|602600__vertebrate|cold|Protobothrops mucrosquamatus|Gnathostomata|Squamata|Viperidae|mucofirase|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVIGG------
+-------------------------DECNIN---------------------------------------
+--EHPFLVLVYY--------------------DDYQCGGTLLN------EEWVLT------------AAH
+CNGK-----------------------------DMEIYLGVHSKK-----------------------VP
+NKDVQRRVPKEKFFCDSSKT-----------------------YTKWNKDIMLIRLDRP-VRKS------
+-----------------AHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRVMGWG-TITSPQ---------------------------------------
+ETYPD----VP-HCANINLLD---------------------------YEVCRAAYAG------------
+----LPATSRTLCAGILEGG---------KDSCVGDSG-GPLICN----------GQFQGIVSWGGD---
+---PCAQPR-----EPGVYTNVFD------HLDWIKGIIAGNTDVTCPL---------------------
+--------------------------------------------------------------
 
 >gi|39576258__bacteria|cold|Bdellovibrio bacteriovorus HD100|Deltaproteobacteria|Bdellovibrionales|Bdellovibrionaceae|trypsin|
 ----------------------------------------------------------------------
@@ -3554,6 +3666,34 @@ WQKPD----DL-QCVFLKLLP---------------------------IKNCIENHN-------------
 ---PCGKPG-----VPAMYTNLIK------FNSWIKDTMTKNS---------------------------
 --------------------------------------------------------------
 
+>gi|4006842__vertebrate|cold|Gloydius halys|Gnathostomata|Squamata|Viperidae|pallabin|
+----------------------------------------------------------------------
+------------------------------------MVLIKVLANLLILQLSYAQKSSELIIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVALYTS-------------------RTLFCGGTLIN------QEWVLT------------AAH
+CNME-----------------------------DIQIKLGMHSKK-----------------------VP
+NEDEQKRVPKEKFFCLSSKN-----------------------YTLWDKDIMLIRLDSP-VKNS------
+-----------------AHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRTMGWG-RISSTK---------------------------------------
+ETYPD----VP-HCVNINLLE---------------------------YEMCRAPYPEF-----------
+---ELPATSRTLCAGILEGG---------KDTCVGDSG-GPLICN----------GQFQGIASWGDD---
+---PCAQPH-----KPAAYTKVFD------HLDWIENIIAGNTDASCPP---------------------
+--------------------------------------------------------------
+
+>gi|3122187|P81176__vertebrate|cold|Gloydius blomhoffi|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------------------------------IIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVALYTPR-----------------SRTLFCGGTLIN------QEWVLT------------AAH
+CDRK-----------------------------NFRIKLGMHSKK-----------------------VP
+NKDEQTRVPKEKFFCLSSKN-----------------------YTLWDKDIMLIRLDSP-VKNS------
+-----------------THIEPF----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-RISPTE---------------------------------------
+ETFPD----VP-HCVNINLLE---------------------------YEMCRAPYPEF-----------
+---ELPATSRTLCAGILEGG---------KDTCRGDSG-GPLICN----------GQFQGIASWGDD---
+---PCAQPH-----KPAAYTKVFD------HLDWIKSIIAGNTDASCPP---------------------
+--------------------------------------------------------------
+
 >gi|94378519__vertebrate|warm|Mus musculus|Mammalia|Rodentia|Muridae|tesp4|
 ----------------------------------------------------------------------
 ---------------------------------------------MWELLLLSPVDDDDKIVGG------
@@ -3594,6 +3734,20 @@ KPG------------DVCYVAGWGK-LG-------------------PMG--------------------
 -EFPD----TL-QEVELTVQE---------------------------DQKCESHLTN------------
 ----VYDKANEICAGDPNIK---------RASFQGDSG-GPLVCK----------KVAAGIVSYGRK---
 ---DGST--------PREFTKVST------FLSWIKKTMKKN----------------------------
+--------------------------------------------------------------
+
+>gi|545584|AAB30013__vertebrate|cold|Bothrops jararaca|Gnathostomata|Squamata|Viperidae|venom|
+----------------------------------------------------------------------
+------------------------------------------------------------VIGG------
+-------------------------DECDIN---------------------------------------
+--EHPFLAFMYYS-------------------PQYFCGMTLIN------QEWVLT------------AAH
+CDKT-----------------------------YMRIYLGIH----------------------------
+--TRSVANDDEVIRYPKEKFICPN----------------KKKNVITDKDIMLIRLNRP-VKNS------
+-----------------THIAPI----------------------SLP-----------------SNPPS
+-VG------------SVCRIMGWG-AITTSE---------------------------------------
+DTYPD----VP-HCANINLFN---------------------------NTVCREAYN-------------
+-----GLPAKTLCAGVLQGG---------IDTCGGDSG-GPLICN----------GQFQGILSWGSD---
+---PCAEPR-----KPAFYTKVFD------YLPWIQSIIAGNKTATCPP---------------------
 --------------------------------------------------------------
 
 >gi|1698668|AAB37261__not vertebrate|cold|Culex pipiens quinquefasciatus|Insecta|Diptera|Culicidae|trypsin|
@@ -3680,6 +3834,20 @@ VTFPS----KL-MCTDVKLIS---------------------------SQDCKKVYK-------------
 ---PCGQPN-----DPGVYTQVCK------YTNWIKETMRKHR---------------------------
 --------------------------------------------------------------
 
+>gi|17933276|AAL48222__vertebrate|cold|Gloydius ussuriensis|Gnathostomata|Squamata|Viperidae|thrombin|
+----------------------------------------------------------------------
+-----------------------------------------------------------MVIGG------
+-------------------------VECNIN---------------------------------------
+--EHGFLALLYS--------------------RRFQCGGTLIN------EEWVLT------------AAH
+CDMR-----------------------------NMYIYLGVHNVS-----------------------VQ
+YDDEQRRYPKKKYFCLSSRN-----------------------YNQWDKDIMLIRLNRP-VRNS------
+-----------------AHIAPL----------------------SLP-----------------SNPPS
+-VG------------SVCRVMGWG-TITSPQ---------------------------------------
+ETLPD----VP-HCANINILD---------------------------YEVCRAAYPE------------
+----LPVTRRTLCAGILEGG---------KDSCNGDSG-GPLICN----------GQFQGIAYWGAD---
+---TCAQPR-----EPGLYTKVFD------YTDWIQSIISGNTDATCPQ---------------------
+--------------------------------------------------------------
+
 >gi|62898403__vertebrate|warm|Homo sapiens|Mammalia|Primates|Hominidae|kallikrein|
 ----------------------------------------------------------------MATARP
 PWMWVLCALITALLLGVTEHVLANNDVSCDHPSNTVPSGSNQDLGAGTGEDARSDDSSSRIING------
@@ -3706,6 +3874,20 @@ ESGQQMFQGVKSIPHPGYSH------------------------PGHSNDLMLIKLNRR-IRPT------
 VHFPK----VL-QCLNISVLS---------------------------QKRCEDAYP-------------
 ----RQIDDTMFCAGDKAG----------RDSCQGDSG-GPVVCN----------GSLQGLVSWGDY---
 ---PCARPN-----RPGVYTNLCK------FTKWIQETIQANS---------------------------
+--------------------------------------------------------------
+
+>gi|90116798|P84788__vertebrate|cold|Protobothrops elegans|Gnathostomata|Squamata|Viperidae|elegaxobin|
+----------------------------------------------------------------------
+------------------------------------------------------------VIGG------
+-------------------------DECNIN---------------------------------------
+--EHPFLVLVYY--------------------DDYQCGGTLIN------EEWVLT------------AAH
+CNGK-----------------------------NMEIYLGVHSKK-----------------------VP
+NKDVQRRVPKEKFFCDSSKT-----------------------YTKWNKDIMLIRLDRP-VRKS------
+-----------------AHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRVMGWG-TITSPQ---------------------------------------
+ETYPD----VP-HCAKINLLD---------------------------YSECRAAYPG------------
+----LPPKSRTLCAGVLEGG---------KDTCGGDSG-GPLICN----------GQFQGIVSWGGD---
+---PCAQPH-----EPGSYTNVFD------HLDWIKGIIAGNTDATCPL---------------------
 --------------------------------------------------------------
 
 >gi|311983__not vertebrate|cold|Anopheles gambiae|Insecta|Diptera|Culicidae|trypsin|
@@ -3750,6 +3932,48 @@ SSLPT----KL-QKVTVPIVD---------------------------RKTCNANYGAV-----------
 ---GCAQAK-----YPGVYTRVGN------YISWIKGKGVPV----------------------------
 --------------------------------------------------------------
 
+>gi|62464__vertebrate|cold|Bothrops atrox|Gnathostomata|Squamata|Viperidae|batroxobin|
+----------------------------------------------------------------------
+------------------------------------MVLIRVIANLLILQVSYAQKSSELVIGG------
+-------------------------DECDIN---------------------------------------
+--EHPFLAFMYYS-------------------PRYFCGMTLIN------QEWVLT------------AAH
+CNRR-----------------------------FMRIHLGKHAGSV----------------------AN
+YDEVVRYPKEKFICPNKKKN------------------------VITDKDIMLIRLDRP-VKNS------
+-----------------EHIAPL----------------------SLP-----------------SNPPS
+-VG------------SVCRIMGWG-AITTSE---------------------------------------
+DTYPD----VP-HCANINLFN---------------------------NTVCREAYN-------------
+-----GLPAKTLCAGVLQGG---------IDTCGGDSG-GPLICN----------GQFQGILSWGSD---
+---PCAEPR-----KPAFYTKVFD------YLPWIQSIIAGNKTATCP----------------------
+--------------------------------------------------------------
+
+>gi|3915685|P05620__vertebrate|cold|Trimeresurus flavoviridis|Gnathostomata|Squamata|Viperidae|flavoxobin|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVIGG------
+-------------------------DECNIN---------------------------------------
+--EHPFLVALYDAW-----------------SGRFLCGGTLIN------PEWVLT------------AAH
+CDSK-----------------------------NFKMKLGAHSKK-----------------------VL
+NEDEQIRNPKEKFICPNKKN-----------------------DEVLDKDIMLIKLDSP-VSYS------
+-----------------EHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-SITPVE---------------------------------------
+ETFPD----VP-HCANINLLD---------------------------DVECKPGYPE------------
+----LLPEYRTLCAGVLQGG---------IDTCGFDSG-TPLICN----------GQFQGIVSYGGH---
+---PCGQSR-----KPGIYTKVFD------YNAWIQSIIAGNTAATCLP---------------------
+--------------------------------------------------------------
+
+>gi|3552036|AAC34898__vertebrate|cold|Gloydius halys|Gnathostomata|Squamata|Viperidae|pallase|
+----------------------------------------------------------------------
+-----------------------------------------------------------MVIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVALYTS-------------------RTLFCGGTLIN------QEWVLT------------AAH
+CNME-----------------------------DIQIKLGMHSKK-----------------------VP
+NEDEQKRVPKEKFFCLSSKK-----------------------LYLWDKDIMLIRLDSP-VKNS------
+-----------------AHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRTMGWG-RISSTK---------------------------------------
+ETYPD----VP-HCVNINLLE---------------------------YEMCRAPYPEF-----------
+---ELPATSRTLCAGILEGG---------KDTCVGDSG-GPLICN----------GQFQGIASWGDH---
+---PCAQPH-----KPAAYTKVFD------HLDWIENIIAGNTDASCPP---------------------
+--------------------------------------------------------------
+
 >gi|76642370__vertebrate|warm|Bos taurus|Mammalia|Ruminantia|Bovidae|kallikrein|
 ----------------------------------------------------------------------
 ------------------------------------------------------MAVKMLVIALVLVAAA
@@ -3778,6 +4002,20 @@ RPSIHLIQDDMICAGYKQGK---------IDACQGDSG-GPLVCNTS------NTWLQFGIVSWGL----
 ---GCAEPN-----QPGVYTNVQY------YLTWIQELVPSVMFCDGEPSIATTTFTDLSQSVSISSDLD
 GAFRENLKNRAHTQSWSLVTIALSLICLCNGLLL----------------------------
 
+>gi|461512|P09872__vertebrate|cold|Agkistrodon contortrix contortrix|Gnathostomata|Squamata|Viperidae|venom|
+----------------------------------------------------------------------
+------------------------------------------------------------VIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLALVYA--------------------NGSLCGGTLIN------QEWVLT------------ARH
+CDRG-----------------------------NMRIYLGMHNLKV----------------------LN
+KDALRRFPKEKYFCLNTRND------------------------TIWDKDIMLIRLNRP-VRNS------
+-----------------AHIAPL----------------------SLP-----------------SNPPS
+-VG------------SVCRIMGWG-TITSPN---------------------------------------
+ATLPD----VP-HCANINILD---------------------------YAVCQAAYK-------------
+-----GLAATTLCAGILEGG---------KDTCKGDSG-GPLICN----------GQFQGILSVGGN---
+---PCAQPR-----KPGIYTKVFD------YTDWIQSIISGNTDATCPP---------------------
+--------------------------------------------------------------
+
 >gi|76642381__vertebrate|warm|Bos taurus|Mammalia|Ruminantia|Bovidae|kallikrein|
 ----------------------------------------------------------------------
 ----------------------------------MVSKPLTPVSLPCVPASGFSHEAKEKITNG------
@@ -3804,6 +4042,20 @@ EPGSQMMEASLSIQHPEYNE------------------------PSMANDLMLIKLKES-VSLS------
 -RLPQ----VL-QCVNISVAS---------------------------EEVCKARYG-------------
 ----PVYHPSMFCAGGGQDQ---------KDSCHGDSG-GPLICN----------GSLQGLVSFGQA---
 ---QCGQPN-----VPGVYTNLCK------FTDWIQTTIQAS----------------------------
+--------------------------------------------------------------
+
+>gi|21309888|AAM46086__vertebrate|cold|Gloydius ussuriensis|Gnathostomata|Squamata|Viperidae|thrombin|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELIIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVALYTSR-----------------SRRFYCGGTLIN------QEWVLT------------AAH
+CDRK-----------------------------NIRIKLGMHSEK-----------------------VP
+NEDAQTRVPKEKFFCLSSKT-----------------------YTKWDKDIMLMRLKRP-VNNS------
+-----------------THIAPV----------------------SLP-----------------SNPPS
+-VG------------SVCRVMGWG-TITSPQ---------------------------------------
+ETYPD----VP-HCANINILD---------------------------YEVCQAAHGG------------
+----LPATSRTLCAGILKGG---------KDSCKGDSG-GPLICN----------GQFQGIASWGAH---
+---PCGQSL-----KPGVYTKVFD------YTEWIQSTIAGNTDATCPP---------------------
 --------------------------------------------------------------
 
 >gi|94382155__vertebrate|warm|Mus musculus|Mammalia|Rodentia|Muridae|kallikrein|
@@ -3834,6 +4086,20 @@ IQVTN----VL-QEVQLPVVS---------------------------NTECNADYK-------------
 ---ECGLPR-----YPGIYTRVSQ------YQSWITSELRTNLPGFVSFTSTETRSSSPSLLSFYFSLTS
 SLLPLILSFYLFF-------------------------------------------------
 
+>gi|20069139|AAM09695__vertebrate|cold|Bothrops insularis|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVIANLLILQVSYAQKSSELVVGG------
+-------------------------DECDIN---------------------------------------
+--EHPFLAFLYS--------------------HGYFCGLTLIN------QEWVLT------------AAH
+CDRR-----------------------------FMRIYLGIHARS-----------------------VA
+NDDEVIRYPKEKFICPNKNM-----------------------SDEKDKDIMLIRLNRP-VKNS------
+-----------------THIAPI----------------------SLP-----------------SNPPS
+-VG------------SVCRVMGWG-SITIPN---------------------------------------
+DTYPD----VP-HCANINLVN---------------------------DTVCRGAYKR------------
+----FPAKSRTLCAGVLQGG---------KDTCVGDSG-GPLICN----------GTFQGIVSWGGK---
+---VCARPR-----KPALYTKVFD------YLPWIQSIIAGNKTATCPP---------------------
+--------------------------------------------------------------
+
 >gi|223207__vertebrate|warm|Sus scrofa domestica|Mammalia|Laurasiatheria|Suidae|kallikrein|
 ----------------------------------------------------------------------
 ------------------------------------------------------------IIGG------
@@ -3846,6 +4112,20 @@ ELG------------STCEASGWG-SIEPGPD-------------------------------------D
 FEFPD----EI-QCVQLTLL----------------------------QNTFCAHABP------------
 ----BKVTESMLCAGYLPGG---------KDTCMGDSG-GPLICN----------GMWQGITSWGHT---
 ---PCGSAN-----KPSIYTKLIF------YLDWIBBTITENP---------------------------
+--------------------------------------------------------------
+
+>gi|24266796|AAN52348__vertebrate|cold|Viridovipera stejnegeri|Gnathostomata|Squamata|Viperidae|stejnefibrase|
+----------------------------------------------------------------------
+------------------------------------MELIRVLANLLILQLSYAQKSSELIIGG------
+-------------------------DECNID---------------------------------------
+--EHRFLVALYKS-------------------GRFRCGGTLIN------QEWVLT------------AAH
+CDRR-----------------------------NMEIKLGMHSKN-----------------------VP
+NEDEQRRVPKEKFFCDSNKN-----------------------YTQWNKDIMLIRLNSP-VNNS------
+-----------------THIAPL----------------------SLP-----------------SSPPI
+-VG------------SVCRIMGWG-TITSPN---------------------------------------
+ETYPD----VP-HCANINLFN---------------------------YTVCHGAHAG------------
+----LPATSRTLCAGVLEGG---------KDTCKGDSG-GPLICN----------GQFQGIVSWGGH---
+---PCAQPR-----EPGVYTKVFD------HLDWIQNIIAGSTTATCPL---------------------
 --------------------------------------------------------------
 
 >gi|19922026__not vertebrate|cold|drosophila melanogaster|Insecta|Diptera|Drosophilidae|ELSE|
@@ -3876,6 +4156,20 @@ VTFPS----DL-MCVDVKLIS---------------------------PQDCTKVYK-------------
 ---PWGQPN-----DPGVYTQVCK------FTKWINDTMKKHR---------------------------
 --------------------------------------------------------------
 
+>gi|83583654|ABC24687__vertebrate|cold|Bothrops jararacussu|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------------------------------VLGG------
+-------------------------DECDIN---------------------------------------
+--EHPFLAFLYS--------------------HGYFCGLTLIN------QEWVVT------------AAH
+CDST-----------------------------NFQMQLGVHSKK-----------------------VL
+NEDEQTRNPKEKFICPNKNM-----------------------SEVLDKDIMLIKLDKP-ISNS------
+-----------------KHIAPL----------------------SLP-----------------SNPPS
+-VG------------SVCRIMGWG-SITIPN---------------------------------------
+ETYPD----VP-YCANINLVD---------------------------YEVCQGAYN-------------
+----GLPAKTTLCAGVLEGG---------KDTCVGDSG-GPLICN----------GQFQGIVSYGAH---
+---SCGQGP-----KPGIYTNVFD------YTDWIQRNIAGNTDATCPP---------------------
+--------------------------------------------------------------
+
 >gi|73957004__vertebrate|warm|Canis familiaris|Mammalia|Carnivora|Canidae|chymotrypsin|
 ----------------------------------------------------------------------
 ---------------------------MAFLWLLSCFALLGTAFGCGVPAIQPVLSGLSRIVNG------
@@ -3888,6 +4182,20 @@ FPAG-----------TLCVTTGWG-LTKHTN---------------------------------------
 ANTPD----KL-QQAALPLLS---------------------------NAECKKFWG-------------
 ----SKITDLMVCAGASGV-----------SSCMGDSG-GPLVCQKD------GAWTLVGIVSWGSG---
 ---TCSTS------TPGVYARVTK------LIPWVQQILQAN----------------------------
+--------------------------------------------------------------
+
+>gi|32396014|AAP42416__vertebrate|cold|Bothrops jararacussu|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKASELIIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVALYTSR-----------------SRRFHCSGTLIN------QEWVLT------------AAN
+CDRK-----------------------------NIRIKLGMHSKN-----------------------VT
+NEDEQTRVPKEKFFCLSSKT-----------------------YTKWDKDIMLIRLKRP-VNDS------
+-----------------PHIAPI----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-TISPTK---------------------------------------
+VSYPD----VP-HCANINLLD---------------------------YEVCRAAHGG------------
+----LPATSRTLCAGILEGG---------KDSCQGDSG-GPLICN----------GQFQGILSWGVH---
+---PCGQRL-----KPGVYTKVSD------YTEWIRSIIAGNTDVTCPP---------------------
 --------------------------------------------------------------
 
 >gi|125173|P12323__vertebrate|warm|Cavia porcellus|Mammalia|Rodentia|Caviidae|kallikrein|
@@ -4000,6 +4308,20 @@ DQSAQRIKASRSFRHPGYST------------------------RTHVNDIMLVKMDKP-VKMS------
 VTFPS----DL-MCSDVKLIS---------------------------SQECKKVYK-------------
 ----DLLGKTMLCAGIPDSK---------TNTCNGDSG-GPLVCN----------DTLQGLVSWGTY---
 ---PCGQPN-----DPGVYTQVCK------YQRWLEDTMKTYR---------------------------
+--------------------------------------------------------------
+
+>gi|4378029|AAD19350__vertebrate|cold|Deinagkistrodon acutus|Gnathostomata|Squamata|Viperidae|thrombin|
+----------------------------------------------------------------------
+-----------------------------------------------------------MVIGG------
+-------------------------DECDIN---------------------------------------
+--EHRFLVAFFNT-------------------TGFFCGGTLIN------PEWVVT------------AAH
+CDST-----------------------------NFQMQLGVHSKK-----------------------VL
+NEDEQTRNPKEKFICPNKNN-----------------------NEVLDKDIMLIKLDKP-ISNS------
+-----------------KHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-SITPVK---------------------------------------
+ETFPD----VP-YCANINLLD---------------------------HAVCQTGYP-------------
+----SCWRNTTLCAGFLEGG---------KDTCGGDSG-GPLICN----------GQFQGIVSYGAH---
+---SCGQGP-----KPGIYTNVFD------YTDWIQRNIAGNTDATCPP---------------------
 --------------------------------------------------------------
 
 >gi|46575745|AAH69110__vertebrate|warm|Homo sapiens|Mammalia|Primates|Hominidae|chymase|
@@ -4268,6 +4590,20 @@ NPFPD----LL-QCLNVSIVS---------------------------SAACRAVFP-------------
 --EPCGQKG-----IPGVYTNICK------YVDWIRMVMRNN----------------------------
 --------------------------------------------------------------
 
+>gi|32469800|P82981__vertebrate|cold|Agkistrodon contortrix contortrix|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------------------------------VVGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVAIFNS-------------------NGFVCSGTLIN------QEWVLT------------AAH
+CDST-----------------------------DFQIKLGAHSKK-----------------------VL
+NEDEQIRNPKEKFICPNKKN-----------------------DEVLDKDIMLIKLDSR-VSNS------
+-----------------EHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCHIMGWG-SITPIE---------------------------------------
+VTFPD----VP-HCAYINLLD---------------------------DAACQPGYPE------------
+----VLPEYRTLCAGILEGG---------KDTCNYDSG-GPLICN----------GQFQGIVSYGAH---
+---PCGQSL-----KPGIYTKVFD------YNDWIQSIIAGNTAATCPP---------------------
+--------------------------------------------------------------
+
 >gi|24582982__not vertebrate|cold|drosophila melanogaster|Insecta|Diptera|Drosophilidae|trypsin|
 ----------------------------------------------------------------------
 -------------------MRSSIGLTGMAKTILHLFIGGILLVNLSLGATVRRPRLDGRIVGG------
@@ -4338,6 +4674,34 @@ SGDEQKIAVSDITYHEKFAS------------------------HGTNYDVCLLKLKSS-LHFN------
 ---GCAAPG-----YPGVYGKV---------SKFIDWIAEHQ----------------------------
 --------------------------------------------------------------
 
+>gi|54650274__vertebrate|cold|Bothrops jararaca|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVIANLLILQLSYAQKSSELVIGG------
+-------------------------DECDIN---------------------------------------
+--EHRFLAFLYA--------------------GGYYCGGTLIN------QEWVLS------------AAH
+CDKR-----------------------------IIRIYLGMHTRS-----------------------VP
+NDDEEIRYPKEKFICPNKKK-----------------------NVITHKDIMLIRLNRP-VKNS------
+-----------------EHIAPL----------------------SLP-----------------SNPPS
+-VG------------SVCRIMGWG-SITTPD---------------------------------------
+ETSPN----VP-HCANINLFN---------------------------NTVCREAYN-------------
+-----GLPAKTLCAGVLQGG---------IDTCGGDSG-GPLICN----------GQFQGILSWGGI---
+---PCAQPR-----KPAFYTKVFD------YLPWIQSIIAGNKTATCPP---------------------
+--------------------------------------------------------------
+
+>gi|18652953|AAL77227__vertebrate|cold|Crotalus atrox|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVVGG------
+-------------------------DECNIN---------------------------------------
+--EHRSLVAIFNS-------------------TEFFCSGTLIN------QEWVVT------------AAH
+CDST-----------------------------NFKMKLGVHSKK-----------------------VP
+NEDEQTRNPKEKFFCPNKKK-----------------------DDVLDKDIMLIKLDSP-VSNS------
+-----------------EHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCHIMGWG-SITPIE---------------------------------------
+KTLPD----VP-YCANIKLLD---------------------------DAVCQPPYPE------------
+----LPATSRTLCAGIPEGG---------KDTCGGDSG-GPLICN----------GQFQGIVFYGAH---
+---PCGQAL-----KPGVYTKVFD------YNDWIQSIIAGNTAATCPP---------------------
+--------------------------------------------------------------
+
 >gi|8393513__vertebrate|warm|Rattus norvegicus|Mammalia|Rodentia|Muridae|granzyme|k
 ----------------------------------------------------------------------
 -----------------------------------MSFSSSALVFLVAGIYMSSESFHTEIIGG------
@@ -4378,6 +4742,76 @@ NPG------------MLCSVAGWGR--LDVDM---------------SRT--------------------
 ----K----KL-QEVELEVQR---------------------------AEKCTSRYK-------------
 ----YYSTTTQICVGDPRKR---------KSSFKGDSG-GPLVCN----------GVAQGIVSYGKK---
 ---DGTP--------PRVFTRISS------FLPWIQKTMKQYELEGPD----------------------
+--------------------------------------------------------------
+
+>gi|31322297|AAP20637__vertebrate|cold|Gloydius ussuriensis|Gnathostomata|Squamata|Viperidae|thrombin|
+----------------------------------------------------------------------
+------------------------------------------------------------VIGG------
+-------------------------DECNIN---------------------------------------
+--EHRSLVAFFNS-------------------TGFFCSGTLVN------EEWVLS------------AAH
+CDST-----------------------------NFQMKLGVHSKK-----------------------VL
+NEDEQTRNPKEKFICPNKKN-----------------------DEVLDKDIMLIKLDSR-VSNS------
+-----------------EHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCHIMGWG-SITPIK---------------------------------------
+ETYPD----VP-YCANINLLD---------------------------DEVCQAGYPE------------
+----LLAEYRTLCAGILEGG---------KDTCGGDSG-GPLICN----------GQFQGIVSYGAH---
+---PCGQSL-----KPGIYTKVFD------YSDWIQSIIAGNTDASCPP---------------------
+--------------------------------------------------------------
+
+>gi|13959618|O13060__vertebrate|cold|Trimeresurus gramineus|Gnathostomata|Squamata|Viperidae|venom|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELIIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVALYTFR-----------------SRRFHCGGTLIN------QEWVLS------------AAR
+CDRK-----------------------------NIRIKLGMHSTN-----------------------VT
+NEDVQTRVPKEKFFCLSSKT-----------------------YTKWNKDIMLIRLKRP-VNNS------
+-----------------THIAPV----------------------SLP-----------------SNPPS
+-LG------------SVCRVMGWG-TISATK---------------------------------------
+ETHPD----VP-HCANINILD---------------------------YSVCRAAYAR------------
+----LPATSRTLCAGILEGG---------KDTCHGDSG-GPLICN----------GQVQGIVSWGGH---
+---PCGQPR-----KPGLYTKVFD------HLDWIKSIIAGNKDATCPP---------------------
+--------------------------------------------------------------
+
+>gi|360797__vertebrate|cold|Trimeresurus flavoviridis|Gnathostomata|Squamata|Viperidae|flavoxobin|
+----------------------------------------------------------------------
+------------------------------------------------------------VIGG------
+-------------------------DECNIN---------------------------------------
+--EHPFLVALYDAW-----------------SGRFLCGGTLIN------PEWVLT------------AAH
+CDSK-----------------------------NFKMKLGAHSQK-----------------------VL
+NEDEQIRNPKEKFICPNKKN-----------------------TEVLDKDIMLIKLDSP-VSYS------
+-----------------EHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-SITPVE---------------------------------------
+ETFPD----VP-HCANINLLD---------------------------DVECKPGYPE------------
+----LLPEYRTLCAGVLQGG---------IDTCGFDSG-TPLICN----------GQFQGIVYIGSH---
+---PCGQSR-----KPGIYTKVFD------YNAWIQSIIAGNTAATCLP---------------------
+--------------------------------------------------------------
+
+>gi|3044080|AAC13280__vertebrate|cold|Gloydius halys|Gnathostomata|Squamata|Viperidae|salmobin|
+----------------------------------------------------------------------
+------------------------------------MVLIKVLANHLILQLSYAQKSSELVIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVALYHSR-----------------SRTFLCGGTLIN------QEWVLT------------AAH
+CDRF-----------------------------LMYIRLGMHNKN-----------------------VK
+FDDEQRRFPKEKYFFACSNN-----------------------FTKWDKDIMLIRLNRP-VNNS------
+-----------------EHIAPL----------------------SLP-----------------SNPPS
+-VG------------SVCRVMGWG-TITSPN---------------------------------------
+ETLPD----VP-HCANINLLH---------------------------YSVCQAAYPK------------
+----LPVTRRLLCAGILEGG---------IDSCHRDSG-GPLICN----------GQFQGIVSWGRY---
+---PCAQPR-----VPGIYIKVFD------YTDWIQSIIAGNTAVNCPP---------------------
+--------------------------------------------------------------
+
+>gi|24266793|AAN52347__vertebrate|cold|Viridovipera stejnegeri|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MMLIRVLANLLILQLSYAQKSSELVIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVALYDFW-----------------SGDFLCGGTLIN------QEYVLT------------AAH
+CKTR-----------------------------NMYIYLGMHNKS-----------------------VQ
+FDDEQRRYPKKKYFFRCRNN-----------------------FTRWDKDIMLIRLNRP-VRNS------
+-----------------AHIAPL----------------------SLP-----------------SSPPT
+-VG------------SVCRVMGWG-TITSPN---------------------------------------
+ETLPD----VP-RCANINLFN---------------------------YTVCHGVFPW------------
+----LPARSRILCAGVLQGG---------IDTCKRDSG-GPLICN----------GQFQGIVSWGPK---
+---PCAQPR-----KPALYTKVFD------HLDWIQSIIAGNTTVTCPP---------------------
 --------------------------------------------------------------
 
 >gi|729315|P39675__not vertebrate|cold|Dermatophagoides pteronyssinus|Arachnida|Astigmata|Pyroglyphidae|allergen|
@@ -4590,6 +5024,20 @@ RPG------------QVCSVAGWGR-IS-------------------MD---------------------
 ---DGTP--------PGVFMKVSH------FLPWIKRTIKHL----------------------------
 --------------------------------------------------------------
 
+>gi|998903|AAB34840__vertebrate|cold|Agkistrodon bilineatus|Gnathostomata|Squamata|Viperidae|venom|
+----------------------------------------------------------------------
+------------------------------------------------------------IIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVALYDVW-----------------SGSFLCGGTLIN------QEWVLT------------AAH
+CNMS-----------------------------NIYIYLGMHNQS-----------------------VQ
+FDDEERRYPKEKYLFRCSKN-----------------------FTKWDKDIMLIRLNKP-VRNS------
+-----------------EHIAPL----------------------SLP-----------------SSPPI
+-VG------------SVCRVMGWG-TITSPN---------------------------------------
+ETLPD----VP-RCVNINLFN---------------------------YTVCRGVFPR------------
+----LPERSRILCAGVLEGG---------IDTCKRDSG-GPLICN----------GQFQGIVSWGPK---
+---RCAQPR-----KPALYSKVFD------HLDWIQSIIAGNKTVNCP----------------------
+--------------------------------------------------------------
+
 >gi|5441869__vertebrate|cold|Paralichthys olivaceus|Actinopterygii|Pleuronectiformes|Paralichthyidae|elastase|
 ----------------------------------------------------------------------
 --------------------------------------LALFVAGAYGCGLPTFPPTITRVVGG------
@@ -4644,6 +5092,20 @@ FPRG-----------TRSWVTGWG-RIGVSGTGGISGR--T-------TVS-----------------VP
 LPAPG----IL-QEVELQVYS---------------------------NEKCSKRCQ-------------
 ----GPITPNMICAGTRSGG---------KGTFYGDSG-GPLMSKQC------SVWVQAGVVSHGY----
 ---GCAQPK-----IPGVFIRVSE------YKQWITDNIGGNLPGFVLFDPTCLLR--------------
+--------------------------------------------------------------
+
+>gi|8567985|AAF76378__vertebrate|cold|Deinagkistrodon acutus|Gnathostomata|Squamata|Viperidae|thrombin|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVIGG------
+-------------------------NECDIN---------------------------------------
+--EHRFLVAFFNT-------------------TGFFCGGTLIN------PEWVVT------------AAH
+CDST-----------------------------NFQMQLGVHSKK-----------------------VL
+NEDEQTRNPKEKFICPNKNN-----------------------NEVLDKDIMLIKLDKP-ISNS------
+-----------------KHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-SITPVK---------------------------------------
+ETFPD----VP-YCANINLLD---------------------------HAVCQAGYPE------------
+----LLAEYRTLCAGIVQGG---------KDTCGGDSG-GPLICN----------GQFQGIVSYGAH---
+---PCGQGP-----KPGIYTNVFD------YTDWIQRNIAGNTDATCPP---------------------
 --------------------------------------------------------------
 
 >gi|54637205|EAL26608__not vertebrate|cold|drosophila pseudoobscura|Insecta|Diptera|Drosophilidae|ELSE|
@@ -4772,6 +5234,20 @@ SGDEQKVGVSKITYHEKFGS------------------------HGTNYDVCLLKLKSS-LDLN------
 ---GCAAPG-----YPGVYGKVSK------FIDWIAETK-------------------------------
 --------------------------------------------------------------
 
+>gi|15042973|AAK52506__vertebrate|cold|Deinagkistrodon acutus|Gnathostomata|Squamata|Viperidae|venom|
+----------------------------------------------------------------------
+-----------------------------------------------------------MVIGG------
+-------------------------DECDIN---------------------------------------
+--EHRFLVAFFNT-------------------TGFFCGGTLIN------PEWVVT------------AAH
+CDST-----------------------------NFQMQLGVHSKK-----------------------VL
+NEDEQTRNPKEKFICPNKNN-----------------------NEVLDKDIMLIKLDSP-VNNS------
+-----------------AHIAPI----------------------SLP-----------------SNPPS
+-VG------------SVCRVMGWG-SITSPN---------------------------------------
+VTIPG----VP-HCANINILD---------------------------YEVCRATKPE------------
+----LPAKSRTLCAGILEGG---------KGSCDGDSG-GPLICN----------GEIQGIVSWGGD---
+---ICAQPH-----EPGHYTKVYD------YTDWINSIIAGNTSATCPP---------------------
+--------------------------------------------------------------
+
 >gi|73957472__vertebrate|warm|Canis familiaris|Mammalia|Carnivora|Canidae|chymotrypsin|
 ----------------------------------------------------------------------
 ---------------------------MLLLSLTLSLVLLGSSWGCGIPAIKPVLSFSQRIVNG------
@@ -4884,6 +5360,34 @@ EPGSQMVEASLSVRHPEYNR------------------------PLLANDLMLIKLDES-VSES------
 ---PCGQVG-----VPGVYTNLCK------FTEWIEKTVQAS----------------------------
 --------------------------------------------------------------
 
+>gi|32329782__vertebrate|cold|Cerastes cerastes|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLISVLASLLVLQLSYAQKSSELVIGG------
+-------------------------AECNIN---------------------------------------
+--EHRSLVLLYNS-------------------SRLFGGGTLIN------KEWVLS------------AAH
+CDGE-----------------------------NMKIYLGLHHFR-----------------------LP
+NKDRQIRVAKEKYFCRDRK-------------------------SIVDKDIMLIKLNKP-VNNS------
+-----------------THIAPL----------------------SLP-----------------SSPPS
+-VG------------SDCRIMGWG-TITSPN---------------------------------------
+DTYPK----VP-HCANINILE---------------------------HSLCERAYND------------
+----LSASSRTLCAGIEKGG---------IDTCKGDSG-GPLICN----------GQIQGIVSWGDE---
+---VCGKPN-----KPGVYTKVFD------YTDWIRNIIAGNTAATCPQ---------------------
+--------------------------------------------------------------
+
+>gi|88861964|ABD52886__vertebrate|cold|Lachesis muta|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLITVLANLLILQLSYAQKSSKLVFGG------
+-------------------------DECNIN---------------------------------------
+--EHRSLVVLFNS-------------------SGFLCAGTLIN------KEWVLT------------AAH
+CDSE-----------------------------NFQMQLGVHSKK-----------------------VP
+NKDEETRDPKEKFICPNRKK-----------------------NDEKDKDIMLIRLNRP-VSNS------
+-----------------EHIALL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-TISPTK---------------------------------------
+EIYPD----VP-HCADINILD---------------------------HAVCRAAYSG------------
+----WLATSTTLCAGILEGG---------KDSCHGDSG-GPLICN----------GQFQGIVSLGRH---
+---PCGHPD-----EPGVYTKVFD------YTDWIQSIIAGNTDAACPP---------------------
+--------------------------------------------------------------
+
 >gi|73957387__vertebrate|warm|Canis familiaris|Mammalia|Carnivora|Canidae|chymotrypsin|
 ----------------------------------------------------------------------
 ---------------------------MAFLWVVLGFLLFGSSSGCGVPAIHPQLSGLSRIING------
@@ -4896,6 +5400,20 @@ FPAG-----------SLCATTGWG-RTRYNS---------------------------------------
 NKTPD----KL-QQAALPLLS---------------------------NAECKKFWG-------------
 ----SKITDVMICAGASGV-----------SSCMGDSG-GPLVCQKD------GAWTLVGIVSWGSG---
 ---WCNPS------SPGVYTLVTK------FIPWVLEILEAN----------------------------
+--------------------------------------------------------------
+
+>gi|8567983|AAF76377__vertebrate|cold|Deinagkistrodon acutus|Gnathostomata|Squamata|Viperidae|thrombin|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVIGG------
+-------------------------VECDIN---------------------------------------
+--EHRFLVALYELT-----------------SMTFLCGGTLIN------QEWVVT------------AAH
+CDR-------------------------------LQLYLYIGMHDK---------------------YVK
+FDDEQGREPIEKYFYNCSNN-----------------------LTTRDKDIMLIRLDRP-VDNS------
+-----------------THIAPL----------------------SLP-----------------SRPPS
+-VG------------SVCRVMGWG-AISPSR---------------------------------------
+DVLPD----VP-HCVNINLVN---------------------------NAECRRAYPR------------
+----LPATSRTLCAGVMQGG---------IDSCNRDSG-GPLICD----------GQFQGVVNWGGN---
+---PCAQPN-----MPALYTKVYD------YNDWIRSITAGNTTAACPP---------------------
 --------------------------------------------------------------
 
 >gi|33637115|AAQ23714__vertebrate|warm|Equus caballus|Mammalia|Perissodactyla|Equidae|kallikrein|
@@ -4968,6 +5486,34 @@ KPG------------TLLTVTGWGS--TGNG----------------PST--------------------
 ---GCALPD-----YPGVYSKIST------ARSWIKEVSGV-----------------------------
 --------------------------------------------------------------
 
+>gi|33307095|AAQ02909__vertebrate|cold|Viridovipera stejnegeri|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQRSSELVIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLALVYT--------------------DRFQCGGTLIN------PEWVLT------------AAH
+CDRR-----------------------------YMHIYLGVHNES-----------------------VQ
+YDDEQRRFPKKKYFCLSSKN-----------------------YTRWDKDIMLIRLNRP-VRNS------
+-----------------AHIAHL----------------------SLP-----------------SKPPS
+-VG------------SVCRVMGWG-TITSPN---------------------------------------
+ETLPD----VP-RCANINLFN---------------------------YTVCRGVFPW------------
+----LPARSRILCAGVLQGG---------IDTCKRDSG-GPLICN----------GQFQGIVSWGGD---
+---PCAQPR-----EPGVYTKVFD------HLDWIQNIIAGNTTATCPL---------------------
+--------------------------------------------------------------
+
+>gi|8567987|AAF76379__vertebrate|cold|Deinagkistrodon acutus|Gnathostomata|Squamata|Viperidae|thrombin|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVIGG------
+-------------------------DECNIN---------------------------------------
+--EHPFLVLVYY--------------------DDYQCGGTLLN------EEWVLT------------AAH
+CNGK-----------------------------DMEIYLGVHSKK-----------------------VP
+NKDVQRRVPKEKFFCDSSKT-----------------------YTKWNKDIMLIRLDRP-VRKS------
+-----------------AHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-SITPVE---------------------------------------
+VTFPD----VP-YCANINLLD---------------------------DVECKPGYPE------------
+----LLPEYKTLCAGILEGG---------IDTCGFDSG-APLISN----------GQFQGIVSWGGD---
+---PCAQPR-----EPGVYTNVFD------HLDWIKGIIAGNTDVTCPP---------------------
+--------------------------------------------------------------
+
 >gi|4753835__vertebrate|warm|Ovis aries|Mammalia|Ruminantia|Bovidae|tryptase|
 ----------------------------------------------------------------------
 --------------------------------MLHLLALALLLSLVSAAPGPGQALQRSGIIGG------
@@ -5010,6 +5556,20 @@ PAG------------KTGTVVGWG-RTTEGG---------------------------------------
 ---GCGRPG-----YPGVYTRVSK------YINWLKYNLDDTCICS------------------------
 --------------------------------------------------------------
 
+>gi|4102924|AAD01623__vertebrate|cold|Gloydius halys|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELIIGG------
+-------------------------DECNIN---------------------------------------
+--EHRSLVLMYY--------------------DGHQCDGTLIN------EEWVLT------------AAH
+CDGE-----------------------------NMEIQLGVHSKK-----------------------VP
+NEDVQTRVPKEKFFCDSNKT-----------------------YARWNKDIMLIRLDRP-VSNS------
+-----------------AHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-TFSTTQ---------------------------------------
+ETYPD----VP-HCANINIHD---------------------------FEVCQAAYPG------------
+----LPATNRILCAGILEGG---------KDTCKGDSG-GPLICN----------GEIQGIVSWGGH---
+---LCGNVL-----EPGIYTKVFD------HLEWIRSIIAGNTDATCPL---------------------
+--------------------------------------------------------------
+
 >gi|62003361|AAX59050__not vertebrate|cold|Culex pipiens|Insecta|Diptera|Culicidae|trypsin|
 ----------------------------------------------------------------------
 --------------------------MAKLLVLTTCALLGLTSGASLKSTLMPSFSRAGKIVGG------
@@ -5022,6 +5582,20 @@ ATGGQLVPVKTVHNHPDYDR------------------------EVTEFDFCLLELGER-LEFG------
 ----------L-RGVLVPLVN---------------------------REECAEAYQKL-----------
 ---GMPVTESMICAGFAKEG--------GKDACQGDSG-GPLVVD----------GQLAGVVSWGK----
 ---GCAEPG-----FPGIYSNVAY------VRDWIKKVAKV-----------------------------
+--------------------------------------------------------------
+
+>gi|11036675|AAG27254__vertebrate|cold|Protobothrops mucrosquamatus|Gnathostomata|Squamata|Viperidae|kallikrein|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQRTSELVIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVALHDAL-----------------SGRFLCGGTLIH------PEWVLT------------AAH
+CNTH-----------------------------FIIIYLGAHNQS-----------------------VE
+FDYEETRYPEKKYFFPCSKN-----------------------YTKWDKDIMLIRLYSP-VRNS------
+-----------------KHIAPI----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-AITSPN---------------------------------------
+ETFPD----VP-HCANINLFN---------------------------YTVCRAAYPE------------
+----LPATSRTLCAGILEGG---------IDTCHGDSG-GPLICN----------GQFQGIVQAGGK---
+---TCARPR-----KPAVYTNVFD------HLDWIKSIIAGNTAVTCPP---------------------
 --------------------------------------------------------------
 
 >gi|29612490|AAH49588__vertebrate|warm|Mus musculus|Mammalia|Rodentia|Muridae|prss21|
@@ -5248,6 +5822,34 @@ PSTEQVILEDMLCAGFVEGK---------KDACNGDSG-GPLVCDVN------DVWIQAGVVSWGS----
 ---DCALSN-----RPGVYTNVSV------YISWIQNTMWNIPTEGKNFSPSLSSTPLSGLLLFLTSLSS
 AFLLLGP-------------------------------------------------------
 
+>gi|13959636|Q91516__vertebrate|cold|Viridovipera stejnegeri|Gnathostomata|Squamata|Viperidae|venom|
+----------------------------------------------------------------------
+------------------------------------MELIRVLANLLILQLSYAQKSSELVFGG------
+-------------------------DECNIN---------------------------------------
+--EHRSLVVLFNS-------------------NGFLCGGTLIN------QDWVVT------------AAH
+CDSNNFQL---------------------LFGVHSKKILNE-----------------------------
+--DEQTRDPKEKFFCPNRKK-----------------------DDEVDKDIMLIKLDSS-VSNS------
+-----------------EHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-KTIPTK---------------------------------------
+EIYPD----VP-HCANINILD---------------------------HAVCRTAYSW------------
+----RQVANTTLCAGILQGG---------RDTCHFDSG-GPLICN----------GIFQGIVSWGGH---
+---PCGQPG-----EPGVYTKVFD------YLDWIKSIIAGNKDATCPP---------------------
+--------------------------------------------------------------
+
+>gi|4102926|AAD01624__vertebrate|cold|Gloydius halys|Gnathostomata|Squamata|Viperidae|plasminogen activator|
+----------------------------------------------------------------------
+---------------MALIRVLANLLILQLSYDLLHYTVCNIWVIASETNLKTAQKSSELVVGG------
+-------------------------DECNIN---------------------------------------
+--EHRSLVVLFNS-------------------SGLICSGTLIN------QEWVLT------------AAH
+CDSKNFQM---------------------LFGVHSKKILNE-----------------------------
+--DEQTRDPKEKFICPNKKK-----------------------DDEKDKDIMLIRLDSP-VSNS------
+-----------------EHIAPL----------------------SLP-----------------SSSPT
+-VD------------SVCRIMGWG-TIKPAD---------------------------------------
+ETYPD----VP-HCANINILD---------------------------HTVCRAAYPV------------
+----LLAGSSTLCAGTQQGG---------KDTCVGDSG-GPLICN----------GQIQGIVSWGAH---
+---PCGQGS-----KPGVYTKVFD------HLDWIKSIIAGNTAVTCPP---------------------
+--------------------------------------------------------------
+
 >gi|57870463|AAH89075__vertebrate|cold|Xenopus tropicalis|Amphibia|Anura|Pipidae|chymotrypsin|
 ----------------------------------------------------------------------
 ---------------------------MAFLWLLSCIALIGSTYGCGSPAISPVLSGYARIVNG------
@@ -5318,6 +5920,20 @@ LVDG-----------KICTVTGWGNTQYYG----------------------------------------
 ---GCALAQ-----KPGVYTKVSD------FREWIFQAIKTHSEASGMVTQL------------------
 --------------------------------------------------------------
 
+>gi|33307074|AAQ02902__vertebrate|cold|Viridovipera stejnegeri|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSKLVVGG------
+-------------------------DECNIN---------------------------------------
+--EHPFLVLVYH--------------------DGYQCGGTLIN------EEWVLT------------AAH
+CDG-------------------------------KKMKLRFGLHSK---------------------NVP
+NKDKQTRVPKEKFFCLSSKY-----------------------FIKWGKDIMLIRLNRP-VNNS------
+-----------------THIAPL----------------------SLP-----------------SSPPS
+-QN------------TVCNIMGWG-TISPTK---------------------------------------
+EIYPD----VP-HCANISILD---------------------------HAVCRAFYPG------------
+----LLEKSKTLCAGILEGG---------KDICQGDSG-GPLICN----------GQIQGIVSVGGN---
+---PCAEPR-----VPAIYTKVFD------HLDWIKSIIAGNTAATCPL---------------------
+--------------------------------------------------------------
+
 >gi|56566179|AAV98367__vertebrate|cold|Lapemis hardwickii|Gnathostomata|Squamata|Hydrophiidae|ELSE|
 ----------------------------------------------------------------------
 ---------------------------MPLIRVLASLLILQLSYGKSLDNGAKAITSLDRIIGG------
@@ -5344,6 +5960,20 @@ KPG------------DVCYVAGWGK-LG-------------------PMG--------------------
 -KFPE----TL-QEGELTVQK---------------------------DQECESYLTN------------
 ----VYDKANEICAGDPKIK---------HASFQGDSG-GPLVCK----------KVAAGIVSYGCK---
 ---DGST--------PRAFTKVST------FLSWIEETMKKS----------------------------
+--------------------------------------------------------------
+
+>gi|18652951|AAL77226__vertebrate|cold|Crotalus atrox|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSEPIIGG------
+-------------------------DECNRN---------------------------------------
+--EHRFLALVSS--------------------DGNQCGGTLIN------EEWVLT------------AAH
+CEGN-----------------------------KMKIHLGVHSKK-----------------------VP
+NKDKQTRVAKEKFFCVSSKN-----------------------YTFWDKDIMLIRLDRP-VSNS------
+-----------------EHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-TISPTK---------------------------------------
+VILPD----VP-HCVNINLLN---------------------------YSVCRAAYPEY-----------
+---GLPATSRTLCAGILEGG---------KDTCVGDSG-GPLICN----------GQFQGIASWGSP---
+---NCGYVR-----EPALYTKVFD------HLDWIQSIIAGNTDATCPFVNF------------------
 --------------------------------------------------------------
 
 >gi|1470064|AAB05241__vertebrate|warm|Rattus norvegicus|Mammalia|Rodentia|Muridae|ELSE|
@@ -5442,6 +6072,20 @@ REG------------AKAVVSGWG-TTESGG---------------------------------------
 STIPD----HL-LAVDLKIVD---------------------------REKCASDEFSY-----------
 ---GSKIKDTMICAYAEHK-----------DACQGDSG-GPLVSG----------SRLVGVVSWGY----
 ---GCGDVR-----YPGVYADVAH------FHEWIEKTADDV----------------------------
+--------------------------------------------------------------
+
+>gi|9988783|AAG10790__vertebrate|cold|Trimeresurus jerdonii|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELIIGG------
+-------------------------HPCNIN---------------------------------------
+--EHRSLVVLFNS-------------------SGLLCSGTLIN------KEWVLT------------AAH
+CDSNNFQL---------------------LFGVHSKKVLNE-----------------------------
+--DEQTRDPKEKFICPNKKK-----------------------DDEKDKDIMLIRLDSS-VSNS------
+-----------------EHIAPL----------------------SLP-----------------SSPPS
+-VG------------SACRVMGWG-KTIPTK---------------------------------------
+DTYPD----VP-HCANINILD---------------------------HAVCRAAYSN------------
+----LLEKSKTLCAGILQGG---------KDTCQFDSG-GPLICN----------GQVQGIVSWGGH---
+---PCGQPH-----ALGVYTNVFN------YTDWIQSIIAGNTDATCPP---------------------
 --------------------------------------------------------------
 
 >gi|5869573__vertebrate|warm|Mus musculus|Mammalia|Rodentia|Muridae|granzyme|k
@@ -5570,6 +6214,20 @@ PTG------------TPCSVSGWGL----------------------IDRD-------------------
 ----FNHP-------PGVYARVGR------YLDWIKKTISEHGDKNI-----------------------
 --------------------------------------------------------------
 
+>gi|22417221|AAM96700__vertebrate|cold|Macrovipera lebetina|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLLLQLSYAQKSSELVVGG------
+-------------------------DECNIN---------------------------------------
+--EHRSLVFLYN--------------------SSFGCGGTLIN------QQWVLS------------AAH
+CDME-----------------------------NVQIYLGLHNLR-----------------------LR
+NQDEQIRVAEEKFFCLSNKS-----------------------YTKWDKDIMLIRLNSS-VTYN------
+-----------------THIAPL----------------------SLP-----------------SSPPR
+-VG------------SVCRIMGWG-AITSPN---------------------------------------
+ETFPN----VP-HCANINILR---------------------------YSVCRAAYRG------------
+----LPAQSRTLCAGILQGG---------IGSCMGDSG-GPLICN----------GEIQGIVSWGDD---
+---ICAQPH-----KPVHYTKVFD------YSDWIQSIIAGNTTATCPL---------------------
+--------------------------------------------------------------
+
 >gi|4504235__vertebrate|warm|Homo sapiens|Mammalia|Primates|Hominidae|granzyme|k
 ----------------------------------------------------------------------
 ------------------------------------------------MTKFSSFSLFFLIVGAY-----
@@ -5610,6 +6268,20 @@ KPG------------QLCSVAGWGY-VS-------------------MS---------------------
 -TLAT----TL-QEVLLTVQK---------------------------DCQCERLFHG------------
 ----NYSRATEICVGDPKKT---------QTGFKGDSG-GPLVCK----------DVAQGILSYGNK---
 ---KGTP--------PGVYIKVSH------FLPWIKRTMKRL----------------------------
+--------------------------------------------------------------
+
+>gi|31322299|AAP20638__vertebrate|cold|Gloydius saxatilis|Gnathostomata|Squamata|Viperidae|thrombin|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVIGG------
+-------------------------DECNIN---------------------------------------
+--EHRSLVAFFNS-------------------TGFFCSGTLIN------EEWVLT------------AAH
+CDNT-----------------------------NFQMKLGVHSKK-----------------------VL
+NEDEQTRNPKEKFICPNKKN-----------------------DEVLDKDIMLIKLDSR-VSNS------
+-----------------EHIVPL----------------------SLP-----------------SSPPS
+-VG------------SVCHIMGWG-SITPIK---------------------------------------
+VTYPD----VP-YCAYINLLD---------------------------DAVCQAGYPE------------
+----LLTEYRTLCAGILEGG---------KDTCGGDSG-GPLICN----------GQFQGIVSFGAH---
+---PCGQGL-----KPGVYTKVFD------YNHWIQSIIAGNTTVTCPQ---------------------
 --------------------------------------------------------------
 
 >gi|14009271|AAK50138__not vertebrate|cold|Culex pipiens quinquefasciatus|Insecta|Diptera|Culicidae|trypsin|
@@ -5724,6 +6396,34 @@ FDTPD----KL-QQATLPILS---------------------------NADCREFWG-------------
 ---RCSPF------LPGVYARVTK------FIPWILEVLEAN----------------------------
 --------------------------------------------------------------
 
+>gi|408280|AAB27876__vertebrate|cold|Lachesis muta|Gnathostomata|Squamata|Viperidae|venom|
+----------------------------------------------------------------------
+------------------------------------------------------------VIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVALYDGL-----------------SGTFLCGGTLIN------QEWVLT------------AQH
+CNRS-----------------------------LMNIYLGMHNKN-----------------------VK
+FDDEQRRYPKKKYFFRCNKN-----------------------FTKWDEDIRLNRPV------R------
+---------------FSAHIEPLS------------------------------------------LPSN
+PPSED----------SVCRVMGWG-QITSPP---------------------------------------
+ETLPD----VP-HCANINLFN---------------------------YTVCRGAYP-------------
+-----RMPTKVLCAGVLEGG---------IDTCNRDSG-GPLICN----------GQFQGIVFWGPD---
+---PCAQPD-----KPGVYTKVFD------YLDWIQSVIAGNTTCS------------------------
+--------------------------------------------------------------
+
+>gi|999161|AAB34465__vertebrate|cold|Bothrops jararaca|Gnathostomata|Squamata|Viperidae|venom|
+----------------------------------------------------------------------
+------------------------------------------------------------VVGG------
+-------------------------RPCKIN---------------------------------------
+--VHRSLVLLYNS-------------------SSLLCSGTLIN------QEWVLT------------AAH
+CDSK-----------------------------NFKMKLGVHSIK-----------------------IR
+NKNERTRHPKEKFICPNRKK-----------------------DDVLDKDIMLIRLNRP-VSNS------
+-----------------EHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCYVMGWG-KISSTK---------------------------------------
+ETYPD----VP-HCAKINILD---------------------------HAVCRAAYTW------------
+----WPATSTTLCAGILQGG---------KDTCEGDSG-GPLICN-----------GLQGIVSGGGN---
+---PCGQPR-----KPALYTKVFD------YLPWIESIIAGTTTATCP----------------------
+--------------------------------------------------------------
+
 >gi|2815618|AAB97887__vertebrate|warm|Papio hamadryas|Mammalia|Primates|Cercopithecidae|plasminogen|
 --------------------------IRLDCMFGNGKRYRGKKATTVTGTPCQEWAAKEPHSHLIFTPET
 YPRAGLEKNYCRNPDGDVGGPWCYTTNPRKLYDYCDVPQCASSSFDCGKPQVEPKKCPGRVVGG------
@@ -5736,6 +6436,20 @@ ADR------------TECFITGWGETQGT-----------------------------------------
 -YGAGL----L-KEARLPVIE---------------------------NKVCNRYEFL------------
 ---NGRVKSTELCAGHLAGG---------TDSCQGDSG-GPLVCFEK------DKYILQGVTSWGL----
 ---GCARPN-----KPGVYVRVSR------FVTWIEGVMRNN----------------------------
+--------------------------------------------------------------
+
+>gi|61741494|AAX54679__vertebrate|cold|Crotalus durissus terrificus|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------------------------------VIGG------
+-------------------------DECNIN---------------------------------------
+--ERNFLVALYEYW-----------------SQSFLCGGTLIN------GEWVLT------------AAH
+CDRKHILIY--------------------VGVHDRSVQFDK-----------------------------
+---EQRRFPKEKYFFNCRNN-----------------------FTKWDKDIMLIRLNKP-VSYS------
+-----------------EHIAPL----------------------SLP-----------------SSPPI
+-VG------------SVCRVMGWG-TIKSPQ---------------------------------------
+ETLPD----VP-HCANINLLD---------------------------YGVCRTAHPQF-----------
+---RLPATSRILCAGVLEGG---------IDTCHRDSG-GPLICN----------GEFQGIVSWGDG---
+---SCAQPD-----KPALYSKVFD------HLDWIQNIIAGSETVNCPS---------------------
 --------------------------------------------------------------
 
 >gi|10441463|AAG17054__vertebrate|warm|Mus musculus|Mammalia|Rodentia|Muridae|channel activating protease|
@@ -5920,6 +6634,34 @@ DDG------------ARLTVTGWG-KLSESG---------------------------------------
 ---GCARPN-----MPGVYAKVAAS----SIREFIRKKTGL-----------------------------
 --------------------------------------------------------------
 
+>gi|48093528|AAT40141__vertebrate|cold|Bothrops alternatus|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------------------------------VIGG------
+-------------------------DECDIN---------------------------------------
+--EHRFLAFLYP--------------------GRFFCSGTLIN------QEWVLT------------VAH
+CDTI-----------------------------SMRIYLGLHTRS-----------------------VP
+NDDEEIRYPMEKFKCPNRKR-----------------------SYIKDKDIMLIRLNRP-VNDS------
+-----------------PHIAPL----------------------SLP-----------------SNPPS
+-VG------------SVCHVMGWG-TTSPSK---------------------------------------
+ATYPD----VP-HCANINLVN---------------------------DTMCHGAYNG------------
+----LPVTSRKFCAGVLQGG---------IDTCVGDSG-GPLICN----------GQFQGIVSWGGK---
+---VCARLP-----RPALYTKVFE------YLPWIQSIIAGNTTATCPL---------------------
+--------------------------------------------------------------
+
+>gi|33307098|AAQ02910__vertebrate|cold|Viridovipera stejnegeri|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSPELVVGG------
+-------------------------DECNIN---------------------------------------
+--EHRSLVAIFNS-------------------TGFFCSGTLIN------QEWVVT------------AAH
+CDSNNFKM---------------------KFGAHSQKVLNE-----------------------------
+--DEQIRNPKEKFICPNKKN-----------------------NEVLDKDIMLIKLDSS-VSNS------
+-----------------EHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-SITPTK---------------------------------------
+VTYPD----VP-YCANINLLD---------------------------DAECKPGYPE------------
+----LLPEYRTLCAGIVQGG---------KDTCGGDSG-GPLICN----------GQFHGIVSYGAH---
+---PCGQSL-----KPGIYTTVFD------YNDWIKSIIAGNTAATCPP---------------------
+--------------------------------------------------------------
+
 >gi|5564__not vertebrate|cold|Aedes aegypti|Insecta|Diptera|Culicidae|trypsin|
 ----------------------------------------------------------------------
 -------------------------------------------------TMVERSDSSGRIVGG------
@@ -5962,6 +6704,20 @@ SETEILIQSDQICAGYQAGQ---------KDGCQGDSG-GPLVCKIQ------GFWYQAGIVSWGE----
 ---RCAAKN-----RPGVYTFVPA------YETWISERSVISFKPFTSSSSPSSSSVLRASAILLGVSLL
 LHDW----------------------------------------------------------
 
+>gi|54650278__vertebrate|cold|Bothrops jararaca|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVIANLLILQLSYAQKSSELVIGG------
+-------------------------DECNIN---------------------------------------
+--EHPFLAFLYT--------------------GWIFCSGTLIN------KEWVLT------------VKQ
+CNNRR----------------------------PMRIYLGMHTRS-----------------------VP
+NDDEEIRYPKEMFICPNK----------------------------KKNDIMLIRLNRP-VNNS------
+-----------------EHIAPL----------------------SLP-----------------SNPPS
+-VG------------SVCRIMGWG-TITPSK---------------------------------------
+ATYPD----VP-HCANINLFN---------------------------YTVCRGAHAG------------
+----LPVTSRKLCAGVLEGG---------IDTCSADSG-GPLICN----------GQLQGIVSWRGG---
+---SCAQPH-----KPGLYTKVFD------YLPWIQSIIAGSTTATCPP---------------------
+--------------------------------------------------------------
+
 >gi|94733506__vertebrate|cold|Danio rerio|Actinopterygii|Cypriniformes|Cyprinidae|not trypsin|
 ----------------------------------------------------------------------
 ----------------------------SSLIFFIMTIITISLLLLVSLVPHLTFTARVGIVDG------
@@ -5988,6 +6744,20 @@ PDN------------AQLTITGWGATY--------------------VGG--------------------
 -YNEY----TL-QVVTIPTVN---------------------------INVCQSAITN------------
 ----DTITNNMFCAGLIGVG--------GKDSCSGDSG-GPAVID----------GQVVGIVSWGY----
 ---SCADPK-----YPGIYTKVSA------FRDWINEETEI-----------------------------
+--------------------------------------------------------------
+
+>gi|13959619|O13061__vertebrate|cold|Trimeresurus gramineus|Gnathostomata|Squamata|Viperidae|venom|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVVGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVALYEYT-----------------SMTFICGGTLIN------QEWVLT------------AAH
+CDR-------------------------------DTIYIYIGMHDK---------------------YVK
+FDDEQGRHPKEKYIFNCSNN-----------------------FTKWDKDIMLIKLDYP-VNYS------
+-----------------EHIAPL----------------------SLP-----------------SSPPS
+-MG------------SVCRVMGWG-AITPTN---------------------------------------
+ETLPD----VP-HCANINILD---------------------------HALCRAVFPG------------
+----LPATSRTLCAGVLQGG---------TDTCNRDSG-GPLICN----------GQFQGIVFWGWY---
+---PCAQPR-----VPALYTKVFD------HLDWIQSIIAGNTDAACPP---------------------
 --------------------------------------------------------------
 
 >gi|47220404__vertebrate|cold|tetraodon nigroviridis|Actinopterygii|Tetraodontiformes|Tetraodontidae|ELSE|
@@ -6030,6 +6800,34 @@ KPG------------KMCRAAGWGRT---------------------GVTE-------------------
 -PTSE----KL-REVKLRIMD---------------------------KGACKYYHH-------------
 -----YSYDFQVCVGSPTKV---------RSAYKGDSG-GPLLCA----------GVAHGIVSYGRG---
 ---DAKP--------PAVFTRISP------YVPWINIVIKASS---------------------------
+--------------------------------------------------------------
+
+>gi|6691473__vertebrate|cold|Bothrops jararaca|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVIANLLILQLSNAQKSSELVIGG------
+-------------------------DECNIT---------------------------------------
+--EHRFLVEIFNS-------------------SGLFCGGTLID------QEWVLS------------AAH
+CDMR-----------------------------NMRIYLGVHNEG-----------------------VQ
+HADQQRRFAREKFFCLSSRN-----------------------YTKWDKDIMLIRLNRP-VNNS------
+-----------------EHIAPL----------------------SLP-----------------SNPPS
+-VG------------SVCRIMGWG-TITSPN---------------------------------------
+ATFPD----VP-HCANINLFN---------------------------YTVCRGAHAG------------
+----LPATSRTLCAGVLQGG---------IDTCGGDSG-GPLICN----------GTFQGIVSWGGH---
+---PCAQPG-----EPALYTKVFD------YLPWIQSIIAGNTTATCPP---------------------
+--------------------------------------------------------------
+
+>gi|9988781|AAG10789__vertebrate|cold|Trimeresurus jerdonii|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVFGG------
+-------------------------RPCNIN---------------------------------------
+--EHRSLVVLFNS-------------------SGFLCGGTLIN------QDWVVT------------AAH
+CDSENFQL---------------------LFGVHSKKILNE-----------------------------
+--DEQTRDPKEKFFCPNRKN-----------------------DDEVDKDIMLIKLDSS-VSNS------
+-----------------THIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-KTIPTK---------------------------------------
+EIYPD----VP-HCANINILD---------------------------HAVCRAAYSW------------
+----RTVANTTLCAGILQGG---------KDTCHADSG-GPLICN----------GQVQGIVSWGGH---
+---PCGQPR-----EPGVYTKVLD------YNDWVQSIIAGNTEATCPP---------------------
 --------------------------------------------------------------
 
 >gi|54644151|EAL32893__not vertebrate|cold|drosophila pseudoobscura|Insecta|Diptera|Drosophilidae|ELSE|
@@ -6157,6 +6955,34 @@ LPGSK----TL-QVGNVKIIS---------------------------RQTCNCLYHINPS---------
 SDSLGSVQQDMICAGSAAGS---------VDACQGDSG-GPLTCTVN------NQPYLAAVVSWGD----
 ---ECGAPN-----RPGVYILISL------YSSWIRSIDPSATVQYFTVDIPSDPQNNSGCVGADGQFYP
 NPNGASIFLVTFAALPFYWLTTYILSDF----------------------------------
+
+>gi|13959622|O13069__vertebrate|cold|Bothrops jararaca|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKASELIIGG------
+-------------------------RPCDIN---------------------------------------
+--EHRSLALVKY--------------------GNFQCSGTLIN------QEWVLS------------AAH
+CDGE-----------------------------KMKIHLGVHSKK-----------------------VP
+NKDKQTRVAKEKFFCLSSKN-----------------------YTKWDKDIMLIRLDSP-VKNS------
+-----------------AHIAPI----------------------SLP-----------------SSPPI
+-VG------------SVCRIMGWG-TISTSK---------------------------------------
+VILSD----VP-HCANINLLN---------------------------YTVCRAAYPE------------
+----LPATSRTLCAGILQGG---------KDTCVGDSG-GPLICN----------GQFQGIVSWGSD---
+---VCGYVL-----EPALYTKVSD------YTEWINSIIAGNTTATCPP---------------------
+--------------------------------------------------------------
+
+>gi|13959623|O42207__vertebrate|cold|Gloydius ussuriensis|Gnathostomata|Squamata|Viperidae|capillary permeability increasing |
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLALVFNS-------------------SGFLCSGTLIN------QEWVLT------------AAH
+CDME-----------------------------NMRIYLGVHNES-----------------------VQ
+YDDEQTRVPEEKFFCLRSNN-----------------------DTKWDKDIMLIRLDSP-VNNS------
+-----------------AHIAPL----------------------NLP-----------------FNPPM
+-LG------------SVCRIMGWGAIT--------------------SPN--------------------
+EIYSS----VP-HCANINVLH---------------------------YSMCRAVYPG------------
+----MPAQTRILCAGIQTGG---------IDTCSGDSG-GPLICN----------GQFQGIVSWGRY---
+---PCAKPR-----APGLYTRVFD------YTDWIENIIAGNTDASCPP---------------------
+--------------------------------------------------------------
 
 >gi|20129689__not vertebrate|cold|drosophila melanogaster|Insecta|Diptera|Drosophilidae|ELSE|
 ----------------------------------------------------------------------
@@ -6368,6 +7194,20 @@ EAD------------TICSVAGWGD-LW-------------------SKG--------------------
 --YLCNSRL-----YPNAYTKISA------YLQWIRFKLENV----------------------------
 --------------------------------------------------------------
 
+>gi|18072835__vertebrate|cold|Crotalus adamanteus|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELIFGG------
+-------------------------RPCNRN---------------------------------------
+--EHRFLALVYS--------------------DGNQCSGTLIN------EEWVLT------------AAH
+CEGN-----------------------------KMKIHLGVHSKK-----------------------VP
+NKDKQTRVPKEKFFCVSSKT-----------------------YTKWNKDIMLIRLDRP-VSNS------
+-----------------KHIAPL----------------------NLP-----------------SSSPS
+-VG------------SVCRIMGWG-TISPTE---------------------------------------
+VILPD----VP-QCANINLLS---------------------------YSVCRAAYPEY-----------
+---GLPATSRTLCAGILEGG---------KDTCAGDSG-GPLICN----------GQFQGIASWGST---
+---LCGYVR-----EPALYTKVFD------HLDWIQSIIAGNTDATCPL---------------------
+--------------------------------------------------------------
+
 >gi|25282393__vertebrate|warm|Rattus norvegicus|Mammalia|Rodentia|Muridae|mast cell protease|
 ----------------------------------------------------------------------
 ----------------------------------------MQALLFLMALLLPSGAGAEEIIGG------
@@ -6394,6 +7234,20 @@ APG------------ANVTVAGWG-RLQEGG---------------------------------------
 -ATPS----QL-QKVTVPVVD---------------------------RATCKEAYSTP-----------
 --TPLEITDNMFCAGLPQGG---------QDACQGDSG-GPIVQG----------DVLLGVVSWGV----
 ---GCARPN-----KYGVYTRLGN------YVSFIEQYL-------------------------------
+--------------------------------------------------------------
+
+>gi|33307053|AAQ02895__vertebrate|cold|Viridovipera stejnegeri|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVALYDVS-----------------SGDFRGSGTLIN------PEWVLT------------AAH
+CET-------------------------------EEMKLQFGLHSK---------------------RVP
+NKDKQTRVSKEKFFCESNKN-----------------------YTKWNKDIMLIKLNRP-VKNS------
+-----------------AHIEPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-TLSDTE---------------------------------------
+MILPD----VP-HCANINLLN---------------------------YSDCQAAYPE------------
+----LPAKSRTLCAGILEGG---------KDTCSGDSG-GPLICN----------GTFQGIASWGST---
+---LCGYVR-----EPGSYTKVFD------HLDWIQSIIAGNTNVTCPL---------------------
 --------------------------------------------------------------
 
 >gi|130315|P80010__vertebrate|warm|Equus caballus|Mammalia|Perissodactyla|Equidae|plasminogen|
@@ -6478,6 +7332,34 @@ DQPGERYLVEQTFVHQFDQ-------------------------ESLRHDLALVKVSSP-IEFN------
 ----N----EL-QELNTVTLS---------------------------HQQCVRQQI-------------
 ----YPVYDSQLCTFVGSG----------RGACNGDSG-GPLVVN----------GELHGVVSWGI----
 ---PCAVG------LPDVFTRVSH------YADWIRETMENN----------------------------
+--------------------------------------------------------------
+
+>gi|33307071|AAQ02901__vertebrate|cold|Viridovipera stejnegeri|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVVGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVLVYT--------------------DGIQCGGTLIN------KEWMLT------------AAH
+CDG-------------------------------KKMKLQFGLHSK---------------------NVP
+NKDKQTRVPKKKYIFNCSNN-----------------------FTKWDKDIMLIKLDYP-VNYS------
+-----------------EHIAPL----------------------SLP-----------------SSPPG
+-MG------------SVCRVMGWG-AITPTN---------------------------------------
+ETLPD----VP-HCANINILD---------------------------HALCRAVFPG------------
+----LPATSRTLCAGVLQGG---------TDTCNRDSG-GPLICN----------GQFQGIVFWGWY---
+---PCAQPR-----VPALYTKVFD------HLDWIQSIIAGNTDAACPP---------------------
+--------------------------------------------------------------
+
+>gi|54650276__vertebrate|cold|Bothrops jararaca|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLVRVVANLLILQLSYAQKVSELVVGG------
+-------------------------DECNIN---------------------------------------
+--EHRSLVAIFNS-------------------TGFFCSGILLN------QEWVLT------------ASH
+CDST-----------------------------NFQMKIGVHSKK-----------------------TL
+NQDEQTRNPKEKIFCPNKKN-----------------------DDALDKDLMLVRLDSP-VSDS------
+-----------------EHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-SITPIQ---------------------------------------
+KTNPD----VP-HCANINLLD---------------------------DAVCRAAYPE------------
+----LPAEYRTLCAGVPEGG---------IDTCNGDSG-GPLICN----------GQFQGIVFYGAH---
+---PCGQAP-----KPGLYTKVID------YNTWIESVIAGNTAATCPP---------------------
 --------------------------------------------------------------
 
 >gi|23097244__vertebrate|warm|Homo sapiens|Mammalia|Primates|Hominidae|ELSE|
@@ -6634,6 +7516,34 @@ TKVSS----CL-REAELIIQE---------------------------DQECEKIFY-------------
 ---KGEIS-------SGVFTKVVY------FLPWISRNMKVL----------------------------
 --------------------------------------------------------------
 
+>gi|6066249|AAF03233__vertebrate|cold|Macrovipera lebetina|Gnathostomata|Squamata|Viperidae|factor v activating|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLVLQLSYAQKSSELVVGG------
+-------------------------DECDIN---------------------------------------
+--EHPFLVALYTSS-----------------SSTVHCAGTLIN------QEWVLT------------AVH
+CDRK-----------------------------NIRIKLGMHSKN-----------------------IR
+NEDEQIRVPRRKFFCLNTKF-----------------------PNGKDKDIMLIRLRRP-VKNS------
+-----------------AHIAPI----------------------SLP-----------------SSPSS
+-PR------------SRCRIMGWG-KISTTE---------------------------------------
+ETYPD----VP-HCAKIFIVK---------------------------HAWCEALYPW------------
+----VPADSRTLCAGILQGG---------KDTCEGDSG-GPLICN----------GQIQGIVSGGSD---
+---PCGQRL-----KPAVYTKVFD------YTDWIQSIIAGNTTATCP----------------------
+--------------------------------------------------------------
+
+>gi|13959615|O13057__vertebrate|cold|Trimeresurus flavoviridis|Gnathostomata|Squamata|Viperidae|venom|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLFYAQKSSELIIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVALYTFR-----------------SRRLHCGGILIN------QEWVLS------------AAR
+CNRK-----------------------------NIRIQLGMHSTN-----------------------VI
+NEDVQTRVPKEKFFCLSSKT-----------------------HTRWNKDIMLIRLNSP-VNNS------
+-----------------THIAPV----------------------SLP-----------------SNPPS
+-LG------------SVCRVMGWG-TISATK---------------------------------------
+ETHPD----VP-HCANINILD---------------------------YSVCRAAYAR------------
+----LPATSRTLCAGILEGG---------KDSCKADSG-GPLICN----------GEIQGIVSRGGH---
+---SCGQPR-----KPGLYTKVFD------HLDWIKSIIAGNKDAICPP---------------------
+--------------------------------------------------------------
+
 >gi|28856156|AAH48112__vertebrate|warm|homo sapiens|Mammalia|Primates|Hominidae|ELSE|
 -----------------------------------------------------MRLGLLSVALLFVGSSH
 LYSDHYSPSGRHRLGPSPEPAASSQQAEAVRKRLRRRREGGAHAKDCGTAPLKDVLQGSRIIGG------
@@ -6702,6 +7612,34 @@ KPG------------DVCYMAGWGKIT--------------------PQG--------------------
 -EFPN----TL-REVELTVQK---------------------------DRVCESQFQR------------
 ----SYIKASEICVGDSKTK---------GASFEEDSG-GPLVCK----------KAAAGIVSYGKT---
 ---DGSA--------PQVFTRVLS------FLSWIKKTMKNS----------------------------
+--------------------------------------------------------------
+
+>gi|6562944__vertebrate|cold|Macrovipera lebetina|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLVLQLSYAQKSSELVIGG------
+-------------------------DECNIN---------------------------------------
+--EHPFPVALHTAR-----------------SKRFYCAGTLIN------QEWVLT------------AAR
+CDRK-----------------------------NIRIILGVHSKN-----------------------VP
+NEDQQIRVPKEKFFCLSSKT-----------------------YTRWDKDIMLIRLKKP-VNDS------
+-----------------THIVPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-TITTTK---------------------------------------
+VTYPD----VP-HCANINMFD---------------------------YSVCRKVYRK------------
+----LPEKSRTLCAGILQGG---------IDSCKVDNG-GPLICN----------GQIQGIVSWGGH---
+---PCAQPH-----KPALYTNVFD------YTDWIQSIIAGNITATCPP---------------------
+--------------------------------------------------------------
+
+>gi|9988779|AAG10788__vertebrate|cold|Trimeresurus jerdonii|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLVRVLANLLMLQLSYAQKSSELIIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVALYTFR-----------------SRRFHCSGTLIN------EEWVLS------------AAR
+CDRK-----------------------------NIRIQLGMHSTN-----------------------VI
+NEDVQTRVPKEKFSCLSSKT-----------------------YTKWNKDIMLIRLKKP-VNNS------
+-----------------THIAPV----------------------SLP-----------------SNPPT
+-LG------------SVCRVMGWG-TISATK---------------------------------------
+ETHPD----VP-LCANINILD---------------------------YSVCRAAYAR------------
+----LPATSRTLCAGILEGG---------IDTCKGDPG-GPLICN----------GQFQGIVSWGSD---
+---PCAKPH-----EPGSYTKVFD------HLNWIQSIIAGNTTATCPP---------------------
 --------------------------------------------------------------
 
 >gi|73949707__vertebrate|warm|Canis familiaris|Mammalia|Carnivora|Canidae|granzyme|a
@@ -7068,6 +8006,20 @@ SSIPS----QL-QYVNVNIVS---------------------------QSKCASSAYGY-----------
 ---GCAYSN-----YPGVYASVAD------LRSWVINNA-------------------------------
 --------------------------------------------------------------
 
+>gi|9581530__vertebrate|cold|Deinagkistrodon acutus|Gnathostomata|Squamata|Viperidae|acubin|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSKLVIGG------
+-------------------------DECDINE--------------------------------------
+-HRSLALVYITT---------------------GFPCGGTLIN------PEWVLS------------AAH
+CDRG-----------------------------PMHIFLGMHSLK-----------------------AP
+KENEQKRIAKEKFFCLSSKN-----------------------YTKWGNDIMLIKLDSP-VNNS------
+-----------------AHIAPI----------------------SLP-----------------SNPPI
+-VG------------SVCRVMGWG-SITSPN---------------------------------------
+VTIPG----VP-HCANINILD---------------------------YEVCRATKPE------------
+----LPAKSRTLCAGILEGG---------KGSCDGDSG-GPLICN----------GEIQGIVSWGGD---
+---ICAQPH-----EPGHYTKVYD------YTDWINSIIAGNTSATCPP---------------------
+--------------------------------------------------------------
+
 >gi|1336172|AAB58350__vertebrate|cold|Gadus morhua|Actinopterygii|Gadiformes|Gadidae|elastase|
 ----------------------------------------------------------------------
 ---------------------------------MKLLVFALFVAGAYGCGLPTFPPIVTRVVGG------
@@ -7164,6 +8116,34 @@ NPG------------DVCSVAGWGKT---------------------SINT-------------------
 TEGSA----LL-EEAELIIQE---------------------------NKECKKQFR-------------
 ----HYSKITEICAGDPNKI---------EAPSKGDSG-GPLVCN----------NKAHGVLSYVK----
 ----SKKI------SSGVFTKVVH------FLPWISTNMKLL----------------------------
+--------------------------------------------------------------
+
+>gi|38570060|AAR24534__vertebrate|cold|Bitis gabonica|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLLLQLSYAQESSELVIGG------
+-------------------------DECDIN---------------------------------------
+--EHPFLVALHTAR-----------------SKRFHCAGTLLN------KEWVLT------------AAR
+CDR-------------------------------KNIRIKFGVHNK----------------------NV
+QNEDEEMRVPKEKHFCVSSKT----------------------YTRWDKDIMLIRLKRP-VNDG------
+-----------------THIAPL----------------------SLP-----------------SNPPS
+-VG------------SVCRIMGWG-SITTTK---------------------------------------
+VTYPD----VP-HCANIKLFD---------------------------YSVCRDAYKG------------
+----LPEKSRTLCAGILEGG---------IDSCKVDNG-GPLICN----------GQFQGIGSWEGH---
+---PCAQPL-----KPALYTNVFE------YTDWIEGIIARNTTVTCPP---------------------
+--------------------------------------------------------------
+
+>gi|134129|P18964__vertebrate|cold|Daboia russellii siamensis|Gnathostomata|Squamata|Viperidae|venom|
+----------------------------------------------------------------------
+------------------------------------------------------------VVGG------
+-------------------------DECNIN---------------------------------------
+--EHPFLVALYTST-----------------SSTIHCGGALIN------REWVLT------------AAH
+CDRR-----------------------------NIRIKLGMH----------------------------
+--SKNIRNEDEQIRVPRGKYFCLN----------------TKFPNGLDKDIMLIRLRRP-VTYS------
+-----------------THIAPV----------------------SLP-----------------SRSRG
+-VG------------SRCRIMGWG-KISTTE---------------------------------------
+DTYPD----VP-HCTNIFIVK---------------------------HKWCEPLYPW------------
+----VPADSRTLCAGILKGG---------RDTCHGDSG-GPLICN----------GQIQGIVAGGSE---
+---PCGQHL-----KPAVYTKVFD------YNNWIQNIIAGNRTVTCPP---------------------
 --------------------------------------------------------------
 
 >gi|78707270__not vertebrate|cold|drosophila melanogaster|Insecta|Diptera|Drosophilidae|ELSE|
@@ -7276,6 +8256,20 @@ KPG------------KMCWTAGWGKT---------------------GKNN-------------------
 -PLSV----TL-REVELRIMD---------------------------QEACKDHSD-------------
 -----YDYQLQVCAGSPTTS---------KSIGQGDSG-GPLVCD----------SVAHGIASSYE----
 ----AKA--------PAVFTRISY------YLPWIYKVLKSK----------------------------
+--------------------------------------------------------------
+
+>gi|13959621|O13063__vertebrate|cold|Trimeresurus gramineus|Gnathostomata|Squamata|Viperidae|venom|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVIGG------
+-------------------------DECNIN---------------------------------------
+--EHRSLVVLFNS-------------------SGVLCGGTLIN------QEYVLT------------AAH
+CDMP-----------------------------NMQILLGVHSAS-----------------------VL
+NDDEQARDPEEKYFCLSSNN-----------------------DTEWDKDIMLIRLNRS-VNNS------
+-----------------VHIAPL----------------------SLP-----------------SSPPR
+-LG------------SVCRVMGWG-AITSPN---------------------------------------
+ETYPD----VP-HCANINILR---------------------------YSLCRAVYLG------------
+----MPVQSRILCAGILRGG---------KDSCKGDSG-GPLICN----------GQLQGIVSAGSD---
+---PCAKPR-----VPNLYIKVFD------YTDWIQSIIAGNTTVTCPQ---------------------
 --------------------------------------------------------------
 
 >gi|56789072|AAH88011__vertebrate|cold|Xenopus tropicalis|Amphibia|Anura|Pipidae|ELSE|
@@ -7612,6 +8606,20 @@ KQN------------IQVEVTGWGATS--------------------ADG--------------------
 -DISN----NL-QQVTIPIIS---------------------------TFSCCLKYLKV-----------
 ---RHAITSRMFCAGEQGK-----------DSCQGDSG-GPLTLN----------NVQVGVTSFGS----
 ---GCGKL-------PGVYTKISA------MLPWINDNIKKNL---------------------------
+--------------------------------------------------------------
+
+>gi|13959616|O13058__vertebrate|cold|Trimeresurus flavoviridis|Gnathostomata|Squamata|Viperidae|venom|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVIGG------
+-------------------------DECNIN---------------------------------------
+--EHRSLVVLFNS-------------------SGALCGGTLIN------QEWVLT------------AAH
+CDMP-----------------------------NMQIYLGVHSAS-----------------------VP
+NDDEQARDPEEKYFCLSSNN-----------------------DTEWDKDIMLIRLNRS-VRNS------
+-----------------KHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-AITSPN---------------------------------------
+ETYPD----VP-YCANIKLLR---------------------------YSLCRVYQR-------------
+----MPAQSRILCAGILQGG---------KGICKGDSG-GPLICN----------GQFQGIVHGGGK---
+---TCAQPY-----EPGLYIKVFD------YTDWIQNIIAGNTTATCPP---------------------
 --------------------------------------------------------------
 
 >gi|853701__not vertebrate|cold|Anopheles gambiae|Insecta|Diptera|Culicidae|ELSE|
@@ -8412,6 +9420,20 @@ KPG------------KMCWAAGWGRT---------------------GVTE-------------------
 ---RGKP--------PIIFTRISS------YVPWIDTVIKGN----------------------------
 --------------------------------------------------------------
 
+>gi|33307104|AAQ02912__vertebrate|cold|Viridovipera stejnegeri|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVVGG------
+-------------------------LPCNIN---------------------------------------
+--EHRFLVLVYS--------------------DGIQCGGTLIN------KEWMLT------------AAH
+CDG-------------------------------KKMKLQFGLHSK---------------------NVP
+NKDKQTRVPKKKYFFPCSKN-----------------------FTKWDKDIMLIRLNHP-VNNS------
+-----------------THIAPL----------------------SLP-----------------SKPPS
+-QD------------TVCNIMGWG-TISPTK---------------------------------------
+EIYPD----VP-HCAYINIVD---------------------------HAVCRAFYPG------------
+----LLEKSKTLCAGILEGG---------KDTCQGDSG-GPLICN----------GQIQGIVSVGGD---
+---PCAEPR-----VSVLYTKVFD------HLDWIKSIIAGNTAATCPL---------------------
+--------------------------------------------------------------
+
 >gi|73544890|AAZ78212__not vertebrate|cold|Blattella germanica|Insecta|Blattaria|Blattellidae|trypsin|
 ----------------------------------------------------------------------
 -----------------------------MFRLVVIATLLVASCLGAATRARPRPRLIGRIVGG------
@@ -8732,6 +9754,34 @@ DPG------------TMCQAAGWGQT---------------------GVTD-------------------
 -PTSY----TL-REVELRIMD---------------------------VEACKIFSD-------------
 -----YDYNFQMCVGSLGR----------KRSPCGDSG-GPLLCA----------GVAHGIVSHGRE---
 ---DAKP--------PAVFTRISPY----VPRIYTVLSASS-----------------------------
+--------------------------------------------------------------
+
+>gi|57791760|AAW56633__vertebrate|cold|Deinagkistrodon acutus|Gnathostomata|Squamata|Viperidae|thrombin|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVIGG------
+-------------------------DECDIN---------------------------------------
+--EHRFLAALYTSE-----------------PWTFHCAGTLIH------KQWVLG------------AAH
+CYKR-----------------------------GLNIYLGMHNQG-----------------------IQ
+FDDEQRRYAIEEHYYRCDEK-----------------------LTKWENDVVLLKLNKP-VRRS------
+-----------------THIAPL----------------------SLP-----------------SSPPS
+-IG------------SVCRVMGWG-IMSSTK---------------------------------------
+DILPD----VP-HCANIKLVN---------------------------YTECVAPYPN------------
+----IPVTTRLWCAGILEGG---------IDTCHQDSG-GPLICD----------GQFQGIVAFGRY---
+---PCAQPR-----VPALYTKVSN------YTDWIQNIIAGKTTTACPP---------------------
+--------------------------------------------------------------
+
+>gi|76365438|ABA42115__vertebrate|cold|Crotalus durissus durissus|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVIGG------
+-------------------------DECNINE--------------------------------------
+-HRSLALVYITS---------------------GFLCGGTLIN------KEWVLT------------AAH
+CDRG-----------------------------DILVLLGVHRLKDV-------------------QTGV
+SKDVQTRVAKEKFICPNRKK-----------------------DDEKDKDIMLIRMDSP-VNIS------
+-----------------THIAPL----------------------SLP-----------------SNPPS
+-VG------------SVCRIMGWG-AITSPN---------------------------------------
+VTLPG----VP-HCADINIFD---------------------------YEVCRAAKPE------------
+----LPVTSRTLCAGILEGG---------KGSCDGDSG-GPLICN----------GEIQGIVSWGGD---
+---ICAQPR-----EPEPYTKVFD------YTEWIQSIIAGNTDATCPP---------------------
 --------------------------------------------------------------
 
 >gi|4530060|AAD21839__not vertebrate|cold|Ctenocephalides felis|Insecta|Siphonaptera|Pulicidae|trypsin|
@@ -9210,6 +10260,20 @@ STLPT----AL-RKVDVPIIS---------------------------RTTCRSYYGT------------
 ---GCAAPN-----APGVYARVGA------ARTFINQYL-------------------------------
 --------------------------------------------------------------
 
+>gi|57791683|AAW56609__vertebrate|cold|Deinagkistrodon acutus|Gnathostomata|Squamata|Viperidae|thrombin|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLILQLSYAQKSSELVIGG------
+-------------------------VECDIN---------------------------------------
+--EHRFLAAFFKYQ-----------------PWTFQCAGTLIH------EQWVLG------------AAH
+CYKR-----------------------------GLNIYLGMHNQS-----------------------IQ
+FDDEQRRYAIEEHYYRCDEK-----------------------LTKWEKDVVLLKLNKP-VRNS------
+-----------------THIAPL----------------------SLP-----------------SSPPS
+-IG------------SLCRVMGWG-IMSSTK---------------------------------------
+DILPD----VP-HCANINLLN---------------------------YTECVAPYPN------------
+----IPVTTRLWCAGILEGG---------IDTCHQDSG-GPLICD----------GQFQGIVSYGAH---
+---PCGQGP-----KPGIYTNVFD------YTDWIQRNIAGNTDATCPP---------------------
+--------------------------------------------------------------
+
 >gi|46398237|AAS91796__not vertebrate|cold|Lepeophtheirus salmonis|Maxillopoda|Siphonostomatoida|Caligidae|trypsin|
 ----------------------------------------------------------------------
 -------------------------------------MSNLMYLGILFACLLTPSESRSKIVGG------
@@ -9658,6 +10722,34 @@ PDN------------ATITLTGWG-RLSAGG---------------------------------------
 ---PCGRG------YPDAHARISY------YHDWIRTNVASNSD--------------------------
 --------------------------------------------------------------
 
+>gi|22417112|AAM96674__vertebrate|cold|Macrovipera lebetina|Gnathostomata|Squamata|Viperidae|alpha fibrinogenase|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLVMLHLSYGEKSSELVIGG------
+-------------------------RPCNIN---------------------------------------
+--QHRSLALLYNS-------------------SGFLCGGTLIN------QQWVLS------------AAH
+CDME-----------------------------NMQIYLGLHNFS------------------------L
+PNMDQKRRVAEEKFFCLSNKS----------------------YTKWDKDIMLIKLNRR-VKTS------
+-----------------THIAPL----------------------SLP-----------------SNPPR
+-LR------------SVCRIMGWG-SITSPR---------------------------------------
+ETLPY----VP-HCANIMILR---------------------------YWVCRAIYGS------------
+----LPAKSRTLCAGVPRRR---------IGSCLGDSG-GPLICN----------GQIQGIASWGSD---
+---PCVNHG-----APGVYTKVFD------YNDWIQSIIAGNTAATCPP---------------------
+--------------------------------------------------------------
+
+>gi|33307083|AAQ02905__vertebrate|cold|Viridovipera stejnegeri|Gnathostomata|Squamata|Viperidae|ELSE|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLLIIQLSYAQKSSELVIGG------
+-------------------------DECNIN---------------------------------------
+--EHRSLVVLFNS-------------------SGALCGGTLIN------QEYVLA------------AAH
+CDMP-----------------------------NMQILLGVHSAS-----------------------VL
+NDDEQARDPEEKYFCLSSNN-----------------------DTKWDKDIMLIRLNRP-VNNS------
+-----------------VHIAPL----------------------SLP-----------------SSPPS
+-VG------------SVCRIMGWG-KTIPTQ---------------------------------------
+ETHPD----VP-HCANIKLFH---------------------------YSLCRAVYVG------------
+----MPAQSRILCAGILQGG---------IGSCQGDSG-GPLICN----------GQFQGIVSATSK---
+---PCAHSL-----MPALYIKVFD------YTDWIKSIIAGNTTVTCPP---------------------
+--------------------------------------------------------------
+
 >gi|33087201|AAP92795__not vertebrate|cold|synthetic construct|not applicable|not applicable|not applicable|lumbrokinase|
 ----------------------------------------------------------------------
 ----------------MLLLALASLVAVGFAQPPIWYPGGQCGLSQYSDAGDMELPPGTKIVGG------
@@ -9740,6 +10832,20 @@ SAG------------AGITVAGWG-DTNSGVI--------------------------------------
 QSLPN----NL-QYVNVAVIS---------------------------TSDCNARTAY------------
 ---NGQILSGMICMGNMSGG---------EDSCQGDSG-GPAYLSG--------TTTVAGVTSWGY----
 ---GCAQAN-----KPGVYTDVAY------FRSWINSNS-------------------------------
+--------------------------------------------------------------
+
+>gi|247212|AAA03254__vertebrate|cold|Calloselasma rhodostoma|Gnathostomata|Squamata|Viperidae|venom|
+----------------------------------------------------------------------
+------------------------------------------------------------VIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVAVYEGT-----------------NWTFICGGVLIH------PEWVIT------------AEH
+CAR-------------------------------RRMNLVFGMHRK---------------------SEK
+FDDEQERYPKKRYFIRCNKT-----------------------RTSWDEDIMLIRLNKP-VNNS------
+-----------------EHIAPL----------------------SLP-----------------SNPPI
+-VG------------SDCRVMGWG-SINRRI---------------------------------------
+DVLSD----EP-RCANINLHN---------------------------FTMCHGLFRK------------
+----MPKKGRVLCAGDLRGR---------RDSCNSDSG-GPLICN----------EELHGIVARGPN---
+---PCAQPN-----KPALYTSIYD------YRDWVNNVIAGNATCSP-----------------------
 --------------------------------------------------------------
 
 >gi|91085341__not vertebrate|cold|Tribolium castaneum|Insecta|Coleoptera|Tenebrionidae|ELSE|
@@ -10510,6 +11616,20 @@ PDE------------STAXITGWG-TLTENG---------------------------------------
 -NTPV----VL-YSVNIPVIP---------------------------TSTCAQIFRN------------
 ---WGGLPENQICAASPGGG---------KDACQGDSG-GPMVVN----------DRLAGIVSWGNG---
 ---CGRNG------WPGVYTEVAA------YREWITSLTGV-----------------------------
+--------------------------------------------------------------
+
+>gi|1351938|P47797__vertebrate|cold|Calloselasma rhodostoma|Gnathostomata|Squamata|Viperidae|venom|
+----------------------------------------------------------------------
+------------------------------------MVLIRVLANLVILQLSYAQKSSELVIGG------
+-------------------------DECNIN---------------------------------------
+--EHRFLVALYDST-----------------TRNFLCGGVLIH------PEWVIT------------AKH
+CNK-------------------------------KSMVLYLGKHKQ---------------------SVK
+FDDEQERFPKEKHFIRCNKP-----------------------RTRWGEDIMLIRLNKP-VNNS------
+-----------------EHIAPL----------------------SLP-----------------SNPPI
+-VG------------SVCRVMGWG-SINKYI---------------------------------------
+DVLPD----EP-RCANINLYN---------------------------YTVCRGVFPR------------
+----IPKKSKILCAGDLQGR---------LDSCHCDSG-GPLICS----------EEFHGIVYRGPN---
+---PCAQPD-----KPALYTNIFD------HLHWILSIMAGNATCYP-----------------------
 --------------------------------------------------------------
 
 >gi|51094362|AAT95349__not vertebrate|cold|Sesamia nonagrioides|Insecta|Lepidoptera|Noctuidae|trypsin|

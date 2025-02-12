@@ -1,5 +1,5 @@
 import os
-from ..io import load_MSA
+from ..io import load_MSA, load_pdb
 import numpy as np
 import pandas as pd
 
@@ -8,9 +8,10 @@ def load_S1A_serine_proteases(paper):
     """
     Load the S1A serine protease dataset
 
-    Note that this is not the original dataset from Halabi et al,
-    Cell, 2008. The dataset has been augmented with more recent data
-    (hence the MSA is larger), and reprocessed.
+    Halabi dataset: 1470 sequences of length 832; 3 sectors identified
+    Rivoire dataset : 1390 sequences of length 832 (snake sequences were
+    removed for the paper's analysis); 6 sectors identified (including the
+    3 from Halabi et al, 2008)
 
     Parameters
     ----------
@@ -20,7 +21,6 @@ def load_S1A_serine_proteases(paper):
 
     Returns
     -------
-
     a dictionnary containing :
         - `sequences_ids`: a list of strings corresponding to sequence names
         - `alignment`: a list of strings corresponding to sequences. Because it
@@ -28,8 +28,10 @@ def load_S1A_serine_proteases(paper):
         - `metadata`: a pandas dataframe containing the metadata associated
           with the alignment.
         - `sector_positions`: a dictionnary of arrays containing the residue
-          positions associated to sectors, either in Halabi et al, or in
+          positions associated to each sector, either in Halabi et al, or in
           Rivoire et al.
+        - `pdb_sequence`: sequence extracted from rat's trypsin PDB structure
+        - `pdb_positions`: positions extracted from rat's trypsin PDB structure
     """
 
     module_path = os.path.dirname(__file__)
@@ -46,6 +48,11 @@ def load_S1A_serine_proteases(paper):
             module_path,
             "data/S1A_serine_proteases/halabi_sectors.npz")
         sectors = np.load(filename)
+        # Load the metadata
+        filename = os.path.join(
+            module_path,
+            "data/S1A_serine_proteases/halabi_metadata.csv")
+        metadata = pd.read_csv(filename)
 
     if paper == 'rivoire':
         # Load the alignment used in Rivoire et al, 2016
@@ -65,10 +72,18 @@ def load_S1A_serine_proteases(paper):
             "data/S1A_serine_proteases/rivoire_metadata.csv")
         metadata = pd.read_csv(filename)
 
+    # Load the PDB structure
+    filename = os.path.join(
+        module_path,
+        "data/S1A_serine_proteases/3tgi.pdb")
+    pdb_sequence, pdb_positions = load_pdb(filename, '3TGI', 'E')
+
     return {"sequence_ids": sequence_ids,
             "alignment": sequences,
             "sector_positions": sectors,
-            "metadata": metadata}
+            "metadata": metadata,
+            "pdb_sequence": pdb_sequence,
+            "pdb_positions": pdb_positions}
 
 
 def load_rhomboid_proteases():
@@ -80,7 +95,6 @@ def load_rhomboid_proteases():
 
     Returns
     -------
-
     a dictionnary containing :
         - `sequences_ids`: a list of strings corresponding to sequence names
         - `alignment`: a list of strings corresponding to sequences. Because it

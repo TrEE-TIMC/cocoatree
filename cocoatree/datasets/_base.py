@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 
-def load_S1A_serine_proteases(paper):
+def load_S1A_serine_proteases(paper='rivoire'):
     """
     Load the S1A serine protease dataset
 
@@ -54,7 +54,7 @@ def load_S1A_serine_proteases(paper):
             "data/S1A_serine_proteases/halabi_metadata.csv")
         metadata = pd.read_csv(filename)
 
-    if paper == 'rivoire':
+    elif paper == 'rivoire':
         # Load the alignment used in Rivoire et al, 2016
         filename = os.path.join(
             module_path,
@@ -71,6 +71,10 @@ def load_S1A_serine_proteases(paper):
             module_path,
             "data/S1A_serine_proteases/rivoire_metadata.csv")
         metadata = pd.read_csv(filename)
+
+    else:
+        raise ValueError(f"invalid paper: {paper}. Options are 'halabi' or \
+                         'rivoire'")
 
     # Load the PDB structure
     filename = os.path.join(

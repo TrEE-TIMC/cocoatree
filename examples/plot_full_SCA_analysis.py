@@ -32,13 +32,16 @@ import numpy as np
 # ----------------
 #
 # We start by importing the dataset. In this case, we can directly load the S1
-# serine protease dataset provided in :mod:`cocoatree`. To work on your on
+# serine protease dataset provided in :mod:`cocoatree`. To work on your own
 # dataset, you can use the `cocoatree.io.load_msa` function.
 
 serine_dataset = c_data.load_S1A_serine_proteases('rivoire')
 loaded_seqs = serine_dataset["alignment"]
 loaded_seqs_id = serine_dataset["sequence_ids"]
 n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
+true_sectors = serine_dataset["sector_positions"]
+pdb_sequence = serine_dataset["pdb_sequence"]
+pdb_positions = serine_dataset["pdb_positions"]
 
 print(f"The loaded MSA has {n_loaded_seqs} sequences and {n_loaded_pos} \
       positions.")

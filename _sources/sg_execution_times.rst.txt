@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:52.821** total execution time for 5 files **from all galleries**:
+**00:16.764** total execution time for 5 files **from all galleries**:
 
 .. container::
 
@@ -33,17 +33,17 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_auto_examples_plot_sca_vs_mi.py` (``../examples/plot_sca_vs_mi.py``)
-     - 00:32.216
+     - 00:08.119
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_full_SCA_analysis.py` (``../examples/plot_full_SCA_analysis.py``)
-     - 00:16.577
+     - 00:04.671
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_sector_along_tree_and_metadata.py` (``../examples/plot_sector_along_tree_and_metadata.py``)
-     - 00:03.742
+     - 00:03.764
      - 0.0
    * - :ref:`sphx_glr_auto_examples_datasets_plot_s1A_serine_proteases.py` (``../examples/datasets/plot_s1A_serine_proteases.py``)
-     - 00:00.238
+     - 00:00.159
      - 0.0
    * - :ref:`sphx_glr_auto_examples_datasets_plot_rhomboid_proteases.py` (``../examples/datasets/plot_rhomboid_proteases.py``)
-     - 00:00.049
+     - 00:00.052
      - 0.0

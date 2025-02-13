@@ -74,7 +74,7 @@ sector.</p>
 <p>We start by importing the dataset. In this case, we can directly load the S1
 serine protease dataset provided in <code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree</span></code>. To work on your on
 dataset, you can use the <cite>cocoatree.io.load_msa</cite> function.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">serine_dataset</span></a> <span class="o">=</span> <a href="../modules/generated/cocoatree.datasets.load_S1A_serine_proteases.html#cocoatree.datasets.load_S1A_serine_proteases" title="cocoatree.datasets.load_S1A_serine_proteases" class="sphx-glr-backref-module-cocoatree-datasets sphx-glr-backref-type-py-function"><span class="n">c_data</span><span class="o">.</span><span class="n">load_S1A_serine_proteases</span></a><span class="p">()</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">serine_dataset</span></a> <span class="o">=</span> <a href="../modules/generated/cocoatree.datasets.load_S1A_serine_proteases.html#cocoatree.datasets.load_S1A_serine_proteases" title="cocoatree.datasets.load_S1A_serine_proteases" class="sphx-glr-backref-module-cocoatree-datasets sphx-glr-backref-type-py-function"><span class="n">c_data</span><span class="o">.</span><span class="n">load_S1A_serine_proteases</span></a><span class="p">(</span><span class="s1">&#39;rivoire&#39;</span><span class="p">)</span>
 <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">serine_dataset</span></a><span class="p">[</span><span class="s2">&quot;alignment&quot;</span><span class="p">]</span>
 <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs_id</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">serine_dataset</span></a><span class="p">[</span><span class="s2">&quot;sequence_ids&quot;</span><span class="p">]</span>
 <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_loaded_pos</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_loaded_seqs</span></a> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs</span></a><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs</span></a><span class="p">)</span>
@@ -83,7 +83,15 @@ dataset, you can use the <cite>cocoatree.io.load_msa</cite> function.</p>
 <span class="s2">      positions.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>The loaded MSA has 6970 sequences and 296       positions.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain E is discontinuous at line 2569.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain I is discontinuous at line 2570.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain E is discontinuous at line 2580.
+  warnings.warn(
+/opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain I is discontinuous at line 2758.
+  warnings.warn(
+The loaded MSA has 1390 sequences and 832       positions.
 </pre></div>
 </div>
 </section>
@@ -97,8 +105,8 @@ dataset, you can use the <cite>cocoatree.io.load_msa</cite> function.</p>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;After filtering, we have </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sequences</span></a><span class="p">)</span><span class="si">}</span><span class="s2"> remaining sequences.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>After filtering, we have 226 remaining positions.
-After filtering, we have 6965 remaining sequences.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>After filtering, we have 243 remaining positions.
+After filtering, we have 1376 remaining sequences.
 </pre></div>
 </div>
 </section>
@@ -121,7 +129,7 @@ After filtering, we have 6965 remaining sequences.
       <a href="https://numpy.org/doc/stable/reference/generated/numpy.round.html#numpy.round" title="numpy.round" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">round</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">m_eff</span></a><span class="p">))</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Number of effective sequences 1206
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Number of effective sequences 1019
 </pre></div>
 </div>
 </section>
@@ -156,7 +164,7 @@ After filtering, we have 6965 remaining sequences.
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.colorbar.html#matplotlib.figure.Figure.colorbar" title="matplotlib.figure.Figure.colorbar" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-method"><span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span></a><span class="p">(</span><a href="https://matplotlib.org/stable/api/image_api.html#matplotlib.image.AxesImage" title="matplotlib.image.AxesImage" class="sphx-glr-backref-module-matplotlib-image sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">im</span></a><span class="p">,</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../_images/sphx_glr_plot_full_SCA_analysis_003.png" srcset="../_images/sphx_glr_plot_full_SCA_analysis_003.png" alt="SCA matrix" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar object at 0x7f5cb46e53d0&gt;
+<img src="../_images/sphx_glr_plot_full_SCA_analysis_003.png" srcset="../_images/sphx_glr_plot_full_SCA_analysis_003.png" alt="SCA matrix" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar object at 0x7f419e81e710&gt;
 </pre></div>
 </div>
 <p>Extraction of principal components (PCA analysis)
@@ -210,15 +218,15 @@ and of independent components (ICA analysis)
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Sector positions on (filtered) sequences:
-sector 1: [184, 118, 64, 56, 43, 87, 48, 29, 101, 53, 10, 46, 9, 61, 8, 95, 63, 35, 130, 225]
-sector 2: [41, 25, 149, 163, 40, 177, 123, 181, 179, 85, 122, 191, 124, 38, 180, 176, 178, 54, 3, 26, 136, 205, 194, 39, 12, 91, 2, 17]
-sector 3: [208, 195, 153, 77, 172, 206, 196, 183, 189, 170, 141, 115, 81]
-sector 4: [199, 174, 211, 14, 1, 28, 94, 114, 15, 89, 200]
-sector 5: [217, 74, 218, 106, 88, 86, 34, 137, 23, 72, 107, 30, 97, 84, 16, 18, 90]
-sector 6: [186, 11, 105, 193, 49, 120, 75, 71, 121]
-sector 7: [0, 192, 154]
-sector 8: [37, 68, 210, 51, 27, 212, 209, 157, 158, 143]
-sector 9: [161, 165, 164, 207, 13, 175, 198, 169, 182, 139]
+sector 1: [64, 48, 145, 195, 63, 182, 199, 168, 146, 197, 144, 108, 222, 61, 196, 198, 194, 211, 49, 216, 208, 192, 234, 26, 35, 62, 235, 50, 155, 200, 23, 60, 76, 213, 73, 58, 114, 25]
+sector 2: [140, 202, 52, 110, 78, 87, 81, 129, 75, 124, 33, 32, 128, 82, 207, 226, 120, 83, 69, 31]
+sector 3: [225, 190, 212, 223, 180, 183, 184, 220, 224, 193, 172, 210, 142, 176, 160, 177, 217, 219, 161, 227]
+sector 4: [0, 1, 2, 3, 4, 5, 6, 22, 7, 8, 9, 10, 11, 12, 13, 158, 14]
+sector 5: [24, 228, 51, 215, 188]
+sector 6: [97, 100, 98, 101, 95, 91, 107, 126, 102]
+sector 7: [231, 109, 59, 53, 206, 131, 130]
+sector 8: [57, 36, 111, 204, 34, 117]
+sector 9: [46, 39, 37, 38, 156, 152, 41, 201, 149, 148, 143]
 </pre></div>
 </div>
 <p>Plot coevolution within and between the sectors
@@ -309,7 +317,7 @@ as implemented in the cocoatree.visualization module</p>
                                  <span class="n">outpath</span><span class="o">=</span><span class="s1">&#39;color_sector_1_pymol.npy&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 16.577 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 4.671 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-full-sca-analysis-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/tree-timc/cocoatree/gh-pages?urlpath=lab/tree/notebooks/auto_examples/plot_full_SCA_analysis.ipynb"><img alt="Launch binder" src="../_images/binder_badge_logo1.svg" style="width: 150px;" />

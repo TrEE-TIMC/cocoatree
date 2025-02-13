@@ -44,11 +44,20 @@
 <h1>cocoatree.datasets.load_S1A_serine_proteases<a class="headerlink" href="#cocoatree-datasets-load-s1a-serine-proteases" title="Link to this heading">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="cocoatree.datasets.load_S1A_serine_proteases">
-<span class="sig-prename descclassname"><span class="pre">cocoatree.datasets.</span></span><span class="sig-name descname"><span class="pre">load_S1A_serine_proteases</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.datasets.load_S1A_serine_proteases" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cocoatree.datasets.</span></span><span class="sig-name descname"><span class="pre">load_S1A_serine_proteases</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paper</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rivoire'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.datasets.load_S1A_serine_proteases" title="Link to this definition">¶</a></dt>
 <dd><p>Load the S1A serine protease dataset</p>
-<p>Note that this is not the original dataset from Halabi et al,
-Cell, 2008. The dataset has been augmented with more recent data
-(hence the MSA is larger), and reprocessed.</p>
+<p>Halabi dataset: 1470 sequences of length 832; 3 sectors identified
+Rivoire dataset : 1390 sequences of length 832 (snake sequences were
+removed for the paper’s analysis); 6 sectors identified (including the
+3 from Halabi et al, 2008)</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>paper: str, either ‘halabi’ or ‘rivoire’</dt><dd><p>whether to load the dataset from Halabi et al, Cell, 2008 or from
+Rivoire et al, PLoS Comput Biol, 2016</p>
+</dd>
+</dl>
+</section>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
 <dl class="simple">
@@ -56,6 +65,13 @@ Cell, 2008. The dataset has been augmented with more recent data
 <li><p><cite>sequences_ids</cite>: a list of strings corresponding to sequence names</p></li>
 <li><p><cite>alignment</cite>: a list of strings corresponding to sequences. Because it
 is an MSA, all the strings are of same length.</p></li>
+<li><p><cite>metadata</cite>: a pandas dataframe containing the metadata associated
+with the alignment.</p></li>
+<li><p><cite>sector_positions</cite>: a dictionnary of arrays containing the residue
+positions associated to each sector, either in Halabi et al, or in
+Rivoire et al.</p></li>
+<li><p><cite>pdb_sequence</cite>: sequence extracted from rat’s trypsin PDB structure</p></li>
+<li><p><cite>pdb_positions</cite>: positions extracted from rat’s trypsin PDB structure</p></li>
 </ul>
 </dd>
 </dl>

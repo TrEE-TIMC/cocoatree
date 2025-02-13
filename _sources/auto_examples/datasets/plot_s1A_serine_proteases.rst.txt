@@ -28,20 +28,37 @@ Load the dataset
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain E is discontinuous at line 2569.
+      warnings.warn(
+    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain I is discontinuous at line 2570.
+      warnings.warn(
+    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain E is discontinuous at line 2580.
+      warnings.warn(
+    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain I is discontinuous at line 2758.
+      warnings.warn(
 
 
+
+
+
+
+|
 
 .. code-block:: Python
 
 
     from cocoatree.datasets import load_S1A_serine_proteases
 
-    dataset = load_S1A_serine_proteases()
+    dataset = load_S1A_serine_proteases(paper='rivoire')
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.238 seconds)
+   **Total running time of the script:** (0 minutes 0.159 seconds)
 
 
 .. _sphx_glr_download_auto_examples_datasets_plot_s1A_serine_proteases.py:

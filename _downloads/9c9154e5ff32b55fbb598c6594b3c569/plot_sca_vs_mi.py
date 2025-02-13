@@ -26,7 +26,7 @@ import numpy as np
 #
 # We start by importing the dataset.
 
-serine_dataset = load_S1A_serine_proteases()
+serine_dataset = load_S1A_serine_proteases(paper='rivoire')
 seq_id = serine_dataset["sequence_ids"]
 sequences = serine_dataset["alignment"]
 n_pos, n_seq = len(sequences[0]), len(sequences)

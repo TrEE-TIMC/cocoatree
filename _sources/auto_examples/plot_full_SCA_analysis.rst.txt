@@ -84,7 +84,7 @@ dataset, you can use the `cocoatree.io.load_msa` function.
 .. code-block:: Python
 
 
-    serine_dataset = c_data.load_S1A_serine_proteases()
+    serine_dataset = c_data.load_S1A_serine_proteases('rivoire')
     loaded_seqs = serine_dataset["alignment"]
     loaded_seqs_id = serine_dataset["sequence_ids"]
     n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
@@ -100,7 +100,15 @@ dataset, you can use the `cocoatree.io.load_msa` function.
 
  .. code-block:: none
 
-    The loaded MSA has 6970 sequences and 296       positions.
+    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain E is discontinuous at line 2569.
+      warnings.warn(
+    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain I is discontinuous at line 2570.
+      warnings.warn(
+    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain E is discontinuous at line 2580.
+      warnings.warn(
+    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain I is discontinuous at line 2758.
+      warnings.warn(
+    The loaded MSA has 1390 sequences and 832       positions.
 
 
 
@@ -132,8 +140,8 @@ We clean the loaded MSA by filtering both sequences and positions.
 
  .. code-block:: none
 
-    After filtering, we have 226 remaining positions.
-    After filtering, we have 6965 remaining sequences.
+    After filtering, we have 243 remaining positions.
+    After filtering, we have 1376 remaining sequences.
 
 
 
@@ -190,7 +198,7 @@ Compute sequence weights
 
  .. code-block:: none
 
-    Number of effective sequences 1206
+    Number of effective sequences 1019
 
 
 
@@ -267,7 +275,7 @@ Compute the SCA coevolution matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7f5cb46e53d0>
+    <matplotlib.colorbar.Colorbar object at 0x7f419e81e710>
 
 
 
@@ -372,15 +380,15 @@ Extract sectors
  .. code-block:: none
 
     Sector positions on (filtered) sequences:
-    sector 1: [184, 118, 64, 56, 43, 87, 48, 29, 101, 53, 10, 46, 9, 61, 8, 95, 63, 35, 130, 225]
-    sector 2: [41, 25, 149, 163, 40, 177, 123, 181, 179, 85, 122, 191, 124, 38, 180, 176, 178, 54, 3, 26, 136, 205, 194, 39, 12, 91, 2, 17]
-    sector 3: [208, 195, 153, 77, 172, 206, 196, 183, 189, 170, 141, 115, 81]
-    sector 4: [199, 174, 211, 14, 1, 28, 94, 114, 15, 89, 200]
-    sector 5: [217, 74, 218, 106, 88, 86, 34, 137, 23, 72, 107, 30, 97, 84, 16, 18, 90]
-    sector 6: [186, 11, 105, 193, 49, 120, 75, 71, 121]
-    sector 7: [0, 192, 154]
-    sector 8: [37, 68, 210, 51, 27, 212, 209, 157, 158, 143]
-    sector 9: [161, 165, 164, 207, 13, 175, 198, 169, 182, 139]
+    sector 1: [64, 48, 145, 195, 63, 182, 199, 168, 146, 197, 144, 108, 222, 61, 196, 198, 194, 211, 49, 216, 208, 192, 234, 26, 35, 62, 235, 50, 155, 200, 23, 60, 76, 213, 73, 58, 114, 25]
+    sector 2: [140, 202, 52, 110, 78, 87, 81, 129, 75, 124, 33, 32, 128, 82, 207, 226, 120, 83, 69, 31]
+    sector 3: [225, 190, 212, 223, 180, 183, 184, 220, 224, 193, 172, 210, 142, 176, 160, 177, 217, 219, 161, 227]
+    sector 4: [0, 1, 2, 3, 4, 5, 6, 22, 7, 8, 9, 10, 11, 12, 13, 158, 14]
+    sector 5: [24, 228, 51, 215, 188]
+    sector 6: [97, 100, 98, 101, 95, 91, 107, 126, 102]
+    sector 7: [231, 109, 59, 53, 206, 131, 130]
+    sector 8: [57, 36, 111, 204, 34, 117]
+    sector 9: [46, 39, 37, 38, 156, 152, 41, 201, 149, 148, 143]
 
 
 
@@ -528,7 +536,7 @@ as implemented in the cocoatree.visualization module
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 16.577 seconds)
+   **Total running time of the script:** (0 minutes 4.671 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_full_SCA_analysis.py:

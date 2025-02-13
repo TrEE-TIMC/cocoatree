@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>cocoatree.msa.map_msa_positions &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="../../_static/documentation_options.js?v=837179f8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  </head><body><div class="navbar related">
+      <a href="../../index.html">
+        
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="../../auto_examples/index.html">Gallery</a> </li>
+      <li class="right"><a href="../classes.html">API</a> | </li>
+      <li class="right"><a href="../../install.html">Installation</a> | </li>
+      <li class="right"><a href="../../index.html">Home</a> | </li>
+      
+    </ul>
+  </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cocoatree-msa-map-msa-positions">
+<h1>cocoatree.msa.map_msa_positions<a class="headerlink" href="#cocoatree-msa-map-msa-positions" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="cocoatree.msa.map_msa_positions">
+<span class="sig-prename descclassname"><span class="pre">cocoatree.msa.</span></span><span class="sig-name descname"><span class="pre">map_msa_positions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_loaded_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remaining_pos</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#cocoatree.msa.map_msa_positions" title="Link to this definition">¶</a></dt>
+<dd><p>Maps positions between the original and the filtered MSA</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>n_loaded_pos<span class="classifier">int,</span></dt><dd><p>Number of positions in the original unfiltered MSA</p>
+</dd>
+<dt>remaining_pos<span class="classifier">np.ndarray,</span></dt><dd><p>array containing the indexes of positions that have been conserved
+after filtering the MSA (output from cocoatree.msa.filter_sequences)</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>original2filtered<span class="classifier">dictionnary,</span></dt><dd><p>the keys are the positions in the original MSA and the values are the
+corresponding positions in the filtered MSA. When the original position
+has been filtered, the value is set to ‘None’.</p>
+</dd>
+<dt>filtered2original<span class="classifier">dictionnary,</span></dt><dd><p>the keys are the positions in the filtered MSA and the values are the
+corresponding positions in the original MSA.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<div class="sphx-glr-clear"></div></section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

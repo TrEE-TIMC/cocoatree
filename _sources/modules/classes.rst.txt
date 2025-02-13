@@ -88,6 +88,7 @@ Functions
    msa.map_to_pdb
    msa.compute_seq_identity
    msa.compute_seq_weights
+   msa.map_msa_positions
 
 
 .. _msa_ref:

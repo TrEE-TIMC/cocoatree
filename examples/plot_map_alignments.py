@@ -19,7 +19,7 @@ import pandas as pd
 # Start by loading the dataset and the different relevant information: the
 # MSA, the PDB positions, and the sectors positions.
 
-serine_dataset = load_S1A_serine_proteases(paper="halabi")
+serine_dataset = load_S1A_serine_proteases(paper="rivoire")
 seq_id = serine_dataset["sequence_ids"]
 sequences = serine_dataset["alignment"]
 n_pos, n_seq = len(sequences[0]), len(sequences)
@@ -27,7 +27,7 @@ n_pos, n_seq = len(sequences[0]), len(sequences)
 # Make the sectors the same object type as what our extract_sectors_pos
 # returns.
 sectors = [
-    [int(i) for i in serine_dataset["sector_positions"][key]]
+    [str(i) for i in serine_dataset["sector_positions"][key]]
     for key in serine_dataset["sector_positions"].keys()]
 pdb_pos = serine_dataset["pdb_positions"]
 
@@ -58,15 +58,11 @@ mapping = pd.DataFrame(
     {"original_msa_pos": np.arange(n_pos, dtype=int),
      "pdb_pos": pdb_mapping,
      "pdb_named_pos": pdb_pos_mapping,
-     "pdb_pos_trunc": [int(i)
-                       if i is not None and len(i) < 4 else None
-                       for i in pdb_pos_mapping],
      "filtered_msa_pos": pos_mapping.values()})
 
-mapping["sector_1"] = np.isin(mapping["pdb_pos_trunc"], sectors[0])
-mapping["sector_2"] = np.isin(mapping["pdb_pos_trunc"], sectors[1])
-mapping["sector_3"] = np.isin(mapping["pdb_pos_trunc"], sectors[2])
-mapping = mapping.drop("pdb_pos_trunc", axis=1)
+mapping["sector_1"] = np.isin(mapping["pdb_named_pos"], sectors[0])
+mapping["sector_2"] = np.isin(mapping["pdb_named_pos"], sectors[1])
+mapping["sector_3"] = np.isin(mapping["pdb_named_pos"], sectors[2])
 
 # %%
 # Now print the indices of sectors 1 in the different referentials

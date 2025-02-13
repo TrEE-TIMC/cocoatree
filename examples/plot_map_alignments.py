@@ -15,10 +15,17 @@ from cocoatree.msa import map_msa_positions
 import pandas as pd
 
 
+# %%
+# Start by loading the dataset and the different relevant information: the
+# MSA, the PDB positions, and the sectors positions.
+
 serine_dataset = load_S1A_serine_proteases(paper="halabi")
 seq_id = serine_dataset["sequence_ids"]
 sequences = serine_dataset["alignment"]
 n_pos, n_seq = len(sequences[0]), len(sequences)
+
+# Make the sectors the same object type as what our extract_sectors_pos
+# returns.
 sectors = [
     [int(i) for i in serine_dataset["sector_positions"][key]]
     for key in serine_dataset["sector_positions"].keys()]
@@ -27,9 +34,16 @@ pdb_pos = serine_dataset["pdb_positions"]
 seq_kept, seq_id_kept, pos_kept = filter_sequences(sequences, seq_id)
 
 
+# %%
+# Now, we are going to map all of these onte the same referential: the
+# original MSA positions.
+#
+# Use the function to obtain the mapping between the original MSA and the
+# filtered MSA
 pos_mapping, _ = map_msa_positions(n_pos, pos_kept)
 
 
+# %%
 # Sectors are in the PDB referential. The sequence corresponding to the PDB is
 # the first of the MSA.
 is_mapped = np.array([s != "-" for s in sequences[0]])

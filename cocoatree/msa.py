@@ -381,17 +381,18 @@ def map_msa_positions(n_loaded_pos, remaining_pos):
         the keys are the positions in the filtered MSA and the values are the
         corresponding positions in the original MSA.
     """
+    mapping = [
+        int(val) if f else None
+        for f, val in zip(
+            np.isin(np.arange(n_loaded_pos), remaining_pos),
+            np.isin(np.arange(n_loaded_pos), remaining_pos).cumsum())]
+    original2filtered = {
+        i: t for i, t
+        in enumerate(mapping)}
 
-    original2filtered = dict()
     filtered2original = dict()
 
-    for pos in range(n_loaded_pos):
-        if pos in remaining_pos:
-            original2filtered[pos] = np.where(remaining_pos == pos)[0][0]
-        else:
-            original2filtered[pos] = None
-
     for pos in range(len(remaining_pos)):
-        filtered2original[pos] = remaining_pos[pos]
+        filtered2original[pos] = int(remaining_pos[pos])
 
     return original2filtered, filtered2original

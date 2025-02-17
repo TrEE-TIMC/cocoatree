@@ -1,3 +1,5 @@
+import warnings
+
 from Bio import AlignIO
 from Bio.PDB import PDBParser
 from .msa import _clean_msa
@@ -82,8 +84,7 @@ def export_fasta(sequences, sequences_id, outpath):
 
 
 def load_pdb(path2pdb, pdb_id, chain):
-
-    '''
+    """
     Read in a PDB file.
 
     Import a PDB file and extract the associated sequence along with the
@@ -106,10 +107,11 @@ def load_pdb(path2pdb, pdb_id, chain):
 
     pdb_pos : list,
         PDB position of each amino acid
-    '''
-
-    P = PDBParser(PERMISSIVE=1)
-    structure = P.get_structure(pdb_id, path2pdb)
+    """
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        P = PDBParser(PERMISSIVE=1)
+        structure = P.get_structure(pdb_id, path2pdb)
 
     # Fill up sequence and label information
     pdb_seq = ""

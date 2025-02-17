@@ -100,14 +100,6 @@ dataset, you can use the `cocoatree.io.load_msa` function.
 
  .. code-block:: none
 
-    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain E is discontinuous at line 2569.
-      warnings.warn(
-    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain I is discontinuous at line 2570.
-      warnings.warn(
-    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain E is discontinuous at line 2580.
-      warnings.warn(
-    /opt/hostedtoolcache/Python/3.11.11/x64/lib/python3.11/site-packages/Bio/PDB/StructureBuilder.py:100: PDBConstructionWarning: WARNING: Chain I is discontinuous at line 2758.
-      warnings.warn(
     The loaded MSA has 1390 sequences and 832       positions.
 
 
@@ -275,7 +267,7 @@ Compute the SCA coevolution matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7f37e13f3710>
+    <matplotlib.colorbar.Colorbar object at 0x7f8024d6df50>
 
 
 
@@ -536,7 +528,7 @@ as implemented in the cocoatree.visualization module
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.782 seconds)
+   **Total running time of the script:** (0 minutes 4.733 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_full_SCA_analysis.py:

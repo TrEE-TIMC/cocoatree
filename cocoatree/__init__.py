@@ -12,15 +12,49 @@ __version__ = "0.0.0a0.dev0"
 
 
 def perform_sca(sequences_id, sequences,
+                n_components=4,
                 freq_regul=__params.__freq_regularization_ref,
                 gap_threshold=0.4, seq_threshold=0.2,
-                coevolution_metric="SCA", correction=None, n_components=4):
+                coevolution_metric="SCA", correction=None):
     """
     Perform statistical coupling analysis (SCA)
 
     Parameters
     ----------
+    sequences : list of MSA sequences to filter
 
+    sequences_id : list of the MSA's sequence identifiers
+
+    n_components : int, default: 4
+
+    gap_threshold : float [0, 1], default: 0.4
+        max proportion of gaps tolerated
+
+    seq_threshold : maximum fraction of gaps per sequence (default 0.2)
+
+    coevolution_metric : {'SCA', 'NMI', 'MI}, optional, default: 'SCA'
+        which coevolution metric to use:
+
+        - SCA: the coevolution matrix from Rivoire et al
+        - MI: the mutual information
+        - NMI: the normalized mutual information
+
+    correction : {None, 'APC', 'entropy'}, default: None
+        which correction to use
+
+    Returns
+    -------
+    results : pd.DataFrame with the following columns
+
+        - original_msa_pos : the original MSA position
+        - filtered_msa_pos : the position in the filtered MSA
+
+        and  for each component:
+
+        - PCk: the projection of the residue onto the kth principal component
+        - ICk: the projeciton of the residue onto the kth independent
+          component
+        - sector_k: wherether the residue is found to be part of sector k
 
     """
 

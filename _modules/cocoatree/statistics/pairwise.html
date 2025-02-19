@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cocoatree.statistics.pairwise &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/nameko.css?v=2296cfae" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="../../../_static/documentation_options.js?v=837179f8"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  </head><body><div class="navbar related">
+      <a href="../../../index.html">
+        
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="../../../auto_examples/index.html">Gallery</a> </li>
+      <li class="right"><a href="../../../modules/classes.html">API</a> | </li>
+      <li class="right"><a href="../../../install.html">Installation</a> | </li>
+      <li class="right"><a href="../../../index.html">Home</a> | </li>
+      
+    </ul>
+  </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for cocoatree.statistics.pairwise</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..__params</span><span class="w"> </span><span class="kn">import</span> <span class="n">lett2num</span><span class="p">,</span> <span class="n">__freq_regularization_ref</span><span class="p">,</span> <span class="n">__aa_count</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..msa</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_seq_weights</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.position</span><span class="w"> </span><span class="kn">import</span> <span class="n">_compute_first_order_freqs</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_compute_aa_joint_freqs</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">freq_regul</span><span class="o">=</span><span class="n">__freq_regularization_ref</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes the joint frequencies of each pair of amino acids in a MSA</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        f_{ij}^{ab} = (\\sum_s w_s x_{si}^a x_{sj}^b +</span>
+<span class="sd">            \\lambda/(21)^2)/(M_{eff} + \\lambda)</span>
+
+<span class="sd">    where</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        M_{eff} = \\sum_s w_s</span>
+
+<span class="sd">    represents the effective number of sequences in the alignment and *lambda*</span>
+<span class="sd">    is a regularization parameter (pseudocount).</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sequences : list of sequences as imported by load_MSA()</span>
+
+<span class="sd">    seq_weights : numpy 1D array, optional</span>
+<span class="sd">            Gives more or less importance to certain sequences. If</span>
+<span class="sd">            seq_weights=None, all sequences are attributed an equal weighti</span>
+<span class="sd">            of 1.</span>
+
+<span class="sd">    freq_regul : regularization parameter (default=__freq_regularization_ref)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    aa_joint_freqs : np.ndarray of shape (Npos, Npos, aa_count, aa_count)</span>
+<span class="sd">        joint frequency of amino acids `a` and `b`</span>
+<span class="sd">        at respective positions `i` and `j`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Convert sequences to binary format</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">char</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">])</span>
+    <span class="n">binary_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">tmp</span> <span class="o">==</span> <span class="n">aa</span> <span class="k">for</span> <span class="n">aa</span> <span class="ow">in</span> <span class="n">lett2num</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># Adding weights</span>
+    <span class="k">if</span> <span class="n">seq_weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">seq_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">))</span>
+    <span class="n">weighted_binary_array</span> <span class="o">=</span> <span class="n">binary_array</span> <span class="o">*</span> \
+        <span class="n">seq_weights</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+    <span class="c1"># number of effective sequences</span>
+    <span class="n">m_eff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">seq_weights</span><span class="p">)</span>
+
+    <span class="c1"># Joint frequencies</span>
+    <span class="n">aa_joint_freqs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tensordot</span><span class="p">(</span><span class="n">weighted_binary_array</span><span class="p">,</span> <span class="n">binary_array</span><span class="p">,</span>
+                                  <span class="n">axes</span><span class="o">=</span><span class="p">([</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">aa_joint_freqs</span> <span class="o">=</span> <span class="p">(</span><span class="n">aa_joint_freqs</span> <span class="o">+</span> <span class="n">freq_regul</span> <span class="o">*</span> <span class="n">m_eff</span> <span class="o">/</span> <span class="n">__aa_count</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>\
+        <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">freq_regul</span><span class="p">)</span> <span class="o">*</span> <span class="n">m_eff</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">aa_joint_freqs</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_compute_aa_product_freqs</span><span class="p">(</span><span class="n">aa_freqs_1</span><span class="p">,</span> <span class="n">aa_freqs_2</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes the product of frequencies</span>
+
+<span class="sd">    (joint frequencies if residues are independent)</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ----------</span>
+<span class="sd">    aa_freqs_1 : frequency of amino acid *a* at position *i* (set 1)</span>
+
+<span class="sd">    aa_freqs_2 : frequency of amino acid *a* at position *i* (set 2)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    aa_prod_freqs : np.ndarray of shape (Npos, Npos, aa_count, aa_count)</span>
+<span class="sd">        product of frequency of amino acids *a* and $b$</span>
+<span class="sd">        at respective positions *i* and *j*</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">aa_product_freqs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">aa_freqs_1</span><span class="p">,</span> <span class="n">aa_freqs_2</span><span class="p">)</span>
+    <span class="n">aa_product_freqs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">moveaxis</span><span class="p">(</span><span class="n">aa_product_freqs</span><span class="p">,</span>
+                                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+                                   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">aa_product_freqs</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_compute_second_order_freqs</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                <span class="n">freq_regul</span><span class="o">=</span><span class="n">__freq_regularization_ref</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes joint frequencies and the product of frequencies</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sequences : list of sequences</span>
+
+<span class="sd">    seq_weights : np.ndarray</span>
+<span class="sd">        weight values for each sequence of the alignment</span>
+
+<span class="sd">    freq_regul : regularization parameter (default=__freq_regularization_ref)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    aa_joint_freqs : np.ndarray of shape (Npos, Npos, aa_count, aa_count)</span>
+<span class="sd">        joint frequency of amino acids `a` and `b` at respective positions</span>
+<span class="sd">        `i` and `j`</span>
+
+<span class="sd">    aa_product_freqs : np.ndarray of shape (Npos, Npos, aa_count, aa_count)</span>
+<span class="sd">        product of frequency of amino acids `a` and `b` at respective</span>
+<span class="sd">        positions `i` and `j`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># joint frequencies</span>
+    <span class="n">aa_joint_freqs</span> <span class="o">=</span> <span class="n">_compute_aa_joint_freqs</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span>
+                                             <span class="n">seq_weights</span><span class="o">=</span><span class="n">seq_weights</span><span class="p">,</span>
+                                             <span class="n">freq_regul</span><span class="o">=</span><span class="n">freq_regul</span><span class="p">)</span>
+
+    <span class="n">aa_freqs</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_compute_first_order_freqs</span><span class="p">(</span>
+        <span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="n">seq_weights</span><span class="p">,</span> <span class="n">freq_regul</span><span class="o">=</span><span class="n">freq_regul</span><span class="p">)</span>
+
+    <span class="c1"># joint frequencies if independence (product of frequencies)</span>
+    <span class="n">aa_product_freqs</span> <span class="o">=</span> <span class="n">_compute_aa_product_freqs</span><span class="p">(</span><span class="n">aa_freqs</span><span class="p">,</span> <span class="n">aa_freqs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">aa_joint_freqs</span><span class="p">,</span> <span class="n">aa_product_freqs</span>
+
+
+<div class="viewcode-block" id="compute_sca_matrix">
+<a class="viewcode-back" href="../../../modules/generated/cocoatree.statistics.pairwise.compute_sca_matrix.html#cocoatree.statistics.pairwise.compute_sca_matrix">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_sca_matrix</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">freq_regul</span><span class="o">=</span><span class="n">__freq_regularization_ref</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the SCA coevolution matrix</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        C_{ij}^{ab} = f_{ij}^{ab} - f_i^a f_j^b</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\tilde{C_{ij}} = \\sqrt{sum_{a,b} \\tilde{(C_{ij}^{ab})^2}}</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sequences : list of sequences</span>
+
+<span class="sd">    seq_weights : ndarray (nseq), optional, default: None</span>
+<span class="sd">        if None, will compute sequence weights</span>
+
+<span class="sd">    freq_regul : regularization parameter (default=__freq_regularization_ref)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    SCA_matrix : SCA coevolution matrix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># computing frequencies</span>
+    <span class="k">if</span> <span class="n">seq_weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">seq_weights</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">compute_seq_weights</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+    <span class="n">aa_joint_freqs</span><span class="p">,</span> <span class="n">aa_product_freqs</span> <span class="o">=</span> <span class="n">_compute_second_order_freqs</span><span class="p">(</span>
+        <span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="n">seq_weights</span><span class="p">,</span> <span class="n">freq_regul</span><span class="o">=</span><span class="n">freq_regul</span><span class="p">)</span>
+
+    <span class="c1"># Cijab</span>
+    <span class="n">Cijab</span> <span class="o">=</span> <span class="n">aa_joint_freqs</span> <span class="o">-</span> <span class="n">aa_product_freqs</span>
+
+    <span class="c1"># derivative of relative entropy</span>
+    <span class="n">aa_freqs</span><span class="p">,</span> <span class="n">bkgd_freqs</span> <span class="o">=</span> <span class="n">_compute_first_order_freqs</span><span class="p">(</span>
+        <span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="n">seq_weights</span><span class="p">,</span> <span class="n">freq_regul</span><span class="o">=</span><span class="n">freq_regul</span><span class="p">)</span>
+    <span class="n">aa_freqs</span> <span class="o">=</span> <span class="n">aa_freqs</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+        <span class="n">aa_freqs</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">bkgd_freqs</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span>
+            <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">aa_freqs</span><span class="p">)</span> <span class="o">*</span>
+            <span class="n">bkgd_freqs</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]))</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+    <span class="c1"># applying sca positional weights</span>
+    <span class="n">Cijab_tilde</span> <span class="o">=</span> <span class="n">phi</span> <span class="o">*</span> <span class="n">Cijab</span>
+
+    <span class="c1"># Frobenius norm</span>
+    <span class="n">SCA_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Cijab_tilde</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+
+    <span class="k">return</span> <span class="n">SCA_matrix</span></div>
+
+
+
+<div class="viewcode-block" id="compute_mutual_information_matrix">
+<a class="viewcode-back" href="../../../modules/generated/cocoatree.statistics.pairwise.compute_mutual_information_matrix.html#cocoatree.statistics.pairwise.compute_mutual_information_matrix">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_mutual_information_matrix</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                      <span class="n">freq_regul</span><span class="o">=</span><span class="n">__freq_regularization_ref</span><span class="p">,</span>
+                                      <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the mutual information matrix</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        I(X, Y) = \\sum_{x,y} p(x, y) \\log \\frac{p(x, y)}{p(x)p(y)}</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sequences : list of sequences</span>
+
+<span class="sd">    seq_weights : ndarray (nseq), optional, default: None</span>
+<span class="sd">        if None, will compute sequence weights</span>
+
+<span class="sd">    freq_regul : regularization parameter (default=__freq_regularization_ref)</span>
+
+<span class="sd">    normalize : boolean, default : True</span>
+<span class="sd">        Whether to normalize the mutual information by the entropy.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    mi_matrix : np.ndarray of shape (nseq, nseq)</span>
+<span class="sd">        the matrix of mutual information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># computing frequencies</span>
+    <span class="k">if</span> <span class="n">seq_weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">seq_weights</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">compute_seq_weights</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+    <span class="n">aa_joint_freqs</span><span class="p">,</span> <span class="n">aa_product_freqs</span> <span class="o">=</span> <span class="n">_compute_second_order_freqs</span><span class="p">(</span>
+        <span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="n">seq_weights</span><span class="p">,</span>
+        <span class="n">freq_regul</span><span class="o">=</span><span class="n">freq_regul</span><span class="p">)</span>
+
+    <span class="c1"># mutual information</span>
+    <span class="n">mi_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+        <span class="n">aa_joint_freqs</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">aa_joint_freqs</span> <span class="o">/</span> <span class="n">aa_product_freqs</span><span class="p">),</span>
+        <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">normalize</span><span class="p">:</span>
+        <span class="n">joint_entropy</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">aa_joint_freqs</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">aa_joint_freqs</span><span class="p">),</span>
+                                <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">mi_matrix</span> <span class="o">/=</span> <span class="n">joint_entropy</span>
+
+    <span class="k">return</span> <span class="n">mi_matrix</span></div>
+
+
+
+<div class="viewcode-block" id="compute_apc">
+<a class="viewcode-back" href="../../../modules/generated/cocoatree.statistics.pairwise.compute_apc.html#cocoatree.statistics.pairwise.compute_apc">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_apc</span><span class="p">(</span><span class="n">MIij</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the average product correction (APC) as described in Dunn et</span>
+<span class="sd">    al. (2008).</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        APC(a, b) = \\frac{MI(a, \\bar{x}) MI(b, \\bar{x}){\\overline{MI}}</span>
+
+<span class="sd">    where :math:`MI(a, \\bar{x})` is the mean mutual information of column *a*</span>
+<span class="sd">    and :math:`\\overline{MI}` is the overall mean mutual information</span>
+
+<span class="sd">    The corrected mutual information is then:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        MIp(a, b) = MI(a, b) - APC(a, b)</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ----------</span>
+<span class="sd">    MIij : np.ndarray,</span>
+<span class="sd">        the mutual information matrix</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    APC_ij : np.ndarray,</span>
+<span class="sd">        the average product correction (APC) matrix</span>
+
+<span class="sd">    MIp : np.ndarray,</span>
+<span class="sd">        the APC corrected mutual information matrix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">MIij</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">m</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="c1"># Replace the matrix diagonal by 0</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">MIij</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">MI_colmean</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">m</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">MIij</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">MI_colmean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">MI_colmean</span><span class="p">,</span> <span class="n">MI_colmean</span><span class="p">)</span>
+
+    <span class="n">MI_overmean</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="n">m</span><span class="o">*</span><span class="n">n</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">tril</span><span class="p">(</span><span class="n">MIij</span><span class="p">))</span>
+
+    <span class="n">APC_ij</span> <span class="o">=</span> <span class="n">MI_colmean</span> <span class="o">/</span> <span class="n">MI_overmean</span>
+
+    <span class="n">MIp</span> <span class="o">=</span> <span class="n">MIij</span> <span class="o">-</span> <span class="n">APC_ij</span>
+
+    <span class="k">return</span> <span class="n">APC_ij</span><span class="p">,</span> <span class="n">MIp</span></div>
+
+
+
+<div class="viewcode-block" id="compute_entropy_correction">
+<a class="viewcode-back" href="../../../modules/generated/cocoatree.statistics.pairwise.compute_entropy_correction.html#cocoatree.statistics.pairwise.compute_entropy_correction">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_entropy_correction</span><span class="p">(</span><span class="n">coevolution_matrix</span><span class="p">,</span> <span class="n">s</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the entropy correction according to Vorberg et al. (2018)</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        C_{ij}^{EC} = C_{ij} - \\alpha s_{i}^{\\frac{1}{2}} \</span>
+<span class="sd">            s_{j}^{\\frac{1}{2}}</span>
+
+<span class="sd">    where :math:`\\alpha` is a coefficient determining the strength of the</span>
+<span class="sd">    correction:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        \\alpha = \\frac{\\sum_{i \\neq j}^{L} c_ij \</span>
+<span class="sd">        s_{i}^{\\frac{1}{2}}}{\\sum_{i \\neq j}^{L} s_i s_j}</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ---------</span>
+<span class="sd">    coevolution_matrix : square matrix of shape (Nseq, Nseq)</span>
+
+<span class="sd">    s : entropy computed for every position of the MSA</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    a square matrix of shape (Nseq, Nseq)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">s_prod</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+    <span class="n">no_diag_eye</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">s_prod</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+        <span class="p">(</span><span class="n">no_diag_eye</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">s_prod</span><span class="p">)</span> <span class="o">*</span> <span class="n">coevolution_matrix</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">no_diag_eye</span> <span class="o">*</span> <span class="n">s_prod</span><span class="p">)))</span>
+
+    <span class="k">return</span> <span class="n">coevolution_matrix</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">s_prod</span><span class="p">)</span></div>
+
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

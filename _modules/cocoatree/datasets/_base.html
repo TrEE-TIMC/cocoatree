@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cocoatree.datasets._base &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/nameko.css?v=2296cfae" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="../../../_static/documentation_options.js?v=837179f8"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  </head><body><div class="navbar related">
+      <a href="../../../index.html">
+        
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="../../../auto_examples/index.html">Gallery</a> </li>
+      <li class="right"><a href="../../../modules/classes.html">API</a> | </li>
+      <li class="right"><a href="../../../install.html">Installation</a> | </li>
+      <li class="right"><a href="../../../index.html">Home</a> | </li>
+      
+    </ul>
+  </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for cocoatree.datasets._base</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">..io</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_MSA</span><span class="p">,</span> <span class="n">load_pdb</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+
+<div class="viewcode-block" id="load_S1A_serine_proteases">
+<a class="viewcode-back" href="../../../modules/generated/cocoatree.datasets.load_S1A_serine_proteases.html#cocoatree.datasets.load_S1A_serine_proteases">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_S1A_serine_proteases</span><span class="p">(</span><span class="n">paper</span><span class="o">=</span><span class="s1">&#39;rivoire&#39;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load the S1A serine protease dataset</span>
+
+<span class="sd">    Halabi dataset: 1470 sequences of length 832; 3 sectors identified</span>
+<span class="sd">    Rivoire dataset : 1390 sequences of length 832 (snake sequences were</span>
+<span class="sd">    removed for the paper&#39;s analysis); 6 sectors identified (including the</span>
+<span class="sd">    3 from Halabi et al, 2008)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    paper: str, either &#39;halabi&#39; or &#39;rivoire&#39;</span>
+<span class="sd">        whether to load the dataset from Halabi et al, Cell, 2008 or from</span>
+<span class="sd">        Rivoire et al, PLoS Comput Biol, 2016</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    a dictionnary containing :</span>
+<span class="sd">        - `sequences_ids`: a list of strings corresponding to sequence names</span>
+<span class="sd">        - `alignment`: a list of strings corresponding to sequences. Because it</span>
+<span class="sd">          is an MSA, all the strings are of same length.</span>
+<span class="sd">        - `metadata`: a pandas dataframe containing the metadata associated</span>
+<span class="sd">          with the alignment.</span>
+<span class="sd">        - `sector_positions`: a dictionnary of arrays containing the residue</span>
+<span class="sd">          positions associated to each sector, either in Halabi et al, or in</span>
+<span class="sd">          Rivoire et al.</span>
+<span class="sd">        - `pdb_sequence`: sequence extracted from rat&#39;s trypsin PDB structure</span>
+<span class="sd">        - `pdb_positions`: positions extracted from rat&#39;s trypsin PDB structure</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">module_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">paper</span> <span class="o">==</span> <span class="s1">&#39;halabi&#39;</span><span class="p">:</span>
+        <span class="c1"># Load the alignment used in Halabi et al, 2008</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">module_path</span><span class="p">,</span>
+            <span class="s2">&quot;data/S1A_serine_proteases/halabi_alignment.fasta&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">load_MSA</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;fasta&quot;</span><span class="p">)</span>
+        <span class="c1"># Load the positions of the 3 sectors identified in Halabi et al, Cell,</span>
+        <span class="c1"># 2008</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">module_path</span><span class="p">,</span>
+            <span class="s2">&quot;data/S1A_serine_proteases/halabi_sectors.npz&quot;</span><span class="p">)</span>
+        <span class="n">sectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="c1"># Load the metadata</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">module_path</span><span class="p">,</span>
+            <span class="s2">&quot;data/S1A_serine_proteases/halabi_metadata.csv&quot;</span><span class="p">)</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">paper</span> <span class="o">==</span> <span class="s1">&#39;rivoire&#39;</span><span class="p">:</span>
+        <span class="c1"># Load the alignment used in Rivoire et al, 2016</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">module_path</span><span class="p">,</span>
+            <span class="s2">&quot;data/S1A_serine_proteases/rivoire_alignment.fasta&quot;</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">load_MSA</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;fasta&quot;</span><span class="p">)</span>
+        <span class="c1"># Load the positions of the 6 sectors identified in Rivoire et al, PLoS</span>
+        <span class="c1"># Comput Biol, 2016</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">module_path</span><span class="p">,</span>
+            <span class="s2">&quot;data/S1A_serine_proteases/rivoire_sectors.npz&quot;</span><span class="p">)</span>
+        <span class="n">sectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="c1"># Load the metadata</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">module_path</span><span class="p">,</span>
+            <span class="s2">&quot;data/S1A_serine_proteases/rivoire_metadata.csv&quot;</span><span class="p">)</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid paper: </span><span class="si">{</span><span class="n">paper</span><span class="si">}</span><span class="s2">. Options are &#39;halabi&#39; or </span><span class="se">\</span>
+<span class="s2">                         &#39;rivoire&#39;&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Load the PDB structure</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">module_path</span><span class="p">,</span>
+        <span class="s2">&quot;data/S1A_serine_proteases/3tgi.pdb&quot;</span><span class="p">)</span>
+    <span class="n">pdb_sequence</span><span class="p">,</span> <span class="n">pdb_positions</span> <span class="o">=</span> <span class="n">load_pdb</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;3TGI&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sector_positions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sectors</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;metadata&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pdb_sequence&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_sequence</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pdb_positions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_positions</span>
+
+    <span class="k">return</span> <span class="n">data</span></div>
+
+
+
+<div class="viewcode-block" id="load_rhomboid_proteases">
+<a class="viewcode-back" href="../../../modules/generated/cocoatree.datasets.load_rhomboid_proteases.html#cocoatree.datasets.load_rhomboid_proteases">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_rhomboid_proteases</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load the rhomboid protease dataset</span>
+
+<span class="sd">    This dataset comes from Mihaljevic &amp; Urban, Cell, 2020</span>
+<span class="sd">    (DOI: https://doi.org/10.1016/j.str.2020.07.015).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    a dictionnary containing :</span>
+<span class="sd">        - `sequence_ids`: a list of strings corresponding to sequence names</span>
+<span class="sd">        - `alignment`: a list of strings corresponding to sequences. Because it</span>
+<span class="sd">          is an MSA, all the strings are of same length.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">module_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">module_path</span><span class="p">,</span>
+        <span class="s2">&quot;data/rhomboid_proteases/Data_S1_Rhomboid_MSA.fasta&quot;</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">load_MSA</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;fasta&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">data</span></div>
+
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

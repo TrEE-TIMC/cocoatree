@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cocoatree.deconvolution &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="../../_static/documentation_options.js?v=837179f8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  </head><body><div class="navbar related">
+      <a href="../../index.html">
+        
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="../../auto_examples/index.html">Gallery</a> </li>
+      <li class="right"><a href="../../modules/classes.html">API</a> | </li>
+      <li class="right"><a href="../../install.html">Installation</a> | </li>
+      <li class="right"><a href="../../index.html">Home</a> | </li>
+      
+    </ul>
+  </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for cocoatree.deconvolution</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.__params</span><span class="w"> </span><span class="kn">import</span> <span class="n">__freq_regularization_ref</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cocoatree.randomize</span><span class="w"> </span><span class="kn">import</span> <span class="n">_randomize_seqs_conserving_col_compo</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cocoatree.msa</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_seq_weights</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cocoatree.statistics.pairwise</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_sca_matrix</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cocoatree.pysca</span><span class="w"> </span><span class="kn">import</span> <span class="n">_compute_ica</span><span class="p">,</span> <span class="n">_icList</span>
+
+
+<div class="viewcode-block" id="extract_independent_components">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.deconvolution.extract_independent_components.html#cocoatree.deconvolution.extract_independent_components">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_independent_components</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">n_components</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">nrandom_pySCA</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                   <span class="n">sequences</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">learnrate_ICA</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">nb_iterations_ICA</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span>
+                                   <span class="n">freq_regul</span><span class="o">=</span><span class="n">__freq_regularization_ref</span><span class="p">,</span>
+                                   <span class="n">verbose_random_iter</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract independent components from a coevolution matrix</span>
+
+<span class="sd">    The current method is fully applicable to SCA analysis. For other metrics,</span>
+<span class="sd">    we set n_components = 3 (to improve)</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ---------</span>
+<span class="sd">    coevo_matrix : np.ndarray</span>
+<span class="sd">        coevolution matrix</span>
+
+<span class="sd">    sequences : list of sequences, optional, default: None</span>
+<span class="sd">        when using pySCA&#39;s strategy to estimate the number of components,</span>
+<span class="sd">        sequences needs to be provided.</span>
+
+
+<span class="sd">    method : {None, &quot;pysca&quot;}, default=None</span>
+<span class="sd">        Methods to use to estimate the number of components to extract. By</span>
+<span class="sd">        default, relies on the number of components provided by the user.</span>
+
+<span class="sd">    n_components : int, default=3,</span>
+<span class="sd">        Number of independent components to extract</span>
+
+<span class="sd">    nrandom_pySCA : int, default=10,</span>
+<span class="sd">        Number of MSA randomizations to perform if method=&#39;pySCA&#39;</span>
+
+<span class="sd">    learnrate_ICA : int, default=0.1,</span>
+<span class="sd">        Learning rate / relaxation parameter used if method=&#39;pySCA&#39;</span>
+
+<span class="sd">    nb_iteration_ICA : int, default=100000,</span>
+<span class="sd">        Number of iterations if method=&#39;pySCA&#39;</span>
+
+<span class="sd">    freq_regul : regularization parameter (default=__freq_regularization_ref)</span>
+
+<span class="sd">    verbose_random_iter : Boolean</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    idpt_components : ndarray of shape (n_components, n_pos)</span>
+<span class="sd">        corresponding to a list of independent components</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">method</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;pySCA&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sequences</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Sequences need to be provided to estimate&quot;</span>
+                    <span class="s2">&quot;the number of components automatically&quot;</span><span class="p">)</span>
+
+            <span class="n">n_components</span> <span class="o">=</span> <span class="n">_compute_n_components_as_pySCA</span><span class="p">(</span>
+                <span class="n">sequences</span><span class="p">,</span> <span class="n">coevo_matrix</span><span class="p">,</span>
+                <span class="n">nrandom</span><span class="o">=</span><span class="n">nrandom_pySCA</span><span class="p">,</span> <span class="n">freq_regul</span><span class="o">=</span><span class="n">freq_regul</span><span class="p">,</span>
+                <span class="n">verbose_random_iter</span><span class="o">=</span><span class="n">verbose_random_iter</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2"> is not a valid method. Options are None, &#39;pySCA&#39;&quot;</span><span class="p">)</span>
+
+    <span class="n">V</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">)</span>
+    <span class="n">Vica</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_compute_ica</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">n_components</span><span class="p">,</span>
+                           <span class="n">learnrate</span><span class="o">=</span><span class="n">learnrate_ICA</span><span class="p">,</span>
+                           <span class="n">iterations</span><span class="o">=</span><span class="n">nb_iterations_ICA</span><span class="p">)</span>
+
+    <span class="n">idpt_components</span> <span class="o">=</span> <span class="n">Vica</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="k">return</span> <span class="n">idpt_components</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_compute_n_components_as_pySCA</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">coevo_matrix</span><span class="p">,</span>
+                                   <span class="n">seq_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                   <span class="n">nrandom</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                   <span class="n">freq_regul</span><span class="o">=</span><span class="n">__freq_regularization_ref</span><span class="p">,</span>
+                                   <span class="n">verbose_random_iter</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the number of independent components as in pySCA</span>
+
+<span class="sd">    Given the eigenvalues of the coevolution matrix, and the</span>
+<span class="sd">    eigenvalues for the set of randomized matrices, return</span>
+<span class="sd">    the number of significant eigenmodes as those above the average second</span>
+<span class="sd">    eigenvalue plus 2 standard deviations.</span>
+<span class="sd">    Based on S1 text of Rivoire et al. (2016)</span>
+
+<span class="sd">    Rem: it concerns only SCA metrics</span>
+<span class="sd">    For other merics (MI, adding corrections) this should be adapted</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ---------</span>
+<span class="sd">    sequences : list of sequences</span>
+
+<span class="sd">    coevo_matrix : np.ndarray of shape (n_pos, n_pos)</span>
+<span class="sd">        coevolution matrix</span>
+
+<span class="sd">    seq_weights : np.array (nseq, ) of each sequence weight</span>
+
+<span class="sd">    nrandom : int</span>
+<span class="sd">        Number of randomizations performed</span>
+
+<span class="sd">    freq_regul : regularization parameter (default=__freq_regularization_ref)</span>
+
+<span class="sd">    verbose_random_iter : boolean, default=True</span>
+<span class="sd">        Print the advance of the randomization procedure</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    n_components : int</span>
+<span class="sd">        Number of independent components to select</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">seq_weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">seq_weights</span><span class="p">,</span> <span class="n">m_eff</span> <span class="o">=</span> <span class="n">compute_seq_weights</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">m_eff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">seq_weights</span><span class="p">)</span>
+
+    <span class="n">second_eigen_values_random</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">irand</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrandom</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">verbose_random_iter</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/</span><span class="si">%d</span><span class="s1"> randomized msa (to compute number of</span><span class="se">\</span>
+<span class="s1">                  significant components) &#39;</span>
+                  <span class="o">%</span> <span class="p">(</span><span class="n">irand</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">nrandom</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">rand_sequences</span> <span class="o">=</span> <span class="n">_randomize_seqs_conserving_col_compo</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+
+        <span class="n">seq_weights_rand</span><span class="p">,</span> <span class="n">m_eff_rand</span> <span class="o">=</span> <span class="n">compute_seq_weights</span><span class="p">(</span><span class="n">rand_sequences</span><span class="p">)</span>
+
+        <span class="c1"># to get the correct m_eff</span>
+        <span class="n">seq_weights_rand</span> <span class="o">=</span> <span class="n">seq_weights_rand</span> <span class="o">/</span> <span class="n">m_eff_rand</span> <span class="o">*</span> <span class="n">m_eff</span>
+
+        <span class="n">SCA_rand</span> <span class="o">=</span> <span class="n">compute_sca_matrix</span><span class="p">(</span><span class="n">rand_sequences</span><span class="p">,</span> <span class="n">seq_weights_rand</span><span class="p">,</span>
+                                      <span class="n">freq_regul</span><span class="o">=</span><span class="n">freq_regul</span><span class="p">)</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">SCA_rand</span><span class="p">)</span>
+        <span class="n">second_eigen_values_random</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">mean_second_ev_rand</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">second_eigen_values_random</span><span class="p">)</span>
+    <span class="n">std_second_ev_rand</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">second_eigen_values_random</span><span class="p">)</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">S_input</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">)</span>
+
+    <span class="n">n_components</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">S_input</span><span class="p">[</span><span class="n">S_input</span> <span class="o">&gt;</span> <span class="n">mean_second_ev_rand</span> <span class="o">+</span>
+                               <span class="mi">2</span> <span class="o">*</span> <span class="n">std_second_ev_rand</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">n_components</span>
+
+
+<div class="viewcode-block" id="extract_principal_components">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.deconvolution.extract_principal_components.html#cocoatree.deconvolution.extract_principal_components">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_principal_components</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform principal component decomposition of a coevolution matrix</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ---------</span>
+<span class="sd">    coevo_matrix : np.ndarray</span>
+<span class="sd">        coevolution matrix</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    principal_components : np.ndarray (n_pos, n_pos)</span>
+<span class="sd">        Principal components obtained from the PCA of the coevolution matrix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">principal_components</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">principal_components</span></div>
+
+
+
+<div class="viewcode-block" id="extract_sectors">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.deconvolution.extract_sectors.html#cocoatree.deconvolution.extract_sectors">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_sectors</span><span class="p">(</span><span class="n">idpt_components</span><span class="p">,</span> <span class="n">coevo_matrix</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract residue positions of sectors</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ---------</span>
+<span class="sd">    idpt_components : independent components obtained from an ICA</span>
+
+<span class="sd">    coevo_matrix : coevolution matrix</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    sectors : lists of residue positions on the filtered MSA for each of the</span>
+<span class="sd">        n_components sector</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Vica</span> <span class="o">=</span> <span class="n">idpt_components</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">sector_sizes</span><span class="p">,</span> <span class="n">sorted_pos</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_icList</span><span class="p">(</span>
+        <span class="n">Vica</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">idpt_components</span><span class="p">),</span> <span class="n">coevo_matrix</span><span class="p">)</span>
+
+    <span class="n">sectors</span> <span class="o">=</span> <span class="p">[[</span><span class="n">sorted_pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sector_sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">])]]</span>
+    <span class="n">ref_index</span> <span class="o">=</span> <span class="n">sector_sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">isize</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sector_sizes</span><span class="p">)):</span>
+        <span class="n">sectors</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">sorted_pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ref_index</span><span class="p">,</span>
+                                       <span class="n">ref_index</span> <span class="o">+</span> <span class="n">sector_sizes</span><span class="p">[</span><span class="n">isize</span><span class="p">])])</span>
+        <span class="n">ref_index</span> <span class="o">+=</span> <span class="n">sector_sizes</span><span class="p">[</span><span class="n">isize</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">sectors</span></div>
+
+
+
+<div class="viewcode-block" id="substract_first_principal_component">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.deconvolution.substract_first_principal_component.html#cocoatree.deconvolution.substract_first_principal_component">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">substract_first_principal_component</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Remove global correlations</span>
+
+<span class="sd">    In the sector literature (and data analysis), this corresponds</span>
+<span class="sd">    to removing global correlations (from e.g. phylogenetic effects)</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ---------</span>
+<span class="sd">    coevo_matrix : np.ndarray (n_pos, n_pos),</span>
+<span class="sd">        coevolution matrix</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    coevo_matrix_sub : np.ndarray (n_pos, n_pos),</span>
+<span class="sd">        coevolution matrix without global correlations</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">)</span>
+    <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">coevo_matrix_sub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">multi_dot</span><span class="p">([</span><span class="n">U</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">S</span><span class="p">),</span> <span class="n">Vt</span><span class="p">]),</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">coevo_matrix_sub</span></div>
+
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

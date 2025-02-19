@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cocoatree.msa &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="../../_static/documentation_options.js?v=837179f8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  </head><body><div class="navbar related">
+      <a href="../../index.html">
+        
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="../../auto_examples/index.html">Gallery</a> </li>
+      <li class="right"><a href="../../modules/classes.html">API</a> | </li>
+      <li class="right"><a href="../../install.html">Installation</a> | </li>
+      <li class="right"><a href="../../index.html">Home</a> | </li>
+      
+    </ul>
+  </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for cocoatree.msa</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">Bio.Seq</span><span class="w"> </span><span class="kn">import</span> <span class="n">Seq</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Bio.SeqRecord</span><span class="w"> </span><span class="kn">import</span> <span class="n">SeqRecord</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Bio.Align</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultipleSeqAlignment</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.__params</span><span class="w"> </span><span class="kn">import</span> <span class="n">lett2num</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_clean_msa</span><span class="p">(</span><span class="n">msa</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function compares the amino acid codes in the sequence alignment with</span>
+<span class="sd">    the ones in lett2num and removes unknown amino acids (such as &#39;X&#39; or &#39;B&#39;)</span>
+<span class="sd">    when importing the multiple sequence alignment.</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ---------</span>
+<span class="sd">    msa : bioalign object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">record</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">msa</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">record</span><span class="o">.</span><span class="n">seq</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">char</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">lett2num</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">sequence</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">seq</span><span class="p">)</span>
+                <span class="n">sequence</span><span class="p">[</span><span class="n">record</span><span class="o">.</span><span class="n">seq</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">char</span><span class="p">)]</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span>
+                <span class="n">sequence</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+                <span class="n">msa</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">seq</span> <span class="o">=</span> <span class="n">Seq</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">msa</span>
+
+
+<div class="viewcode-block" id="filter_sequences">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.msa.filter_sequences.html#cocoatree.msa.filter_sequences">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">filter_sequences</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">sequences_id</span><span class="p">,</span>
+                     <span class="n">gap_threshold</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">seq_threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                     <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Filter sequences</span>
+
+<span class="sd">    Filter (1) overly gapped positions; (2) overly gapped sequences.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sequences : list of MSA sequences to filter</span>
+
+<span class="sd">    sequences_id : list of the MSA&#39;s sequence identifiers</span>
+
+<span class="sd">    gap_threshold : max proportion of gaps tolerated (default=0.4)</span>
+
+<span class="sd">    seq_threshold : maximum fraction of gaps per sequence (default 0.2)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    filt_seqs : list of the sequences after filter</span>
+
+<span class="sd">    remaining_pos : numpy.ndarray</span>
+<span class="sd">        remaining positions after filtering</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">updated_sequences</span><span class="p">,</span> <span class="n">remaining_pos</span> <span class="o">=</span> <span class="n">_filter_gap_pos</span><span class="p">(</span>
+        <span class="n">sequences</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">gap_threshold</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+    <span class="n">filtered_seqs</span><span class="p">,</span> <span class="n">filtered_seqs_id</span><span class="p">,</span>  <span class="o">=</span> <span class="n">_filter_gap_seq</span><span class="p">(</span>
+        <span class="n">updated_sequences</span><span class="p">,</span> <span class="n">sequences_id</span><span class="p">,</span>
+        <span class="n">threshold</span><span class="o">=</span><span class="n">seq_threshold</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">filtered_seqs</span><span class="p">,</span> <span class="n">filtered_seqs_id</span><span class="p">,</span> <span class="n">remaining_pos</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_filter_gap_pos</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter the sequences for overly gapped positions.</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ---------</span>
+<span class="sd">    sequences : list of the MSA sequences to filter</span>
+
+<span class="sd">    threshold : max proportion of gaps tolerated (default=0.4)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    updated_seqs : updated_list of sequences with filtered gaps</span>
+
+<span class="sd">    remaining_pos : numpy.ndarray</span>
+<span class="sd">        remaining positions after filtering</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Filter MSA for overly gapped positions&quot;</span><span class="p">)</span>
+
+    <span class="n">Nseq</span><span class="p">,</span> <span class="n">Npos</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">gaps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="nb">int</span><span class="p">(</span><span class="n">sequences</span><span class="p">[</span><span class="n">seq</span><span class="p">][</span><span class="n">pos</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Npos</span><span class="p">)]</span>
+                     <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nseq</span><span class="p">)])</span>
+
+    <span class="n">freq_gap_per_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">gaps</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">Nseq</span>
+
+    <span class="n">remaining_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">freq_gap_per_pos</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Keeping </span><span class="si">%i</span><span class="s2"> out of </span><span class="si">%i</span><span class="s2"> positions&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining_pos</span><span class="p">),</span> <span class="n">Npos</span><span class="p">))</span>
+
+    <span class="n">updated_seqs</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">sequences</span><span class="p">[</span><span class="n">seq</span><span class="p">][</span><span class="n">pos</span><span class="p">]</span> <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="n">remaining_pos</span><span class="p">])</span>
+                    <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nseq</span><span class="p">)]</span>
+
+    <span class="k">return</span> <span class="n">updated_seqs</span><span class="p">,</span> <span class="n">remaining_pos</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_filter_gap_seq</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">sequences_id</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Remove sequences with a fraction of gaps greater than a specified</span>
+<span class="sd">    value.</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ---------</span>
+<span class="sd">    sequences : list of MSA sequences</span>
+
+<span class="sd">    sequences_id : list of the MSA&#39;s sequence identifiers</span>
+
+<span class="sd">    threshold : maximum fraction of gaps per sequence (default 0.2)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    filt_seqs : filtered list of sequences</span>
+
+<span class="sd">    filt_seqs_id : corresponding list of sequence identifiers</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Filter MSA for overly gapped sequences&#39;</span><span class="p">)</span>
+
+    <span class="n">Nseq</span><span class="p">,</span> <span class="n">Npos</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">freq_gap_per_seq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">sequences</span><span class="p">[</span><span class="n">seq</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span> <span class="o">/</span> <span class="n">Npos</span>
+                                 <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Nseq</span><span class="p">)])</span>
+
+    <span class="n">filt_seqs_ix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">freq_gap_per_seq</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Keeping </span><span class="si">%i</span><span class="s1"> sequences out of </span><span class="si">%i</span><span class="s1"> sequences&#39;</span> <span class="o">%</span>
+              <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">filt_seqs_ix</span><span class="p">),</span> <span class="n">Nseq</span><span class="p">))</span>
+
+    <span class="n">filt_seqs</span> <span class="o">=</span> <span class="p">[</span><span class="n">sequences</span><span class="p">[</span><span class="n">seq</span><span class="p">]</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">filt_seqs_ix</span><span class="p">]</span>
+    <span class="n">filt_seqs_id</span> <span class="o">=</span> <span class="p">[</span><span class="n">sequences_id</span><span class="p">[</span><span class="n">seq</span><span class="p">]</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">filt_seqs_ix</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">filt_seqs</span><span class="p">,</span> <span class="n">filt_seqs_id</span>
+
+
+<div class="viewcode-block" id="filter_ref_seq">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.msa.filter_ref_seq.html#cocoatree.msa.filter_ref_seq">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">filter_ref_seq</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">sequences_id</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">refseq_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                   <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Filter the alignment based on identity with a reference sequence</span>
+
+<span class="sd">    Remove sequences r with Sr &lt; delta, where Sr is the fractional identity</span>
+<span class="sd">    between r and a specified reference sequence.</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ---------</span>
+<span class="sd">    sequences : list of sequences in the MSA</span>
+
+<span class="sd">    sequences_id : list of sequence identifiers in the MSA</span>
+
+<span class="sd">    delta : identity threshold (default 0.2)</span>
+
+<span class="sd">    refseq_id : identifier of the reference sequence, if &#39;None&#39;, a reference</span>
+<span class="sd">                sequence is computed (default &#39;None&#39;)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    filt_seqs : filtered list of sequences</span>
+
+<span class="sd">    filt_seqs_id : corresponding list of sequence identifiers</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">Nseq</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">refseq_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Choose a default reference sequence within the alignment&#39;</span><span class="p">)</span>
+        <span class="n">refseq_idx</span> <span class="o">=</span> <span class="n">_choose_ref_seq</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Reference sequence is: </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">refseq_id</span><span class="p">)</span>
+        <span class="n">refseq_idx</span> <span class="o">=</span> <span class="n">sequences_id</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">refseq_id</span><span class="p">)</span>
+
+    <span class="n">sim_matrix</span> <span class="o">=</span> <span class="n">compute_seq_identity</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">graphic</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">filt_seqs_ix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sim_matrix</span><span class="p">[</span><span class="n">refseq_idx</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">delta</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">filt_seqs</span> <span class="o">=</span> <span class="p">[</span><span class="n">sequences</span><span class="p">[</span><span class="n">seq</span><span class="p">]</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">filt_seqs_ix</span><span class="p">]</span>
+    <span class="n">filt_seqs_id</span> <span class="o">=</span> <span class="p">[</span><span class="n">sequences_id</span><span class="p">[</span><span class="n">seq</span><span class="p">]</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">filt_seqs_ix</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Keeping </span><span class="si">%i</span><span class="s1"> out of </span><span class="si">%i</span><span class="s1"> sequences&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">filt_seqs</span><span class="p">),</span> <span class="n">Nseq</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">filt_seqs</span><span class="p">,</span> <span class="n">filt_seqs_id</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_choose_ref_seq</span><span class="p">(</span><span class="n">msa</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Determine a reference sequence for the alignment</span>
+
+<span class="sd">    This function chooses a default reference sequence for the alignment by</span>
+<span class="sd">    taking the sequence which has the mean pairwise sequence identity closest</span>
+<span class="sd">    to that of the entire sequence alignment.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    msa : the multiple sequence alignment as a list of sequences</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    The index of the reference sequence in the given alignment</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">sim_matrix</span> <span class="o">=</span> <span class="n">compute_seq_identity</span><span class="p">(</span><span class="n">msa</span><span class="p">)</span>
+
+    <span class="n">mean_pairwise_seq_sim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">sim_matrix</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">ref_seq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">mean_pairwise_seq_sim</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ref_seq</span>
+
+
+<div class="viewcode-block" id="filter_seq_id">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.msa.filter_seq_id.html#cocoatree.msa.filter_seq_id">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">filter_seq_id</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">sequences_id</span><span class="p">,</span> <span class="n">list_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Filter sequences based on list</span>
+
+<span class="sd">    Filter a multiple sequence alignment to keep only sequences whose</span>
+<span class="sd">    identifiers are in a user provided list.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sequences : list of MSA sequences</span>
+
+<span class="sd">    sequences_id : list of the MSA&#39;s sequence identifiers</span>
+
+<span class="sd">    list_id : list of sequence identifiers the user wants to keep. The</span>
+<span class="sd">    identifiers must be in the same format as in the input MSA</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    new_msa : Bio.Align.MultipleSeqAlignment object,</span>
+<span class="sd">            filtered msa</span>
+
+<span class="sd">    id_list : list of sequence ID in the filtered MSA</span>
+
+<span class="sd">    seq_list : list of sequences of the filtered MSA</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">new_msa</span> <span class="o">=</span> <span class="n">MultipleSeqAlignment</span><span class="p">([])</span>
+    <span class="k">for</span> <span class="n">ident</span> <span class="ow">in</span> <span class="n">sequences_id</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ident</span> <span class="ow">in</span> <span class="n">list_id</span><span class="p">:</span>
+            <span class="n">new_record</span> <span class="o">=</span> <span class="n">SeqRecord</span><span class="p">(</span><span class="n">Seq</span><span class="p">(</span><span class="n">sequences</span><span class="p">[</span><span class="n">sequences_id</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ident</span><span class="p">)]),</span>
+                                   <span class="nb">id</span><span class="o">=</span><span class="n">ident</span><span class="p">)</span>
+            <span class="n">new_msa</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_record</span><span class="p">)</span>
+
+    <span class="n">seq_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">id_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">new_msa</span><span class="p">:</span>
+        <span class="n">seq_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">seq</span><span class="p">))</span>
+        <span class="n">id_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+    <span class="n">seq_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">seq_list</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">new_msa</span><span class="p">,</span> <span class="n">id_list</span><span class="p">,</span> <span class="n">seq_list</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="map_to_pdb">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.msa.map_to_pdb.html#cocoatree.msa.map_to_pdb">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">map_to_pdb</span><span class="p">(</span><span class="n">pdb_seq</span><span class="p">,</span> <span class="n">pdb_pos</span><span class="p">,</span> <span class="n">sequences</span><span class="p">,</span> <span class="n">sequences_id</span><span class="p">,</span> <span class="n">ref_seq_id</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Mapping of the unfiltered MSA positions on a PDB structure.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pdb_seq: str,</span>
+<span class="sd">        amino acid sequence of the reference PDB file</span>
+
+<span class="sd">    pdb_pos: list,</span>
+<span class="sd">        Residue positions as found in the PDB file</span>
+
+<span class="sd">    sequences: list,</span>
+<span class="sd">        List of sequences of the unfiltered MSA</span>
+
+<span class="sd">    sequences_id: list,</span>
+<span class="sd">        List of sequence identifiers in the unfiltered MSA</span>
+
+<span class="sd">    ref_seq_id: str,</span>
+<span class="sd">        identifier of the sequence the positions are mapped onto. Should be</span>
+<span class="sd">        included in seq_list.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    mapping: numpy.ndarray of shape (3, len(pdb_seq)),</span>
+<span class="sd">        the first element is an array of the residues found in the PDB sequence</span>
+<span class="sd">        the second element is an array of the PDB position of each amino acid</span>
+<span class="sd">        the third element is an array of the positions of those same amino</span>
+<span class="sd">        acids in the unfiltered MSA</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">msa_pos</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">ref_seq_idx</span> <span class="o">=</span> <span class="n">sequences_id</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ref_seq_id</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">aa_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">[</span><span class="n">ref_seq_idx</span><span class="p">])):</span>
+        <span class="k">if</span> <span class="n">sequences</span><span class="p">[</span><span class="n">ref_seq_idx</span><span class="p">][</span><span class="n">aa_index</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+            <span class="n">msa_pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">aa_index</span><span class="p">)</span>
+
+    <span class="n">mapping</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="nb">list</span><span class="p">(</span><span class="n">pdb_seq</span><span class="p">),</span> <span class="n">pdb_pos</span><span class="p">,</span> <span class="n">msa_pos</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">mapping</span></div>
+
+
+
+<div class="viewcode-block" id="compute_seq_identity">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.msa.compute_seq_identity.html#cocoatree.msa.compute_seq_identity">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_seq_identity</span><span class="p">(</span><span class="n">sequences</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes the identity between sequences in a MSA (as Hamming&#39;s pairwise</span>
+<span class="sd">    distance)</span>
+
+<span class="sd">    Arguments</span>
+<span class="sd">    ---------</span>
+<span class="sd">    sequences : list of sequences</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    sim_matrix : identity matrix of shape (Nseq, Nseq)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">separated_aa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">lett2num</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
+                             <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">])</span>
+
+    <span class="n">sim_matrix</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">sn</span><span class="o">.</span><span class="n">DistanceMetric</span><span class="o">.</span><span class="n">get_metric</span><span class="p">(</span>
+        <span class="s2">&quot;hamming&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pairwise</span><span class="p">(</span><span class="n">separated_aa</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">sim_matrix</span></div>
+
+
+
+<div class="viewcode-block" id="compute_seq_weights">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.msa.compute_seq_weights.html#cocoatree.msa.compute_seq_weights">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_seq_weights</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute sequence weights</span>
+
+<span class="sd">    Each sequence s is given a weight ws = 1/Ns where Ns is the number of</span>
+<span class="sd">    sequences with an identity to s above a specified threshold.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sequences : list of sequences</span>
+
+<span class="sd">    threshold : float, optional, default: 0.8</span>
+
+<span class="sd">        percentage identity above which the sequences are considered identical</span>
+<span class="sd">        (default=0.8)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    weights : np.array (nseq, ) of each sequence weight</span>
+
+<span class="sd">    m_eff : float</span>
+<span class="sd">        number of effective sequences</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">threshold</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">threshold</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;The threshold needs to be between 0 and 1.&quot;</span> <span class="o">+</span>
+            <span class="sa">f</span><span class="s2">&quot; Value provided </span><span class="si">{</span><span class="n">threshold</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">sim_matrix</span> <span class="o">=</span> <span class="n">compute_seq_identity</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+    <span class="n">seq_weights</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sim_matrix</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+    <span class="n">m_eff</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">seq_weights</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">seq_weights</span><span class="p">,</span> <span class="n">m_eff</span></div>
+
+
+
+<div class="viewcode-block" id="map_msa_positions">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.msa.map_msa_positions.html#cocoatree.msa.map_msa_positions">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">map_msa_positions</span><span class="p">(</span><span class="n">n_loaded_pos</span><span class="p">,</span> <span class="n">remaining_pos</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Maps positions between the original and the filtered MSA</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_loaded_pos : int,</span>
+<span class="sd">        Number of positions in the original unfiltered MSA</span>
+
+<span class="sd">    remaining_pos : np.ndarray,</span>
+<span class="sd">        array containing the indexes of positions that have been conserved</span>
+<span class="sd">        after filtering the MSA (output from cocoatree.msa.filter_sequences)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    original2filtered : dictionnary,</span>
+<span class="sd">        the keys are the positions in the original MSA and the values are the</span>
+<span class="sd">        corresponding positions in the filtered MSA. When the original position</span>
+<span class="sd">        has been filtered, the value is set to &#39;None&#39;.</span>
+
+<span class="sd">    filtered2original : dictionnary,</span>
+<span class="sd">        the keys are the positions in the filtered MSA and the values are the</span>
+<span class="sd">        corresponding positions in the original MSA.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mapping</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_loaded_pos</span><span class="p">),</span> <span class="n">remaining_pos</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_loaded_pos</span><span class="p">),</span> <span class="n">remaining_pos</span><span class="p">)</span><span class="o">.</span><span class="n">cumsum</span><span class="p">())]</span>
+    <span class="n">original2filtered</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">i</span><span class="p">:</span> <span class="n">t</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">t</span>
+        <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">mapping</span><span class="p">)}</span>
+
+    <span class="n">filtered2original</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining_pos</span><span class="p">)):</span>
+        <span class="n">filtered2original</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">remaining_pos</span><span class="p">[</span><span class="n">pos</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">original2filtered</span><span class="p">,</span> <span class="n">filtered2original</span></div>
+
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

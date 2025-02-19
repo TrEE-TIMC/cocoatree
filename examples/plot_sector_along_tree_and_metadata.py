@@ -19,7 +19,10 @@ tree_file = 'data/random_seq_tree_kpicsg_ete3.treefile'
 tree_ete3 = load_tree_ete3(tree_file)
 
 sector_file = 'data/SCA_sector_1_core_tagged_seq.fasta'
-sector_id, sector_seq = load_MSA(sector_file, 'fasta')
+data = load_MSA(sector_file, 'fasta')
+
+sector_id = data["sequence_ids"]
+sector_seq = data["alignment"]
 
 tree_style = update_tree_ete3_and_return_style(
     tree_ete3, df_annot, sector_id, sector_seq,

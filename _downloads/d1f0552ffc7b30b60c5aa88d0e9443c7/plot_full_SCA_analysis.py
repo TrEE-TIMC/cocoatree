@@ -214,6 +214,16 @@ for i in range(n_components):
 # The file can then be used for visualization along a phylogenetic tree
 # as implemented in the cocoatree.visualization module
 
+sector_1_pos = list(positions[sectors[0]])
+sector_1 = []
+for sequence in range(len(sequences_id)):
+    seq = ''
+    for pos in sector_1_pos:
+        seq += loaded_seqs[sequence][pos]
+    sector_1.append(seq)
+
+c_io.export_fasta(sector_1, sequences_id, 'sector_1.fasta')
+
 if False:  # need to be revised
     sector_1_pos = list(positions[sectors[0].items])
     sector_1 = []

@@ -323,7 +323,7 @@ def compute_seq_identity(sequences):
 
 
 def compute_seq_weights(sequences, threshold=0.8, verbose_every=0,
-                        parallel=False, n_jobs=-2, verbose_parallel=5):
+                        n_jobs=1, verbose_parallel=5):
     """
     Compute sequence weights
 
@@ -341,13 +341,10 @@ def compute_seq_weights(sequences, threshold=0.8, verbose_every=0,
     verbose_every : int
         if > 0, verbose every {verbose_every} sequences 
 
-    parallel : boolean
-        if True, uses jolib library to compute weights in parallel
-
-    n_jobs : int
+    n_jobs : int, default=1 (no parallelization)
         the maximum number of concurrently running jobs
         (see joblib doc)
-    
+
     verbose_parallel : int
         verbosity level for parallelization
         (see joblib doc)
@@ -367,7 +364,7 @@ def compute_seq_weights(sequences, threshold=0.8, verbose_every=0,
     sequences_num = np.array([[lett2num[char] for char in row]
                               for row in sequences])
 
-    if not parallel:
+    if n_jobs == 1:
         seq_weights = []
         for iseq, seq in enumerate(sequences_num):
             if iseq % 100 == 0:

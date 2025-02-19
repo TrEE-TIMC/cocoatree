@@ -44,6 +44,8 @@ def perform_sca(sequences_id, sequences,
 
     Returns
     -------
+    coevolution_matrix : np.ndarray (n_filtered_pos, n_filtered_pos)
+
     results : pd.DataFrame with the following columns
 
         - original_msa_pos : the original MSA position
@@ -132,4 +134,4 @@ def perform_sca(sequences_id, sequences,
                                     "filtered_msa_pos"],
                         sectors[k])
 
-    return results
+    return coevol_matrix, results

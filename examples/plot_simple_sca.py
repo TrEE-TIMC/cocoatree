@@ -29,7 +29,7 @@ n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
 # ------------------------
 #
 
-results = cocoatree.perform_sca(loaded_seqs_id, loaded_seqs)
+coevol_matrix, results = cocoatree.perform_sca(loaded_seqs_id, loaded_seqs)
 print(results.head())
 
 # %%

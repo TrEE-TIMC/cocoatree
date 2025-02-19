@@ -339,7 +339,7 @@ def compute_seq_weights(sequences, threshold=0.8, verbose_every=0,
         (default=0.8)
 
     verbose_every : int
-        if > 0, verbose every {verbose_every} sequences 
+        if > 0, verbose every {verbose_every} sequences
 
     n_jobs : int, default=1 (no parallelization)
         the maximum number of concurrently running jobs

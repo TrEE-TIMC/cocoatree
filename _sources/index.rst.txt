@@ -11,7 +11,7 @@
   interface_cocoatree_pymol.rst
 
 ######################################################
-COCOA-Tree: COllaborative Coevolution Analysis Toolbox
+COCOA-Tree: COllaborative COevolution Analysis Toolbox
 ######################################################
 
 COCOA-Tree is a `Python <https://www.python.org>`_ library to perform coevolution

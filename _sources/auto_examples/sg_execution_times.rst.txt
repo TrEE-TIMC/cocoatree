@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:17.233** total execution time for 4 files **from auto_examples**:
+**00:17.467** total execution time for 4 files **from auto_examples**:
 
 .. container::
 
@@ -33,14 +33,14 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_auto_examples_plot_sca_vs_mi.py` (``plot_sca_vs_mi.py``)
-     - 00:08.266
+     - 00:08.243
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_full_SCA_analysis.py` (``plot_full_SCA_analysis.py``)
-     - 00:04.779
+     - 00:04.794
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_sector_along_tree_and_metadata.py` (``plot_sector_along_tree_and_metadata.py``)
-     - 00:03.826
+     - 00:04.078
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_map_alignments.py` (``plot_map_alignments.py``)
-     - 00:00.361
+     - 00:00.351
      - 0.0

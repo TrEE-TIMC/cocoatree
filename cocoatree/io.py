@@ -8,14 +8,16 @@ from ete3 import Tree
 import numpy as np
 
 
-def load_MSA(file_path, format, clean=True, verbose=False):
+def load_MSA(file_path, format="fasta", clean=True, verbose=False):
     """Read in a multiple sequence alignment (MSA)
 
     Arguments
     ---------
     file_path : path to the alignment file
 
-    format : format of the alignment file (e.g. 'fasta', 'phylip', etc.)
+    format : string {"fasta", "phylip", …}, optional, default: "fasta"
+        format of the alignment file (e.g. 'fasta', 'phylip', etc.)
+        All format supported by biopython's Bio.AlignIO.read are accepted.
 
     clean : boolean, default=True
         whether to remove ambiguous amino acids (e.g. B, X etc.)

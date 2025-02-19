@@ -10,9 +10,6 @@ detect protein sectors from data importation, MSA filtering.
 import cocoatree.datasets as c_data
 import cocoatree
 
-import matplotlib.pyplot as plt
-import numpy as np
-
 # %%
 # Load the dataset
 # ----------------

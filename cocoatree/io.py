@@ -25,9 +25,9 @@ def load_MSA(file_path, format, clean=True, verbose=False):
 
     Returns
     -------
-    sequences_id : list of sequence identifiers
-
-    sequences : list of sequences as strings
+    a dictionnary containing:
+        - `sequences_id`, list of sequence identifiers
+        - `alignment`: list of sequences as strings
     """
 
     alignment = AlignIO.read(file_path, format)
@@ -42,7 +42,7 @@ def load_MSA(file_path, format, clean=True, verbose=False):
         print('Number of sequences: %i' % len(alignment))
         print('Alignment of length: %i' % len(alignment[0]))
 
-    return sequences_id, sequences
+    return {"sequence_ids": sequences_id, "alignment": sequences}
 
 
 def load_tree_ete3(file_path):

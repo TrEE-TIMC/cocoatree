@@ -41,7 +41,7 @@ def load_S1A_serine_proteases(paper='rivoire'):
         filename = os.path.join(
             module_path,
             "data/S1A_serine_proteases/halabi_alignment.fasta")
-        sequence_ids, sequences = load_MSA(filename, format="fasta")
+        data = load_MSA(filename, format="fasta")
         # Load the positions of the 3 sectors identified in Halabi et al, Cell,
         # 2008
         filename = os.path.join(
@@ -59,7 +59,7 @@ def load_S1A_serine_proteases(paper='rivoire'):
         filename = os.path.join(
             module_path,
             "data/S1A_serine_proteases/rivoire_alignment.fasta")
-        sequence_ids, sequences = load_MSA(filename, format="fasta")
+        data = load_MSA(filename, format="fasta")
         # Load the positions of the 6 sectors identified in Rivoire et al, PLoS
         # Comput Biol, 2016
         filename = os.path.join(
@@ -81,13 +81,12 @@ def load_S1A_serine_proteases(paper='rivoire'):
         module_path,
         "data/S1A_serine_proteases/3tgi.pdb")
     pdb_sequence, pdb_positions = load_pdb(filename, '3TGI', 'E')
+    data["sector_positions"] = sectors
+    data["metadata"] = metadata
+    data["pdb_sequence"] = pdb_sequence,
+    data["pdb_positions"] = pdb_positions
 
-    return {"sequence_ids": sequence_ids,
-            "alignment": sequences,
-            "sector_positions": sectors,
-            "metadata": metadata,
-            "pdb_sequence": pdb_sequence,
-            "pdb_positions": pdb_positions}
+    return data
 
 
 def load_rhomboid_proteases():
@@ -100,7 +99,7 @@ def load_rhomboid_proteases():
     Returns
     -------
     a dictionnary containing :
-        - `sequences_ids`: a list of strings corresponding to sequence names
+        - `sequence_ids`: a list of strings corresponding to sequence names
         - `alignment`: a list of strings corresponding to sequences. Because it
           is an MSA, all the strings are of same length.
     """
@@ -109,7 +108,6 @@ def load_rhomboid_proteases():
     filename = os.path.join(
         module_path,
         "data/rhomboid_proteases/Data_S1_Rhomboid_MSA.fasta")
-    sequence_ids, sequences = load_MSA(filename, format="fasta")
+    data = load_MSA(filename, format="fasta")
 
-    return {"sequence_ids": sequence_ids,
-            "alignment": sequences}
+    return data

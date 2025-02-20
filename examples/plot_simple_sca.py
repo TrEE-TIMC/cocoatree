@@ -50,7 +50,7 @@ ax.plot(results.loc[:, "PC1"],
         ".", c="black")
 
 # Plotting elements in sectors
-for isec, color in zip([1, 2, 3], ['r', 'g', 'b']):    
+for isec, color in zip([1, 2, 3], ['r', 'g', 'b']):
     ax.plot(results.loc[results["sector_%d" % isec], "PC1"],
             results.loc[results["sector_%d" % isec], "PC2"],
             ".", c=color, label="Sector %d" % isec)
@@ -72,7 +72,7 @@ ax.plot(results.loc[:, "IC1"],
         ".", c="black")
 
 # Plotting elements in sectors
-for isec, color in zip([1, 2, 3], ['r', 'g', 'b']):    
+for isec, color in zip([1, 2, 3], ['r', 'g', 'b']):
     ax.plot(results.loc[results["sector_%d" % isec], "IC1"],
             results.loc[results["sector_%d" % isec], "IC2"],
             ".", c=color, label="Sector %d" % isec)

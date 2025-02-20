@@ -44,18 +44,26 @@
 <h1>cocoatree.msa.compute_seq_weights<a class="headerlink" href="#cocoatree-msa-compute-seq-weights" title="Link to this heading">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="cocoatree.msa.compute_seq_weights">
-<span class="sig-prename descclassname"><span class="pre">cocoatree.msa.</span></span><span class="sig-name descname"><span class="pre">compute_seq_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cocoatree/msa.html#compute_seq_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cocoatree.msa.compute_seq_weights" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cocoatree.msa.</span></span><span class="sig-name descname"><span class="pre">compute_seq_weights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose_every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose_parallel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cocoatree/msa.html#compute_seq_weights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cocoatree.msa.compute_seq_weights" title="Link to this definition">¶</a></dt>
 <dd><p>Compute sequence weights</p>
 <p>Each sequence s is given a weight ws = 1/Ns where Ns is the number of
 sequences with an identity to s above a specified threshold.</p>
 <section id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
 <p>sequences : list of sequences</p>
-<p>threshold : float, optional, default: 0.8</p>
-<blockquote>
-<div><p>percentage identity above which the sequences are considered identical
+<dl class="simple">
+<dt>threshold<span class="classifier">float, optional, default: 0.8</span></dt><dd><p>percentage identity above which the sequences are considered identical
 (default=0.8)</p>
-</div></blockquote>
+</dd>
+<dt>verbose_every<span class="classifier">int</span></dt><dd><p>if &gt; 0, verbose every {verbose_every} sequences</p>
+</dd>
+<dt>n_jobs<span class="classifier">int, default=1 (no parallelization)</span></dt><dd><p>the maximum number of concurrently running jobs
+(see joblib doc)</p>
+</dd>
+<dt>verbose_parallel<span class="classifier">int</span></dt><dd><p>verbosity level for parallelization
+(see joblib doc)</p>
+</dd>
+</dl>
 </section>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>

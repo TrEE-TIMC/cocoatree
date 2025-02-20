@@ -46,6 +46,7 @@
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sn</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.__params</span><span class="w"> </span><span class="kn">import</span> <span class="n">lett2num</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">joblib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parallel</span><span class="p">,</span> <span class="n">delayed</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_clean_msa</span><span class="p">(</span><span class="n">msa</span><span class="p">):</span>
@@ -380,7 +381,8 @@
 
 <div class="viewcode-block" id="compute_seq_weights">
 <a class="viewcode-back" href="../../modules/generated/cocoatree.msa.compute_seq_weights.html#cocoatree.msa.compute_seq_weights">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">compute_seq_weights</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_seq_weights</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">verbose_every</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                        <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose_parallel</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compute sequence weights</span>
 
@@ -392,9 +394,19 @@
 <span class="sd">    sequences : list of sequences</span>
 
 <span class="sd">    threshold : float, optional, default: 0.8</span>
-
 <span class="sd">        percentage identity above which the sequences are considered identical</span>
 <span class="sd">        (default=0.8)</span>
+
+<span class="sd">    verbose_every : int</span>
+<span class="sd">        if &gt; 0, verbose every {verbose_every} sequences</span>
+
+<span class="sd">    n_jobs : int, default=1 (no parallelization)</span>
+<span class="sd">        the maximum number of concurrently running jobs</span>
+<span class="sd">        (see joblib doc)</span>
+
+<span class="sd">    verbose_parallel : int</span>
+<span class="sd">        verbosity level for parallelization</span>
+<span class="sd">        (see joblib doc)</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -408,9 +420,27 @@
             <span class="s2">&quot;The threshold needs to be between 0 and 1.&quot;</span> <span class="o">+</span>
             <span class="sa">f</span><span class="s2">&quot; Value provided </span><span class="si">{</span><span class="n">threshold</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="n">sim_matrix</span> <span class="o">=</span> <span class="n">compute_seq_identity</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
-    <span class="n">seq_weights</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sim_matrix</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+    <span class="n">sequences_num</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">lett2num</span><span class="p">[</span><span class="n">char</span><span class="p">]</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span>
+                              <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">])</span>
 
+    <span class="k">if</span> <span class="n">n_jobs</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">seq_weights</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">iseq</span><span class="p">,</span> <span class="n">seq</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sequences_num</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">iseq</span> <span class="o">%</span> <span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;computing weight of seq </span><span class="si">%d</span><span class="s1">/</span><span class="si">%d</span><span class="se">\t</span><span class="s1">&#39;</span> <span class="o">%</span>
+                      <span class="p">(</span><span class="n">iseq</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequences_num</span><span class="p">)),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">sim</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">sn</span><span class="o">.</span><span class="n">DistanceMetric</span><span class="o">.</span><span class="n">get_metric</span><span class="p">(</span>
+                <span class="s2">&quot;hamming&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pairwise</span><span class="p">([</span><span class="n">seq</span><span class="p">],</span> <span class="n">sequences_num</span><span class="p">)</span>
+            <span class="n">seq_weights</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sim</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">_weight_f</span><span class="p">(</span><span class="n">sequence</span><span class="p">,</span> <span class="n">sequence_list</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">sn</span><span class="o">.</span><span class="n">DistanceMetric</span><span class="o">.</span><span class="n">get_metric</span><span class="p">(</span>
+                <span class="s2">&quot;hamming&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">pairwise</span><span class="p">([</span><span class="n">sequence</span><span class="p">],</span> <span class="n">sequence_list</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">)</span>
+
+        <span class="n">seq_weights</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose_parallel</span><span class="p">)(</span>
+            <span class="n">delayed</span><span class="p">(</span><span class="n">_weight_f</span><span class="p">)(</span><span class="n">seq</span><span class="p">,</span> <span class="n">sequences_num</span><span class="p">)</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">sequences_num</span><span class="p">)</span>
+
+    <span class="n">seq_weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">seq_weights</span><span class="p">)</span>
     <span class="n">m_eff</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">seq_weights</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">seq_weights</span><span class="p">,</span> <span class="n">m_eff</span></div>

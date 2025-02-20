@@ -110,6 +110,11 @@ Compute the SCA matrix
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    computing weight of seq 1/1376      computing weight of seq 101/1376            computing weight of seq 201/1376            computing weight of seq 301/1376            computing weight of seq 401/1376            computing weight of seq 501/1376            computing weight of seq 601/1376            computing weight of seq 701/1376            computing weight of seq 801/1376            computing weight of seq 901/1376            computing weight of seq 1001/1376           computing weight of seq 1101/1376           computing weight of seq 1201/1376           computing weight of seq 1301/1376       
 
 
 
@@ -129,6 +134,11 @@ Compute the Mutual information matrix
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    computing weight of seq 1/1376      computing weight of seq 101/1376            computing weight of seq 201/1376            computing weight of seq 301/1376            computing weight of seq 401/1376            computing weight of seq 501/1376            computing weight of seq 601/1376            computing weight of seq 701/1376            computing weight of seq 801/1376            computing weight of seq 901/1376            computing weight of seq 1001/1376           computing weight of seq 1101/1376           computing weight of seq 1201/1376           computing weight of seq 1301/1376           computing weight of seq 1/1376      computing weight of seq 101/1376            computing weight of seq 201/1376            computing weight of seq 301/1376            computing weight of seq 401/1376            computing weight of seq 501/1376            computing weight of seq 601/1376            computing weight of seq 701/1376            computing weight of seq 801/1376            computing weight of seq 901/1376            computing weight of seq 1001/1376           computing weight of seq 1101/1376           computing weight of seq 1201/1376           computing weight of seq 1301/1376       
 
 
 
@@ -277,13 +287,18 @@ Relationship between coevolution metrics and conservation
    :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    computing weight of seq 1/1376      computing weight of seq 101/1376            computing weight of seq 201/1376            computing weight of seq 301/1376            computing weight of seq 401/1376            computing weight of seq 501/1376            computing weight of seq 601/1376            computing weight of seq 701/1376            computing weight of seq 801/1376            computing weight of seq 901/1376            computing weight of seq 1001/1376           computing weight of seq 1101/1376           computing weight of seq 1201/1376           computing weight of seq 1301/1376       
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 8.139 seconds)
+   **Total running time of the script:** (0 minutes 9.537 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_sca_vs_mi.py:

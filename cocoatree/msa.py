@@ -4,6 +4,7 @@ from Bio.Align import MultipleSeqAlignment
 import numpy as np
 import sklearn.metrics as sn
 from .__params import lett2num
+from joblib import Parallel, delayed
 
 
 def _clean_msa(msa):
@@ -321,7 +322,8 @@ def compute_seq_identity(sequences):
     return sim_matrix
 
 
-def compute_seq_weights(sequences, threshold=0.8):
+def compute_seq_weights(sequences, threshold=0.8, verbose_every=0,
+                        n_jobs=1, verbose_parallel=5):
     """
     Compute sequence weights
 
@@ -333,9 +335,19 @@ def compute_seq_weights(sequences, threshold=0.8):
     sequences : list of sequences
 
     threshold : float, optional, default: 0.8
-
         percentage identity above which the sequences are considered identical
         (default=0.8)
+
+    verbose_every : int
+        if > 0, verbose every {verbose_every} sequences
+
+    n_jobs : int, default=1 (no parallelization)
+        the maximum number of concurrently running jobs
+        (see joblib doc)
+
+    verbose_parallel : int
+        verbosity level for parallelization
+        (see joblib doc)
 
     Returns
     -------
@@ -349,9 +361,27 @@ def compute_seq_weights(sequences, threshold=0.8):
             "The threshold needs to be between 0 and 1." +
             f" Value provided {threshold}")
 
-    sim_matrix = compute_seq_identity(sequences)
-    seq_weights = (1 / np.sum(sim_matrix >= threshold, axis=0))
+    sequences_num = np.array([[lett2num[char] for char in row]
+                              for row in sequences])
 
+    if n_jobs == 1:
+        seq_weights = []
+        for iseq, seq in enumerate(sequences_num):
+            if iseq % 100 == 0:
+                print('computing weight of seq %d/%d\t' %
+                      (iseq+1, len(sequences_num)), end='\r')
+            sim = 1 - sn.DistanceMetric.get_metric(
+                "hamming").pairwise([seq], sequences_num)
+            seq_weights.append(1 / np.sum(sim >= threshold))
+    else:
+        def _weight_f(sequence, sequence_list):
+            return 1 / np.sum(1 - sn.DistanceMetric.get_metric(
+                "hamming").pairwise([sequence], sequence_list) >= threshold)
+
+        seq_weights = Parallel(n_jobs=n_jobs, verbose=verbose_parallel)(
+            delayed(_weight_f)(seq, sequences_num) for seq in sequences_num)
+
+    seq_weights = np.array(seq_weights)
     m_eff = sum(seq_weights)
 
     return seq_weights, m_eff

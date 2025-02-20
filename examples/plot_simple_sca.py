@@ -65,4 +65,9 @@ ax.plot(results.loc[results["sector_2"], "PC1"],
 ax.plot(results.loc[results["sector_3"], "PC1"],
         results.loc[results["sector_3"], "PC2"],
         ".",
-        c="b", label="Sector 1")
+        c="b", label="Sector 3")
+
+ax.set_xlabel("PC1")
+ax.set_ylabel("PC2")
+
+ax.legend()

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>cocoatree.perform_sca &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="../../_static/documentation_options.js?v=837179f8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  </head><body><div class="navbar related">
+      <a href="../../index.html">
+        
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="../../auto_examples/index.html">Gallery</a> </li>
+      <li class="right"><a href="../classes.html">API</a> | </li>
+      <li class="right"><a href="../../install.html">Installation</a> | </li>
+      <li class="right"><a href="../../index.html">Home</a> | </li>
+      
+    </ul>
+  </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cocoatree-perform-sca">
+<h1>cocoatree.perform_sca<a class="headerlink" href="#cocoatree-perform-sca" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="cocoatree.perform_sca">
+<span class="sig-prename descclassname"><span class="pre">cocoatree.</span></span><span class="sig-name descname"><span class="pre">perform_sca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq_regul</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.03</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coevolution_metric</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SCA'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cocoatree/_pipeline.html#perform_sca"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cocoatree.perform_sca" title="Link to this definition">¶</a></dt>
+<dd><p>Perform statistical coupling analysis (SCA)</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<p>sequences : list of MSA sequences to filter</p>
+<p>sequences_id : list of the MSA’s sequence identifiers</p>
+<p>n_components : int, default: 4</p>
+<dl class="simple">
+<dt>gap_threshold<span class="classifier">float [0, 1], default: 0.4</span></dt><dd><p>max proportion of gaps tolerated</p>
+</dd>
+</dl>
+<p>seq_threshold : maximum fraction of gaps per sequence (default 0.2)</p>
+<dl class="simple">
+<dt>coevolution_metric<span class="classifier">{‘SCA’, ‘NMI’, ‘MI}, optional, default: ‘SCA’</span></dt><dd><p>which coevolution metric to use:</p>
+<ul class="simple">
+<li><p>SCA: the coevolution matrix from Rivoire et al</p></li>
+<li><p>MI: the mutual information</p></li>
+<li><p>NMI: the normalized mutual information</p></li>
+</ul>
+</dd>
+<dt>correction<span class="classifier">{None, ‘APC’, ‘entropy’}, default: None</span></dt><dd><p>which correction to use</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
+<p>coevolution_matrix : np.ndarray (n_filtered_pos, n_filtered_pos)</p>
+<p>results : pd.DataFrame with the following columns</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>original_msa_pos : the original MSA position</p></li>
+<li><p>filtered_msa_pos : the position in the filtered MSA</p></li>
+</ul>
+<p>and  for each component:</p>
+<ul class="simple">
+<li><p>PCk: the projection of the residue onto the kth principal component</p></li>
+<li><p>ICk: the projeciton of the residue onto the kth independent
+component</p></li>
+<li><p>sector_k: wherether the residue is found to be part of sector k</p></li>
+</ul>
+</div></blockquote>
+</section>
+</dd></dl>
+
+<section id="examples-using-cocoatree-perform-sca">
+<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.perform_sca</span></code><a class="headerlink" href="#examples-using-cocoatree-perform-sca" title="Link to this heading">¶</a></h2>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete SCA analysis and detect protein sectors from data importation, MSA filtering."><img alt="" src="../../_images/sphx_glr_plot_simple_sca_thumb.png" />
+<p><a class="reference internal" href="../../auto_examples/plot_simple_sca.html#sphx-glr-auto-examples-plot-simple-sca-py"><span class="std std-ref">The simplest SCA analysis ever</span></a></p>
+  <div class="sphx-glr-thumbnail-title">The simplest SCA analysis ever</div>
+</div></div><div class="sphx-glr-clear"></div></section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

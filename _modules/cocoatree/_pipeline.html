@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cocoatree._pipeline &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="../../_static/documentation_options.js?v=837179f8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  </head><body><div class="navbar related">
+      <a href="../../index.html">
+        
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="../../auto_examples/index.html">Gallery</a> </li>
+      <li class="right"><a href="../../modules/classes.html">API</a> | </li>
+      <li class="right"><a href="../../install.html">Installation</a> | </li>
+      <li class="right"><a href="../../index.html">Home</a> | </li>
+      
+    </ul>
+  </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for cocoatree._pipeline</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">msa</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">statistics</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">deconvolution</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">__params</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+
+<div class="viewcode-block" id="perform_sca">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.perform_sca.html#cocoatree.perform_sca">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">perform_sca</span><span class="p">(</span><span class="n">sequences_id</span><span class="p">,</span> <span class="n">sequences</span><span class="p">,</span>
+                <span class="n">n_components</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                <span class="n">freq_regul</span><span class="o">=</span><span class="n">__params</span><span class="o">.</span><span class="n">__freq_regularization_ref</span><span class="p">,</span>
+                <span class="n">gap_threshold</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">seq_threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+                <span class="n">coevolution_metric</span><span class="o">=</span><span class="s2">&quot;SCA&quot;</span><span class="p">,</span> <span class="n">correction</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform statistical coupling analysis (SCA)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sequences : list of MSA sequences to filter</span>
+
+<span class="sd">    sequences_id : list of the MSA&#39;s sequence identifiers</span>
+
+<span class="sd">    n_components : int, default: 4</span>
+
+<span class="sd">    gap_threshold : float [0, 1], default: 0.4</span>
+<span class="sd">        max proportion of gaps tolerated</span>
+
+<span class="sd">    seq_threshold : maximum fraction of gaps per sequence (default 0.2)</span>
+
+<span class="sd">    coevolution_metric : {&#39;SCA&#39;, &#39;NMI&#39;, &#39;MI}, optional, default: &#39;SCA&#39;</span>
+<span class="sd">        which coevolution metric to use:</span>
+
+<span class="sd">        - SCA: the coevolution matrix from Rivoire et al</span>
+<span class="sd">        - MI: the mutual information</span>
+<span class="sd">        - NMI: the normalized mutual information</span>
+
+<span class="sd">    correction : {None, &#39;APC&#39;, &#39;entropy&#39;}, default: None</span>
+<span class="sd">        which correction to use</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    coevolution_matrix : np.ndarray (n_filtered_pos, n_filtered_pos)</span>
+
+<span class="sd">    results : pd.DataFrame with the following columns</span>
+
+<span class="sd">        - original_msa_pos : the original MSA position</span>
+<span class="sd">        - filtered_msa_pos : the position in the filtered MSA</span>
+
+<span class="sd">        and  for each component:</span>
+
+<span class="sd">        - PCk: the projection of the residue onto the kth principal component</span>
+<span class="sd">        - ICk: the projeciton of the residue onto the kth independent</span>
+<span class="sd">          component</span>
+<span class="sd">        - sector_k: wherether the residue is found to be part of sector k</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Start by filtering sequences</span>
+    <span class="n">seq_kept</span><span class="p">,</span> <span class="n">seq_kept_id</span><span class="p">,</span> <span class="n">pos_kept</span> <span class="o">=</span> <span class="n">msa</span><span class="o">.</span><span class="n">filter_sequences</span><span class="p">(</span>
+        <span class="n">sequences</span><span class="p">,</span> <span class="n">sequences_id</span><span class="p">,</span> <span class="n">gap_threshold</span><span class="o">=</span><span class="n">gap_threshold</span><span class="p">,</span>
+        <span class="n">seq_threshold</span><span class="o">=</span><span class="n">seq_threshold</span><span class="p">)</span>
+
+    <span class="c1"># Compute sequence weights. This is mostly to avoid recomputing it at</span>
+    <span class="c1"># several step in the pipeline and thus speed things up a bit</span>
+    <span class="n">seq_weights</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">msa</span><span class="o">.</span><span class="n">compute_seq_weights</span><span class="p">(</span><span class="n">seq_kept</span><span class="p">)</span>
+
+    <span class="c1"># Compute co-evolution matrix</span>
+    <span class="k">if</span> <span class="n">coevolution_metric</span> <span class="o">==</span> <span class="s2">&quot;SCA&quot;</span><span class="p">:</span>
+        <span class="n">coevol_matrix</span> <span class="o">=</span> <span class="n">statistics</span><span class="o">.</span><span class="n">pairwise</span><span class="o">.</span><span class="n">compute_sca_matrix</span><span class="p">(</span>
+            <span class="n">seq_kept</span><span class="p">,</span>
+            <span class="n">seq_weights</span><span class="o">=</span><span class="n">seq_weights</span><span class="p">,</span>
+            <span class="n">freq_regul</span><span class="o">=</span><span class="n">freq_regul</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">coevolution_metric</span> <span class="o">==</span> <span class="s2">&quot;MI&quot;</span><span class="p">:</span>
+        <span class="n">coevol_matrix</span> <span class="o">=</span> <span class="n">statistics</span><span class="o">.</span><span class="n">pairwise</span><span class="o">.</span><span class="n">compute_mutual_information_matrix</span><span class="p">(</span>
+            <span class="n">seq_kept</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="n">seq_weights</span><span class="p">,</span> <span class="n">freq_regul</span><span class="o">=</span><span class="n">freq_regul</span><span class="p">,</span>
+            <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">coevolution_metric</span> <span class="o">==</span> <span class="s2">&quot;NMI&quot;</span><span class="p">:</span>
+        <span class="n">coevol_matrix</span> <span class="o">=</span> <span class="n">statistics</span><span class="o">.</span><span class="n">pairwise</span><span class="o">.</span><span class="n">compute_mutual_information_matrix</span><span class="p">(</span>
+            <span class="n">seq_kept</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="n">seq_weights</span><span class="p">,</span> <span class="n">freq_regul</span><span class="o">=</span><span class="n">freq_regul</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Unknown &#39;coevol_metric&#39; value. User provided&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">coevolution_metric</span><span class="si">}</span><span class="s2">. Options are &#39;SCA&#39;, &#39;MI&#39;, &#39;NMI&#39;&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Compute correction on coevolution matrix</span>
+    <span class="k">if</span> <span class="n">correction</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">correction</span> <span class="o">==</span> <span class="s2">&quot;APC&quot;</span><span class="p">:</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">coevol_matrix</span> <span class="o">=</span> <span class="n">statistics</span><span class="o">.</span><span class="n">pairwise</span><span class="o">.</span><span class="n">compute_apc</span><span class="p">(</span><span class="n">coevol_matrix</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">correction</span> <span class="o">==</span> <span class="s2">&quot;entropy&quot;</span><span class="p">:</span>
+            <span class="n">entropy_aa</span> <span class="o">=</span> <span class="n">statistics</span><span class="o">.</span><span class="n">position</span><span class="o">.</span><span class="n">compute_conservation</span><span class="p">(</span>
+                <span class="n">sequences</span><span class="p">,</span>
+                <span class="n">seq_weights</span><span class="o">=</span><span class="n">seq_weights</span><span class="p">)</span>
+            <span class="n">coevol_matrix</span> <span class="o">=</span> <span class="n">statistics</span><span class="o">.</span><span class="n">pairwise</span><span class="o">.</span><span class="n">compute_entropy_correction</span><span class="p">(</span>
+                <span class="n">coevol_matrix</span><span class="p">,</span> <span class="n">entropy_aa</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Unknown &#39;correction&#39; value. User provided&quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">correction</span><span class="si">}</span><span class="s2">. Options are &#39;APC&#39;, &#39;entropy&#39;&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Now, compute deconvolution</span>
+
+    <span class="n">principal_components</span> <span class="o">=</span> <span class="n">deconvolution</span><span class="o">.</span><span class="n">extract_principal_components</span><span class="p">(</span>
+        <span class="n">coevol_matrix</span><span class="p">)</span>
+    <span class="n">independent_components</span> <span class="o">=</span> <span class="n">deconvolution</span><span class="o">.</span><span class="n">extract_independent_components</span><span class="p">(</span>
+        <span class="n">coevol_matrix</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">)</span>
+    <span class="n">sectors</span> <span class="o">=</span> <span class="n">deconvolution</span><span class="o">.</span><span class="n">extract_sectors</span><span class="p">(</span>
+        <span class="n">independent_components</span><span class="p">,</span> <span class="n">coevol_matrix</span><span class="p">)</span>
+
+    <span class="c1"># Now, map everything into a nice pandas DataFrame</span>
+    <span class="n">pos_mapping</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">msa</span><span class="o">.</span><span class="n">map_msa_positions</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">pos_kept</span><span class="p">)</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">{</span><span class="s2">&quot;original_msa_pos&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span>
+         <span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">:</span> <span class="n">pos_mapping</span><span class="o">.</span><span class="n">values</span><span class="p">()})</span>
+
+    <span class="c1"># Add PCA and ICA results</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_components</span><span class="p">):</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span>
+                    <span class="s2">&quot;PC</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">principal_components</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span>
+                    <span class="s2">&quot;IC</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">independent_components</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">results</span><span class="p">[</span><span class="s2">&quot;sector_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
+            <span class="n">results</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">],</span>
+            <span class="n">sectors</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span>
+                    <span class="s2">&quot;sector_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
+                        <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span>
+                                    <span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">],</span>
+                        <span class="n">sectors</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">coevol_matrix</span><span class="p">,</span> <span class="n">results</span></div>
+
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

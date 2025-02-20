@@ -10,6 +10,26 @@ API Reference
    :local:
    :backlinks: none
 
+:mod:`cocoatree`: Overall functions
+===================================
+
+.. automodule:: cocoatree
+    :no-members:
+    :no-inherited-members:
+
+Functions
+---------
+
+.. currentmodule:: cocoatree
+ 
+
+.. autosummary::
+
+  :toctree: generated/
+  :template: function.rst
+
+  perform_sca
+
 
 :mod:`cocoatree.io`: Functions to import and export files
 ===================================================================

@@ -415,7 +415,7 @@ def map_msa_positions(n_loaded_pos, remaining_pos):
         int(val) if f else None
         for f, val in zip(
             np.isin(np.arange(n_loaded_pos), remaining_pos),
-            np.isin(np.arange(n_loaded_pos), remaining_pos).cumsum())]
+            np.isin(np.arange(n_loaded_pos), remaining_pos).cumsum()-1)]
     original2filtered = {
         i: t for i, t
         in enumerate(mapping)}

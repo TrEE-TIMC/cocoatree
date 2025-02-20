@@ -120,7 +120,6 @@ def perform_sca(sequences_id, sequences,
                     "PC%d" % (k+1)] = principal_components[k]
         results.loc[~results["filtered_msa_pos"].isna(),
                     "IC%d" % (k+1)] = independent_components[k]
-
         results["sector_%d" % (k+1)] = np.isin(
             results["filtered_msa_pos"],
             sectors[k])

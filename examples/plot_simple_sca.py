@@ -40,34 +40,44 @@ print(results.head())
 print(results.loc[results["sector_1"]].head())
 
 # %%
-# Visualizing the sectors on the first and second IC
+# Visualizing the sectors on the first and second PC
 # --------------------------------------------------
 
+# Plotting all elements in components
 fig, ax = plt.subplots()
-# Start by plotting elements that are in sector 1
 ax.plot(results.loc[:, "PC1"],
         results.loc[:, "PC2"],
-        ".",
-        c="black")
+        ".", c="black")
 
-# Start by plotting elements that are in sector 1
-ax.plot(results.loc[results["sector_1"], "PC1"],
-        results.loc[results["sector_1"], "PC2"],
-        ".",
-        c="r", label="Sector 1")
-
-ax.plot(results.loc[results["sector_2"], "PC1"],
-        results.loc[results["sector_2"], "PC2"],
-        ".",
-        c="g", label="Sector 2")
-
-
-ax.plot(results.loc[results["sector_3"], "PC1"],
-        results.loc[results["sector_3"], "PC2"],
-        ".",
-        c="b", label="Sector 3")
+# Plotting elements in sectors
+for isec, color in zip([1, 2, 3], ['r', 'g', 'b']):    
+    ax.plot(results.loc[results["sector_%d" % isec], "PC1"],
+            results.loc[results["sector_%d" % isec], "PC2"],
+            ".", c=color, label="Sector %d" % isec)
 
 ax.set_xlabel("PC1")
 ax.set_ylabel("PC2")
+
+ax.legend()
+
+
+# %%
+# Visualizing the sectors on the first and second IC
+# --------------------------------------------------
+
+# Plotting all elements in components
+fig, ax = plt.subplots()
+ax.plot(results.loc[:, "IC1"],
+        results.loc[:, "IC2"],
+        ".", c="black")
+
+# Plotting elements in sectors
+for isec, color in zip([1, 2, 3], ['r', 'g', 'b']):    
+    ax.plot(results.loc[results["sector_%d" % isec], "IC1"],
+            results.loc[results["sector_%d" % isec], "IC2"],
+            ".", c=color, label="Sector %d" % isec)
+
+ax.set_xlabel("IC1")
+ax.set_ylabel("IC2")
 
 ax.legend()

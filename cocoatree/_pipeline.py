@@ -89,7 +89,7 @@ def perform_sca(sequences_id, sequences,
             _, coevol_matrix = statistics.pairwise.compute_apc(coevol_matrix)
         elif correction == "entropy":
             entropy_aa = statistics.position.compute_conservation(
-                sequences,
+                seq_kept,
                 seq_weights=seq_weights)
             coevol_matrix = statistics.pairwise.compute_entropy_correction(
                 coevol_matrix, entropy_aa)

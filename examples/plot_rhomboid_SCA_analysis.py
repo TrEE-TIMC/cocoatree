@@ -1,13 +1,17 @@
 """
-============================================================
-Perform full SCA analysis on the S1A serine protease dataset
-============================================================
+===========================================================
+Perform full SCA analysis on the Rhomboid proteases dataset
+===========================================================
 
-This example shows the full process to perform a complete SCA analysis
-and detect protein sectors from data importation, MSA filtering.
+In this example, we aim to reproduce the coevolution analysis performed
+in Mihaljevic and Urban, 2020 (doi:
+https://doi-org.insb.bib.cnrs.fr/10.1016/j.str.2020.07.015).
 
-Finally, we export a fasta file of the residues contributing to the first
-sector.
+Using the SCA metric, they identified two protein sectors in the rhomboid
+protein superfamily and successfully performed experimental sector
+grafting which converted rhomboid architectural and proteolytic properties.
+
+Let's see if we can identify those sectors using COCOA-Tree!
 """
 
 # Author: Margaux Jullien <margaux.jullien@univ-grenoble-alpes.fr>
@@ -18,7 +22,7 @@ sector.
 # %%
 # Import necessary
 import cocoatree.datasets as c_data
-import cocoatree.io as c_io
+# import cocoatree.io as c_io
 import cocoatree.msa as c_msa
 import cocoatree.statistics.position as c_pos
 import cocoatree.statistics.pairwise as c_pw
@@ -35,13 +39,10 @@ import numpy as np
 # serine protease dataset provided in :mod:`cocoatree`. To work on your own
 # dataset, you can use the `cocoatree.io.load_msa` function.
 
-serine_dataset = c_data.load_S1A_serine_proteases('rivoire')
-loaded_seqs = serine_dataset["alignment"]
-loaded_seqs_id = serine_dataset["sequence_ids"]
+rhomboid_dataset = c_data.load_rhomboid_proteases()
+loaded_seqs = rhomboid_dataset["alignment"]
+loaded_seqs_id = rhomboid_dataset["sequence_ids"]
 n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
-true_sectors = serine_dataset["sector_positions"]
-pdb_sequence = serine_dataset["pdb_sequence"]
-pdb_positions = serine_dataset["pdb_positions"]
 
 print(f"The loaded MSA has {n_loaded_seqs} sequences and {n_loaded_pos} \
       positions.")
@@ -51,7 +52,8 @@ print(f"The loaded MSA has {n_loaded_seqs} sequences and {n_loaded_pos} \
 # -------------
 #
 # We clean the loaded MSA by filtering both sequences and positions.
-#
+# As the authors provide the already processed alignment, this step doesn't
+# modify the alignment.
 
 sequences, sequences_id, positions = c_msa.filter_sequences(
     loaded_seqs, loaded_seqs_id, gap_threshold=0.4, seq_threshold=0.2)
@@ -82,15 +84,17 @@ print('Number of effective sequences %d' %
 # %%
 # Compute conservation along the MSA
 # ----------------------------------
+#
+# We compute the conservation of residues over each position of the alignment.
 Di = c_pos.compute_conservation(sequences, seq_weights)
 
 fig, ax = plt.subplots(figsize=(9, 4))
 xvals = [i+1 for i in range(len(Di))]
-xticks = [0, 50, 100, 150, 200, 250]
+xticks = [0, 50, 100, 150]
 ax.bar(xvals, Di, color='k')
 plt.tick_params(labelsize=11)
 ax.set_xticks(xticks)
-ax.set_xlabel('residues', fontsize=14)
+ax.set_xlabel('Residue positions', fontsize=14)
 ax.set_ylabel('Di', fontsize=14)
 
 # %%
@@ -101,10 +105,9 @@ SCA_matrix = c_pw.compute_sca_matrix(sequences, seq_weights)
 
 fig, ax = plt.subplots()
 im = ax.imshow(SCA_matrix, vmin=0, vmax=1.4, cmap='inferno')
-
-ax.set_xlabel('residues', fontsize=10)
+ax.set_xlabel('Residue positions', fontsize=10)
 ax.set_ylabel(None)
-ax.set_title('SCA matrix')
+ax.set_title('SCA matrix', fontweight='bold')
 fig.colorbar(im, shrink=0.7)
 
 # %%
@@ -126,10 +129,11 @@ idpt_components = c_deconv.extract_independent_components(
 # ---------------
 
 n_components_to_plot = n_components
-if n_components_to_plot % 2:
+if n_components_to_plot % 2 != 0:
     print('Odd number of components: the last one is discarded for \
           visualization')
     n_components_to_plot -= 1
+print(n_components_to_plot)
 
 pairs = [[x, x+1] for x in range(0, n_components_to_plot, 2)]
 ncols = len(pairs)
@@ -210,51 +214,3 @@ for i in range(n_components):
                                      sum(sector_sizes) - line_index],
             'w', linewidth=2)
     line_index += sector_sizes[i]
-
-
-# %%
-# Export sector sequences for all sequences as a fasta file
-# The file can then be used for visualization along a phylogenetic tree
-# as implemented in the cocoatree.visualization module
-
-sector_1_pos = list(positions[sectors[0]])
-sector_1 = []
-for sequence in range(len(sequences_id)):
-    seq = ''
-    for pos in sector_1_pos:
-        seq += loaded_seqs[sequence][pos]
-    sector_1.append(seq)
-
-c_io.export_fasta(sector_1, sequences_id, 'sector_1.fasta')
-
-if False:  # need to be revised
-    sector_1_pos = list(positions[sectors[0].items])
-    sector_1 = []
-    for sequence in range(len(sequences_id)):
-        seq = ''
-        for pos in sector_1_pos:
-            seq += sequences[sequence][pos]
-        sector_1.append(seq)
-
-    c_io.export_fasta(sector_1, sequences_id, 'sector_1.fasta')
-
-    # %
-    # Export files necessary for Pymol visualization
-    # Load PDB file of rat's trypsin
-    pdb_seq, pdb_pos = c_io.load_pdb('data/3TGI.pdb', pdb_id='TRIPSIN',
-                                     chain='E')
-    # Map PDB positions on the MSA sequence corresponding to rat's trypsin:
-    # seq_id='14719441'
-    pdb_mapping = c_msa.map_to_pdb(pdb_seq, pdb_pos, sequences, sequences_id,
-                                   ref_seq_id='14719441')
-    # Export lists of the first sector positions and each residue's
-    # contribution to the independent component to use for visualization on
-    # Pymol.
-    # The residues are ordered in the list by decreasing contribution score
-    # (the first residue in the list is the highest contributing)
-    c_io.export_sector_for_pymol(pdb_mapping, idpt_components.T, axis=0,
-                                 sector_pos=sector_1_pos,
-                                 ics=sectors,
-                                 outpath='color_sector_1_pymol.npy')
-
-# %%

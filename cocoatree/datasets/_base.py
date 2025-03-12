@@ -110,4 +110,17 @@ def load_rhomboid_proteases():
         "data/rhomboid_proteases/Data_S1_Rhomboid_MSA.fasta")
     data = load_MSA(filename, format="fasta")
 
+    filename = os.path.join(
+        module_path,
+        "data/rhomboid_proteases/rhomboid_sectors.npz")
+    sectors = np.load(filename)
+
+    # Load the metadata
+    filename = os.path.join(
+        module_path,
+        "data/rhomboid_proteases/rhomboid_Uniprot_metadata.tsv")
+    metadata = pd.read_csv(filename, sep="\t")
+    data["sector_positions"] = sectors
+    data["metadata"] = metadata
+
     return data

@@ -120,7 +120,16 @@ def load_rhomboid_proteases():
         module_path,
         "data/rhomboid_proteases/rhomboid_Uniprot_metadata.tsv")
     metadata = pd.read_csv(filename, sep="\t")
+
+    # Load the PDB structure
+    filename = os.path.join(
+        module_path,
+        "data/rhomboid_proteases/2NRF.pdb")
+    pdb_sequence, pdb_positions = load_pdb(filename, '2NRF', 'A')
+
     data["sector_positions"] = sectors
     data["metadata"] = metadata
+    data["pdb_sequence"] = pdb_sequence,
+    data["pdb_positions"] = pdb_positions
 
     return data

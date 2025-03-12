@@ -102,6 +102,12 @@ def load_rhomboid_proteases():
         - `sequence_ids`: a list of strings corresponding to sequence names
         - `alignment`: a list of strings corresponding to sequences. Because it
           is an MSA, all the strings are of same length.
+         - `sector_positions`: a dictionnary of arrays containing the residue
+          positions associated to each sector as published in the original
+          paper.
+        - `pdb_sequence`: sequence extracted from E. coli's PDB structure
+        - `pdb_positions`: positions extracted from E. coli's PDB structure
+
     """
 
     module_path = os.path.dirname(__file__)
@@ -109,5 +115,28 @@ def load_rhomboid_proteases():
         module_path,
         "data/rhomboid_proteases/Data_S1_Rhomboid_MSA.fasta")
     data = load_MSA(filename, format="fasta")
+
+    filename = os.path.join(
+        module_path,
+        "data/rhomboid_proteases/rhomboid_sectors.npz")
+    sectors = np.load(filename)
+
+    # Load the metadata
+    filename = os.path.join(
+        module_path,
+        "data/rhomboid_proteases/rhomboid_Uniprot_metadata.tsv")
+    metadata = pd.read_csv(filename, sep="\t")
+
+    # Load the PDB structure
+    filename = os.path.join(
+        module_path,
+        "data/rhomboid_proteases/2NRF.pdb")
+    # Two chains: A or B
+    pdb_sequence, pdb_positions = load_pdb(filename, '2NRF', 'A')
+
+    data["sector_positions"] = sectors
+    data["metadata"] = metadata
+    data["pdb_sequence"] = pdb_sequence,
+    data["pdb_positions"] = pdb_positions
 
     return data

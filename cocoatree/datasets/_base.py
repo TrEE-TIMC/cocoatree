@@ -102,6 +102,12 @@ def load_rhomboid_proteases():
         - `sequence_ids`: a list of strings corresponding to sequence names
         - `alignment`: a list of strings corresponding to sequences. Because it
           is an MSA, all the strings are of same length.
+         - `sector_positions`: a dictionnary of arrays containing the residue
+          positions associated to each sector as published in the original
+          paper.
+        - `pdb_sequence`: sequence extracted from E. coli's PDB structure
+        - `pdb_positions`: positions extracted from E. coli's PDB structure
+
     """
 
     module_path = os.path.dirname(__file__)

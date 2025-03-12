@@ -131,6 +131,7 @@ def load_rhomboid_proteases():
     filename = os.path.join(
         module_path,
         "data/rhomboid_proteases/2NRF.pdb")
+    # Two chains: A or B
     pdb_sequence, pdb_positions = load_pdb(filename, '2NRF', 'A')
 
     data["sector_positions"] = sectors

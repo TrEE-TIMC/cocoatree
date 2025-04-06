@@ -176,7 +176,7 @@ Visualizing the sectors on the first and second PC
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fb05eb63410>
+    <matplotlib.legend.Legend object at 0x7f9b8a27a690>
 
 
 
@@ -220,14 +220,14 @@ Visualizing the sectors on the first and second IC
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fb05f5232d0>
+    <matplotlib.legend.Legend object at 0x7f9b8a846e10>
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 3.197 seconds)
+   **Total running time of the script:** (0 minutes 2.381 seconds)
 
 
 .. _sphx_glr_download_auto_examples_plot_simple_sca.py:

@@ -47,7 +47,7 @@ def load_S1A_serine_proteases(paper='rivoire'):
         filename = os.path.join(
             module_path,
             "data/S1A_serine_proteases/halabi_sectors.npz")
-        sectors = np.load(filename)
+        sectors = np.load(filename, allow_pickle=True)
         # Load the metadata
         filename = os.path.join(
             module_path,
@@ -65,7 +65,7 @@ def load_S1A_serine_proteases(paper='rivoire'):
         filename = os.path.join(
             module_path,
             "data/S1A_serine_proteases/rivoire_sectors.npz")
-        sectors = np.load(filename)
+        sectors = np.load(filename, allow_pickle=True)
         # Load the metadata
         filename = os.path.join(
             module_path,
@@ -119,7 +119,7 @@ def load_rhomboid_proteases():
     filename = os.path.join(
         module_path,
         "data/rhomboid_proteases/rhomboid_sectors.npz")
-    sectors = np.load(filename)
+    sectors = np.load(filename, allow_pickle=True)
 
     # Load the metadata
     filename = os.path.join(

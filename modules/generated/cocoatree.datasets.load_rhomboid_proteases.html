@@ -50,11 +50,24 @@
 (DOI: <a class="reference external" href="https://doi.org/10.1016/j.str.2020.07.015">https://doi.org/10.1016/j.str.2020.07.015</a>).</p>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
-<dl class="simple">
+<dl>
 <dt>a dictionnary containing :</dt><dd><ul class="simple">
 <li><p><cite>sequence_ids</cite>: a list of strings corresponding to sequence names</p></li>
 <li><p><cite>alignment</cite>: a list of strings corresponding to sequences. Because it
 is an MSA, all the strings are of same length.</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>sector_positions</cite>: a dictionnary of arrays containing the residue</p></li>
+</ul>
+<blockquote>
+<div><p>positions associated to each sector as published in the original
+paper.</p>
+</div></blockquote>
+</div></blockquote>
+<ul class="simple">
+<li><p><cite>pdb_sequence</cite>: sequence extracted from E. coli’s PDB structure</p></li>
+<li><p><cite>pdb_positions</cite>: positions extracted from E. coli’s PDB structure</p></li>
 </ul>
 </dd>
 </dl>

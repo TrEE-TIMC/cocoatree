@@ -149,6 +149,12 @@
 <span class="sd">        - `sequence_ids`: a list of strings corresponding to sequence names</span>
 <span class="sd">        - `alignment`: a list of strings corresponding to sequences. Because it</span>
 <span class="sd">          is an MSA, all the strings are of same length.</span>
+<span class="sd">         - `sector_positions`: a dictionnary of arrays containing the residue</span>
+<span class="sd">          positions associated to each sector as published in the original</span>
+<span class="sd">          paper.</span>
+<span class="sd">        - `pdb_sequence`: sequence extracted from E. coli&#39;s PDB structure</span>
+<span class="sd">        - `pdb_positions`: positions extracted from E. coli&#39;s PDB structure</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">module_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
@@ -156,6 +162,29 @@
         <span class="n">module_path</span><span class="p">,</span>
         <span class="s2">&quot;data/rhomboid_proteases/Data_S1_Rhomboid_MSA.fasta&quot;</span><span class="p">)</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">load_MSA</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;fasta&quot;</span><span class="p">)</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">module_path</span><span class="p">,</span>
+        <span class="s2">&quot;data/rhomboid_proteases/rhomboid_sectors.npz&quot;</span><span class="p">)</span>
+    <span class="n">sectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="c1"># Load the metadata</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">module_path</span><span class="p">,</span>
+        <span class="s2">&quot;data/rhomboid_proteases/rhomboid_Uniprot_metadata.tsv&quot;</span><span class="p">)</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Load the PDB structure</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">module_path</span><span class="p">,</span>
+        <span class="s2">&quot;data/rhomboid_proteases/2NRF.pdb&quot;</span><span class="p">)</span>
+    <span class="c1"># Two chains: A or B</span>
+    <span class="n">pdb_sequence</span><span class="p">,</span> <span class="n">pdb_positions</span> <span class="o">=</span> <span class="n">load_pdb</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;2NRF&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)</span>
+
+    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sector_positions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sectors</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;metadata&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pdb_sequence&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_sequence</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pdb_positions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_positions</span>
 
     <span class="k">return</span> <span class="n">data</span></div>
 

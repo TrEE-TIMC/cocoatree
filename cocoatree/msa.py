@@ -178,7 +178,7 @@ def filter_ref_seq(sequences, sequences_id, delta=0.2, refseq_id=None,
             print('Reference sequence is: %i' % refseq_id)
         refseq_idx = sequences_id.index(refseq_id)
 
-    sim_matrix = compute_seq_identity(sequences, graphic=False)
+    sim_matrix = compute_seq_identity(sequences)
     filt_seqs_ix = np.where(sim_matrix[refseq_idx] >= delta)[0]
     filt_seqs = [sequences[seq] for seq in filt_seqs_ix]
     filt_seqs_id = [sequences_id[seq] for seq in filt_seqs_ix]

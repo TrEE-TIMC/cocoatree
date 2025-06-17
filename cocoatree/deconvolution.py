@@ -18,8 +18,8 @@ def extract_independent_components(coevo_matrix, method=None,
     The current method is fully applicable to SCA analysis. For other metrics,
     we set n_components = 3 (to improve)
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     coevo_matrix : np.ndarray
         coevolution matrix
 
@@ -96,8 +96,8 @@ def _compute_n_components_as_pySCA(sequences, coevo_matrix,
     Rem: it concerns only SCA metrics
     For other merics (MI, adding corrections) this should be adapted
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     sequences : list of sequences
 
     coevo_matrix : np.ndarray of shape (n_pos, n_pos)
@@ -158,8 +158,8 @@ def extract_principal_components(coevo_matrix):
     """
     Perform principal component decomposition of a coevolution matrix
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     coevo_matrix : np.ndarray
         coevolution matrix
 
@@ -178,8 +178,8 @@ def extract_sectors(idpt_components, coevo_matrix):
     """
     Extract residue positions of sectors
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     idpt_components : independent components obtained from an ICA
 
     coevo_matrix : coevolution matrix
@@ -210,8 +210,8 @@ def substract_first_principal_component(coevo_matrix):
     In the sector literature (and data analysis), this corresponds
     to removing global correlations (from e.g. phylogenetic effects)
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     coevo_matrix : np.ndarray (n_pos, n_pos),
         coevolution matrix
 

@@ -12,8 +12,8 @@ def _clean_msa(msa):
     the ones in lett2num and removes unknown amino acids (such as 'X' or 'B')
     when importing the multiple sequence alignment.
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     msa : bioalign object
     """
 
@@ -67,8 +67,8 @@ def filter_sequences(sequences, sequences_id,
 def _filter_gap_pos(sequences, threshold=0.4, verbose=False):
     """Filter the sequences for overly gapped positions.
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     sequences : list of the MSA sequences to filter
 
     threshold : max proportion of gaps tolerated (default=0.4)
@@ -107,8 +107,8 @@ def _filter_gap_seq(sequences, sequences_id, threshold=0.2, verbose=False):
     Remove sequences with a fraction of gaps greater than a specified
     value.
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     sequences : list of MSA sequences
 
     sequences_id : list of the MSA's sequence identifiers
@@ -149,8 +149,8 @@ def filter_ref_seq(sequences, sequences_id, delta=0.2, refseq_id=None,
     Remove sequences r with Sr < delta, where Sr is the fractional identity
     between r and a specified reference sequence.
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     sequences : list of sequences in the MSA
 
     sequences_id : list of sequence identifiers in the MSA
@@ -303,8 +303,8 @@ def compute_seq_identity(sequences):
     Computes the identity between sequences in a MSA (as Hamming's pairwise
     distance)
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     sequences : list of sequences
 
     Returns

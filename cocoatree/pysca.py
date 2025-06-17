@@ -9,8 +9,8 @@ def _basicICA(x, r0, Niter, tolerance=1e-15):
     data should preferentially be sphered, i.e., x.T.dot(x) = 1
     Source: https://github.com/ranganathanlab/pySCA/
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     x : LxM input matrix where L = # features and M = # samples
 
     r : learning rate / relaxation parameter (e.g. r=.0001)
@@ -62,8 +62,8 @@ def _compute_ica(V, kmax=6, learnrate=0.1, iterations=10000):
 
     Source: https://github.com/ranganathanlab/pySCA/
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     V : ndarray,
         eigenvectors obtained after matrix decomposition
 
@@ -134,8 +134,8 @@ def _icList(Vica, n_component, Cij, p_cut=0.95):
     returns the numeric value of the cutoff for each IC, and the pdf fit, which
     can be used for plotting/evaluation.
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     Vica : ndarray,
         independent components
 

@@ -22,7 +22,7 @@ def _compute_aa_joint_freqs(sequences, seq_weights=None,
     represents the effective number of sequences in the alignment and *lambda*
     is a regularization parameter (pseudocount).
 
-    Arguments
+    Parameters
     ----------
     sequences : list of sequences as imported by load_MSA()
 
@@ -65,7 +65,7 @@ def _compute_aa_product_freqs(aa_freqs_1, aa_freqs_2):
 
     (joint frequencies if residues are independent)
 
-    Arguments
+    Parameters
     ----------
     aa_freqs_1 : frequency of amino acid *a* at position *i* (set 1)
 
@@ -137,7 +137,7 @@ def compute_sca_matrix(sequences, seq_weights=None,
 
         \\tilde{C_{ij}} = \\sqrt{sum_{a,b} \\tilde{(C_{ij}^{ab})^2}}
 
-    Arguments
+    Parameters
     ----------
     sequences : list of sequences
 
@@ -188,7 +188,7 @@ def compute_mutual_information_matrix(sequences, seq_weights=None,
 
         I(X, Y) = \\sum_{x,y} p(x, y) \\log \\frac{p(x, y)}{p(x)p(y)}
 
-    Arguments
+    Parameters
     ----------
     sequences : list of sequences
 
@@ -244,7 +244,7 @@ def compute_apc(MIij):
 
         MIp(a, b) = MI(a, b) - APC(a, b)
 
-    Arguments
+    Parameters
     ----------
     MIij : np.ndarray,
         the mutual information matrix
@@ -293,8 +293,8 @@ def compute_entropy_correction(coevolution_matrix, s):
         \\alpha = \\frac{\\sum_{i \\neq j}^{L} c_ij \
         s_{i}^{\\frac{1}{2}}}{\\sum_{i \\neq j}^{L} s_i s_j}
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     coevolution_matrix : square matrix of shape (Nseq, Nseq)
 
     s : entropy computed for every position of the MSA

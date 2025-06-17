@@ -8,7 +8,7 @@ def _randomize_seqs_conserving_col_compo(sequences=[], seed=None):
     Randomize the list of sequenecs (MSA) so that the content of each
     colum is overall conserved (conservation of aa frequencies)
 
-    Arguments
+    Parameters
     ----------
     sequences : list of sequences (MSA)
 

@@ -31,6 +31,19 @@ The software is organized in different modules detailed below:
 .. image:: schemas/graphical_abstract.png
 	:width: 100%
 
+Example gallery
+---------------
+
+Various examples of COCOA-Tree's use can be found in the Gallery.
+
+If you wish to perform a simple SCA analysis, go to:
+
+.. doc:: `Simple SCA example <../examples/plot_simple_sca.py>`
+
+For a detailed SCA analysis, go to:
+
+.. doc:: `Full SCA analysis <../examples/plot_full_SCA_analysis.py>`
+
 Citing COCOA-Tree
 -----------------
 

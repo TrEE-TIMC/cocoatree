@@ -11,7 +11,7 @@
   interface_cocoatree_pymol.rst
 
 ######################################################
-COCOA-Tree: COllaborative Coevolution Analysis Toolbox
+COCOA-Tree: COllaborative COevolution Analysis Toolbox
 ######################################################
 
 COCOA-Tree is a `Python <https://www.python.org>`_ library to perform coevolution
@@ -36,13 +36,11 @@ Example gallery
 
 Various examples of COCOA-Tree's use can be found in the Gallery.
 
-If you wish to perform a simple SCA analysis, go to:
+If you wish to perform a simple SCA analysis, go to
+`Simple SCA example <../examples/plot_simple_sca.py>`
 
-.. doc:: `Simple SCA example <../examples/plot_simple_sca.py>`
-
-For a detailed SCA analysis, go to:
-
-.. doc:: `Full SCA analysis <../examples/plot_full_SCA_analysis.py>`
+For a detailed SCA analysis, go to
+`Full SCA analysis <../examples/plot_full_SCA_analysis.py>`
 
 Citing COCOA-Tree
 -----------------

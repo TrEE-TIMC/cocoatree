@@ -43,7 +43,7 @@ Example gallery
 Various examples of COCOA-Tree's use can be found in the Gallery.
 
 If you wish to perform a simple SCA analysis, go to
-:py:obj:`Simple SCA example <../examples/plot_simple_sca.py>`
+`Simple SCA example <auto_examples/plot_simple_sca.html>`_
 
 For a detailed SCA analysis, go to
 :py:obj:`Full SCA analysis <../examples/plot_full_SCA_analysis.py>`

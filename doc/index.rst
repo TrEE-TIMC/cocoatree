@@ -31,6 +31,12 @@ The software is organized in different modules detailed below:
 .. image:: schemas/graphical_abstract.png
 	:width: 100%
 
+List of abbreviations
+---------------------
+- MSA: multiple sequence alignment
+- SCA: statistical coupling analysis
+- MI: mutual information
+
 Example gallery
 ---------------
 

@@ -64,7 +64,7 @@ def load_tree_ete3(file_path):
 
 def export_fasta(sequences, sequences_id, outpath):
     """
-    Export intermediate files in fasta format
+    Export intermediate files in FASTA format
 
     Parameters
     ----------

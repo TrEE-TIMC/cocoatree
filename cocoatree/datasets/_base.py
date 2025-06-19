@@ -2,6 +2,7 @@ import os
 from ..io import load_MSA, load_pdb
 import numpy as np
 import pandas as pd
+import gzip
 
 
 def load_S1A_serine_proteases(paper='rivoire'):
@@ -140,3 +141,34 @@ def load_rhomboid_proteases():
     data["pdb_positions"] = pdb_positions
 
     return data
+
+
+def load_DHFR():
+    """
+    load the DHFR dataset
+    """
+    module_path = os.path.dirname(__file__)
+
+    filename = os.path.join(
+        module_path,
+        "data/DHFR/alignment.faa.gz")
+    with gzip.open(filename, "rt") as f:
+        data = load_MSA(f, format="fasta")
+
+    filename = os.path.join(
+        module_path,
+        "data/DHFR/DHFR_sectors.npz")
+    sectors = np.load(filename)
+
+    # Load the PDB structure
+    filename = os.path.join(
+        module_path,
+        "data/DHFR/3QL0.pdb")
+    pdb_sequence, pdb_positions = load_pdb(filename, '3QL0', 'A')
+
+    data["sector_positions"] = sectors
+    data["pdb_sequence"] = pdb_sequence,
+    data["pdb_positions"] = pdb_positions
+
+    return data
+

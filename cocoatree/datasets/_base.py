@@ -146,6 +146,21 @@ def load_rhomboid_proteases():
 def load_DHFR():
     """
     load the DHFR dataset
+
+    This dataset comes from Kalmer et al, The Journal of Physical Chemistry B,
+    2024 (https://pubs.acs.org/doi/10.1021/acs.jpcb.4c04195)
+
+    Returns
+    -------
+    a dictionnary containing :
+        - `sequence_ids`: a list of strings corresponding to sequence names
+        - `alignment`: a list of strings corresponding to sequences. Because it
+          is an MSA, all the strings are of same length.
+         - `sector_positions`: a dictionnary of arrays containing the residue
+          positions associated to each sector as published in the original
+          paper.
+        - `pdb_sequence`: sequence extracted from E. coli's PDB structure
+        - `pdb_positions`: positions extracted from E. coli's PDB structure
     """
     module_path = os.path.dirname(__file__)
 
@@ -171,4 +186,3 @@ def load_DHFR():
     data["pdb_positions"] = pdb_positions
 
     return data
-

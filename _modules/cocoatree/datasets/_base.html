@@ -44,6 +44,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">..io</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_MSA</span><span class="p">,</span> <span class="n">load_pdb</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">gzip</span>
 
 
 <div class="viewcode-block" id="load_S1A_serine_proteases">
@@ -188,6 +189,51 @@
 
     <span class="k">return</span> <span class="n">data</span></div>
 
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">load_DHFR</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    load the DHFR dataset</span>
+
+<span class="sd">    This dataset comes from Kalmer et al, The Journal of Physical Chemistry B,</span>
+<span class="sd">    2024 (https://pubs.acs.org/doi/10.1021/acs.jpcb.4c04195)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    a dictionnary containing :</span>
+<span class="sd">        - `sequence_ids`: a list of strings corresponding to sequence names</span>
+<span class="sd">        - `alignment`: a list of strings corresponding to sequences. Because it</span>
+<span class="sd">          is an MSA, all the strings are of same length.</span>
+<span class="sd">         - `sector_positions`: a dictionnary of arrays containing the residue</span>
+<span class="sd">          positions associated to each sector as published in the original</span>
+<span class="sd">          paper.</span>
+<span class="sd">        - `pdb_sequence`: sequence extracted from E. coli&#39;s PDB structure</span>
+<span class="sd">        - `pdb_positions`: positions extracted from E. coli&#39;s PDB structure</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">module_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">module_path</span><span class="p">,</span>
+        <span class="s2">&quot;data/DHFR/alignment.faa.gz&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">load_MSA</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;fasta&quot;</span><span class="p">)</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">module_path</span><span class="p">,</span>
+        <span class="s2">&quot;data/DHFR/DHFR_sectors.npz&quot;</span><span class="p">)</span>
+    <span class="n">sectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="c1"># Load the PDB structure</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+        <span class="n">module_path</span><span class="p">,</span>
+        <span class="s2">&quot;data/DHFR/3QL0.pdb&quot;</span><span class="p">)</span>
+    <span class="n">pdb_sequence</span><span class="p">,</span> <span class="n">pdb_positions</span> <span class="o">=</span> <span class="n">load_pdb</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;3QL0&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)</span>
+
+    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sector_positions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sectors</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pdb_sequence&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_sequence</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pdb_positions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_positions</span>
+
+    <span class="k">return</span> <span class="n">data</span>
 </pre></div>
 
             <div class="clearer"></div>

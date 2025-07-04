@@ -125,8 +125,8 @@ def load_rhomboid_proteases():
     # Load the metadata
     filename = os.path.join(
         module_path,
-        "data/rhomboid_proteases/rhomboid_Uniprot_metadata.tsv")
-    metadata = pd.read_csv(filename, sep="\t")
+        "data/rhomboid_proteases/rhomboid_metadata_clean.csv")
+    metadata = pd.read_csv(filename)
 
     # Load the PDB structure
     filename = os.path.join(

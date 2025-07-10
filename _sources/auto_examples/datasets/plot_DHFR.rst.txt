@@ -23,25 +23,61 @@ DHFR proteases
 
 Load the dataset
 
-.. GENERATED FROM PYTHON SOURCE LINES 8-12
+.. GENERATED FROM PYTHON SOURCE LINES 8-34
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Number of sequences 4422
+    The loaded MSA has 4422 sequences and 802       positions.
+    After filtering, we have 156 remaining positions.
+    After filtering, we have 3806 remaining sequences.
+    computing weight of seq 1/3806      computing weight of seq 101/3806            computing weight of seq 201/3806            computing weight of seq 301/3806            computing weight of seq 401/3806            computing weight of seq 501/3806            computing weight of seq 601/3806            computing weight of seq 701/3806            computing weight of seq 801/3806            computing weight of seq 901/3806            computing weight of seq 1001/3806           computing weight of seq 1101/3806           computing weight of seq 1201/3806           computing weight of seq 1301/3806           computing weight of seq 1401/3806           computing weight of seq 1501/3806           computing weight of seq 1601/3806           computing weight of seq 1701/3806           computing weight of seq 1801/3806           computing weight of seq 1901/3806           computing weight of seq 2001/3806           computing weight of seq 2101/3806           computing weight of seq 2201/3806           computing weight of seq 2301/3806           computing weight of seq 2401/3806           computing weight of seq 2501/3806           computing weight of seq 2601/3806           computing weight of seq 2701/3806           computing weight of seq 2801/3806           computing weight of seq 2901/3806           computing weight of seq 3001/3806           computing weight of seq 3101/3806           computing weight of seq 3201/3806           computing weight of seq 3301/3806           computing weight of seq 3401/3806           computing weight of seq 3501/3806           computing weight of seq 3601/3806           computing weight of seq 3701/3806           computing weight of seq 3801/3806           Number of effective sequences 3332
 
 
 
 
 
 
+|
 
 .. code-block:: Python
 
+    import numpy as np
 
     from cocoatree.datasets import load_DHFR
+    import cocoatree.msa as c_msa
+    import cocoatree.statistics.position as c_pos
+
 
     dataset = load_DHFR()
+
+    print("Number of sequences", len(dataset["alignment"]))
+    loaded_seqs = dataset["alignment"]
+    loaded_seqs_id = dataset["sequence_ids"]
+    n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
+
+    print(f"The loaded MSA has {n_loaded_seqs} sequences and {n_loaded_pos} \
+          positions.")
+
+    sequences, sequences_id, positions = c_msa.filter_sequences(
+        loaded_seqs, loaded_seqs_id, gap_threshold=0.4, seq_threshold=0.2)
+    n_pos = len(positions)
+    print(f"After filtering, we have {n_pos} remaining positions.")
+    print(f"After filtering, we have {len(sequences)} remaining sequences.")
+
+    seq_weights, m_eff = c_pos.compute_seq_weights(sequences)
+    print('Number of effective sequences %d' %
+          np.round(m_eff))
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.783 seconds)
+   **Total running time of the script:** (0 minutes 3.011 seconds)
 
 
 .. _sphx_glr_download_auto_examples_datasets_plot_DHFR.py:

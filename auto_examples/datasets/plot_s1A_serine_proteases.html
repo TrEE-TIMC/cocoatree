@@ -48,12 +48,85 @@ to download the full example code. or to run this example in your browser via Bi
 <section class="sphx-glr-example-title" id="s1a-serine-proteases">
 <span id="sphx-glr-auto-examples-datasets-plot-s1a-serine-proteases-py"></span><h1>S1A serine proteases<a class="headerlink" href="#s1a-serine-proteases" title="Link to this heading">¶</a></h1>
 <p>Load the dataset</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">cocoatree.datasets</span><span class="w"> </span><span class="kn">import</span> <a href="../../modules/generated/cocoatree.datasets.load_S1A_serine_proteases.html#cocoatree.datasets.load_S1A_serine_proteases" title="cocoatree.datasets.load_S1A_serine_proteases" class="sphx-glr-backref-module-cocoatree-datasets sphx-glr-backref-type-py-function"><span class="n">load_S1A_serine_proteases</span></a>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>halabi
+Number of sequences 1470
+The loaded MSA has 1470 sequences and 832         positions.
+After filtering, we have 242 remaining positions.
+After filtering, we have 1456 remaining sequences.
+computing weight of seq 1/1456
+computing weight of seq 101/1456
+computing weight of seq 201/1456
+computing weight of seq 301/1456
+computing weight of seq 401/1456
+computing weight of seq 501/1456
+computing weight of seq 601/1456
+computing weight of seq 701/1456
+computing weight of seq 801/1456
+computing weight of seq 901/1456
+computing weight of seq 1001/1456
+computing weight of seq 1101/1456
+computing weight of seq 1201/1456
+computing weight of seq 1301/1456
+computing weight of seq 1401/1456
+Number of effective sequences 1053
 
-<a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a> <span class="o">=</span> <a href="../../modules/generated/cocoatree.datasets.load_S1A_serine_proteases.html#cocoatree.datasets.load_S1A_serine_proteases" title="cocoatree.datasets.load_S1A_serine_proteases" class="sphx-glr-backref-module-cocoatree-datasets sphx-glr-backref-type-py-function"><span class="n">load_S1A_serine_proteases</span></a><span class="p">(</span><span class="n">paper</span><span class="o">=</span><span class="s1">&#39;rivoire&#39;</span><span class="p">)</span>
+rivoire
+Number of sequences 1390
+The loaded MSA has 1390 sequences and 832         positions.
+After filtering, we have 243 remaining positions.
+After filtering, we have 1376 remaining sequences.
+computing weight of seq 1/1376
+computing weight of seq 101/1376
+computing weight of seq 201/1376
+computing weight of seq 301/1376
+computing weight of seq 401/1376
+computing weight of seq 501/1376
+computing weight of seq 601/1376
+computing weight of seq 701/1376
+computing weight of seq 801/1376
+computing weight of seq 901/1376
+computing weight of seq 1001/1376
+computing weight of seq 1101/1376
+computing weight of seq 1201/1376
+computing weight of seq 1301/1376
+Number of effective sequences 1019
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.137 seconds)</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">cocoatree.datasets</span><span class="w"> </span><span class="kn">import</span> <a href="../../modules/generated/cocoatree.datasets.load_S1A_serine_proteases.html#cocoatree.datasets.load_S1A_serine_proteases" title="cocoatree.datasets.load_S1A_serine_proteases" class="sphx-glr-backref-module-cocoatree-datasets sphx-glr-backref-type-py-function"><span class="n">load_S1A_serine_proteases</span></a>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">cocoatree.msa</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">c_msa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cocoatree.statistics.position</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">c_pos</span>
+
+
+<span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paper</span></a> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;halabi&quot;</span><span class="p">,</span> <span class="s2">&quot;rivoire&quot;</span><span class="p">]:</span>
+    <span class="nb">print</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paper</span></a><span class="p">)</span>
+    <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a> <span class="o">=</span> <a href="../../modules/generated/cocoatree.datasets.load_S1A_serine_proteases.html#cocoatree.datasets.load_S1A_serine_proteases" title="cocoatree.datasets.load_S1A_serine_proteases" class="sphx-glr-backref-module-cocoatree-datasets sphx-glr-backref-type-py-function"><span class="n">load_S1A_serine_proteases</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paper</span></a><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">paper</span></a><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of sequences&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">[</span><span class="s2">&quot;alignment&quot;</span><span class="p">]))</span>
+    <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">[</span><span class="s2">&quot;alignment&quot;</span><span class="p">]</span>
+    <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs_id</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">dataset</span></a><span class="p">[</span><span class="s2">&quot;sequence_ids&quot;</span><span class="p">]</span>
+    <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_loaded_pos</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_loaded_seqs</span></a> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs</span></a><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs</span></a><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The loaded MSA has </span><span class="si">{</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_loaded_seqs</span></a><span class="si">}</span><span class="s2"> sequences and </span><span class="si">{</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_loaded_pos</span></a><span class="si">}</span><span class="s2"> </span><span class="se">\</span>
+<span class="s2">        positions.&quot;</span><span class="p">)</span>
+
+    <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sequences</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sequences_id</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">positions</span></a> <span class="o">=</span> <a href="../../modules/generated/cocoatree.msa.filter_sequences.html#cocoatree.msa.filter_sequences" title="cocoatree.msa.filter_sequences" class="sphx-glr-backref-module-cocoatree-msa sphx-glr-backref-type-py-function"><span class="n">c_msa</span><span class="o">.</span><span class="n">filter_sequences</span></a><span class="p">(</span>
+        <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs_id</span></a><span class="p">,</span> <span class="n">gap_threshold</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">seq_threshold</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+    <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_pos</span></a> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">positions</span></a><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;After filtering, we have </span><span class="si">{</span><a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_pos</span></a><span class="si">}</span><span class="s2"> remaining positions.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;After filtering, we have </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sequences</span></a><span class="p">)</span><span class="si">}</span><span class="s2"> remaining sequences.&quot;</span><span class="p">)</span>
+
+    <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">seq_weights</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">m_eff</span></a> <span class="o">=</span> <span class="n">c_pos</span><span class="o">.</span><span class="n">compute_seq_weights</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sequences</span></a><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Number of effective sequences </span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span>
+          <a href="https://numpy.org/doc/stable/reference/generated/numpy.round.html#numpy.round" title="numpy.round" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">round</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.float64" title="numpy.float64" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-attribute"><span class="n">m_eff</span></a><span class="p">))</span>
+    <span class="nb">print</span><span class="p">()</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.487 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-datasets-plot-s1a-serine-proteases-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/tree-timc/cocoatree/gh-pages?urlpath=lab/tree/notebooks/auto_examples/datasets/plot_s1A_serine_proteases.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" style="width: 150px;" />

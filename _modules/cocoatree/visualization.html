@@ -51,13 +51,13 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">ete3</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProfileFace</span><span class="p">,</span> <span class="n">TreeStyle</span><span class="p">,</span> <span class="n">NodeStyle</span><span class="p">,</span> <span class="n">TextFace</span><span class="p">,</span> \
     <span class="n">add_face_to_node</span><span class="p">,</span> <span class="n">SeqMotifFace</span><span class="p">,</span> <span class="n">RectFace</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pandas.api.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_numeric_dtype</span>  <span class="c1"># type: ignore</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">PyQt5</span><span class="w"> </span><span class="kn">import</span> <span class="n">QtGui</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">colors</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.cm</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">cmx</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">.msa</span><span class="w"> </span><span class="kn">import</span> <span class="n">filter_seq_id</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.msa</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_seq_identity</span>
 
 
@@ -284,10 +284,13 @@
     <span class="k">if</span> <span class="n">t_sector_heatmap</span><span class="p">:</span>
         <span class="c1"># allow to chose among Matplotlib&#39;s colormaps</span>
         <span class="n">ProfileFace</span><span class="o">.</span><span class="n">get_color_gradient</span> <span class="o">=</span> <span class="n">_get_color_gradient</span>
+
         <span class="c1"># Check that sequences in the similarity matrix are ordered as in the</span>
         <span class="c1"># tree leaves and keep only sequences that are present in the tree</span>
-        <span class="n">reorder_msa</span> <span class="o">=</span> <span class="n">filter_seq_id</span><span class="p">(</span><span class="n">sector_seq</span><span class="p">,</span> <span class="n">sector_id</span><span class="p">,</span> <span class="n">leaves_id</span><span class="p">)</span>
-        <span class="n">id_mat</span> <span class="o">=</span> <span class="n">compute_seq_identity</span><span class="p">(</span><span class="n">reorder_msa</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">sequences</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">sector_id</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;seq&quot;</span><span class="p">:</span> <span class="n">sector_seq</span><span class="p">})</span>
+        <span class="n">reordered_sequences</span> <span class="o">=</span> <span class="n">sequences</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">leaves_id</span><span class="p">,</span> <span class="s2">&quot;seq&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+        <span class="n">id_mat</span> <span class="o">=</span> <span class="n">compute_seq_identity</span><span class="p">(</span><span class="n">reordered_sequences</span><span class="p">)</span>
 
         <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="c1"># Add heatmap profile to each leaf</span>

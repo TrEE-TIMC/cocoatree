@@ -11,8 +11,8 @@ import numpy as np
 def load_MSA(file_path, format="fasta", clean=True, verbose=False):
     """Read in a multiple sequence alignment (MSA)
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     file_path : path to the alignment file
 
     format : string {"fasta", "phylip", …}, optional, default: "fasta"
@@ -51,8 +51,8 @@ def load_tree_ete3(file_path):
     """
     From the loading of a Newick tree, generate a ete3.Tree object
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     file_path : path to the Newick file
 
     Returns
@@ -66,10 +66,10 @@ def load_tree_ete3(file_path):
 
 def export_fasta(sequences, sequences_id, outpath):
     """
-    Export intermediate files in fasta format
+    Export intermediate files in FASTA format
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     sequences : list of sequences as strings (as imported by load_MSA)
 
     sequences_id : list of sequences identifiers (as imported by load_MSA)
@@ -92,8 +92,8 @@ def load_pdb(path2pdb, pdb_id, chain):
     Import a PDB file and extract the associated sequence along with the
     amino acid positions
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     path2pdb : path to the PDB file
 
     pdb_id : str,
@@ -140,8 +140,8 @@ def export_sector_for_pymol(mapping, independent_components, axis,
     Export numpy arrays of a sector's residue positions and their contribution
     for coloring in PyMOL.
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     mapping : numpy.ndarray,
         mapping between the unfiltered MSA and the PDB structure, output of
         cocoatree.msa.map_to_pdb() function

@@ -72,7 +72,7 @@ cb.set_label("Pairwise sequence identity", fontweight="bold")
 
 # %%
 # Compute sequence weights
-seq_weights, m_eff = c_pos.compute_seq_weights(sequences)
+seq_weights, m_eff = c_msa.compute_seq_weights(sequences)
 print('Number of effective sequences %d' %
       np.round(m_eff))
 

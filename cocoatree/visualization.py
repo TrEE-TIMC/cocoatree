@@ -24,8 +24,8 @@ def _annot_to_color(attribute, tree, df_annot, cmap='jet'):
     Reads in the attributes specified by the user in the annotation csv file
     and attributes a color palette for each.
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     tree : ete3's tree object,
             as imported by io.load_tree_ete3()
 
@@ -117,8 +117,8 @@ def update_tree_ete3_and_return_style(
     Update ete3 tree with sector info and attributes
     and return tree_style for further visualization.
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     tree_ete3 : ete3's tree object,
             as imported by io.load_tree_ete3()
 

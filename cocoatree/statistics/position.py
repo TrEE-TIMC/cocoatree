@@ -19,7 +19,7 @@ def _compute_aa_freqs(sequences, seq_weights=None,
     represents the effective number of sequences in the alignment and *lambda*
     is a regularization parameter (pseudocount).
 
-    Arguments
+    Parameters
     ----------
     sequences : list of sequences as imported by load_msa()
 
@@ -54,8 +54,8 @@ def _compute_background_freqs(aa_freqs, sequences, seq_weights=None,
                               freq_regul=__freq_regularization_ref):
     """Computes (regularized) background frequencies of amino acids
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     aa_freqs : np.ndarray of the positional amino acid frequencies
 
     sequences : list of sequences for which seq_weights give weights
@@ -228,7 +228,7 @@ def _compute_rel_entropy(aa_freqs, bkgd_freqs):
     2012) and indicates how unlikely the observed frequencies of amino acid
     *a* at position *i* would be if *a* occurred randomly with probability q^a.
 
-    Arguments
+    Parameters
     ----------
     aa_freqs: np.ndarray,
         amino acid frequencies per position

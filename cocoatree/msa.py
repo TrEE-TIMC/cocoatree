@@ -13,8 +13,8 @@ def _clean_msa(msa):
     the ones in lett2num and removes unknown amino acids (such as 'X' or 'B')
     when importing the multiple sequence alignment.
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     msa : bioalign object
     """
 
@@ -35,7 +35,7 @@ def filter_sequences(sequences, sequences_id,
     """
     Filter sequences
 
-    Filter (1) overly gapped positions; (2) overly gapped sequences.
+    Remove (1) overly gapped positions; (2) overly gapped sequences.
 
     Parameters
     ----------
@@ -43,13 +43,19 @@ def filter_sequences(sequences, sequences_id,
 
     sequences_id : list of the MSA's sequence identifiers
 
-    gap_threshold : max proportion of gaps tolerated (default=0.4)
+    gap_threshold : float,
+        maximum proportion of gaps tolerated per position (default=0.4)
 
-    seq_threshold : maximum fraction of gaps per sequence (default 0.2)
+    seq_threshold : float,
+        maximum proportion of gaps tolerated per sequence (default=0.2)
 
     Returns
     -------
-    filt_seqs : list of the sequences after filter
+    filtered_seqs : list of the remaining sequences (written as strings)
+        after applying the filters
+
+    filtered_seqs_id : list of sequence identifiers that were kept after
+        applying the filters
 
     remaining_pos : numpy.ndarray
         remaining positions after filtering
@@ -68,8 +74,8 @@ def filter_sequences(sequences, sequences_id,
 def _filter_gap_pos(sequences, threshold=0.4, verbose=False):
     """Filter the sequences for overly gapped positions.
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     sequences : list of the MSA sequences to filter
 
     threshold : max proportion of gaps tolerated (default=0.4)
@@ -108,8 +114,8 @@ def _filter_gap_seq(sequences, sequences_id, threshold=0.2, verbose=False):
     Remove sequences with a fraction of gaps greater than a specified
     value.
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     sequences : list of MSA sequences
 
     sequences_id : list of the MSA's sequence identifiers
@@ -147,19 +153,21 @@ def filter_ref_seq(sequences, sequences_id, delta=0.2, refseq_id=None,
     '''
     Filter the alignment based on identity with a reference sequence
 
-    Remove sequences r with Sr < delta, where Sr is the fractional identity
-    between r and a specified reference sequence.
+    Remove sequences *r* with Sr < delta, where Sr is the fractional identity
+    between the sequence *r* and a specified reference sequence.
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     sequences : list of sequences in the MSA
 
     sequences_id : list of sequence identifiers in the MSA
 
-    delta : identity threshold (default 0.2)
+    delta : identity threshold (default=0.2)
 
     refseq_id : identifier of the reference sequence, if 'None', a reference
-                sequence is computed (default 'None')
+                sequence is choosen as the sequence that has the mean pairwise
+                sequence identity closest to that of the entire sequence
+                alignment (default 'None')
 
     Returns
     -------
@@ -179,7 +187,7 @@ def filter_ref_seq(sequences, sequences_id, delta=0.2, refseq_id=None,
             print('Reference sequence is: %i' % refseq_id)
         refseq_idx = sequences_id.index(refseq_id)
 
-    sim_matrix = compute_seq_identity(sequences, graphic=False)
+    sim_matrix = compute_seq_identity(sequences)
     filt_seqs_ix = np.where(sim_matrix[refseq_idx] >= delta)[0]
     filt_seqs = [sequences[seq] for seq in filt_seqs_ix]
     filt_seqs_id = [sequences_id[seq] for seq in filt_seqs_ix]
@@ -258,7 +266,7 @@ def filter_seq_id(sequences, sequences_id, list_id):
     return [new_msa, id_list, seq_list]
 
 
-def map_to_pdb(pdb_seq, pdb_pos, sequences, sequences_id, ref_seq_id):
+def map_to_pdb(pdb_seq, pdb_pos, sequences, sequences_id, pdb_seq_id):
     """
     Mapping of the unfiltered MSA positions on a PDB structure.
 
@@ -276,9 +284,9 @@ def map_to_pdb(pdb_seq, pdb_pos, sequences, sequences_id, ref_seq_id):
     sequences_id: list,
         List of sequence identifiers in the unfiltered MSA
 
-    ref_seq_id: str,
+    pdb_seq_id: str,
         identifier of the sequence the positions are mapped onto. Should be
-        included in seq_list.
+        included in sequences_id.
 
     Returns
     -------
@@ -289,9 +297,9 @@ def map_to_pdb(pdb_seq, pdb_pos, sequences, sequences_id, ref_seq_id):
         acids in the unfiltered MSA
     """
     msa_pos = []
-    ref_seq_idx = sequences_id.index(ref_seq_id)
-    for aa_index in range(len(sequences[ref_seq_idx])):
-        if sequences[ref_seq_idx][aa_index] != '-':
+    pdb_seq_idx = sequences_id.index(pdb_seq_id)
+    for aa_index in range(len(sequences[pdb_seq_idx])):
+        if sequences[pdb_seq_idx][aa_index] != '-':
             msa_pos.append(aa_index)
 
     mapping = np.array((list(pdb_seq), pdb_pos, msa_pos))
@@ -304,8 +312,8 @@ def compute_seq_identity(sequences):
     Computes the identity between sequences in a MSA (as Hamming's pairwise
     distance)
 
-    Arguments
-    ---------
+    Parameters
+    ----------
     sequences : list of sequences
 
     Returns

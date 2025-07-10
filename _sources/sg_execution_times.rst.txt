@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:23.341** total execution time for 8 files **from all galleries**:
+**00:23.260** total execution time for 8 files **from all galleries**:
 
 .. container::
 
@@ -33,26 +33,26 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_auto_examples_plot_sca_vs_mi.py` (``../examples/plot_sca_vs_mi.py``)
-     - 00:07.051
+     - 00:06.997
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_full_SCA_analysis.py` (``../examples/plot_full_SCA_analysis.py``)
-     - 00:04.233
+     - 00:04.222
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_sector_along_tree_and_metadata.py` (``../examples/plot_sector_along_tree_and_metadata.py``)
-     - 00:03.769
+     - 00:03.692
      - 0.0
    * - :ref:`sphx_glr_auto_examples_datasets_plot_DHFR.py` (``../examples/datasets/plot_DHFR.py``)
-     - 00:03.011
+     - 00:03.108
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_simple_sca.py` (``../examples/plot_simple_sca.py``)
-     - 00:02.398
+     - 00:02.373
      - 0.0
    * - :ref:`sphx_glr_auto_examples_datasets_plot_s1A_serine_proteases.py` (``../examples/datasets/plot_s1A_serine_proteases.py``)
-     - 00:01.487
+     - 00:01.486
      - 0.0
    * - :ref:`sphx_glr_auto_examples_datasets_plot_rhomboid_proteases.py` (``../examples/datasets/plot_rhomboid_proteases.py``)
-     - 00:01.054
+     - 00:01.040
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_map_alignments.py` (``../examples/plot_map_alignments.py``)
-     - 00:00.338
+     - 00:00.341
      - 0.0

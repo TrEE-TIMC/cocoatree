@@ -9,13 +9,13 @@
 from ete3 import ProfileFace, TreeStyle, NodeStyle, TextFace, \
     add_face_to_node, SeqMotifFace, RectFace
 from pandas.api.types import is_numeric_dtype  # type: ignore
+import pandas as pd
 import numpy as np
 from PyQt5 import QtGui
 import matplotlib.colors as colors
 import matplotlib.cm as cmx
 import matplotlib.pyplot as plt
 
-from .msa import filter_seq_id
 from .msa import compute_seq_identity
 
 
@@ -240,10 +240,13 @@ def update_tree_ete3_and_return_style(
     if t_sector_heatmap:
         # allow to chose among Matplotlib's colormaps
         ProfileFace.get_color_gradient = _get_color_gradient
+
         # Check that sequences in the similarity matrix are ordered as in the
         # tree leaves and keep only sequences that are present in the tree
-        reorder_msa = filter_seq_id(sector_seq, sector_id, leaves_id)
-        id_mat = compute_seq_identity(reorder_msa[2])
+        sequences = pd.DataFrame(index=sector_id, data={"seq": sector_seq})
+        reordered_sequences = sequences.loc[leaves_id, "seq"].values
+
+        id_mat = compute_seq_identity(reordered_sequences)
 
         count = 0
         # Add heatmap profile to each leaf

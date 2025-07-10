@@ -31,6 +31,23 @@ The software is organized in different modules detailed below:
 .. image:: schemas/graphical_abstract.png
 	:width: 100%
 
+List of abbreviations
+---------------------
+- MSA: multiple sequence alignment
+- SCA: statistical coupling analysis
+- MI: mutual information
+
+Example gallery
+---------------
+
+Various examples of COCOA-Tree's use can be found in the Gallery.
+
+If you wish to perform a simple SCA analysis, go to
+`Simple SCA example <auto_examples/plot_simple_sca.html>`_
+
+For a detailed SCA analysis, go to
+:py:obj:`Full SCA analysis <../examples/plot_full_SCA_analysis.py>`
+
 Citing COCOA-Tree
 -----------------
 

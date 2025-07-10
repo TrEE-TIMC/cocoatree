@@ -55,8 +55,8 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">load_MSA</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;fasta&quot;</span><span class="p">,</span> <span class="n">clean</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Read in a multiple sequence alignment (MSA)</span>
 
-<span class="sd">    Arguments</span>
-<span class="sd">    ---------</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
 <span class="sd">    file_path : path to the alignment file</span>
 
 <span class="sd">    format : string {&quot;fasta&quot;, &quot;phylip&quot;, …}, optional, default: &quot;fasta&quot;</span>
@@ -98,8 +98,8 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    From the loading of a Newick tree, generate a ete3.Tree object</span>
 
-<span class="sd">    Arguments</span>
-<span class="sd">    ---------</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
 <span class="sd">    file_path : path to the Newick file</span>
 
 <span class="sd">    Returns</span>
@@ -116,10 +116,10 @@
 <a class="viewcode-back" href="../../modules/generated/cocoatree.io.export_fasta.html#cocoatree.io.export_fasta">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">export_fasta</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">sequences_id</span><span class="p">,</span> <span class="n">outpath</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Export intermediate files in fasta format</span>
+<span class="sd">    Export intermediate files in FASTA format</span>
 
-<span class="sd">    Arguments</span>
-<span class="sd">    ---------</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
 <span class="sd">    sequences : list of sequences as strings (as imported by load_MSA)</span>
 
 <span class="sd">    sequences_id : list of sequences identifiers (as imported by load_MSA)</span>
@@ -145,8 +145,8 @@
 <span class="sd">    Import a PDB file and extract the associated sequence along with the</span>
 <span class="sd">    amino acid positions</span>
 
-<span class="sd">    Arguments</span>
-<span class="sd">    ---------</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
 <span class="sd">    path2pdb : path to the PDB file</span>
 
 <span class="sd">    pdb_id : str,</span>
@@ -196,8 +196,8 @@
 <span class="sd">    Export numpy arrays of a sector&#39;s residue positions and their contribution</span>
 <span class="sd">    for coloring in PyMOL.</span>
 
-<span class="sd">    Arguments</span>
-<span class="sd">    ---------</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
 <span class="sd">    mapping : numpy.ndarray,</span>
 <span class="sd">        mapping between the unfiltered MSA and the PDB structure, output of</span>
 <span class="sd">        cocoatree.msa.map_to_pdb() function</span>

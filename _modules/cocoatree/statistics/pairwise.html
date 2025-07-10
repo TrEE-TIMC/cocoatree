@@ -64,7 +64,7 @@
 <span class="sd">    represents the effective number of sequences in the alignment and *lambda*</span>
 <span class="sd">    is a regularization parameter (pseudocount).</span>
 
-<span class="sd">    Arguments</span>
+<span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    sequences : list of sequences as imported by load_MSA()</span>
 
@@ -107,7 +107,7 @@
 
 <span class="sd">    (joint frequencies if residues are independent)</span>
 
-<span class="sd">    Arguments</span>
+<span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    aa_freqs_1 : frequency of amino acid *a* at position *i* (set 1)</span>
 
@@ -181,7 +181,7 @@
 
 <span class="sd">        \\tilde{C_{ij}} = \\sqrt{sum_{a,b} \\tilde{(C_{ij}^{ab})^2}}</span>
 
-<span class="sd">    Arguments</span>
+<span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    sequences : list of sequences</span>
 
@@ -235,7 +235,7 @@
 
 <span class="sd">        I(X, Y) = \\sum_{x,y} p(x, y) \\log \\frac{p(x, y)}{p(x)p(y)}</span>
 
-<span class="sd">    Arguments</span>
+<span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    sequences : list of sequences</span>
 
@@ -294,7 +294,7 @@
 
 <span class="sd">        MIp(a, b) = MI(a, b) - APC(a, b)</span>
 
-<span class="sd">    Arguments</span>
+<span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    MIij : np.ndarray,</span>
 <span class="sd">        the mutual information matrix</span>
@@ -346,8 +346,8 @@
 <span class="sd">        \\alpha = \\frac{\\sum_{i \\neq j}^{L} c_ij \</span>
 <span class="sd">        s_{i}^{\\frac{1}{2}}}{\\sum_{i \\neq j}^{L} s_i s_j}</span>
 
-<span class="sd">    Arguments</span>
-<span class="sd">    ---------</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
 <span class="sd">    coevolution_matrix : square matrix of shape (Nseq, Nseq)</span>
 
 <span class="sd">    s : entropy computed for every position of the MSA</span>

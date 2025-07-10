@@ -55,8 +55,8 @@
 <span class="sd">    the ones in lett2num and removes unknown amino acids (such as &#39;X&#39; or &#39;B&#39;)</span>
 <span class="sd">    when importing the multiple sequence alignment.</span>
 
-<span class="sd">    Arguments</span>
-<span class="sd">    ---------</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
 <span class="sd">    msa : bioalign object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -79,7 +79,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Filter sequences</span>
 
-<span class="sd">    Filter (1) overly gapped positions; (2) overly gapped sequences.</span>
+<span class="sd">    Remove (1) overly gapped positions; (2) overly gapped sequences.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -87,13 +87,19 @@
 
 <span class="sd">    sequences_id : list of the MSA&#39;s sequence identifiers</span>
 
-<span class="sd">    gap_threshold : max proportion of gaps tolerated (default=0.4)</span>
+<span class="sd">    gap_threshold : float,</span>
+<span class="sd">        maximum proportion of gaps tolerated per position (default=0.4)</span>
 
-<span class="sd">    seq_threshold : maximum fraction of gaps per sequence (default 0.2)</span>
+<span class="sd">    seq_threshold : float,</span>
+<span class="sd">        maximum proportion of gaps tolerated per sequence (default=0.2)</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    filt_seqs : list of the sequences after filter</span>
+<span class="sd">    filtered_seqs : list of the remaining sequences (written as strings)</span>
+<span class="sd">        after applying the filters</span>
+
+<span class="sd">    filtered_seqs_id : list of sequence identifiers that were kept after</span>
+<span class="sd">        applying the filters</span>
 
 <span class="sd">    remaining_pos : numpy.ndarray</span>
 <span class="sd">        remaining positions after filtering</span>
@@ -113,8 +119,8 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">_filter_gap_pos</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Filter the sequences for overly gapped positions.</span>
 
-<span class="sd">    Arguments</span>
-<span class="sd">    ---------</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
 <span class="sd">    sequences : list of the MSA sequences to filter</span>
 
 <span class="sd">    threshold : max proportion of gaps tolerated (default=0.4)</span>
@@ -153,8 +159,8 @@
 <span class="sd">    Remove sequences with a fraction of gaps greater than a specified</span>
 <span class="sd">    value.</span>
 
-<span class="sd">    Arguments</span>
-<span class="sd">    ---------</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
 <span class="sd">    sequences : list of MSA sequences</span>
 
 <span class="sd">    sequences_id : list of the MSA&#39;s sequence identifiers</span>
@@ -194,19 +200,21 @@
 <span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Filter the alignment based on identity with a reference sequence</span>
 
-<span class="sd">    Remove sequences r with Sr &lt; delta, where Sr is the fractional identity</span>
-<span class="sd">    between r and a specified reference sequence.</span>
+<span class="sd">    Remove sequences *r* with Sr &lt; delta, where Sr is the fractional identity</span>
+<span class="sd">    between the sequence *r* and a specified reference sequence.</span>
 
-<span class="sd">    Arguments</span>
-<span class="sd">    ---------</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
 <span class="sd">    sequences : list of sequences in the MSA</span>
 
 <span class="sd">    sequences_id : list of sequence identifiers in the MSA</span>
 
-<span class="sd">    delta : identity threshold (default 0.2)</span>
+<span class="sd">    delta : identity threshold (default=0.2)</span>
 
 <span class="sd">    refseq_id : identifier of the reference sequence, if &#39;None&#39;, a reference</span>
-<span class="sd">                sequence is computed (default &#39;None&#39;)</span>
+<span class="sd">                sequence is choosen as the sequence that has the mean pairwise</span>
+<span class="sd">                sequence identity closest to that of the entire sequence</span>
+<span class="sd">                alignment (default &#39;None&#39;)</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -226,7 +234,7 @@
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Reference sequence is: </span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">refseq_id</span><span class="p">)</span>
         <span class="n">refseq_idx</span> <span class="o">=</span> <span class="n">sequences_id</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">refseq_id</span><span class="p">)</span>
 
-    <span class="n">sim_matrix</span> <span class="o">=</span> <span class="n">compute_seq_identity</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">graphic</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">sim_matrix</span> <span class="o">=</span> <span class="n">compute_seq_identity</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
     <span class="n">filt_seqs_ix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">sim_matrix</span><span class="p">[</span><span class="n">refseq_idx</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">delta</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">filt_seqs</span> <span class="o">=</span> <span class="p">[</span><span class="n">sequences</span><span class="p">[</span><span class="n">seq</span><span class="p">]</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">filt_seqs_ix</span><span class="p">]</span>
     <span class="n">filt_seqs_id</span> <span class="o">=</span> <span class="p">[</span><span class="n">sequences_id</span><span class="p">[</span><span class="n">seq</span><span class="p">]</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">filt_seqs_ix</span><span class="p">]</span>
@@ -311,7 +319,7 @@
 
 <div class="viewcode-block" id="map_to_pdb">
 <a class="viewcode-back" href="../../modules/generated/cocoatree.msa.map_to_pdb.html#cocoatree.msa.map_to_pdb">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">map_to_pdb</span><span class="p">(</span><span class="n">pdb_seq</span><span class="p">,</span> <span class="n">pdb_pos</span><span class="p">,</span> <span class="n">sequences</span><span class="p">,</span> <span class="n">sequences_id</span><span class="p">,</span> <span class="n">ref_seq_id</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">map_to_pdb</span><span class="p">(</span><span class="n">pdb_seq</span><span class="p">,</span> <span class="n">pdb_pos</span><span class="p">,</span> <span class="n">sequences</span><span class="p">,</span> <span class="n">sequences_id</span><span class="p">,</span> <span class="n">pdb_seq_id</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Mapping of the unfiltered MSA positions on a PDB structure.</span>
 
@@ -329,9 +337,9 @@
 <span class="sd">    sequences_id: list,</span>
 <span class="sd">        List of sequence identifiers in the unfiltered MSA</span>
 
-<span class="sd">    ref_seq_id: str,</span>
+<span class="sd">    pdb_seq_id: str,</span>
 <span class="sd">        identifier of the sequence the positions are mapped onto. Should be</span>
-<span class="sd">        included in seq_list.</span>
+<span class="sd">        included in sequences_id.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -342,9 +350,9 @@
 <span class="sd">        acids in the unfiltered MSA</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">msa_pos</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">ref_seq_idx</span> <span class="o">=</span> <span class="n">sequences_id</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">ref_seq_id</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">aa_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">[</span><span class="n">ref_seq_idx</span><span class="p">])):</span>
-        <span class="k">if</span> <span class="n">sequences</span><span class="p">[</span><span class="n">ref_seq_idx</span><span class="p">][</span><span class="n">aa_index</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+    <span class="n">pdb_seq_idx</span> <span class="o">=</span> <span class="n">sequences_id</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">pdb_seq_id</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">aa_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">[</span><span class="n">pdb_seq_idx</span><span class="p">])):</span>
+        <span class="k">if</span> <span class="n">sequences</span><span class="p">[</span><span class="n">pdb_seq_idx</span><span class="p">][</span><span class="n">aa_index</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
             <span class="n">msa_pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">aa_index</span><span class="p">)</span>
 
     <span class="n">mapping</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="nb">list</span><span class="p">(</span><span class="n">pdb_seq</span><span class="p">),</span> <span class="n">pdb_pos</span><span class="p">,</span> <span class="n">msa_pos</span><span class="p">))</span>
@@ -360,8 +368,8 @@
 <span class="sd">    Computes the identity between sequences in a MSA (as Hamming&#39;s pairwise</span>
 <span class="sd">    distance)</span>
 
-<span class="sd">    Arguments</span>
-<span class="sd">    ---------</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
 <span class="sd">    sequences : list of sequences</span>
 
 <span class="sd">    Returns</span>

@@ -61,7 +61,7 @@
 <span class="sd">    represents the effective number of sequences in the alignment and *lambda*</span>
 <span class="sd">    is a regularization parameter (pseudocount).</span>
 
-<span class="sd">    Arguments</span>
+<span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    sequences : list of sequences as imported by load_msa()</span>
 
@@ -96,8 +96,8 @@
                               <span class="n">freq_regul</span><span class="o">=</span><span class="n">__freq_regularization_ref</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes (regularized) background frequencies of amino acids</span>
 
-<span class="sd">    Arguments</span>
-<span class="sd">    ---------</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
 <span class="sd">    aa_freqs : np.ndarray of the positional amino acid frequencies</span>
 
 <span class="sd">    sequences : list of sequences for which seq_weights give weights</span>
@@ -276,7 +276,7 @@
 <span class="sd">    2012) and indicates how unlikely the observed frequencies of amino acid</span>
 <span class="sd">    *a* at position *i* would be if *a* occurred randomly with probability q^a.</span>
 
-<span class="sd">    Arguments</span>
+<span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    aa_freqs: np.ndarray,</span>
 <span class="sd">        amino acid frequencies per position</span>

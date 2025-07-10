@@ -46,15 +46,17 @@
 <dt class="sig sig-object py" id="cocoatree.msa.filter_ref_seq">
 <span class="sig-prename descclassname"><span class="pre">cocoatree.msa.</span></span><span class="sig-name descname"><span class="pre">filter_ref_seq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequences_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refseq_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cocoatree/msa.html#filter_ref_seq"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cocoatree.msa.filter_ref_seq" title="Link to this definition">¶</a></dt>
 <dd><p>Filter the alignment based on identity with a reference sequence</p>
-<p>Remove sequences r with Sr &lt; delta, where Sr is the fractional identity
-between r and a specified reference sequence.</p>
-<section id="arguments">
-<h2>Arguments<a class="headerlink" href="#arguments" title="Link to this heading">¶</a></h2>
+<p>Remove sequences <em>r</em> with Sr &lt; delta, where Sr is the fractional identity
+between the sequence <em>r</em> and a specified reference sequence.</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
 <p>sequences : list of sequences in the MSA</p>
 <p>sequences_id : list of sequence identifiers in the MSA</p>
-<p>delta : identity threshold (default 0.2)</p>
+<p>delta : identity threshold (default=0.2)</p>
 <dl class="simple">
-<dt>refseq_id<span class="classifier">identifier of the reference sequence, if ‘None’, a reference</span></dt><dd><p>sequence is computed (default ‘None’)</p>
+<dt>refseq_id<span class="classifier">identifier of the reference sequence, if ‘None’, a reference</span></dt><dd><p>sequence is choosen as the sequence that has the mean pairwise
+sequence identity closest to that of the entire sequence
+alignment (default ‘None’)</p>
 </dd>
 </dl>
 </section>

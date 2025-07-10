@@ -46,18 +46,25 @@
 <dt class="sig sig-object py" id="cocoatree.msa.filter_sequences">
 <span class="sig-prename descclassname"><span class="pre">cocoatree.msa.</span></span><span class="sig-name descname"><span class="pre">filter_sequences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sequences_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cocoatree/msa.html#filter_sequences"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cocoatree.msa.filter_sequences" title="Link to this definition">¶</a></dt>
 <dd><p>Filter sequences</p>
-<p>Filter (1) overly gapped positions; (2) overly gapped sequences.</p>
+<p>Remove (1) overly gapped positions; (2) overly gapped sequences.</p>
 <section id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
 <p>sequences : list of MSA sequences to filter</p>
 <p>sequences_id : list of the MSA’s sequence identifiers</p>
-<p>gap_threshold : max proportion of gaps tolerated (default=0.4)</p>
-<p>seq_threshold : maximum fraction of gaps per sequence (default 0.2)</p>
+<dl class="simple">
+<dt>gap_threshold<span class="classifier">float,</span></dt><dd><p>maximum proportion of gaps tolerated per position (default=0.4)</p>
+</dd>
+<dt>seq_threshold<span class="classifier">float,</span></dt><dd><p>maximum proportion of gaps tolerated per sequence (default=0.2)</p>
+</dd>
+</dl>
 </section>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
-<p>filt_seqs : list of the sequences after filter</p>
 <dl class="simple">
+<dt>filtered_seqs<span class="classifier">list of the remaining sequences (written as strings)</span></dt><dd><p>after applying the filters</p>
+</dd>
+<dt>filtered_seqs_id<span class="classifier">list of sequence identifiers that were kept after</span></dt><dd><p>applying the filters</p>
+</dd>
 <dt>remaining_pos<span class="classifier">numpy.ndarray</span></dt><dd><p>remaining positions after filtering</p>
 </dd>
 </dl>

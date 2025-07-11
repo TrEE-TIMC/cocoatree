@@ -28,12 +28,14 @@ def perform_sca(sequences_id, sequences,
 
     seq_threshold : maximum fraction of gaps per sequence (default 0.2)
 
-    coevolution_metric : {'SCA', 'NMI', 'MI}, optional, default: 'SCA'
+    coevolution_metric : str or callable, optional, default: 'SCA'
         which coevolution metric to use:
 
         - SCA: the coevolution matrix from Rivoire et al
         - MI: the mutual information
         - NMI: the normalized mutual information
+        - callable: a function that takes as arguments (1) sequences, (2)
+          `seq_weights`, and `freq_regul`
 
     correction : {None, 'APC', 'entropy'}, default: None
         which correction to use
@@ -78,6 +80,10 @@ def perform_sca(sequences_id, sequences,
     elif coevolution_metric == "NMI":
         coevol_matrix = statistics.pairwise.compute_mutual_information_matrix(
             seq_kept, seq_weights=seq_weights, freq_regul=freq_regul)
+    elif callable(coevolution_metric):
+        coevol_matrix = coevolution_metric(
+            seq_kept, seq_weights=seq_weights,
+            freq_regul=freq_regul)
     else:
         raise ValueError(
             "Unknown 'coevol_metric' value. User provided"

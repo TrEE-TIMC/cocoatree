@@ -72,12 +72,14 @@
 
 <span class="sd">    seq_threshold : maximum fraction of gaps per sequence (default 0.2)</span>
 
-<span class="sd">    coevolution_metric : {&#39;SCA&#39;, &#39;NMI&#39;, &#39;MI}, optional, default: &#39;SCA&#39;</span>
+<span class="sd">    coevolution_metric : str or callable, optional, default: &#39;SCA&#39;</span>
 <span class="sd">        which coevolution metric to use:</span>
 
 <span class="sd">        - SCA: the coevolution matrix from Rivoire et al</span>
 <span class="sd">        - MI: the mutual information</span>
 <span class="sd">        - NMI: the normalized mutual information</span>
+<span class="sd">        - callable: a function that takes as arguments (1) sequences, (2)</span>
+<span class="sd">          `seq_weights`, and `freq_regul`</span>
 
 <span class="sd">    correction : {None, &#39;APC&#39;, &#39;entropy&#39;}, default: None</span>
 <span class="sd">        which correction to use</span>
@@ -122,6 +124,10 @@
     <span class="k">elif</span> <span class="n">coevolution_metric</span> <span class="o">==</span> <span class="s2">&quot;NMI&quot;</span><span class="p">:</span>
         <span class="n">coevol_matrix</span> <span class="o">=</span> <span class="n">statistics</span><span class="o">.</span><span class="n">pairwise</span><span class="o">.</span><span class="n">compute_mutual_information_matrix</span><span class="p">(</span>
             <span class="n">seq_kept</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="n">seq_weights</span><span class="p">,</span> <span class="n">freq_regul</span><span class="o">=</span><span class="n">freq_regul</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">callable</span><span class="p">(</span><span class="n">coevolution_metric</span><span class="p">):</span>
+        <span class="n">coevol_matrix</span> <span class="o">=</span> <span class="n">coevolution_metric</span><span class="p">(</span>
+            <span class="n">seq_kept</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="n">seq_weights</span><span class="p">,</span>
+            <span class="n">freq_regul</span><span class="o">=</span><span class="n">freq_regul</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="s2">&quot;Unknown &#39;coevol_metric&#39; value. User provided&quot;</span>

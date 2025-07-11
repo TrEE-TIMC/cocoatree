@@ -169,7 +169,7 @@
 
 <div class="viewcode-block" id="compute_sca_matrix">
 <a class="viewcode-back" href="../../../modules/generated/cocoatree.statistics.pairwise.compute_sca_matrix.html#cocoatree.statistics.pairwise.compute_sca_matrix">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">compute_sca_matrix</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_sca_matrix</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">raw_correlation</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
                        <span class="n">freq_regul</span><span class="o">=</span><span class="n">__freq_regularization_ref</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the SCA coevolution matrix</span>
 
@@ -188,6 +188,9 @@
 <span class="sd">    seq_weights : ndarray (nseq), optional, default: None</span>
 <span class="sd">        if None, will compute sequence weights</span>
 
+<span class="sd">    raw_correlation : boolean, optional, default: False</span>
+<span class="sd">        whether to return raw correlations</span>
+
 <span class="sd">    freq_regul : regularization parameter (default=__freq_regularization_ref)</span>
 
 <span class="sd">    Returns</span>
@@ -204,21 +207,23 @@
     <span class="c1"># Cijab</span>
     <span class="n">Cijab</span> <span class="o">=</span> <span class="n">aa_joint_freqs</span> <span class="o">-</span> <span class="n">aa_product_freqs</span>
 
-    <span class="c1"># derivative of relative entropy</span>
-    <span class="n">aa_freqs</span><span class="p">,</span> <span class="n">bkgd_freqs</span> <span class="o">=</span> <span class="n">_compute_first_order_freqs</span><span class="p">(</span>
-        <span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="n">seq_weights</span><span class="p">,</span> <span class="n">freq_regul</span><span class="o">=</span><span class="n">freq_regul</span><span class="p">)</span>
-    <span class="n">aa_freqs</span> <span class="o">=</span> <span class="n">aa_freqs</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
-        <span class="n">aa_freqs</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">bkgd_freqs</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span>
-            <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">aa_freqs</span><span class="p">)</span> <span class="o">*</span>
-            <span class="n">bkgd_freqs</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]))</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-    <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">raw_correlation</span><span class="p">:</span>
 
-    <span class="c1"># applying sca positional weights</span>
-    <span class="n">Cijab_tilde</span> <span class="o">=</span> <span class="n">phi</span> <span class="o">*</span> <span class="n">Cijab</span>
+        <span class="c1"># derivative of relative entropy</span>
+        <span class="n">aa_freqs</span><span class="p">,</span> <span class="n">bkgd_freqs</span> <span class="o">=</span> <span class="n">_compute_first_order_freqs</span><span class="p">(</span>
+            <span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="n">seq_weights</span><span class="p">,</span> <span class="n">freq_regul</span><span class="o">=</span><span class="n">freq_regul</span><span class="p">)</span>
+        <span class="n">aa_freqs</span> <span class="o">=</span> <span class="n">aa_freqs</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+            <span class="n">aa_freqs</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">bkgd_freqs</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span>
+                <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">aa_freqs</span><span class="p">)</span> <span class="o">*</span>
+                <span class="n">bkgd_freqs</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]))</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">phi</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+
+        <span class="c1"># applying sca positional weights</span>
+        <span class="n">Cijab</span> <span class="o">=</span> <span class="n">phi</span> <span class="o">*</span> <span class="n">Cijab</span>
 
     <span class="c1"># Frobenius norm</span>
-    <span class="n">SCA_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Cijab_tilde</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+    <span class="n">SCA_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Cijab</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
 
     <span class="k">return</span> <span class="n">SCA_matrix</span></div>
 

@@ -125,7 +125,7 @@ def _compute_second_order_freqs(sequences, seq_weights=None,
     return aa_joint_freqs, aa_product_freqs
 
 
-def compute_sca_matrix(sequences, seq_weights=None,
+def compute_sca_matrix(sequences, seq_weights=None, raw_correlation=False,
                        freq_regul=__freq_regularization_ref):
     """Compute the SCA coevolution matrix
 
@@ -144,6 +144,9 @@ def compute_sca_matrix(sequences, seq_weights=None,
     seq_weights : ndarray (nseq), optional, default: None
         if None, will compute sequence weights
 
+    raw_correlation : boolean, optional, default: False
+        whether to return raw correlations
+
     freq_regul : regularization parameter (default=__freq_regularization_ref)
 
     Returns
@@ -160,21 +163,23 @@ def compute_sca_matrix(sequences, seq_weights=None,
     # Cijab
     Cijab = aa_joint_freqs - aa_product_freqs
 
-    # derivative of relative entropy
-    aa_freqs, bkgd_freqs = _compute_first_order_freqs(
-        sequences, seq_weights=seq_weights, freq_regul=freq_regul)
-    aa_freqs = aa_freqs.transpose([1, 0])
-    phi = np.log(
-        aa_freqs * (1 - bkgd_freqs[:, np.newaxis]) / (
-            (1 - aa_freqs) *
-            bkgd_freqs[:, np.newaxis])).transpose([1, 0])
-    phi = np.multiply.outer(phi, phi).transpose([0, 2, 1, 3])
+    if not raw_correlation:
 
-    # applying sca positional weights
-    Cijab_tilde = phi * Cijab
+        # derivative of relative entropy
+        aa_freqs, bkgd_freqs = _compute_first_order_freqs(
+            sequences, seq_weights=seq_weights, freq_regul=freq_regul)
+        aa_freqs = aa_freqs.transpose([1, 0])
+        phi = np.log(
+            aa_freqs * (1 - bkgd_freqs[:, np.newaxis]) / (
+                (1 - aa_freqs) *
+                bkgd_freqs[:, np.newaxis])).transpose([1, 0])
+        phi = np.multiply.outer(phi, phi).transpose([0, 2, 1, 3])
+
+        # applying sca positional weights
+        Cijab = phi * Cijab
 
     # Frobenius norm
-    SCA_matrix = np.sqrt(np.sum(Cijab_tilde ** 2, axis=(2, 3)))
+    SCA_matrix = np.sqrt(np.sum(Cijab ** 2, axis=(2, 3)))
 
     return SCA_matrix
 

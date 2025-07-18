@@ -10,7 +10,6 @@ The user can provide a dictionnary of colors for metadata.
 import pandas as pd
 from cocoatree.io import load_MSA, load_tree_ete3
 from cocoatree.visualization import update_tree_ete3_and_return_style
-from cocoatree.visualization import add_heatmap_to_tree
 
 
 annot_file = 'data/random_seq_tree_annotations.csv'
@@ -41,7 +40,6 @@ colors = {
 
 tree_style, column_layout = update_tree_ete3_and_return_style(
     tree_ete3, df_annot, sector_id, sector_seq,
-    #meta_data=("superkingdom", 'class', 'HMM_annotation'),
     meta_data=("superkingdom", "HMM_annotation"),
     fig_title='Visualization example',
     metadata_colors=colors,

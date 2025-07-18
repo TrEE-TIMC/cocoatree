@@ -113,7 +113,10 @@ def _get_color_gradient(self):
 
 
 def update_tree_ete3_and_return_style(
-        tree_ete3, df_annot, sector_id=None, sector_seq=None, meta_data=None,
+        tree_ete3, df_annot,
+        sector_id=None,
+        sector_seq=None,
+        meta_data=None,
         fig_title='',
         bootstrap_style={},
         tree_scale=200,
@@ -177,7 +180,8 @@ def update_tree_ete3_and_return_style(
     # Add bootstrap support NodeStyle
     boot_style = NodeStyle()
     boot_style["fgcolor"] = \
-        bootstrap_style["fgcolor"] if "fgcolor" in bootstrap_style else "darkred"
+        bootstrap_style["fgcolor"] if "fgcolor" in bootstrap_style \
+        else "darkred"
     boot_style["size"] = \
         bootstrap_style["size"] if "size" in bootstrap_style else 10
     support = \

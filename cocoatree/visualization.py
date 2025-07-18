@@ -118,8 +118,8 @@ def update_tree_ete3_and_return_style(
         bootstrap_style={},
         tree_scale=200,
         metadata_colors=None,
-        t_sector_seq=True,
-        t_sector_heatmap=True,
+        t_sector_seq=False,
+        t_sector_heatmap=False,
         colormap='inferno'
         ):
     """

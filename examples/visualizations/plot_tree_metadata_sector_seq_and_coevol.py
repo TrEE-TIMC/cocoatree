@@ -24,7 +24,7 @@ data = load_MSA(sector_file, 'fasta')
 sector_id = data["sequence_ids"]
 sector_seq = data["alignment"]
 
-tree_style = update_tree_ete3_and_return_style(
+tree_style, _ = update_tree_ete3_and_return_style(
     tree_ete3, df_annot, sector_id, sector_seq,
     meta_data=('class', 'HMM_annotation', 'superkingdom'),
     fig_title='Visualization example',

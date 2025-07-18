@@ -1,6 +1,6 @@
 """
-=======================================
-Running Cocoatree with specific metrics
+========================================
+Running Cocoatree with your own metric
 ========================================
 
 It is possible to perform Cocoatree's SCA pipeline by defining it's own

@@ -190,6 +190,8 @@ Functions
     :template: function.rst
 
     visualization.update_tree_ete3_and_return_style
+    visualization.add_sector_sequences_to_tree
+    visualization.add_heatmap_to_tree
 
 
 .. _visualization_ref:

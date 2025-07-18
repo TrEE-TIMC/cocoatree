@@ -166,6 +166,13 @@ def update_tree_ete3_and_return_style(
         sets the scale of the tree in ETE3: the higher, the larger the tree
         will be (in width)
 
+    metadata_colors : dict, str, or None, optional, default: None
+        colors for the metadata:
+            - None: generates automatically the colors
+            - str: uses a Matplotlib colormap to generate the colors
+            - dict: specifies colors for each matadata entry
+                {key: color}
+
     fig_title : figure title (str)
 
     t_sector_seq : boolean,

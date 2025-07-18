@@ -25,7 +25,7 @@ sector_id = data["sequence_ids"]
 sector_seq = data["alignment"]
 
 tree_style, column_layout = update_tree_ete3_and_return_style(
-    tree_ete3, df_annot, sector_id, sector_seq,
+    tree_ete3, df_annot,
     meta_data=("superkingdom", 'class', 'HMM_annotation'),
     fig_title='A tree visualization with metadata',
     )

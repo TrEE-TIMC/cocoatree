@@ -113,7 +113,7 @@ def _get_color_gradient(self):
 
 
 def update_tree_ete3_and_return_style(
-        tree_ete3, df_annot, sector_id, sector_seq, meta_data,
+        tree_ete3, df_annot, sector_id=None, sector_seq=None, meta_data=None,
         fig_title='',
         bootstrap_style={},
         tree_scale=200,

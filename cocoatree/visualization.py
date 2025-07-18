@@ -117,7 +117,10 @@ def update_tree_ete3_and_return_style(
         sector_id=None,
         sector_seq=None,
         meta_data=None,
+        show_leaf_name=True,
         fig_title='',
+        linewidth=1,
+        linecolor="#000000",
         bootstrap_style={},
         tree_scale=200,
         metadata_colors=None,
@@ -144,6 +147,15 @@ def update_tree_ete3_and_return_style(
 
     meta_data : tuple of annotations to display
                  (from annotation file's header)
+
+    show_leaf_name : boolean, optional, default: True
+        whether to show leaf names.
+
+    linewidth : int, optional, default: 1
+        width of the lines in the tree
+
+    linecolor : str, optional, default: "#000000"
+        color of the lines
 
     bootstrap_style : dict, optional,
         `fgcolor`: color of the bootstrap node, default: "darkred"
@@ -176,6 +188,8 @@ def update_tree_ete3_and_return_style(
     tree_style = TreeStyle()
     tree_style.scale = tree_scale
     tree_style.layout_fn = []
+    # tree_style.branch_vertical_margin = 20
+    tree_style.show_leaf_name = show_leaf_name
 
     # Add bootstrap support NodeStyle
     boot_style = NodeStyle()
@@ -187,8 +201,18 @@ def update_tree_ete3_and_return_style(
     support = \
         bootstrap_style["support"] if "support" in bootstrap_style else 95
 
+    boot_style["hz_line_width"] = linewidth
+    boot_style["vt_line_width"] = linewidth
+    boot_style["vt_line_color"] = linecolor
+    boot_style["hz_line_color"] = linecolor
+
     empty_style = NodeStyle()
     empty_style["size"] = 0
+    empty_style["vt_line_width"] = linewidth
+    empty_style["hz_line_width"] = linewidth
+    empty_style["vt_line_color"] = linecolor
+    empty_style["hz_line_color"] = linecolor
+
     for node in tree_ete3.traverse():
         if node.support >= support:
             node.set_style(boot_style)

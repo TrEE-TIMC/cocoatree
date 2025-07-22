@@ -1,11 +1,12 @@
 from setuptools import setup, find_packages
-from cocoatree import __version__
+version = {}
+with open("cocoatree/version.py") as f: exec(f.read(), version)
 
 long_description = "Long description of the awesome coevolution package"
 
 setup(
     name='cocoatree',
-    version=__version__,
+    version=version["__version__"],
     description='Awesome coevolution stuff',  # Optional
     long_description=long_description,  # Optional
     long_description_content_type='text/markdown',  # Optional (see note above)

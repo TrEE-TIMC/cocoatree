@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 version = {}
-with open("cocoatree/version.py") as f: exec(f.read(), version)
+with open("cocoatree/_version.py") as f: exec(f.read(), version)
 
 long_description = "Long description of the awesome coevolution package"
 

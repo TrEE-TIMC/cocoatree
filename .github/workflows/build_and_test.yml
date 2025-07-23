@@ -30,6 +30,9 @@ jobs:
         mkdir _test_dir
         cd _test_dir
         pytest --doctest-modules --showlocals --pyargs cocoatree --cov=cocoatree
+
+    - name: Check code with flake8
+      run: |
         flake8 cocoatree examples
 
     - name: Build the documentation

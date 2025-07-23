@@ -27,6 +27,8 @@ jobs:
 
     - name: Run the tests
       run: |
+        mkdir _test_dir
+        cd _test_dir
         pytest --doctest-modules --showlocals --pyargs cocoatree --cov=cocoatree
         flake8 cocoatree examples
 

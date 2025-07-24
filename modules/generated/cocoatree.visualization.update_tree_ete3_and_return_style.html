@@ -44,7 +44,7 @@
 <h1>cocoatree.visualization.update_tree_ete3_and_return_style<a class="headerlink" href="#cocoatree-visualization-update-tree-ete3-and-return-style" title="Link to this heading">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="cocoatree.visualization.update_tree_ete3_and_return_style">
-<span class="sig-prename descclassname"><span class="pre">cocoatree.visualization.</span></span><span class="sig-name descname"><span class="pre">update_tree_ete3_and_return_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree_ete3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_annot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sector_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sector_seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_sector_seq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_sector_heatmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colormap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'inferno'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cocoatree/visualization.html#update_tree_ete3_and_return_style"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cocoatree.visualization.update_tree_ete3_and_return_style" title="Link to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">cocoatree.visualization.</span></span><span class="sig-name descname"><span class="pre">update_tree_ete3_and_return_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree_ete3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_annot</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sector_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sector_seq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">meta_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_leaf_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fig_title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linewidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">linecolor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'#000000'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrap_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tree_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">200</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metadata_colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_sector_seq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t_sector_heatmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colormap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'inferno'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cocoatree/visualization.html#update_tree_ete3_and_return_style"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cocoatree.visualization.update_tree_ete3_and_return_style" title="Link to this definition">¶</a></dt>
 <dd><p>Update ete3 tree with sector info and attributes
 and return tree_style for further visualization.</p>
 <section id="parameters">
@@ -61,6 +61,32 @@ and return tree_style for further visualization.</p>
 </dd>
 <dt>meta_data<span class="classifier">tuple of annotations to display</span></dt><dd><p>(from annotation file’s header)</p>
 </dd>
+<dt>show_leaf_name<span class="classifier">boolean, optional, default: True</span></dt><dd><p>whether to show leaf names.</p>
+</dd>
+<dt>linewidth<span class="classifier">int, optional, default: 1</span></dt><dd><p>width of the lines in the tree</p>
+</dd>
+<dt>linecolor<span class="classifier">str, optional, default: “#000000”</span></dt><dd><p>color of the lines</p>
+</dd>
+<dt>bootstrap_style<span class="classifier">dict, optional,</span></dt><dd><p><cite>fgcolor</cite>: color of the bootstrap node, default: “darkred”
+<cite>size</cite>: size of the bootstrap node, default: 10
+<cite>support</cite>: int between 0 and 100, minimum support level for display</p>
+</dd>
+<dt>tree_scale<span class="classifier">int, optional, default: 200</span></dt><dd><p>sets the scale of the tree in ETE3: the higher, the larger the tree
+will be (in width)</p>
+</dd>
+<dt>metadata_colors<span class="classifier">dict, str, or None, optional, default: None</span></dt><dd><dl class="simple">
+<dt>colors for the metadata:</dt><dd><ul class="simple">
+<li><p>None: generates automatically the colors</p></li>
+<li><p>str: uses a Matplotlib colormap to generate the colors</p></li>
+<li><dl class="simple">
+<dt>dict: specifies colors for each matadata entry</dt><dd><p>{key: color}</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</dd>
 </dl>
 <p>fig_title : figure title (str)</p>
 <dl class="simple">
@@ -74,14 +100,25 @@ sequences</p>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
 <p>tree_style : TreeStyle class from ete3</p>
+<dl class="simple">
+<dt>column_end<span class="classifier">int, the number of columns after the tree. If you want to</span></dt><dd><p>plot anything else alongside the tree, the column number should be
+equal to this value.</p>
+</dd>
+</dl>
 </section>
 </dd></dl>
 
 <section id="examples-using-cocoatree-visualization-update-tree-ete3-and-return-style">
 <h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.visualization.update_tree_ete3_and_return_style</span></code><a class="headerlink" href="#examples-using-cocoatree-visualization-update-tree-ete3-and-return-style" title="Link to this heading">¶</a></h2>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="A small example that shows how to plot the sector composition within a tree and to add metadata"><img alt="" src="../../_images/sphx_glr_plot_sector_along_tree_and_metadata_thumb.png" />
-<p><a class="reference internal" href="../../auto_examples/plot_sector_along_tree_and_metadata.html#sphx-glr-auto-examples-plot-sector-along-tree-and-metadata-py"><span class="std std-ref">Plot sector together with (phylogenetic) tree and metadata</span></a></p>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="A simple tree visualization with cocoatree."><img alt="" src="../../_images/sphx_glr_plot_simple_tree_thumb.png" />
+<p><a class="reference internal" href="../../auto_examples/visualizations/plot_simple_tree.html#sphx-glr-auto-examples-visualizations-plot-simple-tree-py"><span class="std std-ref">Simple tree visualization with metadata</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Simple tree visualization with metadata</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="A small example that shows how to plot the sector composition within a tree and to add metadata"><img alt="" src="../../_images/sphx_glr_plot_tree_metadata_sector_seq_and_coevol_thumb.png" />
+<p><a class="reference internal" href="../../auto_examples/visualizations/plot_tree_metadata_sector_seq_and_coevol.html#sphx-glr-auto-examples-visualizations-plot-tree-metadata-sector-seq-and-coevol-py"><span class="std std-ref">Plot sector together with (phylogenetic) tree and metadata</span></a></p>
   <div class="sphx-glr-thumbnail-title">Plot sector together with (phylogenetic) tree and metadata</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="The user can provide a dictionnary of colors for metadata."><img alt="" src="../../_images/sphx_glr_plot_tree_metadata_colors_thumb.png" />
+<p><a class="reference internal" href="../../auto_examples/visualizations/plot_tree_metadata_colors.html#sphx-glr-auto-examples-visualizations-plot-tree-metadata-colors-py"><span class="std std-ref">Specifying metadata’s colors</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Specifying metadata's colors</div>
 </div></div><div class="sphx-glr-clear"></div></section>
 </section>
 

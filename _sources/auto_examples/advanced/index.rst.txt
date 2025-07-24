@@ -1,0 +1,82 @@
+
+
+.. _sphx_glr_auto_examples_advanced:
+
+.. advanced_example:
+
+Advanced usage of cocoatree
+---------------------------
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="It is possible to perform Cocoatree&#x27;s SCA pipeline by defining it&#x27;s own metric. In this example, we show how to use a callable to compute the coevolution metric.">
+
+.. only:: html
+
+  .. image:: /auto_examples/advanced/images/thumb/sphx_glr_plot_sca_with_own_metric_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_advanced_plot_sca_with_own_metric.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Running Cocoatree with your own metric</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example, we are comparing the results of the co-evolution analysis on serine proteases using SCA and the mutual information.">
+
+.. only:: html
+
+  .. image:: /auto_examples/advanced/images/thumb/sphx_glr_plot_sca_vs_mi_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_advanced_plot_sca_vs_mi.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Mutual information versus SCA</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete SCA analysis and detect protein sectors from data importation, MSA filtering.">
+
+.. only:: html
+
+  .. image:: /auto_examples/advanced/images/thumb/sphx_glr_plot_full_SCA_analysis_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_advanced_plot_full_SCA_analysis.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Perform full SCA analysis on the S1A serine protease dataset</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/advanced/plot_sca_with_own_metric
+   /auto_examples/advanced/plot_sca_vs_mi
+   /auto_examples/advanced/plot_full_SCA_analysis
+

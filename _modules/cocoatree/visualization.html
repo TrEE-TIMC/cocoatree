@@ -91,7 +91,13 @@
 
     <span class="n">att_dict</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">df_annot</span> <span class="o">=</span> <span class="n">df_annot</span><span class="p">[[</span><span class="s1">&#39;Seq_ID&#39;</span><span class="p">,</span> <span class="n">attribute</span><span class="p">]]</span>
-    <span class="n">color_dict</span> <span class="o">=</span> <span class="n">_get_color_palette</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">df_annot</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()),</span> <span class="n">cmap</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cmap</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">color_dict</span> <span class="o">=</span> <span class="n">_get_color_palette</span><span class="p">(</span>
+            <span class="nb">list</span><span class="p">(</span><span class="n">df_annot</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()),</span> <span class="n">cmap</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">color_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">n</span><span class="p">:</span> <span class="n">cmap</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">df_annot</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())}</span>
+
     <span class="n">df_annot</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">attribute</span> <span class="o">+</span> <span class="s1">&#39;_color&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="n">df_annot</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
         <span class="k">lambda</span> <span class="n">row</span><span class="p">:</span> <span class="n">color_dict</span><span class="p">[</span><span class="n">row</span><span class="p">[</span><span class="n">attribute</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_annot</span><span class="p">[</span><span class="s1">&#39;Seq_ID&#39;</span><span class="p">])):</span>
@@ -151,10 +157,19 @@
 <div class="viewcode-block" id="update_tree_ete3_and_return_style">
 <a class="viewcode-back" href="../../modules/generated/cocoatree.visualization.update_tree_ete3_and_return_style.html#cocoatree.visualization.update_tree_ete3_and_return_style">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">update_tree_ete3_and_return_style</span><span class="p">(</span>
-        <span class="n">tree_ete3</span><span class="p">,</span> <span class="n">df_annot</span><span class="p">,</span> <span class="n">sector_id</span><span class="p">,</span> <span class="n">sector_seq</span><span class="p">,</span> <span class="n">meta_data</span><span class="p">,</span>
+        <span class="n">tree_ete3</span><span class="p">,</span> <span class="n">df_annot</span><span class="p">,</span>
+        <span class="n">sector_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">sector_seq</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">meta_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">show_leaf_name</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">fig_title</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
-        <span class="n">t_sector_seq</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">t_sector_heatmap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">linecolor</span><span class="o">=</span><span class="s2">&quot;#000000&quot;</span><span class="p">,</span>
+        <span class="n">bootstrap_style</span><span class="o">=</span><span class="p">{},</span>
+        <span class="n">tree_scale</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+        <span class="n">metadata_colors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">t_sector_seq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">t_sector_heatmap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">colormap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span>
         <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -177,6 +192,31 @@
 <span class="sd">    meta_data : tuple of annotations to display</span>
 <span class="sd">                 (from annotation file&#39;s header)</span>
 
+<span class="sd">    show_leaf_name : boolean, optional, default: True</span>
+<span class="sd">        whether to show leaf names.</span>
+
+<span class="sd">    linewidth : int, optional, default: 1</span>
+<span class="sd">        width of the lines in the tree</span>
+
+<span class="sd">    linecolor : str, optional, default: &quot;#000000&quot;</span>
+<span class="sd">        color of the lines</span>
+
+<span class="sd">    bootstrap_style : dict, optional,</span>
+<span class="sd">        `fgcolor`: color of the bootstrap node, default: &quot;darkred&quot;</span>
+<span class="sd">        `size`: size of the bootstrap node, default: 10</span>
+<span class="sd">        `support`: int between 0 and 100, minimum support level for display</span>
+
+<span class="sd">    tree_scale : int, optional, default: 200</span>
+<span class="sd">        sets the scale of the tree in ETE3: the higher, the larger the tree</span>
+<span class="sd">        will be (in width)</span>
+
+<span class="sd">    metadata_colors : dict, str, or None, optional, default: None</span>
+<span class="sd">        colors for the metadata:</span>
+<span class="sd">            - None: generates automatically the colors</span>
+<span class="sd">            - str: uses a Matplotlib colormap to generate the colors</span>
+<span class="sd">            - dict: specifies colors for each matadata entry</span>
+<span class="sd">                {key: color}</span>
+
 <span class="sd">    fig_title : figure title (str)</span>
 
 <span class="sd">    t_sector_seq : boolean,</span>
@@ -189,44 +229,71 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    tree_style : TreeStyle class from ete3</span>
+
+<span class="sd">    column_end : int, the number of columns after the tree. If you want to</span>
+<span class="sd">        plot anything else alongside the tree, the column number should be</span>
+<span class="sd">        equal to this value.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">leaves_id</span> <span class="o">=</span> <span class="n">tree_ete3</span><span class="o">.</span><span class="n">get_leaf_names</span><span class="p">()</span>
-    <span class="n">nb_leaves</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">leaves_id</span><span class="p">)</span>
-
     <span class="n">tree_style</span> <span class="o">=</span> <span class="n">TreeStyle</span><span class="p">()</span>
+    <span class="n">tree_style</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">tree_scale</span>
     <span class="n">tree_style</span><span class="o">.</span><span class="n">layout_fn</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># tree_style.branch_vertical_margin = 20</span>
+    <span class="n">tree_style</span><span class="o">.</span><span class="n">show_leaf_name</span> <span class="o">=</span> <span class="n">show_leaf_name</span>
 
     <span class="c1"># Add bootstrap support NodeStyle</span>
     <span class="n">boot_style</span> <span class="o">=</span> <span class="n">NodeStyle</span><span class="p">()</span>
-    <span class="n">boot_style</span><span class="p">[</span><span class="s2">&quot;fgcolor&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;darkred&quot;</span>
-    <span class="n">boot_style</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">boot_style</span><span class="p">[</span><span class="s2">&quot;fgcolor&quot;</span><span class="p">]</span> <span class="o">=</span> \
+        <span class="n">bootstrap_style</span><span class="p">[</span><span class="s2">&quot;fgcolor&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="s2">&quot;fgcolor&quot;</span> <span class="ow">in</span> <span class="n">bootstrap_style</span> \
+        <span class="k">else</span> <span class="s2">&quot;darkred&quot;</span>
+    <span class="n">boot_style</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">=</span> \
+        <span class="n">bootstrap_style</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="s2">&quot;size&quot;</span> <span class="ow">in</span> <span class="n">bootstrap_style</span> <span class="k">else</span> <span class="mi">10</span>
+    <span class="n">support</span> <span class="o">=</span> \
+        <span class="n">bootstrap_style</span><span class="p">[</span><span class="s2">&quot;support&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="s2">&quot;support&quot;</span> <span class="ow">in</span> <span class="n">bootstrap_style</span> <span class="k">else</span> <span class="mi">95</span>
+
+    <span class="n">boot_style</span><span class="p">[</span><span class="s2">&quot;hz_line_width&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">linewidth</span>
+    <span class="n">boot_style</span><span class="p">[</span><span class="s2">&quot;vt_line_width&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">linewidth</span>
+    <span class="n">boot_style</span><span class="p">[</span><span class="s2">&quot;vt_line_color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">linecolor</span>
+    <span class="n">boot_style</span><span class="p">[</span><span class="s2">&quot;hz_line_color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">linecolor</span>
+
     <span class="n">empty_style</span> <span class="o">=</span> <span class="n">NodeStyle</span><span class="p">()</span>
     <span class="n">empty_style</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">empty_style</span><span class="p">[</span><span class="s2">&quot;vt_line_width&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">linewidth</span>
+    <span class="n">empty_style</span><span class="p">[</span><span class="s2">&quot;hz_line_width&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">linewidth</span>
+    <span class="n">empty_style</span><span class="p">[</span><span class="s2">&quot;vt_line_color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">linecolor</span>
+    <span class="n">empty_style</span><span class="p">[</span><span class="s2">&quot;hz_line_color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">linecolor</span>
+
     <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">tree_ete3</span><span class="o">.</span><span class="n">traverse</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">support</span> <span class="o">&gt;=</span> <span class="mi">95</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">support</span> <span class="o">&gt;=</span> <span class="n">support</span><span class="p">:</span>
             <span class="n">node</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="n">boot_style</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">node</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="n">empty_style</span><span class="p">)</span>
 
     <span class="n">column_layout</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">col_legend_rectface</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">if</span> <span class="n">meta_data</span><span class="p">:</span>  <span class="c1"># if no meta_data, do nothing</span>
-        <span class="c1"># add column associated with attributes</span>
+
+    <span class="k">if</span> <span class="n">metadata_colors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">metadata_colors</span> <span class="o">=</span> <span class="s2">&quot;jet&quot;</span>
+
+    <span class="c1"># If no metadata, do nothing</span>
+    <span class="k">if</span> <span class="n">meta_data</span><span class="p">:</span>
+
         <span class="k">def</span><span class="w"> </span><span class="nf">layout_attribute</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">column_layout</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
                 <span class="n">name</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span>
                 <span class="n">rect_faces</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">meta_data</span><span class="p">))]</span>
-                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">meta_data</span><span class="p">)):</span>
-                    <span class="n">colors</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_annot_to_color</span><span class="p">(</span><span class="n">meta_data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">meta_data</span><span class="p">):</span>
+                    <span class="n">colors</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_annot_to_color</span><span class="p">(</span><span class="n">col</span><span class="p">,</span>
                                                 <span class="n">tree_ete3</span><span class="p">,</span>
-                                                <span class="n">df_annot</span><span class="p">)</span>
+                                                <span class="n">df_annot</span><span class="p">,</span>
+                                                <span class="n">cmap</span><span class="o">=</span><span class="n">metadata_colors</span><span class="p">)</span>
 
                     <span class="n">rect_faces</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">RectFace</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span>
                                              <span class="n">fgcolor</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">name</span><span class="p">],</span>
                                              <span class="n">bgcolor</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
-                    <span class="n">rect_faces</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">margin_left</span> <span class="o">=</span> <span class="mi">15</span>
-                    <span class="n">rect_faces</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">margin_right</span> <span class="o">=</span> <span class="mi">15</span>
+                    <span class="n">rect_faces</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">margin_left</span> <span class="o">=</span> <span class="mi">5</span>
+                    <span class="n">rect_faces</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">margin_right</span> <span class="o">=</span> <span class="mi">0</span>
                     <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">meta_data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
                         <span class="n">rect_faces</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">margin_right</span> <span class="o">=</span> <span class="mi">30</span>
                     <span class="n">add_face_to_node</span><span class="p">(</span><span class="n">rect_faces</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">node</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">column</span><span class="p">,</span>
@@ -237,10 +304,10 @@
 
         <span class="c1"># Add legend</span>
         <span class="n">legend_face</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">meta_data</span><span class="p">))]</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">meta_data</span><span class="p">)):</span>
-            <span class="n">_</span><span class="p">,</span> <span class="n">col_dict</span> <span class="o">=</span> <span class="n">_annot_to_color</span><span class="p">(</span><span class="n">meta_data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">tree_ete3</span><span class="p">,</span>
-                                          <span class="n">df_annot</span><span class="p">)</span>
-            <span class="n">tree_style</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">add_face</span><span class="p">(</span><span class="n">TextFace</span><span class="p">(</span><span class="n">meta_data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">meta_data</span><span class="p">):</span>
+            <span class="n">_</span><span class="p">,</span> <span class="n">col_dict</span> <span class="o">=</span> <span class="n">_annot_to_color</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">tree_ete3</span><span class="p">,</span>
+                                          <span class="n">df_annot</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">metadata_colors</span><span class="p">)</span>
+            <span class="n">tree_style</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">add_face</span><span class="p">(</span><span class="n">TextFace</span><span class="p">(</span><span class="n">col</span><span class="p">,</span>
                                                 <span class="n">fsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                                                 <span class="n">bold</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
                                        <span class="n">column</span><span class="o">=</span><span class="n">col_legend_rectface</span><span class="p">)</span>
@@ -259,55 +326,142 @@
                 <span class="n">tree_style</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">add_face</span><span class="p">(</span><span class="n">TextFace</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">fsize</span><span class="o">=</span><span class="mi">10</span><span class="p">),</span>
                                            <span class="n">column</span><span class="o">=</span><span class="n">col_legend_rectface</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
             <span class="n">col_legend_rectface</span> <span class="o">+=</span> <span class="mi">2</span>
-    <span class="n">column_layout</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">meta_data</span><span class="p">)</span>
+    <span class="n">column_layout</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">meta_data</span><span class="p">)</span> <span class="k">if</span> <span class="n">meta_data</span> <span class="k">else</span> <span class="mi">0</span>
 
     <span class="k">if</span> <span class="n">t_sector_seq</span><span class="p">:</span>
-        <span class="n">sector_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">sector_id</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="nb">str</span><span class="p">(</span><span class="n">sector_seq</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-                       <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sector_id</span><span class="p">))}</span>
-
-        <span class="k">def</span><span class="w"> </span><span class="nf">layout_SeqMotifFace</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">column_layout</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
-                <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">sector_dict</span><span class="p">:</span>
-                    <span class="n">seq</span> <span class="o">=</span> <span class="n">sector_dict</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">seq</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">sector_seq</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-                <span class="n">seqFace</span> <span class="o">=</span> <span class="n">SeqMotifFace</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span>
-                                       <span class="n">motifs</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sector_seq</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s2">&quot;seq&quot;</span><span class="p">,</span>
-                                                <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]],</span>
-                                       <span class="n">scale_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-                <span class="n">seqFace</span><span class="o">.</span><span class="n">margin_right</span> <span class="o">=</span> <span class="mi">30</span>
-                <span class="n">add_face_to_node</span><span class="p">(</span><span class="n">seqFace</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">column</span><span class="p">,</span>
-                                 <span class="n">position</span><span class="o">=</span><span class="s1">&#39;aligned&#39;</span><span class="p">)</span>
-        <span class="n">tree_style</span><span class="o">.</span><span class="n">layout_fn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">layout_SeqMotifFace</span><span class="p">)</span>
-        <span class="n">column_layout</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">tree_style</span><span class="p">,</span> <span class="n">column_layout</span> <span class="o">=</span> <span class="n">add_sector_sequences_to_tree</span><span class="p">(</span>
+            <span class="n">tree_style</span><span class="p">,</span> <span class="n">tree_ete3</span><span class="p">,</span> <span class="n">sector_id</span><span class="p">,</span>
+            <span class="n">sector_seq</span><span class="p">,</span> <span class="n">column_start</span><span class="o">=</span><span class="n">column_layout</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">t_sector_heatmap</span><span class="p">:</span>
-        <span class="c1"># allow to chose among Matplotlib&#39;s colormaps</span>
-        <span class="n">ProfileFace</span><span class="o">.</span><span class="n">get_color_gradient</span> <span class="o">=</span> <span class="n">_get_color_gradient</span>
-
-        <span class="c1"># Check that sequences in the similarity matrix are ordered as in the</span>
-        <span class="c1"># tree leaves and keep only sequences that are present in the tree</span>
-        <span class="n">sequences</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">sector_id</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;seq&quot;</span><span class="p">:</span> <span class="n">sector_seq</span><span class="p">})</span>
-        <span class="n">reordered_sequences</span> <span class="o">=</span> <span class="n">sequences</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">leaves_id</span><span class="p">,</span> <span class="s2">&quot;seq&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-
-        <span class="n">id_mat</span> <span class="o">=</span> <span class="n">compute_seq_identity</span><span class="p">(</span><span class="n">reordered_sequences</span><span class="p">)</span>
-
-        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="c1"># Add heatmap profile to each leaf</span>
-        <span class="k">for</span> <span class="n">lf</span> <span class="ow">in</span> <span class="n">tree_ete3</span><span class="o">.</span><span class="n">iter_leaves</span><span class="p">():</span>
-            <span class="n">lf</span><span class="o">.</span><span class="n">add_features</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="n">id_mat</span><span class="p">[</span><span class="n">count</span><span class="p">])</span>
-            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-            <span class="n">lf</span><span class="o">.</span><span class="n">add_features</span><span class="p">(</span><span class="n">deviation</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">id_mat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])])</span>
-            <span class="n">lf</span><span class="o">.</span><span class="n">add_face</span><span class="p">(</span><span class="n">ProfileFace</span><span class="p">(</span><span class="n">max_v</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">min_v</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">center_v</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-                                    <span class="n">width</span><span class="o">=</span><span class="p">(</span><span class="n">nb_leaves</span><span class="o">*</span><span class="mi">20</span><span class="p">),</span> <span class="n">height</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
-                                    <span class="n">style</span><span class="o">=</span><span class="s1">&#39;heatmap&#39;</span><span class="p">,</span>
-                                    <span class="n">colorscheme</span><span class="o">=</span><span class="n">colormap</span><span class="p">),</span>
-                        <span class="n">column</span><span class="o">=</span><span class="n">column_layout</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s2">&quot;aligned&quot;</span><span class="p">)</span>
+        <span class="n">tree_style</span><span class="p">,</span> <span class="n">column_layout</span> <span class="o">=</span> <span class="n">add_heatmap_to_tree</span><span class="p">(</span>
+            <span class="n">tree_style</span><span class="p">,</span> <span class="n">tree_ete3</span><span class="p">,</span> <span class="n">sector_id</span><span class="p">,</span> <span class="n">sector_seq</span><span class="p">,</span>
+            <span class="n">column_start</span><span class="o">=</span><span class="n">column_layout</span><span class="p">)</span>
 
     <span class="c1"># Add title</span>
     <span class="n">tree_style</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">add_face</span><span class="p">(</span><span class="n">TextFace</span><span class="p">(</span><span class="n">fig_title</span><span class="p">,</span> <span class="n">fsize</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">tree_style</span></div>
+    <span class="k">return</span> <span class="n">tree_style</span><span class="p">,</span> <span class="n">column_layout</span></div>
+
+
+
+<div class="viewcode-block" id="add_sector_sequences_to_tree">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.visualization.add_sector_sequences_to_tree.html#cocoatree.visualization.add_sector_sequences_to_tree">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_sector_sequences_to_tree</span><span class="p">(</span><span class="n">tree_style</span><span class="p">,</span> <span class="n">tree_ete3</span><span class="p">,</span> <span class="n">sector_id</span><span class="p">,</span> <span class="n">sector_seq</span><span class="p">,</span>
+                                 <span class="n">column_start</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add sector sequence to ETE3&#39;s tree style</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    tree_style : ETE3&#39;s tree_style object</span>
+
+<span class="sd">    tree_ete3 : ete3&#39;s tree object,</span>
+<span class="sd">            as imported by io.load_tree_ete3()</span>
+
+<span class="sd">    sector_id : list of sector identifiers, as imported by io.load_msa()</span>
+<span class="sd">            the ids must match with the tree&#39;s leaves id</span>
+
+<span class="sd">    sector_seq : corresponding list of sector sequences to display,</span>
+<span class="sd">            as imported by io.load_msa()</span>
+
+<span class="sd">    column_start : int, optional, default : 0</span>
+<span class="sd">        the column on which to start plotting</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tree_style : TreeStyle class from ete3</span>
+
+<span class="sd">    column_end : int, the number of columns after the tree. If you want to</span>
+<span class="sd">        plot anything else alongside the tree, the column number should be</span>
+<span class="sd">        equal to this value.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sector_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">sector_id</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="nb">str</span><span class="p">(</span><span class="n">sector_seq</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sector_id</span><span class="p">))}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">layout_SeqMotifFace</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">column_start</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">sector_dict</span><span class="p">:</span>
+                <span class="n">seq</span> <span class="o">=</span> <span class="n">sector_dict</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">seq</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">sector_seq</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">seqFace</span> <span class="o">=</span> <span class="n">SeqMotifFace</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span>
+                                   <span class="n">motifs</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sector_seq</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s2">&quot;seq&quot;</span><span class="p">,</span>
+                                            <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]],</span>
+                                   <span class="n">scale_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">seqFace</span><span class="o">.</span><span class="n">margin_right</span> <span class="o">=</span> <span class="mi">30</span>
+            <span class="n">add_face_to_node</span><span class="p">(</span><span class="n">seqFace</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">column</span><span class="p">,</span>
+                             <span class="n">position</span><span class="o">=</span><span class="s1">&#39;aligned&#39;</span><span class="p">)</span>
+    <span class="n">tree_style</span><span class="o">.</span><span class="n">layout_fn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">layout_SeqMotifFace</span><span class="p">)</span>
+    <span class="n">column_start</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">tree_style</span><span class="p">,</span> <span class="n">column_start</span></div>
+
+
+
+<div class="viewcode-block" id="add_heatmap_to_tree">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.visualization.add_heatmap_to_tree.html#cocoatree.visualization.add_heatmap_to_tree">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_heatmap_to_tree</span><span class="p">(</span><span class="n">tree_style</span><span class="p">,</span> <span class="n">tree_ete3</span><span class="p">,</span> <span class="n">sector_id</span><span class="p">,</span> <span class="n">sector_seq</span><span class="p">,</span>
+                        <span class="n">column_start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="s2">&quot;inferno&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add heatmap to ETE3&#39;s tree style</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    tree_style : ETE3&#39;s tree_style object</span>
+
+<span class="sd">    tree_ete3 : ete3&#39;s tree object,</span>
+<span class="sd">            as imported by io.load_tree_ete3()</span>
+
+<span class="sd">    sector_id : list of sector identifiers, as imported by io.load_msa()</span>
+<span class="sd">            the ids must match with the tree&#39;s leaves id</span>
+
+<span class="sd">    sector_seq : corresponding list of sector sequences to display,</span>
+<span class="sd">            as imported by io.load_msa()</span>
+
+<span class="sd">    column_start : int, optional, default : 0</span>
+<span class="sd">        the column on which to start plotting</span>
+
+<span class="sd">    width : int, optional, default : 20</span>
+<span class="sd">        the width of each square of the heatmap. If width == 20, the heatmap</span>
+<span class="sd">        will be squared.</span>
+
+<span class="sd">    colormap : str, optional, default: &quot;inferno&quot;</span>
+<span class="sd">        any Matplotlib&#39;s colormap</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tree_style : TreeStyle class from ete3</span>
+
+<span class="sd">    column_end : int, the number of columns after the tree. If you want to</span>
+<span class="sd">        plot anything else alongside the tree, the column number should be</span>
+<span class="sd">        equal to this value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">leaves_id</span> <span class="o">=</span> <span class="n">tree_ete3</span><span class="o">.</span><span class="n">get_leaf_names</span><span class="p">()</span>
+    <span class="n">nb_leaves</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">leaves_id</span><span class="p">)</span>
+
+    <span class="c1"># allow to chose among Matplotlib&#39;s colormaps</span>
+    <span class="n">ProfileFace</span><span class="o">.</span><span class="n">get_color_gradient</span> <span class="o">=</span> <span class="n">_get_color_gradient</span>
+
+    <span class="c1"># Check that sequences in the similarity matrix are ordered as in the</span>
+    <span class="c1"># tree leaves and keep only sequences that are present in the tree</span>
+    <span class="n">sequences</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">sector_id</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;seq&quot;</span><span class="p">:</span> <span class="n">sector_seq</span><span class="p">})</span>
+    <span class="n">reordered_sequences</span> <span class="o">=</span> <span class="n">sequences</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">leaves_id</span><span class="p">,</span> <span class="s2">&quot;seq&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="n">id_mat</span> <span class="o">=</span> <span class="n">compute_seq_identity</span><span class="p">(</span><span class="n">reordered_sequences</span><span class="p">)</span>
+
+    <span class="c1"># Add heatmap profile to each leaf</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">lf</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tree_ete3</span><span class="o">.</span><span class="n">iter_leaves</span><span class="p">()):</span>
+        <span class="n">lf</span><span class="o">.</span><span class="n">add_features</span><span class="p">(</span><span class="n">profile</span><span class="o">=</span><span class="n">id_mat</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">lf</span><span class="o">.</span><span class="n">add_features</span><span class="p">(</span><span class="n">deviation</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">id_mat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])])</span>
+        <span class="n">lf</span><span class="o">.</span><span class="n">add_face</span><span class="p">(</span><span class="n">ProfileFace</span><span class="p">(</span><span class="n">max_v</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">min_v</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">center_v</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                                <span class="n">width</span><span class="o">=</span><span class="p">(</span><span class="n">nb_leaves</span><span class="o">*</span><span class="n">width</span><span class="p">),</span> <span class="n">height</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+                                <span class="n">style</span><span class="o">=</span><span class="s1">&#39;heatmap&#39;</span><span class="p">,</span>
+                                <span class="n">colorscheme</span><span class="o">=</span><span class="n">colormap</span><span class="p">),</span>
+                    <span class="n">column</span><span class="o">=</span><span class="n">column_start</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="s2">&quot;aligned&quot;</span><span class="p">)</span>
+    <span class="n">column_start</span> <span class="o">+=</span> <span class="n">nb_leaves</span><span class="o">*</span><span class="n">width</span>
+    <span class="k">return</span> <span class="n">tree_style</span><span class="p">,</span> <span class="n">column_start</span></div>
 
 </pre></div>
 

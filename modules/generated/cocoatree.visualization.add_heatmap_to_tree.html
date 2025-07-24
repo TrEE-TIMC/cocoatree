@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>cocoatree.visualization.add_heatmap_to_tree &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="../../_static/documentation_options.js?v=837179f8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  </head><body><div class="navbar related">
+      <a href="../../index.html">
+        
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="../../auto_examples/index.html">Gallery</a> </li>
+      <li class="right"><a href="../classes.html">API</a> | </li>
+      <li class="right"><a href="../../install.html">Installation</a> | </li>
+      <li class="right"><a href="../../index.html">Home</a> | </li>
+      
+    </ul>
+  </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cocoatree-visualization-add-heatmap-to-tree">
+<h1>cocoatree.visualization.add_heatmap_to_tree<a class="headerlink" href="#cocoatree-visualization-add-heatmap-to-tree" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="cocoatree.visualization.add_heatmap_to_tree">
+<span class="sig-prename descclassname"><span class="pre">cocoatree.visualization.</span></span><span class="sig-name descname"><span class="pre">add_heatmap_to_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree_style</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tree_ete3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sector_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sector_seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colormap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'inferno'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cocoatree/visualization.html#add_heatmap_to_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cocoatree.visualization.add_heatmap_to_tree" title="Link to this definition">¶</a></dt>
+<dd><p>Add heatmap to ETE3’s tree style</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<p>tree_style : ETE3’s tree_style object</p>
+<dl class="simple">
+<dt>tree_ete3<span class="classifier">ete3’s tree object,</span></dt><dd><p>as imported by io.load_tree_ete3()</p>
+</dd>
+<dt>sector_id<span class="classifier">list of sector identifiers, as imported by io.load_msa()</span></dt><dd><p>the ids must match with the tree’s leaves id</p>
+</dd>
+<dt>sector_seq<span class="classifier">corresponding list of sector sequences to display,</span></dt><dd><p>as imported by io.load_msa()</p>
+</dd>
+<dt>column_start<span class="classifier">int, optional, default</span><span class="classifier">0</span></dt><dd><p>the column on which to start plotting</p>
+</dd>
+<dt>width<span class="classifier">int, optional, default</span><span class="classifier">20</span></dt><dd><p>the width of each square of the heatmap. If width == 20, the heatmap
+will be squared.</p>
+</dd>
+<dt>colormap<span class="classifier">str, optional, default: “inferno”</span></dt><dd><p>any Matplotlib’s colormap</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
+<p>tree_style : TreeStyle class from ete3</p>
+<dl class="simple">
+<dt>column_end<span class="classifier">int, the number of columns after the tree. If you want to</span></dt><dd><p>plot anything else alongside the tree, the column number should be
+equal to this value.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<div class="sphx-glr-clear"></div></section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

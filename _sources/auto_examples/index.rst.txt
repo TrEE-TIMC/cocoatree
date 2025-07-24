@@ -16,40 +16,6 @@ General examples
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="It is possible to perform Cocoatree&#x27;s SCA pipeline by defining it&#x27;s own metric. In this example, we show how to use a callable to compute the coevolution metric.">
-
-.. only:: html
-
-  .. image:: /auto_examples/images/thumb/sphx_glr_plot_sca_with_own_metric_thumb.png
-    :alt:
-
-  :ref:`sphx_glr_auto_examples_plot_sca_with_own_metric.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Running Cocoatree with specific metrics</div>
-    </div>
-
-
-.. raw:: html
-
-    <div class="sphx-glr-thumbcontainer" tooltip="A small example that shows how to plot the sector composition within a tree and to add metadata">
-
-.. only:: html
-
-  .. image:: /auto_examples/images/thumb/sphx_glr_plot_sector_along_tree_and_metadata_thumb.png
-    :alt:
-
-  :ref:`sphx_glr_auto_examples_plot_sector_along_tree_and_metadata.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Plot sector together with (phylogenetic) tree and metadata</div>
-    </div>
-
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete SCA analysis and detect protein sectors from data importation, MSA filtering.">
 
 .. only:: html
@@ -82,16 +48,59 @@ General examples
     </div>
 
 
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/plot_simple_sca
+   /auto_examples/plot_map_alignments
+
+.. advanced_example:
+
+Advanced usage of cocoatree
+---------------------------
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="It is possible to perform Cocoatree&#x27;s SCA pipeline by defining it&#x27;s own metric. In this example, we show how to use a callable to compute the coevolution metric.">
+
+.. only:: html
+
+  .. image:: /auto_examples/advanced/images/thumb/sphx_glr_plot_sca_with_own_metric_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_advanced_plot_sca_with_own_metric.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Running Cocoatree with your own metric</div>
+    </div>
+
+
 .. raw:: html
 
     <div class="sphx-glr-thumbcontainer" tooltip="In this example, we are comparing the results of the co-evolution analysis on serine proteases using SCA and the mutual information.">
 
 .. only:: html
 
-  .. image:: /auto_examples/images/thumb/sphx_glr_plot_sca_vs_mi_thumb.png
+  .. image:: /auto_examples/advanced/images/thumb/sphx_glr_plot_sca_vs_mi_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_plot_sca_vs_mi.py`
+  :ref:`sphx_glr_auto_examples_advanced_plot_sca_vs_mi.py`
 
 .. raw:: html
 
@@ -105,10 +114,10 @@ General examples
 
 .. only:: html
 
-  .. image:: /auto_examples/images/thumb/sphx_glr_plot_full_SCA_analysis_thumb.png
+  .. image:: /auto_examples/advanced/images/thumb/sphx_glr_plot_full_SCA_analysis_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_plot_full_SCA_analysis.py`
+  :ref:`sphx_glr_auto_examples_advanced_plot_full_SCA_analysis.py`
 
 .. raw:: html
 
@@ -121,17 +130,6 @@ General examples
 .. raw:: html
 
     </div>
-
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/plot_sca_with_own_metric
-   /auto_examples/plot_sector_along_tree_and_metadata
-   /auto_examples/plot_simple_sca
-   /auto_examples/plot_map_alignments
-   /auto_examples/plot_sca_vs_mi
-   /auto_examples/plot_full_SCA_analysis
 
 .. datasets_example:
 
@@ -203,13 +201,85 @@ Datasets
 
     </div>
 
+.. visualization_example:
+
+Visualization
+-------------
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A simple tree visualization with cocoatree.">
+
+.. only:: html
+
+  .. image:: /auto_examples/visualizations/images/thumb/sphx_glr_plot_simple_tree_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_visualizations_plot_simple_tree.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Simple tree visualization with metadata</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A small example that shows how to plot the sector composition within a tree and to add metadata">
+
+.. only:: html
+
+  .. image:: /auto_examples/visualizations/images/thumb/sphx_glr_plot_tree_metadata_sector_seq_and_coevol_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_visualizations_plot_tree_metadata_sector_seq_and_coevol.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Plot sector together with (phylogenetic) tree and metadata</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The user can provide a dictionnary of colors for metadata.">
+
+.. only:: html
+
+  .. image:: /auto_examples/visualizations/images/thumb/sphx_glr_plot_tree_metadata_colors_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_visualizations_plot_tree_metadata_colors.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Specifying metadata's colors</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
 
 .. toctree::
    :hidden:
    :includehidden:
 
 
+   /auto_examples/advanced/index.rst
    /auto_examples/datasets/index.rst
+   /auto_examples/visualizations/index.rst
 
 
 .. only:: html

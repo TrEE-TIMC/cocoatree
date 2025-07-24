@@ -49,7 +49,13 @@ def _annot_to_color(attribute, tree, df_annot, cmap='jet'):
 
     att_dict = {}
     df_annot = df_annot[['Seq_ID', attribute]]
-    color_dict = _get_color_palette(list(df_annot[attribute].unique()), cmap)
+
+    if isinstance(cmap, str):
+        color_dict = _get_color_palette(
+            list(df_annot[attribute].unique()), cmap)
+    else:
+        color_dict = {n: cmap[n] for n in list(df_annot[attribute].unique())}
+
     df_annot[str(attribute + '_color')] = df_annot.apply(
         lambda row: color_dict[row[attribute]], axis=1)
     for i in range(0, len(df_annot['Seq_ID'])):
@@ -107,10 +113,19 @@ def _get_color_gradient(self):
 
 
 def update_tree_ete3_and_return_style(
-        tree_ete3, df_annot, sector_id, sector_seq, meta_data,
+        tree_ete3, df_annot,
+        sector_id=None,
+        sector_seq=None,
+        meta_data=None,
+        show_leaf_name=True,
         fig_title='',
-        t_sector_seq=True,
-        t_sector_heatmap=True,
+        linewidth=1,
+        linecolor="#000000",
+        bootstrap_style={},
+        tree_scale=200,
+        metadata_colors=None,
+        t_sector_seq=False,
+        t_sector_heatmap=False,
         colormap='inferno'
         ):
     """
@@ -133,6 +148,31 @@ def update_tree_ete3_and_return_style(
     meta_data : tuple of annotations to display
                  (from annotation file's header)
 
+    show_leaf_name : boolean, optional, default: True
+        whether to show leaf names.
+
+    linewidth : int, optional, default: 1
+        width of the lines in the tree
+
+    linecolor : str, optional, default: "#000000"
+        color of the lines
+
+    bootstrap_style : dict, optional,
+        `fgcolor`: color of the bootstrap node, default: "darkred"
+        `size`: size of the bootstrap node, default: 10
+        `support`: int between 0 and 100, minimum support level for display
+
+    tree_scale : int, optional, default: 200
+        sets the scale of the tree in ETE3: the higher, the larger the tree
+        will be (in width)
+
+    metadata_colors : dict, str, or None, optional, default: None
+        colors for the metadata:
+            - None: generates automatically the colors
+            - str: uses a Matplotlib colormap to generate the colors
+            - dict: specifies colors for each matadata entry
+                {key: color}
+
     fig_title : figure title (str)
 
     t_sector_seq : boolean,
@@ -145,44 +185,71 @@ def update_tree_ete3_and_return_style(
     Returns
     -------
     tree_style : TreeStyle class from ete3
+
+    column_end : int, the number of columns after the tree. If you want to
+        plot anything else alongside the tree, the column number should be
+        equal to this value.
+
     """
 
-    leaves_id = tree_ete3.get_leaf_names()
-    nb_leaves = len(leaves_id)
-
     tree_style = TreeStyle()
+    tree_style.scale = tree_scale
     tree_style.layout_fn = []
+    # tree_style.branch_vertical_margin = 20
+    tree_style.show_leaf_name = show_leaf_name
 
     # Add bootstrap support NodeStyle
     boot_style = NodeStyle()
-    boot_style["fgcolor"] = "darkred"
-    boot_style["size"] = 10
+    boot_style["fgcolor"] = \
+        bootstrap_style["fgcolor"] if "fgcolor" in bootstrap_style \
+        else "darkred"
+    boot_style["size"] = \
+        bootstrap_style["size"] if "size" in bootstrap_style else 10
+    support = \
+        bootstrap_style["support"] if "support" in bootstrap_style else 95
+
+    boot_style["hz_line_width"] = linewidth
+    boot_style["vt_line_width"] = linewidth
+    boot_style["vt_line_color"] = linecolor
+    boot_style["hz_line_color"] = linecolor
+
     empty_style = NodeStyle()
     empty_style["size"] = 0
+    empty_style["vt_line_width"] = linewidth
+    empty_style["hz_line_width"] = linewidth
+    empty_style["vt_line_color"] = linecolor
+    empty_style["hz_line_color"] = linecolor
+
     for node in tree_ete3.traverse():
-        if node.support >= 95:
+        if node.support >= support:
             node.set_style(boot_style)
         else:
             node.set_style(empty_style)
 
     column_layout = 0
     col_legend_rectface = 0
-    if meta_data:  # if no meta_data, do nothing
-        # add column associated with attributes
+
+    if metadata_colors is None:
+        metadata_colors = "jet"
+
+    # If no metadata, do nothing
+    if meta_data:
+
         def layout_attribute(node, column=column_layout):
             if node.is_leaf():
                 name = node.name
                 rect_faces = [None for i in range(len(meta_data))]
-                for i in range(len(meta_data)):
-                    colors, _ = _annot_to_color(meta_data[i],
+                for i, col in enumerate(meta_data):
+                    colors, _ = _annot_to_color(col,
                                                 tree_ete3,
-                                                df_annot)
+                                                df_annot,
+                                                cmap=metadata_colors)
 
                     rect_faces[i] = RectFace(50, 20,
                                              fgcolor=colors[name],
                                              bgcolor=colors[name])
-                    rect_faces[i].margin_left = 15
-                    rect_faces[i].margin_right = 15
+                    rect_faces[i].margin_left = 5
+                    rect_faces[i].margin_right = 0
                     if i == len(meta_data) - 1:
                         rect_faces[i].margin_right = 30
                     add_face_to_node(rect_faces[i], node, column=column,
@@ -193,10 +260,10 @@ def update_tree_ete3_and_return_style(
 
         # Add legend
         legend_face = [None for i in range(len(meta_data))]
-        for i in range(len(meta_data)):
-            _, col_dict = _annot_to_color(meta_data[i], tree_ete3,
-                                          df_annot)
-            tree_style.legend.add_face(TextFace(meta_data[i],
+        for i, col in enumerate(meta_data):
+            _, col_dict = _annot_to_color(col, tree_ete3,
+                                          df_annot, cmap=metadata_colors)
+            tree_style.legend.add_face(TextFace(col,
                                                 fsize=10,
                                                 bold=True),
                                        column=col_legend_rectface)
@@ -215,52 +282,133 @@ def update_tree_ete3_and_return_style(
                 tree_style.legend.add_face(TextFace(key, fsize=10),
                                            column=col_legend_rectface + 1)
             col_legend_rectface += 2
-    column_layout += len(meta_data)
+    column_layout += len(meta_data) if meta_data else 0
 
     if t_sector_seq:
-        sector_dict = {sector_id[i]: str(sector_seq[i])
-                       for i in range(len(sector_id))}
-
-        def layout_SeqMotifFace(node, column=column_layout):
-            if node.is_leaf():
-                if node.name in sector_dict:
-                    seq = sector_dict[node.name]
-                else:
-                    seq = '-' * len(sector_seq[0])
-                seqFace = SeqMotifFace(seq,
-                                       motifs=[[0, len(sector_seq[0]), "seq",
-                                                20, 20, None, None, None]],
-                                       scale_factor=1)
-                seqFace.margin_right = 30
-                add_face_to_node(seqFace, node, column=column,
-                                 position='aligned')
-        tree_style.layout_fn.append(layout_SeqMotifFace)
-        column_layout += 1
+        tree_style, column_layout = add_sector_sequences_to_tree(
+            tree_style, tree_ete3, sector_id,
+            sector_seq, column_start=column_layout)
 
     if t_sector_heatmap:
-        # allow to chose among Matplotlib's colormaps
-        ProfileFace.get_color_gradient = _get_color_gradient
-
-        # Check that sequences in the similarity matrix are ordered as in the
-        # tree leaves and keep only sequences that are present in the tree
-        sequences = pd.DataFrame(index=sector_id, data={"seq": sector_seq})
-        reordered_sequences = sequences.loc[leaves_id, "seq"].values
-
-        id_mat = compute_seq_identity(reordered_sequences)
-
-        count = 0
-        # Add heatmap profile to each leaf
-        for lf in tree_ete3.iter_leaves():
-            lf.add_features(profile=id_mat[count])
-            count += 1
-            lf.add_features(deviation=[0 for x in range(id_mat.shape[0])])
-            lf.add_face(ProfileFace(max_v=1, min_v=0.0, center_v=0.5,
-                                    width=(nb_leaves*20), height=20,
-                                    style='heatmap',
-                                    colorscheme=colormap),
-                        column=column_layout, position="aligned")
+        tree_style, column_layout = add_heatmap_to_tree(
+            tree_style, tree_ete3, sector_id, sector_seq,
+            column_start=column_layout)
 
     # Add title
     tree_style.title.add_face(TextFace(fig_title, fsize=20), column=0)
 
-    return tree_style
+    return tree_style, column_layout
+
+
+def add_sector_sequences_to_tree(tree_style, tree_ete3, sector_id, sector_seq,
+                                 column_start=0):
+    """
+    Add sector sequence to ETE3's tree style
+
+    Parameters
+    ----------
+    tree_style : ETE3's tree_style object
+
+    tree_ete3 : ete3's tree object,
+            as imported by io.load_tree_ete3()
+
+    sector_id : list of sector identifiers, as imported by io.load_msa()
+            the ids must match with the tree's leaves id
+
+    sector_seq : corresponding list of sector sequences to display,
+            as imported by io.load_msa()
+
+    column_start : int, optional, default : 0
+        the column on which to start plotting
+
+    Returns
+    -------
+    tree_style : TreeStyle class from ete3
+
+    column_end : int, the number of columns after the tree. If you want to
+        plot anything else alongside the tree, the column number should be
+        equal to this value.
+
+    """
+    sector_dict = {
+        sector_id[i]: str(sector_seq[i]) for i in range(len(sector_id))}
+
+    def layout_SeqMotifFace(node, column=column_start):
+        if node.is_leaf():
+            if node.name in sector_dict:
+                seq = sector_dict[node.name]
+            else:
+                seq = '-' * len(sector_seq[0])
+            seqFace = SeqMotifFace(seq,
+                                   motifs=[[0, len(sector_seq[0]), "seq",
+                                            20, 20, None, None, None]],
+                                   scale_factor=1)
+            seqFace.margin_right = 30
+            add_face_to_node(seqFace, node, column=column,
+                             position='aligned')
+    tree_style.layout_fn.append(layout_SeqMotifFace)
+    column_start += 1
+    return tree_style, column_start
+
+
+def add_heatmap_to_tree(tree_style, tree_ete3, sector_id, sector_seq,
+                        column_start=0, width=20, colormap="inferno"):
+    """
+    Add heatmap to ETE3's tree style
+
+    Parameters
+    ----------
+    tree_style : ETE3's tree_style object
+
+    tree_ete3 : ete3's tree object,
+            as imported by io.load_tree_ete3()
+
+    sector_id : list of sector identifiers, as imported by io.load_msa()
+            the ids must match with the tree's leaves id
+
+    sector_seq : corresponding list of sector sequences to display,
+            as imported by io.load_msa()
+
+    column_start : int, optional, default : 0
+        the column on which to start plotting
+
+    width : int, optional, default : 20
+        the width of each square of the heatmap. If width == 20, the heatmap
+        will be squared.
+
+    colormap : str, optional, default: "inferno"
+        any Matplotlib's colormap
+
+    Returns
+    -------
+    tree_style : TreeStyle class from ete3
+
+    column_end : int, the number of columns after the tree. If you want to
+        plot anything else alongside the tree, the column number should be
+        equal to this value.
+    """
+
+    leaves_id = tree_ete3.get_leaf_names()
+    nb_leaves = len(leaves_id)
+
+    # allow to chose among Matplotlib's colormaps
+    ProfileFace.get_color_gradient = _get_color_gradient
+
+    # Check that sequences in the similarity matrix are ordered as in the
+    # tree leaves and keep only sequences that are present in the tree
+    sequences = pd.DataFrame(index=sector_id, data={"seq": sector_seq})
+    reordered_sequences = sequences.loc[leaves_id, "seq"].values
+
+    id_mat = compute_seq_identity(reordered_sequences)
+
+    # Add heatmap profile to each leaf
+    for i, lf in enumerate(tree_ete3.iter_leaves()):
+        lf.add_features(profile=id_mat[i])
+        lf.add_features(deviation=[0 for x in range(id_mat.shape[0])])
+        lf.add_face(ProfileFace(max_v=1, min_v=0.0, center_v=0.5,
+                                width=(nb_leaves*width), height=20,
+                                style='heatmap',
+                                colorscheme=colormap),
+                    column=column_start, position="aligned")
+    column_start += nb_leaves*width
+    return tree_style, column_start

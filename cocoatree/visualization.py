@@ -282,7 +282,7 @@ def update_tree_ete3_and_return_style(
                 tree_style.legend.add_face(TextFace(key, fsize=10),
                                            column=col_legend_rectface + 1)
             col_legend_rectface += 2
-    column_layout += len(meta_data)
+    column_layout += len(meta_data) if meta_data else 0
 
     if t_sector_seq:
         tree_style, column_layout = add_sector_sequences_to_tree(

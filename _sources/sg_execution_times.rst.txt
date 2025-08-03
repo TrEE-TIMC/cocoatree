@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:27.144** total execution time for 11 files **from all galleries**:
+**00:27.079** total execution time for 11 files **from all galleries**:
 
 .. container::
 
@@ -33,35 +33,35 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_auto_examples_advanced_plot_sca_vs_mi.py` (``../examples/advanced/plot_sca_vs_mi.py``)
-     - 00:06.967
+     - 00:06.919
      - 0.0
    * - :ref:`sphx_glr_auto_examples_advanced_plot_full_SCA_analysis.py` (``../examples/advanced/plot_full_SCA_analysis.py``)
-     - 00:04.211
+     - 00:04.198
      - 0.0
    * - :ref:`sphx_glr_auto_examples_visualizations_plot_tree_metadata_sector_seq_and_coevol.py` (``../examples/visualizations/plot_tree_metadata_sector_seq_and_coevol.py``)
-     - 00:03.603
+     - 00:03.596
      - 0.0
    * - :ref:`sphx_glr_auto_examples_datasets_plot_DHFR.py` (``../examples/datasets/plot_DHFR.py``)
-     - 00:03.090
+     - 00:03.004
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_simple_sca.py` (``../examples/plot_simple_sca.py``)
-     - 00:02.437
+     - 00:02.553
      - 0.0
    * - :ref:`sphx_glr_auto_examples_visualizations_plot_simple_tree.py` (``../examples/visualizations/plot_simple_tree.py``)
-     - 00:01.605
+     - 00:01.609
      - 0.0
    * - :ref:`sphx_glr_auto_examples_datasets_plot_s1A_serine_proteases.py` (``../examples/datasets/plot_s1A_serine_proteases.py``)
-     - 00:01.495
+     - 00:01.487
      - 0.0
    * - :ref:`sphx_glr_auto_examples_advanced_plot_sca_with_own_metric.py` (``../examples/advanced/plot_sca_with_own_metric.py``)
-     - 00:01.320
-     - 0.0
-   * - :ref:`sphx_glr_auto_examples_datasets_plot_rhomboid_proteases.py` (``../examples/datasets/plot_rhomboid_proteases.py``)
-     - 00:01.035
+     - 00:01.316
      - 0.0
    * - :ref:`sphx_glr_auto_examples_visualizations_plot_tree_metadata_colors.py` (``../examples/visualizations/plot_tree_metadata_colors.py``)
-     - 00:01.033
+     - 00:01.031
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_datasets_plot_rhomboid_proteases.py` (``../examples/datasets/plot_rhomboid_proteases.py``)
+     - 00:01.025
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_map_alignments.py` (``../examples/plot_map_alignments.py``)
-     - 00:00.347
+     - 00:00.341
      - 0.0

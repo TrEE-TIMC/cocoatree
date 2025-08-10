@@ -88,7 +88,7 @@ dataset, you can use the `cocoatree.io.load_msa` function.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.316 seconds)
+   **Total running time of the script:** (0 minutes 1.308 seconds)
 
 
 .. _sphx_glr_download_auto_examples_advanced_plot_sca_with_own_metric.py:

@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:26.840** total execution time for 11 files **from all galleries**:
+**00:27.142** total execution time for 11 files **from all galleries**:
 
 .. container::
 
@@ -33,35 +33,35 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_auto_examples_advanced_plot_sca_vs_mi.py` (``../examples/advanced/plot_sca_vs_mi.py``)
-     - 00:06.902
+     - 00:06.918
      - 0.0
    * - :ref:`sphx_glr_auto_examples_advanced_plot_full_SCA_analysis.py` (``../examples/advanced/plot_full_SCA_analysis.py``)
-     - 00:04.170
+     - 00:04.203
      - 0.0
    * - :ref:`sphx_glr_auto_examples_visualizations_plot_tree_metadata_sector_seq_and_coevol.py` (``../examples/visualizations/plot_tree_metadata_sector_seq_and_coevol.py``)
-     - 00:03.565
+     - 00:03.647
      - 0.0
    * - :ref:`sphx_glr_auto_examples_datasets_plot_DHFR.py` (``../examples/datasets/plot_DHFR.py``)
-     - 00:02.976
+     - 00:03.019
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_simple_sca.py` (``../examples/plot_simple_sca.py``)
-     - 00:02.467
+     - 00:02.489
      - 0.0
    * - :ref:`sphx_glr_auto_examples_visualizations_plot_simple_tree.py` (``../examples/visualizations/plot_simple_tree.py``)
-     - 00:01.591
+     - 00:01.615
      - 0.0
    * - :ref:`sphx_glr_auto_examples_datasets_plot_s1A_serine_proteases.py` (``../examples/datasets/plot_s1A_serine_proteases.py``)
-     - 00:01.474
+     - 00:01.497
      - 0.0
    * - :ref:`sphx_glr_auto_examples_advanced_plot_sca_with_own_metric.py` (``../examples/advanced/plot_sca_with_own_metric.py``)
-     - 00:01.308
+     - 00:01.318
      - 0.0
    * - :ref:`sphx_glr_auto_examples_visualizations_plot_tree_metadata_colors.py` (``../examples/visualizations/plot_tree_metadata_colors.py``)
-     - 00:01.026
+     - 00:01.048
      - 0.0
    * - :ref:`sphx_glr_auto_examples_datasets_plot_rhomboid_proteases.py` (``../examples/datasets/plot_rhomboid_proteases.py``)
-     - 00:01.020
+     - 00:01.039
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_map_alignments.py` (``../examples/plot_map_alignments.py``)
-     - 00:00.341
+     - 00:00.348
      - 0.0

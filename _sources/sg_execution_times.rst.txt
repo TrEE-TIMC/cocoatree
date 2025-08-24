@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:27.142** total execution time for 11 files **from all galleries**:
+**00:27.245** total execution time for 11 files **from all galleries**:
 
 .. container::
 
@@ -33,35 +33,35 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_auto_examples_advanced_plot_sca_vs_mi.py` (``../examples/advanced/plot_sca_vs_mi.py``)
-     - 00:06.918
+     - 00:06.949
      - 0.0
    * - :ref:`sphx_glr_auto_examples_advanced_plot_full_SCA_analysis.py` (``../examples/advanced/plot_full_SCA_analysis.py``)
-     - 00:04.203
+     - 00:04.213
      - 0.0
    * - :ref:`sphx_glr_auto_examples_visualizations_plot_tree_metadata_sector_seq_and_coevol.py` (``../examples/visualizations/plot_tree_metadata_sector_seq_and_coevol.py``)
-     - 00:03.647
+     - 00:03.674
      - 0.0
    * - :ref:`sphx_glr_auto_examples_datasets_plot_DHFR.py` (``../examples/datasets/plot_DHFR.py``)
-     - 00:03.019
+     - 00:03.006
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_simple_sca.py` (``../examples/plot_simple_sca.py``)
-     - 00:02.489
+     - 00:02.495
      - 0.0
    * - :ref:`sphx_glr_auto_examples_visualizations_plot_simple_tree.py` (``../examples/visualizations/plot_simple_tree.py``)
-     - 00:01.615
+     - 00:01.602
      - 0.0
    * - :ref:`sphx_glr_auto_examples_datasets_plot_s1A_serine_proteases.py` (``../examples/datasets/plot_s1A_serine_proteases.py``)
-     - 00:01.497
+     - 00:01.557
      - 0.0
    * - :ref:`sphx_glr_auto_examples_advanced_plot_sca_with_own_metric.py` (``../examples/advanced/plot_sca_with_own_metric.py``)
-     - 00:01.318
+     - 00:01.321
      - 0.0
    * - :ref:`sphx_glr_auto_examples_visualizations_plot_tree_metadata_colors.py` (``../examples/visualizations/plot_tree_metadata_colors.py``)
-     - 00:01.048
+     - 00:01.043
      - 0.0
    * - :ref:`sphx_glr_auto_examples_datasets_plot_rhomboid_proteases.py` (``../examples/datasets/plot_rhomboid_proteases.py``)
      - 00:01.039
      - 0.0
    * - :ref:`sphx_glr_auto_examples_plot_map_alignments.py` (``../examples/plot_map_alignments.py``)
-     - 00:00.348
+     - 00:00.345
      - 0.0

@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:05.514** total execution time for 3 files **from auto_examples/datasets**:
+**00:05.530** total execution time for 3 files **from auto_examples/datasets**:
 
 .. container::
 
@@ -33,11 +33,11 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_auto_examples_datasets_plot_DHFR.py` (``plot_DHFR.py``)
-     - 00:03.009
+     - 00:03.010
      - 0.0
    * - :ref:`sphx_glr_auto_examples_datasets_plot_s1A_serine_proteases.py` (``plot_s1A_serine_proteases.py``)
-     - 00:01.481
+     - 00:01.487
      - 0.0
    * - :ref:`sphx_glr_auto_examples_datasets_plot_rhomboid_proteases.py` (``plot_rhomboid_proteases.py``)
-     - 00:01.023
+     - 00:01.033
      - 0.0

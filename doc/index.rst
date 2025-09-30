@@ -28,7 +28,7 @@ structures.
 
 The software is organized in different modules detailed below:
 
-.. image:: schemas/draft_fig1_v3.pdf
+.. image:: schemas/draft_fig1_v3.png
 	:width: 100%
 
 List of abbreviations

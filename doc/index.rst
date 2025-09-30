@@ -56,7 +56,7 @@ to the following paper:
 
    BEST PAPER EVER
 
-Bibex entry::
+Bibtex entry::
 
    @article {}
 

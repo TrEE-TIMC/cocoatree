@@ -4,7 +4,7 @@ Perform full SCA analysis on the S1A serine protease dataset
 ============================================================
 
 This example shows the full process to perform a complete SCA analysis
-and detect protein sectors from data importation, MSA filtering.
+and detect *eXtremal Co-evolving Residues (XCoR)* from data importation, MSA filtering.
 
 Finally, we export a fasta file of the residues contributing to the first
 sector.
@@ -59,6 +59,11 @@ print(f"After filtering, we have {len(sequences)} remaining sequences.")
 # %%
 # Compute the matrix of pairwise sequence identity
 # ------------------------------------------------
+#
+# Note that the sequences in the matrix are in the same order as in the MSA.
+# You can use the `cocoatree.visualization.update_tree_ete3_and_return_style`
+# function to represent a sequence similarity matrix ordered following a
+# phylogenetic tree (see :doc:`../visualizations/plot_tree_metadata_sector_seq_and_coevol.py`).
 
 identity_matrix = c_msa.compute_seq_identity(sequences)
 
@@ -105,10 +110,11 @@ ax.set_title('SCA matrix')
 fig.colorbar(im, shrink=0.7)
 
 # %%
-# Extraction of principal components (PCA analysis)
-# and of independent components (ICA analysis)
-# (this can take some time because of randomization)
+# Extract of principal components (PCA analysis)
+# and independent components (ICA analysis)
 # -------------------------------------------------
+# 
+# (this can take some time because of randomization)
 
 n_components = 9
 principal_components = c_deconv.extract_principal_components(
@@ -146,6 +152,8 @@ for k, [k1, k2] in enumerate(pairs):
 # %%
 # Extract sectors
 # ---------------
+#
+# Obtain a list of residues of each sector
 
 sectors = c_deconv.extract_sectors(idpt_components, SCA_matrix)
 
@@ -155,6 +163,8 @@ for isec, sec in enumerate(sectors):
 
 # %%
 # Plot coevolution within and between the sectors
+# -----------------------------------------------
+#
 # Each white square corresponds to a sector, with the residues ordered in
 # decreasing contribution to the independent component associated from top to
 # bottom and from left to right.
@@ -210,9 +220,11 @@ for i in range(n_components):
 
 
 # %%
-# Export sector sequences for all sequences as a fasta file
+# Export sector sequences in fasta format
+# ---------------------------------------
+#
 # The file can then be used for visualization along a phylogenetic tree
-# as implemented in the cocoatree.visualization module
+# as implemented in :mod:`cocoatree.visualization`
 
 sector_1_pos = list(positions[sectors[0]])
 sector_1 = []

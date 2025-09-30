@@ -28,7 +28,7 @@ structures.
 
 The software is organized in different modules detailed below:
 
-.. image:: schemas/draft_fig1_v3.pdfs
+.. image:: schemas/draft_fig1_v3.pdf
 	:width: 100%
 
 List of abbreviations
@@ -40,7 +40,7 @@ List of abbreviations
 Example gallery
 ---------------
 
-Various examples of COCOA-Tree's use can be found in the Gallery.
+Various examples of COCOA-Tree's use can be found in the `Gallery <auto_examples/index.html>`_.
 
 If you wish to perform a simple SCA analysis, go to
 `Simple SCA example <auto_examples/plot_simple_sca.html>`_

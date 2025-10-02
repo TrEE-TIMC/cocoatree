@@ -292,7 +292,7 @@ def update_tree_ete3_and_return_style(
     if t_sector_heatmap:
         tree_style, column_layout = add_heatmap_to_tree(
             tree_style, tree_ete3, sector_id, sector_seq,
-            column_start=column_layout)
+            column_start=column_layout, colormap=colormap)
 
     # Add title
     tree_style.title.add_face(TextFace(fig_title, fsize=20), column=0)

@@ -117,7 +117,7 @@ fig.colorbar(im, shrink=0.7)
 # Extract principal components (PCA analysis) and independent components
 # (ICA analysis)
 # ----------------------------------------------------------------------
-# 
+#
 # (this can take some time because of randomization)
 
 n_components = 9
@@ -164,7 +164,7 @@ sectors = c_deconv.extract_sectors(idpt_components, SCA_matrix)
 print('Sector positions on (filtered) sequences:')
 for isec, sec in enumerate(sectors):
     print('sector %d: %s' % (isec+1, sec))
-    
+
 # %%
 # Note that the residue positions do not follow the order of the sequence but
 # are ordered following a decreasing contribution to the independent component

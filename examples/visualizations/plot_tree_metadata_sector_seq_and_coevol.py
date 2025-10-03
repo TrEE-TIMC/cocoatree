@@ -10,13 +10,12 @@ within a tree and to add metadata
 
 # %%
 # Import necessary packages
-import pandas as pd
 from cocoatree.io import load_MSA, load_tree_ete3
 from cocoatree.datasets import load_S1A_serine_proteases
 from cocoatree.visualization import update_tree_ete3_and_return_style
 
 # %%
-# Import datasets 
+# Import datasets
 # ---------------
 serine_dataset = load_S1A_serine_proteases('halabi')
 df_annot = serine_dataset["metadata"]
@@ -27,14 +26,15 @@ print(df_annot)
 #
 # The dataframe must have a 'Seq_ID' column, which corresponds to the sequence
 # identifiers used in the fasta and in the phylogenetic tree. The other columns
-# can contain qualitative data that will be displayed as categories alongside the
-# phylogenetic tree. In this example, we will use the last 3 columns 'Protein_type',
-# 'Class', and 'Family'.
+# can contain qualitative data that will be displayed as categories alongside
+# the phylogenetic tree. In this example, we will use the last 3 columns
+# 'Protein_type', 'Class', and 'Family'.
 
 # %%
 # Import tree file
 # ----------------
-# The file must be in Newick format and can include bootstrap values (only one).
+# The file must be in Newick format and can include bootstrap values (only
+# one).
 tree_file = 'data/halabi_82_seqs.txt'
 tree_ete3 = load_tree_ete3(tree_file)
 print(tree_ete3)

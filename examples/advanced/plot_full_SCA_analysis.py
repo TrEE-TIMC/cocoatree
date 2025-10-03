@@ -4,10 +4,13 @@ Perform full SCA analysis on the S1A serine protease dataset
 ============================================================
 
 This example shows the full process to perform a complete SCA analysis
-and detect *eXtremal Co-evolving Residues (XCoR)* from data importation, MSA filtering.
+and detect **eXtremal Co-evolving Residues (XCoR)** from data importation and
+MSA filtering to the computation of a SCA coevolution matrix, the extraction
+of principal and independent components, and the representation of coevolution
+within and between sectors.
 
-Finally, we export a fasta file of the residues contributing to the first
-sector.
+Finally, we export fasta files that are necessary for the sector visualization
+along a phylogenetic tree.
 """
 
 # Author: Margaux Jullien <margaux.jullien@univ-grenoble-alpes.fr>
@@ -32,7 +35,7 @@ import numpy as np
 # ----------------
 #
 # We start by importing the dataset. In this case, we can directly load the S1
-# serine protease dataset provided in :mod:`cocoatree`. To work on your on
+# serine protease dataset provided in :mod:`cocoatree`. To work on your own
 # dataset, you can use the `cocoatree.io.load_msa` function.
 
 serine_dataset = c_data.load_S1A_serine_proteases('rivoire')
@@ -63,12 +66,13 @@ print(f"After filtering, we have {len(sequences)} remaining sequences.")
 # Note that the sequences in the matrix are in the same order as in the MSA.
 # You can use the `cocoatree.visualization.update_tree_ete3_and_return_style`
 # function to represent a sequence similarity matrix ordered following a
-# phylogenetic tree (see :doc:`../visualizations/plot_tree_metadata_sector_seq_and_coevol.py`).
+# phylogenetic tree (see `Plot sector together with (phylogenetic) tree and
+# metadata <../doc/auto_examples/plot_sector_along_tree_and_metadata.html`_).
 
 identity_matrix = c_msa.compute_seq_identity(sequences)
 
 fig, ax = plt.subplots()
-m = ax.imshow(identity_matrix, vmin=0, vmax=1, cmap='inferno')
+m = ax.imshow(identity_matrix, vmin=0, vmax=1, cmap='GnBu')
 ax.set_xlabel("sequences", fontsize=10)
 ax.set_ylabel("sequences", fontsize=10)
 ax.set_title('Matrix of pairwise sequence identity', fontweight="bold")
@@ -110,9 +114,9 @@ ax.set_title('SCA matrix')
 fig.colorbar(im, shrink=0.7)
 
 # %%
-# Extract of principal components (PCA analysis)
-# and independent components (ICA analysis)
-# -------------------------------------------------
+# Extract principal components (PCA analysis) and independent components
+# (ICA analysis)
+# ----------------------------------------------------------------------
 # 
 # (this can take some time because of randomization)
 
@@ -160,6 +164,11 @@ sectors = c_deconv.extract_sectors(idpt_components, SCA_matrix)
 print('Sector positions on (filtered) sequences:')
 for isec, sec in enumerate(sectors):
     print('sector %d: %s' % (isec+1, sec))
+    
+# %%
+# Note that the residue positions do not follow the order of the sequence but
+# are ordered following a decreasing contribution to the independent component
+# (the first residue of the list has the highest score).
 
 # %%
 # Plot coevolution within and between the sectors
@@ -224,7 +233,10 @@ for i in range(n_components):
 # ---------------------------------------
 #
 # The file can then be used for visualization along a phylogenetic tree
-# as implemented in :mod:`cocoatree.visualization`
+# as implemented in :mod:`cocoatree.visualization`.
+#
+# Here, the positions are ordered in decreasing contribution to the
+# independent component to which the sector is associated.
 
 sector_1_pos = list(positions[sectors[0]])
 sector_1 = []
@@ -236,21 +248,12 @@ for sequence in range(len(sequences_id)):
 
 c_io.export_fasta(sector_1, sequences_id, 'sector_1.fasta')
 
+# %%
 if False:  # need to be revised
-    sector_1_pos = list(positions[sectors[0].items])
-    sector_1 = []
-    for sequence in range(len(sequences_id)):
-        seq = ''
-        for pos in sector_1_pos:
-            seq += sequences[sequence][pos]
-        sector_1.append(seq)
-
-    c_io.export_fasta(sector_1, sequences_id, 'sector_1.fasta')
-
     # %
     # Export files necessary for Pymol visualization
     # Load PDB file of rat's trypsin
-    pdb_seq, pdb_pos = c_io.load_pdb('data/3TGI.pdb', pdb_id='TRIPSIN',
+    pdb_seq, pdb_pos = c_io.load_pdb('data/3TGI.pdb', pdb_id='TRYPSIN',
                                      chain='E')
     # Map PDB positions on the MSA sequence corresponding to rat's trypsin:
     # seq_id='14719441'

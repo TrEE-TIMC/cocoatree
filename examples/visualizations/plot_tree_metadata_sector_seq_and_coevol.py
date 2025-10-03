@@ -67,5 +67,3 @@ tree_ete3.render("sector_phylogeny.png", tree_style=tree_style)
 # %%
 # Use ete3's `tree.show()` method for displaying the figure in ete3's
 # interactive GUI.
-
-

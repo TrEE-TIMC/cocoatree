@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:06.234** total execution time for 3 files **from auto_examples/visualizations**:
+**00:06.493** total execution time for 3 files **from auto_examples/visualizations**:
 
 .. container::
 
@@ -33,11 +33,11 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_auto_examples_visualizations_plot_tree_metadata_sector_seq_and_coevol.py` (``plot_tree_metadata_sector_seq_and_coevol.py``)
-     - 00:03.626
+     - 00:03.780
      - 0.0
    * - :ref:`sphx_glr_auto_examples_visualizations_plot_simple_tree.py` (``plot_simple_tree.py``)
-     - 00:01.573
+     - 00:01.655
      - 0.0
    * - :ref:`sphx_glr_auto_examples_visualizations_plot_tree_metadata_colors.py` (``plot_tree_metadata_colors.py``)
-     - 00:01.035
+     - 00:01.057
      - 0.0

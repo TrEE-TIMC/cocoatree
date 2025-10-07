@@ -379,7 +379,7 @@ def add_heatmap_to_tree(tree_style, tree_ete3, sector_id, sector_seq,
 
     sector_seq : corresponding list of sector sequences to display,
             as imported by io.load_msa()
-    
+
     matrix_type : str, default='identity'
             whether to compute pairwise matrix identity ('identity'),
             similarity ('similarity'), or normalized similarity

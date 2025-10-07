@@ -498,8 +498,8 @@ def compute_normalized_seq_similarity(sequences, subst_matrix='BLOSUM62',
     matrix.
 
     Each pairwise similarity score is normalized by the maximum possible
-    score for the pair of sequences (i. e. the score we would obtain by comparing
-    the sequence to itself).
+    score for the pair of sequences (i. e. the score we would obtain by
+    comparing the sequence to itself).
 
     Parameters:
     -----------
@@ -553,7 +553,8 @@ def compute_normalized_seq_similarity(sequences, subst_matrix='BLOSUM62',
 
     # Compute pairwise scores
     results = Parallel(n_jobs=n_jobs)(
-        delayed(score_pair)(i, j) for i in range(n_seq) for j in range(i, n_seq)
+        delayed(score_pair)(i, j) for i in range(n_seq)
+        for j in range(i, n_seq)
     )
 
     similarity_matrix = np.zeros((n_seq, n_seq), dtype=float)

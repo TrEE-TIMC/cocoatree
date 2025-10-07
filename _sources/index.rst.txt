@@ -28,7 +28,7 @@ structures.
 
 The software is organized in different modules detailed below:
 
-.. image:: schemas/graphical_abstract.png
+.. image:: schemas/draft_fig1_v3.png
 	:width: 100%
 
 List of abbreviations
@@ -40,13 +40,13 @@ List of abbreviations
 Example gallery
 ---------------
 
-Various examples of COCOA-Tree's use can be found in the Gallery.
+Various examples of COCOA-Tree's use can be found in the `Gallery <auto_examples/index.html>`_.
 
 If you wish to perform a simple SCA analysis, go to
 `Simple SCA example <auto_examples/plot_simple_sca.html>`_
 
 For a detailed SCA analysis, go to
-:py:obj:`Full SCA analysis <../examples/plot_full_SCA_analysis.py>`
+`Full SCA analysis <auto_examples/plot_full_SCA_analysis.html>`_
 
 Citing COCOA-Tree
 -----------------
@@ -55,6 +55,10 @@ If you use COCOA-Tree in a scientific publication, we would appreciate citations
 to the following paper:
 
    BEST PAPER EVER
+
+Bibtex entry::
+
+   @article {}
 
 License information
 -------------------

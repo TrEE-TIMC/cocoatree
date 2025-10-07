@@ -14,16 +14,36 @@ General examples
 
 .. thumbnail-parent-div-open
 
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+.. quick_start:
+
+Cocoatree quick start
+---------------------
+In this section, you'll find examples to easily perform coevolution
+analyses using `mod:cocoatree`
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
 .. raw:: html
 
     <div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete SCA analysis and detect protein sectors from data importation, MSA filtering.">
 
 .. only:: html
 
-  .. image:: /auto_examples/images/thumb/sphx_glr_plot_simple_sca_thumb.png
+  .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_plot_simple_sca_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_plot_simple_sca.py`
+  :ref:`sphx_glr_auto_examples_a_quick_start_plot_simple_sca.py`
 
 .. raw:: html
 
@@ -37,10 +57,10 @@ General examples
 
 .. only:: html
 
-  .. image:: /auto_examples/images/thumb/sphx_glr_plot_map_alignments_thumb.png
+  .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_plot_map_alignments_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_plot_map_alignments.py`
+  :ref:`sphx_glr_auto_examples_a_quick_start_plot_map_alignments.py`
 
 .. raw:: html
 
@@ -53,13 +73,6 @@ General examples
 .. raw:: html
 
     </div>
-
-
-.. toctree::
-   :hidden:
-
-   /auto_examples/plot_simple_sca
-   /auto_examples/plot_map_alignments
 
 .. advanced_example:
 
@@ -80,10 +93,10 @@ Advanced usage of cocoatree
 
 .. only:: html
 
-  .. image:: /auto_examples/advanced/images/thumb/sphx_glr_plot_sca_with_own_metric_thumb.png
+  .. image:: /auto_examples/b_advanced/images/thumb/sphx_glr_plot_sca_with_own_metric_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_advanced_plot_sca_with_own_metric.py`
+  :ref:`sphx_glr_auto_examples_b_advanced_plot_sca_with_own_metric.py`
 
 .. raw:: html
 
@@ -97,10 +110,10 @@ Advanced usage of cocoatree
 
 .. only:: html
 
-  .. image:: /auto_examples/advanced/images/thumb/sphx_glr_plot_sca_vs_mi_thumb.png
+  .. image:: /auto_examples/b_advanced/images/thumb/sphx_glr_plot_sca_vs_mi_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_advanced_plot_sca_vs_mi.py`
+  :ref:`sphx_glr_auto_examples_b_advanced_plot_sca_vs_mi.py`
 
 .. raw:: html
 
@@ -110,18 +123,88 @@ Advanced usage of cocoatree
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete SCA analysis and detect protein sectors from data importation, MSA filtering.">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete SCA analysis and detect eXtremal Co-evolving Residues (XCoR) from data importation and MSA filtering to the computation of a SCA coevolution matrix, the extraction of principal and independent components, and the representation of coevolution within and between sectors.">
 
 .. only:: html
 
-  .. image:: /auto_examples/advanced/images/thumb/sphx_glr_plot_full_SCA_analysis_thumb.png
+  .. image:: /auto_examples/b_advanced/images/thumb/sphx_glr_plot_full_SCA_analysis_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_advanced_plot_full_SCA_analysis.py`
+  :ref:`sphx_glr_auto_examples_b_advanced_plot_full_SCA_analysis.py`
 
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Perform full SCA analysis on the S1A serine protease dataset</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+.. visualization_example:
+
+Visualization
+-------------
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example details how to plot a simple tree visualization with cocoatree.">
+
+.. only:: html
+
+  .. image:: /auto_examples/c_visualizations/images/thumb/sphx_glr_plot_simple_tree_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_c_visualizations_plot_simple_tree.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Simple tree visualization with metadata</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="A small example that shows how to plot the sector composition within a tree and to add metadata.">
+
+.. only:: html
+
+  .. image:: /auto_examples/c_visualizations/images/thumb/sphx_glr_plot_tree_metadata_sector_seq_and_coevol_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_sector_seq_and_coevol.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Plot sector together with (phylogenetic) tree and metadata</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The user can provide a dictionnary of colors for metadata.">
+
+.. only:: html
+
+  .. image:: /auto_examples/c_visualizations/images/thumb/sphx_glr_plot_tree_metadata_colors_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_colors.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Specifying metadata's colors</div>
     </div>
 
 
@@ -150,10 +233,10 @@ Datasets
 
 .. only:: html
 
-  .. image:: /auto_examples/datasets/images/thumb/sphx_glr_plot_rhomboid_proteases_thumb.png
+  .. image:: /auto_examples/d_datasets/images/thumb/sphx_glr_plot_rhomboid_proteases_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_datasets_plot_rhomboid_proteases.py`
+  :ref:`sphx_glr_auto_examples_d_datasets_plot_rhomboid_proteases.py`
 
 .. raw:: html
 
@@ -167,10 +250,10 @@ Datasets
 
 .. only:: html
 
-  .. image:: /auto_examples/datasets/images/thumb/sphx_glr_plot_DHFR_thumb.png
+  .. image:: /auto_examples/d_datasets/images/thumb/sphx_glr_plot_DHFR_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_datasets_plot_DHFR.py`
+  :ref:`sphx_glr_auto_examples_d_datasets_plot_DHFR.py`
 
 .. raw:: html
 
@@ -184,84 +267,14 @@ Datasets
 
 .. only:: html
 
-  .. image:: /auto_examples/datasets/images/thumb/sphx_glr_plot_s1A_serine_proteases_thumb.png
+  .. image:: /auto_examples/d_datasets/images/thumb/sphx_glr_plot_s1A_serine_proteases_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_datasets_plot_s1A_serine_proteases.py`
+  :ref:`sphx_glr_auto_examples_d_datasets_plot_s1A_serine_proteases.py`
 
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">S1A serine proteases</div>
-    </div>
-
-
-.. thumbnail-parent-div-close
-
-.. raw:: html
-
-    </div>
-
-.. visualization_example:
-
-Visualization
--------------
-
-
-
-.. raw:: html
-
-    <div class="sphx-glr-thumbnails">
-
-.. thumbnail-parent-div-open
-
-.. raw:: html
-
-    <div class="sphx-glr-thumbcontainer" tooltip="A simple tree visualization with cocoatree.">
-
-.. only:: html
-
-  .. image:: /auto_examples/visualizations/images/thumb/sphx_glr_plot_simple_tree_thumb.png
-    :alt:
-
-  :ref:`sphx_glr_auto_examples_visualizations_plot_simple_tree.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Simple tree visualization with metadata</div>
-    </div>
-
-
-.. raw:: html
-
-    <div class="sphx-glr-thumbcontainer" tooltip="A small example that shows how to plot the sector composition within a tree and to add metadata">
-
-.. only:: html
-
-  .. image:: /auto_examples/visualizations/images/thumb/sphx_glr_plot_tree_metadata_sector_seq_and_coevol_thumb.png
-    :alt:
-
-  :ref:`sphx_glr_auto_examples_visualizations_plot_tree_metadata_sector_seq_and_coevol.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Plot sector together with (phylogenetic) tree and metadata</div>
-    </div>
-
-
-.. raw:: html
-
-    <div class="sphx-glr-thumbcontainer" tooltip="The user can provide a dictionnary of colors for metadata.">
-
-.. only:: html
-
-  .. image:: /auto_examples/visualizations/images/thumb/sphx_glr_plot_tree_metadata_colors_thumb.png
-    :alt:
-
-  :ref:`sphx_glr_auto_examples_visualizations_plot_tree_metadata_colors.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Specifying metadata's colors</div>
     </div>
 
 
@@ -277,9 +290,10 @@ Visualization
    :includehidden:
 
 
-   /auto_examples/advanced/index.rst
-   /auto_examples/datasets/index.rst
-   /auto_examples/visualizations/index.rst
+   /auto_examples/a_quick_start/index.rst
+   /auto_examples/b_advanced/index.rst
+   /auto_examples/c_visualizations/index.rst
+   /auto_examples/d_datasets/index.rst
 
 
 .. only:: html

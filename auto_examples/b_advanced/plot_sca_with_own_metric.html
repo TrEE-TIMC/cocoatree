@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Running Cocoatree with your own metric &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="../../_static/documentation_options.js?v=837179f8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  </head><body><div class="navbar related">
+      <a href="../../index.html">
+        
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="../index.html">Gallery</a> </li>
+      <li class="right"><a href="../../modules/classes.html">API</a> | </li>
+      <li class="right"><a href="../../install.html">Installation</a> | </li>
+      <li class="right"><a href="../../index.html">Home</a> | </li>
+      
+    </ul>
+  </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-b-advanced-plot-sca-with-own-metric-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code. or to run this example in your browser via Binder</p>
+</div>
+<section class="sphx-glr-example-title" id="running-cocoatree-with-your-own-metric">
+<span id="sphx-glr-auto-examples-b-advanced-plot-sca-with-own-metric-py"></span><h1>Running Cocoatree with your own metric<a class="headerlink" href="#running-cocoatree-with-your-own-metric" title="Link to this heading">¶</a></h1>
+<p>It is possible to perform Cocoatree’s SCA pipeline by defining it’s own
+metric. In this example, we show how to use a callable to compute the
+coevolution metric.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">cocoatree.datasets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">c_data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cocoatree</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">pairwise</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">OneHotEncoder</span>
+</pre></div>
+</div>
+<section id="load-the-dataset">
+<h2>Load the dataset<a class="headerlink" href="#load-the-dataset" title="Link to this heading">¶</a></h2>
+<p>We start by importing the dataset. In this case, we can directly load the S1
+serine protease dataset provided in <a class="reference internal" href="../../modules/classes.html#module-cocoatree" title="cocoatree"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree</span></code></a>. To work on your on
+dataset, you can use the <cite>cocoatree.io.load_msa</cite> function.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">serine_dataset</span></a> <span class="o">=</span> <a href="../../modules/generated/cocoatree.datasets.load_S1A_serine_proteases.html#cocoatree.datasets.load_S1A_serine_proteases" title="cocoatree.datasets.load_S1A_serine_proteases" class="sphx-glr-backref-module-cocoatree-datasets sphx-glr-backref-type-py-function"><span class="n">c_data</span><span class="o">.</span><span class="n">load_S1A_serine_proteases</span></a><span class="p">()</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">serine_dataset</span></a><span class="p">[</span><span class="s2">&quot;alignment&quot;</span><span class="p">]</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs_id</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">serine_dataset</span></a><span class="p">[</span><span class="s2">&quot;sequence_ids&quot;</span><span class="p">]</span>
+<a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_loaded_pos</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_loaded_seqs</span></a> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs</span></a><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs</span></a><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_correlation</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">freq_regul</span><span class="o">=</span><span class="mf">0.08</span><span class="p">):</span>
+    <span class="n">seqs</span> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.array.html#numpy.array" title="numpy.array" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">array</span></a><span class="p">([[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">s</span><span class="p">]</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">])</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">seqs</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pairwise</span><span class="o">.</span><span class="n">pairwise_kernels</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+
+<a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">coevol_matrix</span></a><span class="p">,</span> <span class="n">results</span> <span class="o">=</span> <a href="../../modules/generated/cocoatree.perform_sca.html#cocoatree.perform_sca" title="cocoatree.perform_sca" class="sphx-glr-backref-module-cocoatree sphx-glr-backref-type-py-function"><span class="n">cocoatree</span><span class="o">.</span><span class="n">perform_sca</span></a><span class="p">(</span>
+    <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs_id</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs</span></a><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">coevolution_metric</span><span class="o">=</span><span class="n">compute_correlation</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>computing weight of seq 1/1376
+computing weight of seq 101/1376
+computing weight of seq 201/1376
+computing weight of seq 301/1376
+computing weight of seq 401/1376
+computing weight of seq 501/1376
+computing weight of seq 601/1376
+computing weight of seq 701/1376
+computing weight of seq 801/1376
+computing weight of seq 901/1376
+computing weight of seq 1001/1376
+computing weight of seq 1101/1376
+computing weight of seq 1201/1376
+computing weight of seq 1301/1376
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 1.320 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-b-advanced-plot-sca-with-own-metric-py">
+<div class="binder-badge docutils container">
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/tree-timc/cocoatree/gh-pages?urlpath=lab/tree/notebooks/auto_examples/b_advanced/plot_sca_with_own_metric.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo1.svg" style="width: 150px;" />
+</a>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/91924faa2909f786b3c6d35b4639aea5/plot_sca_with_own_metric.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_sca_with_own_metric.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/3442dd7d4bc68038081a74b55e3ddda9/plot_sca_with_own_metric.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_sca_with_own_metric.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/b17556304bb920e4064474cca5d2f39d/plot_sca_with_own_metric.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">plot_sca_with_own_metric.zip</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

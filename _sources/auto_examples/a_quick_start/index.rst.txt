@@ -1,0 +1,65 @@
+
+
+.. _sphx_glr_auto_examples_a_quick_start:
+
+.. quick_start:
+
+Cocoatree quick start
+---------------------
+In this section, you'll find examples to easily perform coevolution
+analyses using `mod:cocoatree`
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbnails">
+
+.. thumbnail-parent-div-open
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete SCA analysis and detect protein sectors from data importation, MSA filtering.">
+
+.. only:: html
+
+  .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_plot_simple_sca_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_a_quick_start_plot_simple_sca.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">The simplest SCA analysis ever</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example, we showcase how to create a pandas.DataFrame to map the original MSA&#x27;s positions with the PDB positions, PDB named position, the MSA filtered positions, and the sectors.">
+
+.. only:: html
+
+  .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_plot_map_alignments_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_a_quick_start_plot_map_alignments.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Mapping original MSA, filtered MSA, PDB, and sectors</div>
+    </div>
+
+
+.. thumbnail-parent-div-close
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /auto_examples/a_quick_start/plot_simple_sca
+   /auto_examples/a_quick_start/plot_map_alignments
+

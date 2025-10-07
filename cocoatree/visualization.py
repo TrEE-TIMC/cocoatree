@@ -292,7 +292,7 @@ def update_tree_ete3_and_return_style(
     if t_sector_heatmap:
         tree_style, column_layout = add_heatmap_to_tree(
             tree_style, tree_ete3, sector_id, sector_seq,
-            column_start=column_layout)
+            column_start=column_layout, colormap=colormap)
 
     # Add title
     tree_style.title.add_face(TextFace(fig_title, fsize=20), column=0)
@@ -400,6 +400,8 @@ def add_heatmap_to_tree(tree_style, tree_ete3, sector_id, sector_seq,
     reordered_sequences = sequences.loc[leaves_id, "seq"].values
 
     id_mat = compute_seq_identity(reordered_sequences)
+    # FIX to zero values appearing black in the heatmap whatever the cmap
+    id_mat[id_mat == 0] = 0.00000001
 
     # Add heatmap profile to each leaf
     for i, lf in enumerate(tree_ete3.iter_leaves()):

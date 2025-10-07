@@ -59,8 +59,7 @@ sector_seq = data["alignment"]
 #   - the tree with its leaf names (corresponding to `Seq_ID`)
 #   - metadata as colored columns, in order: *Protein_type*, *Subphylum*,
 # and *Class*. The default colormap (`jet`), will be used. See
-# `Specifying metadata's colors <../doc/auto_examples/plot_tree_metadata_colors.html`_
-# to change it.
+# **Specifying metadata colors** example on how to modify it.
 #   - sector sequences colored by amino acid physico-chemical properties
 # (`t_sector_seq=True`)
 #   - a heatmap of pairwise sequence identity computed on the sector \

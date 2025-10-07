@@ -1,6 +1,6 @@
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
-from Bio.Align import MultipleSeqAlignment
+from Bio.Align import MultipleSeqAlignment, substitution_matrices
 import numpy as np
 import sklearn.metrics as sn
 from .__params import lett2num
@@ -434,3 +434,133 @@ def map_msa_positions(n_loaded_pos, remaining_pos):
         filtered2original[pos] = int(remaining_pos[pos])
 
     return original2filtered, filtered2original
+
+
+def compute_seq_similarity(sequences, subst_matrix='BLOSUM62', gap_penalty=-4,
+                           n_jobs=1, verbose_parallel=5):
+    """
+    Computes a similarity matrix using a precalculated substitution matrix.
+
+    Parameters
+    ----------
+    sequences : list of str,
+        list of MSA sequences.
+    subst_matrix : str, default='BLOSUM62'
+        name of the substitution matrix.
+    gap_penalty : int, default=-4
+        penalty score for gaps.
+    n_jobs : int, default=1 (no parallelization)
+        the maximum number of concurrently running jobs (-1 uses all
+        available cores)
+    verbose_parallel : int, default=5
+        verbosity level for parallelization (see joblib doc)
+
+    Returns
+    -------
+    similarity_matrix : np.ndarray,
+        a (Nseq, Nseq) array of similarity scores.
+    """
+    matrix = substitution_matrices.load(subst_matrix)
+    n = len(sequences)
+    seq_length = len(sequences[0])
+
+    if not all(len(seq) == seq_length for seq in sequences):
+        raise ValueError("All sequences must be of equal length.")
+
+    seq_array = np.array([list(seq) for seq in sequences])
+
+    def score_pair(i, j):
+        a_seq = seq_array[i]
+        b_seq = seq_array[j]
+        score = sum(
+            gap_penalty if a == '-' or b == '-'
+            else matrix.get((a, b), matrix.get((b, a), -1))
+            for a, b in zip(a_seq, b_seq)
+        )
+        return i, j, score
+
+    results = Parallel(n_jobs=n_jobs, verbose=verbose_parallel)(
+        delayed(score_pair)(i, j) for i in range(n) for j in range(i, n)
+    )
+
+    similarity_matrix = np.zeros((n, n), dtype=int)
+    for i, j, score in results:
+        similarity_matrix[i, j] = score
+        similarity_matrix[j, i] = score
+
+    return similarity_matrix
+
+
+def compute_normalized_seq_similarity(sequences, subst_matrix='BLOSUM62',
+                                      gap_penalty=-4, n_jobs=-1):
+    """
+    Computes a normalized similarity matrix using a precalculated substitution
+    matrix.
+
+    Each pairwise similarity score is normalized by the maximum possible
+    score for the pair of sequences (i. e. the score we would obtain by comparing
+    the sequence to itself).
+
+    Parameters:
+    -----------
+    sequences : list of str,
+        list of MSA sequences.
+    subst_matrix : str, default='BLOSUM62'
+        name of the substitution matrix.
+    gap_penalty : int, default=-4
+        Penalty score for gaps.
+    n_jobs : int, default=1 (no parallelization)
+        the maximum number of concurrently running jobs (-1 uses all
+        available cores)
+    verbose_parallel : int, default=5
+        verbosity level for parallelization (see joblib doc)
+
+    Returns:
+    --------
+    similarity_matrix : np.ndarray,
+        a (Nseq, Nseq) array of normalized similarity scores (0.0 to 1.0).
+    """
+    matrix = substitution_matrices.load(subst_matrix)
+    n_seq = len(sequences)
+    seq_length = len(sequences[0])
+
+    if not all(len(seq) == seq_length for seq in sequences):
+        raise ValueError("All sequences must be of equal length.")
+
+    seq_array = np.array([list(seq) for seq in sequences])
+
+    def score_pair(i, j):
+        a_seq = seq_array[i]
+        b_seq = seq_array[j]
+        score = sum(
+            gap_penalty if a == '-' or b == '-'
+            else matrix.get((a, b), matrix.get((b, a), -1))
+            for a, b in zip(a_seq, b_seq)
+        )
+        return i, j, score
+
+    def max_score(i):
+        seq = seq_array[i]
+        return sum(
+            gap_penalty if a == '-' else matrix.get((a, a), -1)
+            for a in seq
+        )
+
+    # Compute maximum scores for normalization
+    max_scores = Parallel(n_jobs=n_jobs)(
+        delayed(max_score)(i) for i in range(n_seq)
+    )
+
+    # Compute pairwise scores
+    results = Parallel(n_jobs=n_jobs)(
+        delayed(score_pair)(i, j) for i in range(n_seq) for j in range(i, n_seq)
+    )
+
+    similarity_matrix = np.zeros((n_seq, n_seq), dtype=float)
+    for i, j, score in results:
+        max_possible = max(max_scores[i], max_scores[j])
+        normalized = score / max_possible if max_possible != 0 else 0.0
+        similarity_matrix[i, j] = normalized
+        similarity_matrix[j, i] = normalized
+
+    return similarity_matrix

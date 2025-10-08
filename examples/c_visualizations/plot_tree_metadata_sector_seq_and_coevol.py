@@ -28,7 +28,7 @@ print(df_annot)
 # identifiers used in the fasta and in the phylogenetic tree. The other columns
 # can contain qualitative data that will be displayed as categories alongside
 # the phylogenetic tree. In this example, we will use the last 3 columns
-# 'Protein_type', 'Class', and 'Family'.
+# 'Protein_type', 'Subphylum', and 'Class'.
 
 # %%
 # Import tree file

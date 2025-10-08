@@ -441,14 +441,20 @@ def compute_seq_similarity(sequences, subst_matrix='BLOSUM62', gap_penalty=-4,
     """
     Computes a similarity matrix using a precalculated substitution matrix.
 
+    The similarity score for a pair of sequences is obtained as the sum of
+    the substitution scores at each position of the sequence pair.
+
     Parameters
     ----------
     sequences : list of str,
-        list of MSA sequences.
+        list of Nseq MSA sequences.
     subst_matrix : str, default='BLOSUM62'
         name of the substitution matrix.
+        Type `Bio.Align.substitution_matrices.load()` to obtain a list of
+        available substitution matrices.
     gap_penalty : int, default=-4
-        penalty score for gaps.
+        penalty score for gaps. You can adjust this parameter to reflect
+        biological assumptions (e.g., -1 for mild, -10 for harsh).
     n_jobs : int, default=1 (no parallelization)
         the maximum number of concurrently running jobs (-1 uses all
         available cores)
@@ -492,23 +498,26 @@ def compute_seq_similarity(sequences, subst_matrix='BLOSUM62', gap_penalty=-4,
 
 
 def compute_normalized_seq_similarity(sequences, subst_matrix='BLOSUM62',
-                                      gap_penalty=-4, n_jobs=-1):
+                                      gap_penalty=-4, n_jobs=1):
     """
     Computes a normalized similarity matrix using a precalculated substitution
     matrix.
 
     Each pairwise similarity score is normalized by the maximum possible
-    score for the pair of sequences (i. e. the score we would obtain by
+    score for the pair of sequences (i.e., the score we would obtain by
     comparing the sequence to itself).
 
     Parameters:
     -----------
     sequences : list of str,
-        list of MSA sequences.
+        list of Nseq MSA sequences.
     subst_matrix : str, default='BLOSUM62'
         name of the substitution matrix.
+        Type `Bio.Align.substitution_matrices.load()` to obtain a list of
+        available substitution matrices.
     gap_penalty : int, default=-4
-        Penalty score for gaps.
+        Penalty score for gaps. You can adjust this parameter to reflect
+        biological assumptions (e.g., -1 for mild, -10 for harsh).
     n_jobs : int, default=1 (no parallelization)
         the maximum number of concurrently running jobs (-1 uses all
         available cores)

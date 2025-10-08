@@ -107,8 +107,9 @@ tree_style, _ = update_tree_ete3_and_return_style(
 tree_ete3.render("sector_phylogeny.png", tree_style=tree_style)
 
 # %%
-# You can use ete3's `tree.show()` method for displaying the figure in
-# ete3's interactive GUI.
+# As the similarity score that is computed here is not normalized, it
+# is difficult to see variations on the heatmap. We will thus use a
+# normalized sequence similarity score.
 
 # %%
 # Plot tree with normalized similarity heatmap

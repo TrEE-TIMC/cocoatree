@@ -12,3 +12,4 @@ ete3
 six
 pyqt5
 pandas
+sphinxcontrib-bibtex

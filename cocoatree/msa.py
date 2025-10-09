@@ -437,7 +437,7 @@ def map_msa_positions(n_loaded_pos, remaining_pos):
 
 
 def compute_seq_similarity(sequences, subst_matrix='BLOSUM62', gap_penalty=-4,
-                           n_jobs=1, verbose_parallel=5):
+                           n_jobs=1, verbose_parallel=0):
     """
     Computes a similarity matrix using a precalculated substitution matrix.
 
@@ -458,7 +458,7 @@ def compute_seq_similarity(sequences, subst_matrix='BLOSUM62', gap_penalty=-4,
     n_jobs : int, default=1 (no parallelization)
         the maximum number of concurrently running jobs (-1 uses all
         available cores)
-    verbose_parallel : int, default=5
+    verbose_parallel : int, default=0
         verbosity level for parallelization (see joblib doc)
 
     Returns
@@ -498,7 +498,8 @@ def compute_seq_similarity(sequences, subst_matrix='BLOSUM62', gap_penalty=-4,
 
 
 def compute_normalized_seq_similarity(sequences, subst_matrix='BLOSUM62',
-                                      gap_penalty=-4, n_jobs=1):
+                                      gap_penalty=-4, n_jobs=1,
+                                      verbose_parallel=0):
     """
     Computes a normalized similarity matrix using a precalculated substitution
     matrix.
@@ -521,7 +522,7 @@ def compute_normalized_seq_similarity(sequences, subst_matrix='BLOSUM62',
     n_jobs : int, default=1 (no parallelization)
         the maximum number of concurrently running jobs (-1 uses all
         available cores)
-    verbose_parallel : int, default=5
+    verbose_parallel : int, default=0
         verbosity level for parallelization (see joblib doc)
 
     Returns:
@@ -556,12 +557,12 @@ def compute_normalized_seq_similarity(sequences, subst_matrix='BLOSUM62',
         )
 
     # Compute maximum scores for normalization
-    max_scores = Parallel(n_jobs=n_jobs)(
+    max_scores = Parallel(n_jobs=n_jobs, verbose=verbose_parallel)(
         delayed(max_score)(i) for i in range(n_seq)
     )
 
     # Compute pairwise scores
-    results = Parallel(n_jobs=n_jobs)(
+    results = Parallel(n_jobs=n_jobs, verbose=verbose_parallel)(
         delayed(score_pair)(i, j) for i in range(n_seq)
         for j in range(i, n_seq)
     )

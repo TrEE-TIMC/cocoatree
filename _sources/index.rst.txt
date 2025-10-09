@@ -15,7 +15,7 @@ COCOA-Tree: COllaborative COevolution Analysis Toolbox
 ######################################################
 
 COCOA-Tree is a `Python <https://www.python.org>`_ library to perform coevolution
-analysis of protein sequence data. It includes different coevolution metrics and
+analysis of protein sequence data :cite:p:`halabi_protein_2009`. It includes different coevolution metrics and
 corrections, and allows for an easy comparison of the methods.
 
 The specificity of COCOA-Tree is the inclusion of a visualization tool that allows
@@ -66,3 +66,6 @@ License information
 Conditions on the use and redistribution of this package.
 
 .. literalinclude:: ../LICENSE
+
+.. bibliography::
+

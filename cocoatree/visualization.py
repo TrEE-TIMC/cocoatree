@@ -423,12 +423,13 @@ def add_heatmap_to_tree(tree_style, tree_ete3, sector_id, sector_seq,
         matrix = compute_normalized_seq_similarity(reordered_sequences)
     # FIX to zero values appearing black in the heatmap whatever the cmap
     matrix[matrix == 0] = 0.00000001
+    vmm = [float(np.min(matrix)), float(np.max(matrix))]
 
     # Add heatmap profile to each leaf
     for i, lf in enumerate(tree_ete3.iter_leaves()):
         lf.add_features(profile=matrix[i])
         lf.add_features(deviation=[0 for x in range(matrix.shape[0])])
-        lf.add_face(ProfileFace(max_v=1, min_v=0.0, center_v=0.5,
+        lf.add_face(ProfileFace(max_v=vmm[1], min_v=vmm[0], center_v=0.5,
                                 width=(nb_leaves*width), height=20,
                                 style='heatmap',
                                 colorscheme=colormap),

@@ -13,9 +13,8 @@ ordered following a phylogenetic tree.
 from cocoatree.io import load_MSA, load_tree_ete3
 from cocoatree.datasets import load_S1A_serine_proteases
 from cocoatree.visualization import update_tree_ete3_and_return_style
-from cocoatree.msa import compute_seq_identity, compute_normalized_seq_similarity, \
-    compute_seq_similarity
-from ete3 import TreeStyle
+from cocoatree.msa import compute_seq_identity, compute_seq_similarity, \
+    compute_normalized_seq_similarity
 import pandas as pd
 import matplotlib.pyplot as plt
 

@@ -13,6 +13,11 @@ ordered following a phylogenetic tree.
 from cocoatree.io import load_MSA, load_tree_ete3
 from cocoatree.datasets import load_S1A_serine_proteases
 from cocoatree.visualization import update_tree_ete3_and_return_style
+from cocoatree.msa import compute_seq_identity, compute_normalized_seq_similarity, \
+    compute_seq_similarity
+from ete3 import TreeStyle
+import pandas as pd
+import matplotlib.pyplot as plt
 
 # %%
 # Import metadata
@@ -135,28 +140,47 @@ tree_style, _ = update_tree_ete3_and_return_style(
 tree_ete3.render("sector_phylogeny.png", tree_style=tree_style)
 
 # %%
-# Plot heatmap of a single sector position
+# Compare similarity and identity matrices
 # ----------------------------------------
-# You can compute sequence similarity on a subset of positions, here
-# we look at position 189 (based on 3TGI pdb sequence), which is the
-# third residue in the sector sequence.
+# Let's compare the matrices obtained by computing sequence identity versus
+# sequence similarity.
+#
+# Start by filtering and reordering the MSA sequences so that they follow
+# the phylogenetic tree
+leaves_id = tree_ete3.get_leaf_names()
+sequences = pd.DataFrame(index=sector_id, data={"seq": sector_seq})
+reordered_sequences = sequences.loc[leaves_id, "seq"].values
 
-tree_ete3 = load_tree_ete3(tree_file)
-subsector_seq = [res[2] for res in sector_seq]
-tree_style, _ = update_tree_ete3_and_return_style(
-    tree_ete3, df_annot, sector_id,
-    sector_seq=subsector_seq,
-    meta_data=('Protein_type', 'Subphylum', 'Class'),
-    show_leaf_name=False,
-    fig_title='Normalized sequence similarity of position 189',
-    linewidth=3,
-    linecolor="#000000",
-    bootstrap_style={},
-    tree_scale=200,
-    metadata_colors=halabi_cmap,
-    t_sector_seq=True,
-    t_sector_heatmap=True,
-    matrix_type='norm_similarity',
-    colormap='GnBu'
-    )
-tree_ete3.render("sector_phylogeny.png", tree_style=tree_style)
+# %%
+# Compute the matrices
+norm_sim_matrix = compute_normalized_seq_similarity(reordered_sequences)
+sim_matrix = compute_seq_similarity(reordered_sequences)
+id_matrix = compute_seq_identity(reordered_sequences)
+
+# %%
+# Plot the heatmaps:
+plt.figure(figsize=(20, 8))
+plt.subplot(1, 3, 1)
+plt.imshow(id_matrix, cmap='GnBu')
+plt.xlabel('sequences')
+plt.ylabel(None)
+plt.title('Identity')
+plt.colorbar(shrink=0.4)
+
+plt.subplot(1, 3, 2)
+plt.imshow(sim_matrix, cmap='GnBu')
+plt.xlabel('sequences')
+plt.ylabel(None)
+plt.title('Similarity')
+plt.colorbar(shrink=0.4)
+
+plt.subplot(1, 3, 3)
+plt.imshow(norm_sim_matrix, cmap='GnBu')
+plt.xlabel('sequences')
+plt.ylabel(None)
+plt.title('Normalized similarity')
+plt.colorbar(shrink=0.4)
+
+# %%
+# In this case, there is not much difference between sequence identity and
+# sequence similarity.

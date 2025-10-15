@@ -109,6 +109,8 @@ Functions
    msa.compute_seq_identity
    msa.compute_seq_weights
    msa.map_msa_positions
+   msa.compute_seq_similarity
+   msa.compute_normalized_seq_similarity
 
 
 .. _msa_ref:

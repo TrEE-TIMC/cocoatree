@@ -16,7 +16,8 @@ import matplotlib.colors as colors
 import matplotlib.cm as cmx
 import matplotlib.pyplot as plt
 
-from .msa import compute_seq_identity
+from .msa import compute_seq_identity, compute_seq_similarity, \
+    compute_normalized_seq_similarity
 
 
 def _annot_to_color(attribute, tree, df_annot, cmap='jet'):
@@ -126,6 +127,7 @@ def update_tree_ete3_and_return_style(
         metadata_colors=None,
         t_sector_seq=False,
         t_sector_heatmap=False,
+        matrix_type='identity',
         colormap='inferno'
         ):
     """
@@ -179,8 +181,15 @@ def update_tree_ete3_and_return_style(
         whether to show the sequences of the sector
 
     t_sector_heatmap : boolean,
-        whether to add a heatmap of the identity matrix between sector
-        sequences
+        whether to add a heatmap of the identity or similarity matrix between
+        sector sequences
+
+    matrix_type : str, default='identity'
+        whether to compute pairwise sequence identity ('identity'), similarity
+        ('similarity'), or normalized similarity ('norm_similarity').
+
+    colormap : str, default='inferno'
+        the matplotlib colormap to use for the heatmap
 
     Returns
     -------
@@ -292,6 +301,7 @@ def update_tree_ete3_and_return_style(
     if t_sector_heatmap:
         tree_style, column_layout = add_heatmap_to_tree(
             tree_style, tree_ete3, sector_id, sector_seq,
+            matrix_type=matrix_type,
             column_start=column_layout, colormap=colormap)
 
     # Add title
@@ -352,6 +362,7 @@ def add_sector_sequences_to_tree(tree_style, tree_ete3, sector_id, sector_seq,
 
 
 def add_heatmap_to_tree(tree_style, tree_ete3, sector_id, sector_seq,
+                        matrix_type="identity",
                         column_start=0, width=20, colormap="inferno"):
     """
     Add heatmap to ETE3's tree style
@@ -368,6 +379,11 @@ def add_heatmap_to_tree(tree_style, tree_ete3, sector_id, sector_seq,
 
     sector_seq : corresponding list of sector sequences to display,
             as imported by io.load_msa()
+
+    matrix_type : str, default='identity'
+            whether to compute pairwise matrix identity ('identity'),
+            similarity ('similarity'), or normalized similarity
+            ('norm_similarity')
 
     column_start : int, optional, default : 0
         the column on which to start plotting
@@ -399,15 +415,23 @@ def add_heatmap_to_tree(tree_style, tree_ete3, sector_id, sector_seq,
     sequences = pd.DataFrame(index=sector_id, data={"seq": sector_seq})
     reordered_sequences = sequences.loc[leaves_id, "seq"].values
 
-    id_mat = compute_seq_identity(reordered_sequences)
+    if matrix_type == 'identity':
+        matrix = compute_seq_identity(reordered_sequences)
+    elif matrix_type == 'similarity':
+        matrix = compute_seq_similarity(reordered_sequences)
+    elif matrix_type == 'norm_similarity':
+        matrix = compute_normalized_seq_similarity(reordered_sequences)
     # FIX to zero values appearing black in the heatmap whatever the cmap
-    id_mat[id_mat == 0] = 0.00000001
+    matrix[matrix == 0] = 0.00000001
+    min_v = float(np.min(matrix))
+    max_v = float(np.max(matrix))
+    center_v = float(np.mean([min_v, max_v]))
 
     # Add heatmap profile to each leaf
     for i, lf in enumerate(tree_ete3.iter_leaves()):
-        lf.add_features(profile=id_mat[i])
-        lf.add_features(deviation=[0 for x in range(id_mat.shape[0])])
-        lf.add_face(ProfileFace(max_v=1, min_v=0.0, center_v=0.5,
+        lf.add_features(profile=matrix[i])
+        lf.add_features(deviation=[0 for x in range(matrix.shape[0])])
+        lf.add_face(ProfileFace(max_v=max_v, min_v=min_v, center_v=center_v,
                                 width=(nb_leaves*width), height=20,
                                 style='heatmap',
                                 colorscheme=colormap),

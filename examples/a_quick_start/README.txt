@@ -2,5 +2,5 @@
 
 Cocoatree quick start
 ---------------------
-In this section, you'll find examples to easily perform coevolution
-analyses using `mod:cocoatree`
+In this section, you'll find examples to perform basic coevolution
+analyses using :mod:`cocoatree`

@@ -544,7 +544,7 @@ def compute_normalized_seq_similarity(sequences, subst_matrix='BLOSUM62',
         a_seq = seq_array[i]
         b_seq = seq_array[j]
         score = sum(
-            0 if a =='-' and b == '-'
+            0 if a == '-' and b == '-'
             else gap_penalty if a == '-' or b == '-'
             else matrix.get((a, b))
             for a, b in zip(a_seq, b_seq)

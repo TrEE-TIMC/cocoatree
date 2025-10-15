@@ -91,7 +91,7 @@ The dataframe must have a 'Seq_ID' column, which corresponds to the sequence
 identifiers used in the fasta and in the phylogenetic tree. The other columns
 can contain qualitative data that will be displayed as categories alongside
 the phylogenetic tree. In this example, we will use the last 3 columns
-'Protein_type', 'Class', and 'Family'.
+'Protein_type', 'Subphylum', and 'Class'.
 
 .. GENERATED FROM PYTHON SOURCE LINES 34-38
 
@@ -380,7 +380,7 @@ ete3's interactive GUI.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 3.444 seconds)
+   **Total running time of the script:** (0 minutes 3.432 seconds)
 
 
 .. _sphx_glr_download_auto_examples_c_visualizations_plot_tree_metadata_sector_seq_and_coevol.py:

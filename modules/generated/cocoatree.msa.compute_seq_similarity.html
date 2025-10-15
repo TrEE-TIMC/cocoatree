@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>cocoatree.msa.compute_seq_similarity &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="../../_static/documentation_options.js?v=837179f8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  </head><body><div class="navbar related">
+      <a href="../../index.html">
+        
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="../../auto_examples/index.html">Gallery</a> </li>
+      <li class="right"><a href="../classes.html">API</a> | </li>
+      <li class="right"><a href="../../install.html">Installation</a> | </li>
+      <li class="right"><a href="../../index.html">Home</a> | </li>
+      
+    </ul>
+  </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cocoatree-msa-compute-seq-similarity">
+<h1>cocoatree.msa.compute_seq_similarity<a class="headerlink" href="#cocoatree-msa-compute-seq-similarity" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="cocoatree.msa.compute_seq_similarity">
+<span class="sig-prename descclassname"><span class="pre">cocoatree.msa.</span></span><span class="sig-name descname"><span class="pre">compute_seq_similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subst_matrix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'BLOSUM62'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gap_penalty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose_parallel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cocoatree/msa.html#compute_seq_similarity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cocoatree.msa.compute_seq_similarity" title="Link to this definition">¶</a></dt>
+<dd><p>Computes a similarity matrix using a precalculated substitution matrix.</p>
+<p>The similarity score for a pair of sequences is obtained as the sum of
+the substitution scores at each position of the sequence pair.</p>
+<section id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>sequences<span class="classifier">list of str,</span></dt><dd><p>list of Nseq MSA sequences.</p>
+</dd>
+<dt>subst_matrix<span class="classifier">str, default=’BLOSUM62’</span></dt><dd><p>name of the substitution matrix.
+Type <cite>Bio.Align.substitution_matrices.load()</cite> to obtain a list of
+available substitution matrices.</p>
+</dd>
+<dt>gap_penalty<span class="classifier">int, default=-4</span></dt><dd><p>penalty score for gaps. You can adjust this parameter to reflect
+biological assumptions (e.g., -1 for mild, -10 for harsh).</p>
+</dd>
+<dt>n_jobs<span class="classifier">int, default=1 (no parallelization)</span></dt><dd><p>the maximum number of concurrently running jobs (-1 uses all
+available cores)</p>
+</dd>
+<dt>verbose_parallel<span class="classifier">int, default=0</span></dt><dd><p>verbosity level for parallelization (see joblib doc)</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>similarity_matrix<span class="classifier">np.ndarray,</span></dt><dd><p>a (Nseq, Nseq) array of similarity scores.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<section id="examples-using-cocoatree-msa-compute-seq-similarity">
+<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.msa.compute_seq_similarity</span></code><a class="headerlink" href="#examples-using-cocoatree-msa-compute-seq-similarity" title="Link to this heading">¶</a></h2>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="Here we present how you can plot a heatmap of sequence similarity ordered following a phylogenetic tree."><img alt="" src="../../_images/sphx_glr_plot_tree_similarity_heatmap_thumb.png" />
+<p><a class="reference internal" href="../../auto_examples/c_visualizations/plot_tree_similarity_heatmap.html#sphx-glr-auto-examples-c-visualizations-plot-tree-similarity-heatmap-py"><span class="std std-ref">Plot a similarity heatmap of a sector along the phylogenetic tree</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Plot a similarity heatmap of a sector along the phylogenetic tree</div>
+</div></div><div class="sphx-glr-clear"></div></section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

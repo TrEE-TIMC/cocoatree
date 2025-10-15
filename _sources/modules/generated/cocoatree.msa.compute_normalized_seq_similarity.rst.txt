@@ -1,0 +1,14 @@
+﻿:orphan:
+
+cocoatree.msa.compute_normalized_seq_similarity
+===============================================
+
+.. currentmodule:: cocoatree.msa
+
+.. autofunction:: compute_normalized_seq_similarity
+
+.. include:: ../../generated/backreferences/cocoatree.msa.compute_normalized_seq_similarity.examples
+
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>

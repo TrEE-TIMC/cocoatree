@@ -42,7 +42,7 @@
   <h1>Source code for cocoatree.msa</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">Bio.Seq</span><span class="w"> </span><span class="kn">import</span> <span class="n">Seq</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">Bio.SeqRecord</span><span class="w"> </span><span class="kn">import</span> <span class="n">SeqRecord</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">Bio.Align</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultipleSeqAlignment</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">Bio.Align</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultipleSeqAlignment</span><span class="p">,</span> <span class="n">substitution_matrices</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sn</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.__params</span><span class="w"> </span><span class="kn">import</span> <span class="n">lett2num</span>
@@ -496,6 +496,155 @@
         <span class="n">filtered2original</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">remaining_pos</span><span class="p">[</span><span class="n">pos</span><span class="p">])</span>
 
     <span class="k">return</span> <span class="n">original2filtered</span><span class="p">,</span> <span class="n">filtered2original</span></div>
+
+
+
+<div class="viewcode-block" id="compute_seq_similarity">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.msa.compute_seq_similarity.html#cocoatree.msa.compute_seq_similarity">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_seq_similarity</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">subst_matrix</span><span class="o">=</span><span class="s1">&#39;BLOSUM62&#39;</span><span class="p">,</span> <span class="n">gap_penalty</span><span class="o">=-</span><span class="mi">4</span><span class="p">,</span>
+                           <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose_parallel</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes a similarity matrix using a precalculated substitution matrix.</span>
+
+<span class="sd">    The similarity score for a pair of sequences is obtained as the sum of</span>
+<span class="sd">    the substitution scores at each position of the sequence pair.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sequences : list of str,</span>
+<span class="sd">        list of Nseq MSA sequences.</span>
+<span class="sd">    subst_matrix : str, default=&#39;BLOSUM62&#39;</span>
+<span class="sd">        name of the substitution matrix.</span>
+<span class="sd">        Type `Bio.Align.substitution_matrices.load()` to obtain a list of</span>
+<span class="sd">        available substitution matrices.</span>
+<span class="sd">    gap_penalty : int, default=-4</span>
+<span class="sd">        penalty score for gaps. You can adjust this parameter to reflect</span>
+<span class="sd">        biological assumptions (e.g., -1 for mild, -10 for harsh).</span>
+<span class="sd">    n_jobs : int, default=1 (no parallelization)</span>
+<span class="sd">        the maximum number of concurrently running jobs (-1 uses all</span>
+<span class="sd">        available cores)</span>
+<span class="sd">    verbose_parallel : int, default=0</span>
+<span class="sd">        verbosity level for parallelization (see joblib doc)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    similarity_matrix : np.ndarray,</span>
+<span class="sd">        a (Nseq, Nseq) array of similarity scores.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">matrix</span> <span class="o">=</span> <span class="n">substitution_matrices</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">subst_matrix</span><span class="p">)</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+    <span class="n">seq_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">==</span> <span class="n">seq_length</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;All sequences must be of equal length.&quot;</span><span class="p">)</span>
+
+    <span class="n">seq_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">score_pair</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+        <span class="n">a_seq</span> <span class="o">=</span> <span class="n">seq_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">b_seq</span> <span class="o">=</span> <span class="n">seq_array</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+            <span class="mi">0</span> <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span> <span class="ow">and</span> <span class="n">b</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span>
+            <span class="k">else</span> <span class="n">gap_penalty</span> <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span> <span class="ow">or</span> <span class="n">b</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span>
+            <span class="k">else</span> <span class="n">matrix</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a_seq</span><span class="p">,</span> <span class="n">b_seq</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">score</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose_parallel</span><span class="p">)(</span>
+        <span class="n">delayed</span><span class="p">(</span><span class="n">score_pair</span><span class="p">)(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">similarity_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+        <span class="n">similarity_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">score</span>
+        <span class="n">similarity_matrix</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">score</span>
+
+    <span class="k">return</span> <span class="n">similarity_matrix</span></div>
+
+
+
+<div class="viewcode-block" id="compute_normalized_seq_similarity">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.msa.compute_normalized_seq_similarity.html#cocoatree.msa.compute_normalized_seq_similarity">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_normalized_seq_similarity</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">subst_matrix</span><span class="o">=</span><span class="s1">&#39;BLOSUM62&#39;</span><span class="p">,</span>
+                                      <span class="n">gap_penalty</span><span class="o">=-</span><span class="mi">4</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                      <span class="n">verbose_parallel</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Computes a normalized similarity matrix using a precalculated substitution</span>
+<span class="sd">    matrix.</span>
+
+<span class="sd">    Each pairwise similarity score is normalized by the maximum possible</span>
+<span class="sd">    score for the pair of sequences (i.e., the score we would obtain by</span>
+<span class="sd">    comparing the sequence to itself).</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    sequences : list of str,</span>
+<span class="sd">        list of Nseq MSA sequences.</span>
+<span class="sd">    subst_matrix : str, default=&#39;BLOSUM62&#39;</span>
+<span class="sd">        name of the substitution matrix.</span>
+<span class="sd">        Type `Bio.Align.substitution_matrices.load()` to obtain a list of</span>
+<span class="sd">        available substitution matrices.</span>
+<span class="sd">    gap_penalty : int, default=-4</span>
+<span class="sd">        Penalty score for gaps. You can adjust this parameter to reflect</span>
+<span class="sd">        biological assumptions (e.g., -1 for mild, -10 for harsh).</span>
+<span class="sd">    n_jobs : int, default=1 (no parallelization)</span>
+<span class="sd">        the maximum number of concurrently running jobs (-1 uses all</span>
+<span class="sd">        available cores)</span>
+<span class="sd">    verbose_parallel : int, default=0</span>
+<span class="sd">        verbosity level for parallelization (see joblib doc)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    --------</span>
+<span class="sd">    similarity_matrix : np.ndarray,</span>
+<span class="sd">        a (Nseq, Nseq) array of normalized similarity scores (0.0 to 1.0).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">matrix</span> <span class="o">=</span> <span class="n">substitution_matrices</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">subst_matrix</span><span class="p">)</span>
+    <span class="n">n_seq</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
+    <span class="n">seq_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="o">==</span> <span class="n">seq_length</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;All sequences must be of equal length.&quot;</span><span class="p">)</span>
+
+    <span class="n">seq_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">list</span><span class="p">(</span><span class="n">seq</span><span class="p">)</span> <span class="k">for</span> <span class="n">seq</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">])</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">score_pair</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span>
+        <span class="n">a_seq</span> <span class="o">=</span> <span class="n">seq_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">b_seq</span> <span class="o">=</span> <span class="n">seq_array</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+        <span class="n">score</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+            <span class="mi">0</span> <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span> <span class="ow">and</span> <span class="n">b</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span>
+            <span class="k">else</span> <span class="n">gap_penalty</span> <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span> <span class="ow">or</span> <span class="n">b</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span>
+            <span class="k">else</span> <span class="n">matrix</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a_seq</span><span class="p">,</span> <span class="n">b_seq</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">score</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">max_score</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="n">seq</span> <span class="o">=</span> <span class="n">seq_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span>
+            <span class="mi">0</span> <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span> <span class="k">else</span> <span class="n">matrix</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">a</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">seq</span>
+        <span class="p">)</span>
+
+    <span class="c1"># Compute maximum scores for normalization</span>
+    <span class="n">max_scores</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose_parallel</span><span class="p">)(</span>
+        <span class="n">delayed</span><span class="p">(</span><span class="n">max_score</span><span class="p">)(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_seq</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Compute pairwise scores</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">Parallel</span><span class="p">(</span><span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose_parallel</span><span class="p">)(</span>
+        <span class="n">delayed</span><span class="p">(</span><span class="n">score_pair</span><span class="p">)(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_seq</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n_seq</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">similarity_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_seq</span><span class="p">,</span> <span class="n">n_seq</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+        <span class="n">max_possible</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_scores</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">max_scores</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+        <span class="n">normalized</span> <span class="o">=</span> <span class="n">score</span> <span class="o">/</span> <span class="n">max_possible</span> <span class="k">if</span> <span class="n">max_possible</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="mf">0.0</span>
+        <span class="n">similarity_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalized</span>
+        <span class="n">similarity_matrix</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalized</span>
+
+    <span class="k">return</span> <span class="n">similarity_matrix</span></div>
 
 </pre></div>
 

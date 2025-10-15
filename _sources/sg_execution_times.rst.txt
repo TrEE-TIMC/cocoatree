@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:27.267** total execution time for 11 files **from all galleries**:
+**00:34.750** total execution time for 12 files **from all galleries**:
 
 .. container::
 
@@ -32,36 +32,39 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
+   * - :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_similarity_heatmap.py` (``../examples/c_visualizations/plot_tree_similarity_heatmap.py``)
+     - 00:07.399
+     - 0.0
    * - :ref:`sphx_glr_auto_examples_b_advanced_plot_sca_vs_mi.py` (``../examples/b_advanced/plot_sca_vs_mi.py``)
-     - 00:06.876
+     - 00:06.908
      - 0.0
    * - :ref:`sphx_glr_auto_examples_b_advanced_plot_full_SCA_analysis.py` (``../examples/b_advanced/plot_full_SCA_analysis.py``)
-     - 00:04.163
+     - 00:04.160
      - 0.0
    * - :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_sector_seq_and_coevol.py` (``../examples/c_visualizations/plot_tree_metadata_sector_seq_and_coevol.py``)
-     - 00:03.444
+     - 00:03.432
      - 0.0
    * - :ref:`sphx_glr_auto_examples_d_datasets_plot_DHFR.py` (``../examples/d_datasets/plot_DHFR.py``)
-     - 00:02.979
+     - 00:03.001
      - 0.0
    * - :ref:`sphx_glr_auto_examples_a_quick_start_plot_simple_sca.py` (``../examples/a_quick_start/plot_simple_sca.py``)
-     - 00:02.459
+     - 00:02.470
      - 0.0
    * - :ref:`sphx_glr_auto_examples_c_visualizations_plot_simple_tree.py` (``../examples/c_visualizations/plot_simple_tree.py``)
-     - 00:01.627
+     - 00:01.643
      - 0.0
    * - :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_colors.py` (``../examples/c_visualizations/plot_tree_metadata_colors.py``)
-     - 00:01.566
+     - 00:01.595
      - 0.0
    * - :ref:`sphx_glr_auto_examples_d_datasets_plot_s1A_serine_proteases.py` (``../examples/d_datasets/plot_s1A_serine_proteases.py``)
-     - 00:01.486
+     - 00:01.478
      - 0.0
    * - :ref:`sphx_glr_auto_examples_b_advanced_plot_sca_with_own_metric.py` (``../examples/b_advanced/plot_sca_with_own_metric.py``)
-     - 00:01.310
+     - 00:01.298
      - 0.0
    * - :ref:`sphx_glr_auto_examples_d_datasets_plot_rhomboid_proteases.py` (``../examples/d_datasets/plot_rhomboid_proteases.py``)
-     - 00:01.020
+     - 00:01.029
      - 0.0
    * - :ref:`sphx_glr_auto_examples_a_quick_start_plot_map_alignments.py` (``../examples/a_quick_start/plot_map_alignments.py``)
-     - 00:00.337
+     - 00:00.335
      - 0.0

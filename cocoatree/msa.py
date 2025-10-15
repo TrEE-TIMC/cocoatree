@@ -479,8 +479,9 @@ def compute_seq_similarity(sequences, subst_matrix='BLOSUM62', gap_penalty=-4,
         a_seq = seq_array[i]
         b_seq = seq_array[j]
         score = sum(
-            gap_penalty if a == '-' or b == '-'
-            else matrix.get((a, b), matrix.get((b, a), -1))
+            0 if a == '-' and b == '-'
+            else gap_penalty if a == '-' or b == '-'
+            else matrix.get((a, b))
             for a, b in zip(a_seq, b_seq)
         )
         return i, j, score
@@ -543,8 +544,9 @@ def compute_normalized_seq_similarity(sequences, subst_matrix='BLOSUM62',
         a_seq = seq_array[i]
         b_seq = seq_array[j]
         score = sum(
-            gap_penalty if a == '-' or b == '-'
-            else matrix.get((a, b), matrix.get((b, a), -1))
+            0 if a =='-' and b == '-'
+            else gap_penalty if a == '-' or b == '-'
+            else matrix.get((a, b))
             for a, b in zip(a_seq, b_seq)
         )
         return i, j, score
@@ -552,7 +554,7 @@ def compute_normalized_seq_similarity(sequences, subst_matrix='BLOSUM62',
     def max_score(i):
         seq = seq_array[i]
         return sum(
-            gap_penalty if a == '-' else matrix.get((a, a), -1)
+            0 if a == '-' else matrix.get((a, a), -1)
             for a in seq
         )
 

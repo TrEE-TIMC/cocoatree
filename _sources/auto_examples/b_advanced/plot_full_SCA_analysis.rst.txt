@@ -276,7 +276,7 @@ Compute the SCA coevolution matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7f9fb9208410>
+    <matplotlib.colorbar.Colorbar object at 0x7fa0457123d0>
 
 
 
@@ -564,7 +564,7 @@ independent component to which the sector is associated.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.160 seconds)
+   **Total running time of the script:** (0 minutes 4.147 seconds)
 
 
 .. _sphx_glr_download_auto_examples_b_advanced_plot_full_SCA_analysis.py:

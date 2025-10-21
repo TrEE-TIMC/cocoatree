@@ -2,8 +2,8 @@
 S1A serine proteases
 ====================
 
-This example shows how the S1A serine proteases dataset is organized and how you
-can use it to test cocoatree's features.
+This example shows how the S1A serine proteases dataset is organized and how
+you can use it to test cocoatree's features.
 
 This dataset is actually composed of two MSAs:
     - the MSA from Halabi et al., (2008)
@@ -11,7 +11,7 @@ This dataset is actually composed of two MSAs:
 
 """
 
-# %% 
+# %%
 # Imports
 import numpy as np
 from cocoatree.datasets import load_S1A_serine_proteases
@@ -138,4 +138,3 @@ for sect in sectors:
 # .. [2] `Evolution-Based Functional Decomposition of Proteins
 #        <https://doi.org/10.1371/journal.pcbi.1004817>`_,
 #        Rivoire et al., PLOS Computational Biology 2016
-# 

@@ -53,9 +53,9 @@ ax.plot(results.loc[:, "IC1"],
 
 # Plotting XCoRs elements
 for isec, color in zip([1, 2, 3], ['r', 'g', 'b']):
-    ax.plot(results.loc[results["XCoR_%d" % isec], "IC1"],
-            results.loc[results["XCoR_%d" % isec], "IC2"],
-            ".", c=color, label="XCoR %d" % isec)
+    ax.plot(results.loc[results["sector_%d" % isec], "IC1"],
+            results.loc[results["sector_%d" % isec], "IC2"],
+            ".", c=color, label="XCoR_%d" % isec)
 
 ax.set_xlabel("IC1")
 ax.set_ylabel("IC2")

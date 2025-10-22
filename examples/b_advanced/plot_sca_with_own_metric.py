@@ -31,7 +31,8 @@ n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
 # %%
 # Perform a SCA-like analysis using your own metrics
 # --------------------------------------------------
-# Here, as a coevolution_matrix, we take the example of a kernel matrix as provided 
+# Here, as a coevolution_matrix, we take the example of a kernel matrix a
+# provided
 # by the scikit-learn library
 
 def my_coevolution_matrix(sequences, seq_weights=None, freq_regul=0.08):

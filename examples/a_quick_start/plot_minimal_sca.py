@@ -3,7 +3,8 @@
 A minimal SCA analysis
 ======================
 
-This example provides a minimal code for identifying sectors -- more precisely, XCoRs :cite:p:`jullien_cocoatree_2025` -- associated with a MSA.
+This example provides a minimal code for identifying sectors -- more precisely,
+XCoRs :cite:p:`jullien_cocoatree_2025` -- associated with a MSA.
 """
 
 import cocoatree.datasets as c_data

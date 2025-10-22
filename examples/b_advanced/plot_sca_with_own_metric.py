@@ -28,7 +28,14 @@ loaded_seqs_id = serine_dataset["sequence_ids"]
 n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
 
 
-def compute_correlation(sequences, seq_weights=None, freq_regul=0.08):
+# %%
+# Perform a SCA-like analysis using your own metrics
+# --------------------------------------------------
+# Here, as a coevolution_matrix, we take the example of a kernel matrix a
+# provided
+# by the scikit-learn library
+
+def my_coevolution_matrix(sequences, seq_weights=None, freq_regul=0.08):
     seqs = np.array([[i for i in s] for s in sequences])
     X = OneHotEncoder().fit_transform(seqs.T)
     return pairwise.pairwise_kernels(X)
@@ -36,4 +43,4 @@ def compute_correlation(sequences, seq_weights=None, freq_regul=0.08):
 
 coevol_matrix, results = cocoatree.perform_sca(
     loaded_seqs_id, loaded_seqs, n_components=3,
-    coevolution_metric=compute_correlation)
+    coevolution_metric=my_coevolution_matrix)

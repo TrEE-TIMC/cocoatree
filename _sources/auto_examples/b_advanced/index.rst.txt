@@ -45,7 +45,7 @@ Advanced usage of cocoatree
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">Mutual information versus SCA</div>
+      <div class="sphx-glr-thumbnail-title">Mutual information versus SCA co-evolution metrics</div>
     </div>
 
 

@@ -380,7 +380,7 @@ ete3's interactive GUI.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 3.464 seconds)
+   **Total running time of the script:** (0 minutes 3.430 seconds)
 
 
 .. _sphx_glr_download_auto_examples_c_visualizations_plot_tree_metadata_sector_seq_and_coevol.py:

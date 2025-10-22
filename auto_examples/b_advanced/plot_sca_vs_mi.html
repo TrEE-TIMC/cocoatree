@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Mutual information versus SCA &#8212; cocoatree 0.0 documentation</title>
+    <title>Mutual information versus SCA co-evolution metrics &#8212; cocoatree 0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
     <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
@@ -45,11 +45,11 @@
 <p><a class="reference internal" href="#sphx-glr-download-auto-examples-b-advanced-plot-sca-vs-mi-py"><span class="std std-ref">Go to the end</span></a>
 to download the full example code. or to run this example in your browser via Binder</p>
 </div>
-<section class="sphx-glr-example-title" id="mutual-information-versus-sca">
-<span id="sphx-glr-auto-examples-b-advanced-plot-sca-vs-mi-py"></span><h1>Mutual information versus SCA<a class="headerlink" href="#mutual-information-versus-sca" title="Link to this heading">¶</a></h1>
+<section class="sphx-glr-example-title" id="mutual-information-versus-sca-co-evolution-metrics">
+<span id="sphx-glr-auto-examples-b-advanced-plot-sca-vs-mi-py"></span><h1>Mutual information versus SCA co-evolution metrics<a class="headerlink" href="#mutual-information-versus-sca-co-evolution-metrics" title="Link to this heading">¶</a></h1>
 <p>In this example, we are comparing the results of the co-evolution analysis on
 serine proteases using SCA and the mutual information.</p>
-<p>Import necessary</p>
+<p>Necessary imports</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">cocoatree.datasets</span><span class="w"> </span><span class="kn">import</span> <a href="../../modules/generated/cocoatree.datasets.load_S1A_serine_proteases.html#cocoatree.datasets.load_S1A_serine_proteases" title="cocoatree.datasets.load_S1A_serine_proteases" class="sphx-glr-backref-module-cocoatree-datasets sphx-glr-backref-type-py-function"><span class="n">load_S1A_serine_proteases</span></a>
 <span class="kn">from</span><span class="w"> </span><span class="nn">cocoatree.msa</span><span class="w"> </span><span class="kn">import</span> <a href="../../modules/generated/cocoatree.msa.filter_sequences.html#cocoatree.msa.filter_sequences" title="cocoatree.msa.filter_sequences" class="sphx-glr-backref-module-cocoatree-msa sphx-glr-backref-type-py-function"><span class="n">filter_sequences</span></a>
 
@@ -65,7 +65,7 @@ serine proteases using SCA and the mutual information.</p>
 <section id="load-the-dataset">
 <h2>Load the dataset<a class="headerlink" href="#load-the-dataset" title="Link to this heading">¶</a></h2>
 <p>We start by importing the dataset.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">serine_dataset</span></a> <span class="o">=</span> <a href="../../modules/generated/cocoatree.datasets.load_S1A_serine_proteases.html#cocoatree.datasets.load_S1A_serine_proteases" title="cocoatree.datasets.load_S1A_serine_proteases" class="sphx-glr-backref-module-cocoatree-datasets sphx-glr-backref-type-py-function"><span class="n">load_S1A_serine_proteases</span></a><span class="p">(</span><span class="n">paper</span><span class="o">=</span><span class="s1">&#39;rivoire&#39;</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">serine_dataset</span></a> <span class="o">=</span> <a href="../../modules/generated/cocoatree.datasets.load_S1A_serine_proteases.html#cocoatree.datasets.load_S1A_serine_proteases" title="cocoatree.datasets.load_S1A_serine_proteases" class="sphx-glr-backref-module-cocoatree-datasets sphx-glr-backref-type-py-function"><span class="n">load_S1A_serine_proteases</span></a><span class="p">()</span>
 <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">seq_id</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">serine_dataset</span></a><span class="p">[</span><span class="s2">&quot;sequence_ids&quot;</span><span class="p">]</span>
 <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sequences</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">serine_dataset</span></a><span class="p">[</span><span class="s2">&quot;alignment&quot;</span><span class="p">]</span>
 <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_pos</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">n_seq</span></a> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sequences</span></a><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sequences</span></a><span class="p">)</span>
@@ -74,7 +74,7 @@ serine proteases using SCA and the mutual information.</p>
 </section>
 <section id="filtering-of-the-multiple-sequence-alignment">
 <h2>Filtering of the multiple sequence alignment<a class="headerlink" href="#filtering-of-the-multiple-sequence-alignment" title="Link to this heading">¶</a></h2>
-<p>We are going to filter and clean the MSA</p>
+<p>We filter and clean the MSA</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">seq_kept</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">seq_id_kept</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">pos_kept</span></a> <span class="o">=</span> <a href="../../modules/generated/cocoatree.msa.filter_sequences.html#cocoatree.msa.filter_sequences" title="cocoatree.msa.filter_sequences" class="sphx-glr-backref-module-cocoatree-msa sphx-glr-backref-type-py-function"><span class="n">filter_sequences</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sequences</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">seq_id</span></a><span class="p">)</span>
 </pre></div>
 </div>
@@ -85,83 +85,30 @@ serine proteases using SCA and the mutual information.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>computing weight of seq 1/1376
-computing weight of seq 101/1376
-computing weight of seq 201/1376
-computing weight of seq 301/1376
-computing weight of seq 401/1376
-computing weight of seq 501/1376
-computing weight of seq 601/1376
-computing weight of seq 701/1376
-computing weight of seq 801/1376
-computing weight of seq 901/1376
-computing weight of seq 1001/1376
-computing weight of seq 1101/1376
-computing weight of seq 1201/1376
-computing weight of seq 1301/1376
 </pre></div>
 </div>
 </section>
-<section id="compute-the-mutual-information-matrix">
-<h2>Compute the Mutual information matrix<a class="headerlink" href="#compute-the-mutual-information-matrix" title="Link to this heading">¶</a></h2>
+<section id="compute-mi-matrices">
+<h2>Compute MI matrices<a class="headerlink" href="#compute-mi-matrices" title="Link to this heading">¶</a></h2>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">normalized_MI</span></a> <span class="o">=</span> <a href="../../modules/generated/cocoatree.statistics.pairwise.compute_mutual_information_matrix.html#cocoatree.statistics.pairwise.compute_mutual_information_matrix" title="cocoatree.statistics.pairwise.compute_mutual_information_matrix" class="sphx-glr-backref-module-cocoatree-statistics-pairwise sphx-glr-backref-type-py-function"><span class="n">compute_mutual_information_matrix</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">seq_kept</span></a><span class="p">)</span>
 <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">MI</span></a> <span class="o">=</span> <a href="../../modules/generated/cocoatree.statistics.pairwise.compute_mutual_information_matrix.html#cocoatree.statistics.pairwise.compute_mutual_information_matrix" title="cocoatree.statistics.pairwise.compute_mutual_information_matrix" class="sphx-glr-backref-module-cocoatree-statistics-pairwise sphx-glr-backref-type-py-function"><span class="n">compute_mutual_information_matrix</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">seq_kept</span></a><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>computing weight of seq 1/1376
-computing weight of seq 101/1376
-computing weight of seq 201/1376
-computing weight of seq 301/1376
-computing weight of seq 401/1376
-computing weight of seq 501/1376
-computing weight of seq 601/1376
-computing weight of seq 701/1376
-computing weight of seq 801/1376
-computing weight of seq 901/1376
-computing weight of seq 1001/1376
-computing weight of seq 1101/1376
-computing weight of seq 1201/1376
-computing weight of seq 1301/1376
 computing weight of seq 1/1376
-computing weight of seq 101/1376
-computing weight of seq 201/1376
-computing weight of seq 301/1376
-computing weight of seq 401/1376
-computing weight of seq 501/1376
-computing weight of seq 601/1376
-computing weight of seq 701/1376
-computing weight of seq 801/1376
-computing weight of seq 901/1376
-computing weight of seq 1001/1376
-computing weight of seq 1101/1376
-computing weight of seq 1201/1376
-computing weight of seq 1301/1376
 </pre></div>
 </div>
 </section>
 <section id="compare-mi-versus-sca">
 <h2>Compare MI versus SCA<a class="headerlink" href="#compare-mi-versus-sca" title="Link to this heading">¶</a></h2>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="matplotlib.pyplot.figure" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">figure</span></a><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-
-<span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ih</span></a><span class="p">,</span> <span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">heatmap</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">title</span></a><span class="p">)</span> <span class="ow">in</span> \
-    <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">SCA_matrix</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">MI</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">normalized_MI</span></a><span class="p">],</span>
-                  <span class="p">[</span><span class="s1">&#39;SCA matrix&#39;</span><span class="p">,</span> <span class="s1">&#39;Mutual Information&#39;</span><span class="p">,</span>
-                   <span class="s1">&#39;Normalized Mutual Information&#39;</span><span class="p">])):</span>
-    <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplot.html#matplotlib.pyplot.subplot" title="matplotlib.pyplot.subplot" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span></a><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ih</span></a><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-    <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imshow.html#matplotlib.pyplot.imshow" title="matplotlib.pyplot.imshow" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">heatmap</span></a><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span><span class="p">)</span>
-    <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xlabel.html#matplotlib.pyplot.xlabel" title="matplotlib.pyplot.xlabel" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span></a><span class="p">(</span><span class="s1">&#39;residues&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-    <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.ylabel.html#matplotlib.pyplot.ylabel" title="matplotlib.pyplot.ylabel" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span></a><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
-    <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.title.html#matplotlib.pyplot.title" title="matplotlib.pyplot.title" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">title</span></a><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">title</span></a><span class="p">)</span>
-    <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.colorbar.html#matplotlib.pyplot.colorbar" title="matplotlib.pyplot.colorbar" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span></a><span class="p">(</span><span class="n">shrink</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
-</pre></div>
-</div>
-<img src="../../_images/sphx_glr_plot_sca_vs_mi_001.png" srcset="../../_images/sphx_glr_plot_sca_vs_mi_001.png" alt="SCA matrix, Mutual Information, Normalized Mutual Information" class = "sphx-glr-single-img"/></section>
-<section id="adapt-heatmap-scale">
-<h2>Adapt heatmap scale<a class="headerlink" href="#adapt-heatmap-scale" title="Link to this heading">¶</a></h2>
+</section>
+<section id="the-heatmap-scales-are-adjusted-to-make-the-information-visible">
+<h2>The heatmap scales are adjusted to make the information visible<a class="headerlink" href="#the-heatmap-scales-are-adjusted-to-make-the-information-visible" title="Link to this heading">¶</a></h2>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="matplotlib.pyplot.figure" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">figure</span></a><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
 
 <span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ih</span></a><span class="p">,</span> <span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">heatmap</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">title</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">vmm</span></a><span class="p">)</span> <span class="ow">in</span> \
     <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">SCA_matrix</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">MI</span></a><span class="p">,</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">normalized_MI</span></a><span class="p">],</span>
-                  <span class="p">[</span><span class="s1">&#39;SCA matrix&#39;</span><span class="p">,</span> <span class="s1">&#39;Mutual Information&#39;</span><span class="p">,</span>
+                  <span class="p">[</span><span class="s1">&#39;SCA&#39;</span><span class="p">,</span> <span class="s1">&#39;Mutual Information&#39;</span><span class="p">,</span>
                    <span class="s1">&#39;Normalized Mutual Information&#39;</span><span class="p">],</span>
                   <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">]])):</span>
     <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplot.html#matplotlib.pyplot.subplot" title="matplotlib.pyplot.subplot" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span></a><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ih</span></a><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
@@ -172,14 +119,14 @@ computing weight of seq 1301/1376
     <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.colorbar.html#matplotlib.pyplot.colorbar" title="matplotlib.pyplot.colorbar" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span></a><span class="p">(</span><span class="n">shrink</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_sca_vs_mi_002.png" srcset="../../_images/sphx_glr_plot_sca_vs_mi_002.png" alt="SCA matrix, Mutual Information, Normalized Mutual Information" class = "sphx-glr-single-img"/></section>
+<img src="../../_images/sphx_glr_plot_sca_vs_mi_001.png" srcset="../../_images/sphx_glr_plot_sca_vs_mi_001.png" alt="SCA, Mutual Information, Normalized Mutual Information" class = "sphx-glr-single-img"/></section>
 <section id="relationships-between-sca-and-mi-s">
 <h2>Relationships between SCA and MI’s<a class="headerlink" href="#relationships-between-sca-and-mi-s" title="Link to this heading">¶</a></h2>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.figure.html#matplotlib.pyplot.figure" title="matplotlib.pyplot.figure" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">figure</span></a><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplot.html#matplotlib.pyplot.subplot" title="matplotlib.pyplot.subplot" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span></a><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html#matplotlib.pyplot.plot" title="matplotlib.pyplot.plot" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.triu.html#numpy.triu" title="numpy.triu" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">triu</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">SCA_matrix</span></a><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span>
          <a href="https://numpy.org/doc/stable/reference/generated/numpy.triu.html#numpy.triu" title="numpy.triu" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">triu</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">normalized_MI</span></a><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
-<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xlabel.html#matplotlib.pyplot.xlabel" title="matplotlib.pyplot.xlabel" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span></a><span class="p">(</span><span class="s1">&#39;SCA matrix&#39;</span><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xlabel.html#matplotlib.pyplot.xlabel" title="matplotlib.pyplot.xlabel" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span></a><span class="p">(</span><span class="s1">&#39;SCA&#39;</span><span class="p">)</span>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.ylabel.html#matplotlib.pyplot.ylabel" title="matplotlib.pyplot.ylabel" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span></a><span class="p">(</span><span class="s1">&#39;Normalized Mutual Information&#39;</span><span class="p">)</span>
 
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplot.html#matplotlib.pyplot.subplot" title="matplotlib.pyplot.subplot" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span></a><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
@@ -189,11 +136,11 @@ computing weight of seq 1301/1376
 
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplot.html#matplotlib.pyplot.subplot" title="matplotlib.pyplot.subplot" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span></a><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html#matplotlib.pyplot.plot" title="matplotlib.pyplot.plot" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.triu.html#numpy.triu" title="numpy.triu" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">triu</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">SCA_matrix</span></a><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.triu.html#numpy.triu" title="numpy.triu" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">triu</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">MI</span></a><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
-<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xlabel.html#matplotlib.pyplot.xlabel" title="matplotlib.pyplot.xlabel" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span></a><span class="p">(</span><span class="s1">&#39;SCA matrix&#39;</span><span class="p">)</span>
+<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xlabel.html#matplotlib.pyplot.xlabel" title="matplotlib.pyplot.xlabel" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span></a><span class="p">(</span><span class="s1">&#39;SCA&#39;</span><span class="p">)</span>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.ylabel.html#matplotlib.pyplot.ylabel" title="matplotlib.pyplot.ylabel" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span></a><span class="p">(</span><span class="s1">&#39;Mutual Information&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_sca_vs_mi_003.png" srcset="../../_images/sphx_glr_plot_sca_vs_mi_003.png" alt="plot sca vs mi" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Text(769.1928104575164, 0.5, &#39;Mutual Information&#39;)
+<img src="../../_images/sphx_glr_plot_sca_vs_mi_002.png" srcset="../../_images/sphx_glr_plot_sca_vs_mi_002.png" alt="plot sca vs mi" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Text(769.1928104575164, 0.5, &#39;Mutual Information&#39;)
 </pre></div>
 </div>
 </section>
@@ -214,23 +161,10 @@ computing weight of seq 1301/1376
     <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.title.html#matplotlib.pyplot.title" title="matplotlib.pyplot.title" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">title</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">title</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_sca_vs_mi_004.png" srcset="../../_images/sphx_glr_plot_sca_vs_mi_004.png" alt="SCA, MI, normalized MI" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>computing weight of seq 1/1376
-computing weight of seq 101/1376
-computing weight of seq 201/1376
-computing weight of seq 301/1376
-computing weight of seq 401/1376
-computing weight of seq 501/1376
-computing weight of seq 601/1376
-computing weight of seq 701/1376
-computing weight of seq 801/1376
-computing weight of seq 901/1376
-computing weight of seq 1001/1376
-computing weight of seq 1101/1376
-computing weight of seq 1201/1376
-computing weight of seq 1301/1376
+<img src="../../_images/sphx_glr_plot_sca_vs_mi_003.png" srcset="../../_images/sphx_glr_plot_sca_vs_mi_003.png" alt="SCA, MI, normalized MI" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>computing weight of seq 1/1376
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 6.805 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 6.672 seconds)</p>
 <div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-b-advanced-plot-sca-vs-mi-py">
 <div class="binder-badge docutils container">
 <a class="reference external image-reference" href="https://mybinder.org/v2/gh/tree-timc/cocoatree/gh-pages?urlpath=lab/tree/notebooks/auto_examples/b_advanced/plot_sca_vs_mi.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo1.svg" style="width: 150px;" />

@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>COCOA-Tree: COllaborative COevolution Analysis Toolbox &#8212; cocoatree 0.0 documentation</title>
+    <title>COCOA-Tree: COllaborative COevolution Analysis Toolbox including tree-based vizualisation &#8212; cocoatree 0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d7e2fa82" />
     <link rel="stylesheet" type="text/css" href="_static/nameko.css?v=2296cfae" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
@@ -43,35 +43,29 @@
             
   <div class="toctree-wrapper compound">
 </div>
-<section id="cocoa-tree-collaborative-coevolution-analysis-toolbox">
-<h1>COCOA-Tree: COllaborative COevolution Analysis Toolbox<a class="headerlink" href="#cocoa-tree-collaborative-coevolution-analysis-toolbox" title="Link to this heading">¶</a></h1>
-<p>COCOA-Tree is a <a class="reference external" href="https://www.python.org">Python</a> library to perform coevolution
-analysis of protein sequence data <span id="id1">[<a class="reference internal" href="#id3" title="Najeeb Halabi, Olivier Rivoire, Stanislas Leibler, and Rama Ranganathan. Protein Sectors: Evolutionary Units of Three-Dimensional Structure. Cell, 138(4):774–786, August 2009. URL: https://linkinghub.elsevier.com/retrieve/pii/S0092867409009635 (visited on 2023-07-19), doi:10.1016/j.cell.2009.07.038.">HRLR09</a>]</span>. It includes different coevolution metrics and
-corrections, and allows for an easy comparison of the methods.</p>
-<p>The specificity of COCOA-Tree is the inclusion of a visualization tool that allows
-the user to confront coevolution analyses with a phylogenetic tree and metadata
-to facilitate the understanding of protein sectors.</p>
-<p>COCOA-Tree also provides integration with the molecular visualization software
-<a class="reference external" href="https://pymol.org">PyMOL</a> allowing to map protein sector predictions on 3D
-structures.</p>
-<p>The software is organized in different modules detailed below:</p>
+<section id="cocoa-tree-collaborative-coevolution-analysis-toolbox-including-tree-based-vizualisation">
+<h1>COCOA-Tree: COllaborative COevolution Analysis Toolbox including tree-based vizualisation<a class="headerlink" href="#cocoa-tree-collaborative-coevolution-analysis-toolbox-including-tree-based-vizualisation" title="Link to this heading">¶</a></h1>
+<p>COCOA-Tree is a <a class="reference external" href="https://www.python.org">Python</a> library designed to perform coevolution analysis of protein sequence data and to compare the results with phylogenetic trees and metadata. By doing so, it facilitates the investigation of the origins of coevolution patterns, their relationships to phylogeny and functional protein annotation, and ultimately aims to democratize the use and development of so-called <em>protein sectors</em> <span id="id1">[<a class="reference internal" href="#id7" title="Olivier Rivoire, Kimberly A. Reynolds, and Rama Ranganathan. Evolution-Based Functional Decomposition of Proteins. PLOS Computational Biology, 12(6):e1004817, June 2016. doi:10.1371/journal.pcbi.1004817.">RRR16</a>]</span> and <em>specificity-determining positions (SDPs)</em> <span id="id2">[<a class="reference internal" href="#id8" title="David De Juan, Florencio Pazos, and Alfonso Valencia. Emerging methods in protein co-evolution. Nature Reviews Genetics, 14(4):249–261, April 2013. doi:10.1038/nrg3414.">DJPV13</a>]</span>.</p>
+<p>The library includes several coevolution metrics (and allows users to define their own), along with various correction methods, enabling easy comparison between approaches. It also integrates with the molecular visualization software <a class="reference external" href="https://pymol.org">PyMOL</a>, allowing users to map results onto 3D structures, more specifically, extremal co-evolving residues that form the basis of protein sectors <span id="id3">[<a class="reference internal" href="#id9" title="Margaux et al. Tbd. BioRxiv, 1(1):1, 2025. doi:no DOI yet.">eal25</a>]</span>.</p>
+<p>The software is organized into different modules, detailed below:</p>
 <a class="reference internal image-reference" href="_images/draft_fig1_v3.png"><img alt="_images/draft_fig1_v3.png" src="_images/draft_fig1_v3.png" style="width: 100%;" />
 </a>
 <section id="list-of-abbreviations">
 <h2>List of abbreviations<a class="headerlink" href="#list-of-abbreviations" title="Link to this heading">¶</a></h2>
 <ul class="simple">
-<li><p>MSA: multiple sequence alignment</p></li>
-<li><p>SCA: statistical coupling analysis</p></li>
-<li><p>MI: mutual information</p></li>
+<li><p>MI: Mutual Information</p></li>
+<li><p>MSA: Multiple Sequence Alignment</p></li>
+<li><p>SCA: Statistical Coupling Analysis, the method underlying the identification of protein sectors <span id="id4">[<a class="reference internal" href="#id6" title="Najeeb Halabi, Olivier Rivoire, Stanislas Leibler, and Rama Ranganathan. Protein Sectors: Evolutionary Units of Three-Dimensional Structure. Cell, 138(4):774–786, August 2009. URL: https://linkinghub.elsevier.com/retrieve/pii/S0092867409009635 (visited on 2023-07-19), doi:10.1016/j.cell.2009.07.038.">HRLR09</a>, <a class="reference internal" href="#id7" title="Olivier Rivoire, Kimberly A. Reynolds, and Rama Ranganathan. Evolution-Based Functional Decomposition of Proteins. PLOS Computational Biology, 12(6):e1004817, June 2016. doi:10.1371/journal.pcbi.1004817.">RRR16</a>]</span></p></li>
+<li><p>XCoR: eXtremal Co-evolving Residues</p></li>
 </ul>
 </section>
 <section id="example-gallery">
 <h2>Example gallery<a class="headerlink" href="#example-gallery" title="Link to this heading">¶</a></h2>
 <p>Various examples of COCOA-Tree’s use can be found in the <a class="reference external" href="auto_examples/index.html">Gallery</a>.</p>
-<p>If you wish to perform a simple SCA analysis, go to
-<a class="reference external" href="auto_examples/plot_simple_sca.html">Simple SCA example</a></p>
+<p>If you wish to perform a minimal SCA analysis, go to
+<a class="reference external" href="../examples/a_quick_start/plot_minimal_sca.py">Minimal SCA example</a>.</p>
 <p>For a detailed SCA analysis, go to
-<a class="reference external" href="auto_examples/plot_full_SCA_analysis.html">Full SCA analysis</a></p>
+<a class="reference external" href="../examples/b_advanced/plot_full_SCA_analysis.py">Full SCA analysis</a>.</p>
 </section>
 <section id="citing-cocoa-tree">
 <h2>Citing COCOA-Tree<a class="headerlink" href="#citing-cocoa-tree" title="Link to this heading">¶</a></h2>
@@ -118,11 +112,24 @@ to the following paper:</p>
 <span class="n">THE</span> <span class="n">POSSIBILITY</span> <span class="n">OF</span> <span class="n">SUCH</span> <span class="n">DAMAGE</span><span class="o">.</span>
 </pre></div>
 </div>
-<div class="docutils container" id="id2">
+<div class="docutils container" id="id5">
 <div role="list" class="citation-list">
-<div class="citation" id="id3" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">HRLR09</a><span class="fn-bracket">]</span></span>
+<div class="citation" id="id8" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">DJPV13</a><span class="fn-bracket">]</span></span>
+<p>David De Juan, Florencio Pazos, and Alfonso Valencia. Emerging methods in protein co-evolution. <em>Nature Reviews Genetics</em>, 14(4):249–261, April 2013. <a class="reference external" href="https://doi.org/10.1038/nrg3414">doi:10.1038/nrg3414</a>.</p>
+</div>
+<div class="citation" id="id9" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">eal25</a><span class="fn-bracket">]</span></span>
+<p>Margaux et al. Tbd. <em>BioRxiv</em>, 1(1):1, 2025. <a class="reference external" href="https://doi.org/no DOI yet">doi:no DOI yet</a>.</p>
+</div>
+<div class="citation" id="id6" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">HRLR09</a><span class="fn-bracket">]</span></span>
 <p>Najeeb Halabi, Olivier Rivoire, Stanislas Leibler, and Rama Ranganathan. Protein Sectors: Evolutionary Units of Three-Dimensional Structure. <em>Cell</em>, 138(4):774–786, August 2009. URL: <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/S0092867409009635">https://linkinghub.elsevier.com/retrieve/pii/S0092867409009635</a> (visited on 2023-07-19), <a class="reference external" href="https://doi.org/10.1016/j.cell.2009.07.038">doi:10.1016/j.cell.2009.07.038</a>.</p>
+</div>
+<div class="citation" id="id7" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>RRR16<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id4">2</a>)</span>
+<p>Olivier Rivoire, Kimberly A. Reynolds, and Rama Ranganathan. Evolution-Based Functional Decomposition of Proteins. <em>PLOS Computational Biology</em>, 12(6):e1004817, June 2016. <a class="reference external" href="https://doi.org/10.1371/journal.pcbi.1004817">doi:10.1371/journal.pcbi.1004817</a>.</p>
 </div>
 </div>
 </div>

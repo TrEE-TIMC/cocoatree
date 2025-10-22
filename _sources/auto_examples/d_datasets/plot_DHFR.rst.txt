@@ -36,7 +36,7 @@ Load the dataset
     The loaded MSA has 4422 sequences and 802       positions.
     After filtering, we have 156 remaining positions.
     After filtering, we have 3806 remaining sequences.
-    computing weight of seq 1/3806      computing weight of seq 101/3806            computing weight of seq 201/3806            computing weight of seq 301/3806            computing weight of seq 401/3806            computing weight of seq 501/3806            computing weight of seq 601/3806            computing weight of seq 701/3806            computing weight of seq 801/3806            computing weight of seq 901/3806            computing weight of seq 1001/3806           computing weight of seq 1101/3806           computing weight of seq 1201/3806           computing weight of seq 1301/3806           computing weight of seq 1401/3806           computing weight of seq 1501/3806           computing weight of seq 1601/3806           computing weight of seq 1701/3806           computing weight of seq 1801/3806           computing weight of seq 1901/3806           computing weight of seq 2001/3806           computing weight of seq 2101/3806           computing weight of seq 2201/3806           computing weight of seq 2301/3806           computing weight of seq 2401/3806           computing weight of seq 2501/3806           computing weight of seq 2601/3806           computing weight of seq 2701/3806           computing weight of seq 2801/3806           computing weight of seq 2901/3806           computing weight of seq 3001/3806           computing weight of seq 3101/3806           computing weight of seq 3201/3806           computing weight of seq 3301/3806           computing weight of seq 3401/3806           computing weight of seq 3501/3806           computing weight of seq 3601/3806           computing weight of seq 3701/3806           computing weight of seq 3801/3806           Number of effective sequences 3332
+    computing weight of seq 1/3806      Number of effective sequences 3332
 
 
 
@@ -77,7 +77,7 @@ Load the dataset
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.974 seconds)
+   **Total running time of the script:** (0 minutes 2.987 seconds)
 
 
 .. _sphx_glr_download_auto_examples_d_datasets_plot_DHFR.py:

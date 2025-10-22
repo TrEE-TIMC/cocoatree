@@ -10,43 +10,36 @@
 
   interface_cocoatree_pymol.rst
 
-######################################################
-COCOA-Tree: COllaborative COevolution Analysis Toolbox
-######################################################
+#########################################################################################
+COCOA-Tree: COllaborative COevolution Analysis Toolbox including tree-based vizualisation
+#########################################################################################
 
-COCOA-Tree is a `Python <https://www.python.org>`_ library to perform coevolution
-analysis of protein sequence data :cite:p:`halabi_protein_2009`. It includes different coevolution metrics and
-corrections, and allows for an easy comparison of the methods.
+COCOA-Tree is a `Python <https://www.python.org>`_ library designed to perform coevolution analysis of protein sequence data and to compare the results with phylogenetic trees and metadata. By doing so, it facilitates the investigation of the origins of coevolution patterns, their relationships to phylogeny and functional protein annotation, and ultimately aims to democratize the use and development of so-called *protein sectors* :cite:p:`rivoire_evolution-based_2016` and *specificity-determining positions (SDPs)* :cite:p:`de_juan_emerging_2013`.
 
-The specificity of COCOA-Tree is the inclusion of a visualization tool that allows
-the user to confront coevolution analyses with a phylogenetic tree and metadata
-to facilitate the understanding of protein sectors.
+The library includes several coevolution metrics (and allows users to define their own), along with various correction methods, enabling easy comparison between approaches. It also integrates with the molecular visualization software `PyMOL <https://pymol.org>`_, allowing users to map results onto 3D structures, more specifically, extremal co-evolving residues that form the basis of protein sectors :cite:p:`jullien_cocoatree_2025`.
 
-COCOA-Tree also provides integration with the molecular visualization software
-`PyMOL <https://pymol.org>`_ allowing to map protein sector predictions on 3D
-structures.
-
-The software is organized in different modules detailed below:
+The software is organized into different modules, detailed below:
 
 .. image:: schemas/draft_fig1_v3.png
 	:width: 100%
 
 List of abbreviations
 ---------------------
-- MSA: multiple sequence alignment
-- SCA: statistical coupling analysis
-- MI: mutual information
+- MI: Mutual Information
+- MSA: Multiple Sequence Alignment
+- SCA: Statistical Coupling Analysis, the method underlying the identification of protein sectors :cite:p:`halabi_protein_2009,rivoire_evolution-based_2016`
+- XCoR: eXtremal Co-evolving Residues
 
 Example gallery
 ---------------
 
 Various examples of COCOA-Tree's use can be found in the `Gallery <auto_examples/index.html>`_.
 
-If you wish to perform a simple SCA analysis, go to
-`Simple SCA example <auto_examples/plot_simple_sca.html>`_
+If you wish to perform a minimal SCA analysis, go to
+`Minimal SCA example <../examples/a_quick_start/plot_minimal_sca.py>`_.
 
 For a detailed SCA analysis, go to
-`Full SCA analysis <auto_examples/plot_full_SCA_analysis.html>`_
+`Full SCA analysis <../examples/b_advanced/plot_full_SCA_analysis.py>`_.
 
 Citing COCOA-Tree
 -----------------

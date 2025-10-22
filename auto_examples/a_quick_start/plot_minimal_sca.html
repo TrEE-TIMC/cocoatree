@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>The simplest SCA analysis ever &#8212; cocoatree 0.0 documentation</title>
+    <title>A minimal SCA analysis &#8212; cocoatree 0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
     <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
@@ -42,13 +42,13 @@
             
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p><a class="reference internal" href="#sphx-glr-download-auto-examples-a-quick-start-plot-simple-sca-py"><span class="std std-ref">Go to the end</span></a>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-a-quick-start-plot-minimal-sca-py"><span class="std std-ref">Go to the end</span></a>
 to download the full example code. or to run this example in your browser via Binder</p>
 </div>
-<section class="sphx-glr-example-title" id="the-simplest-sca-analysis-ever">
-<span id="sphx-glr-auto-examples-a-quick-start-plot-simple-sca-py"></span><h1>The simplest SCA analysis ever<a class="headerlink" href="#the-simplest-sca-analysis-ever" title="Link to this heading">¶</a></h1>
-<p>This example shows the full process to perform a complete SCA analysis and
-detect protein sectors from data importation, MSA filtering.</p>
+<section class="sphx-glr-example-title" id="a-minimal-sca-analysis">
+<span id="sphx-glr-auto-examples-a-quick-start-plot-minimal-sca-py"></span><h1>A minimal SCA analysis<a class="headerlink" href="#a-minimal-sca-analysis" title="Link to this heading">¶</a></h1>
+<p>This example provides a minimal code for identifying sectors – more precisely,
+XCoRs <span id="id1">[<a class="reference internal" href="../../index.html#id9" title="Margaux et al. Tbd. BioRxiv, 1(1):1, 2025. doi:no DOI yet.">eal25</a>]</span> – associated with a MSA.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cocoatree.datasets</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">c_data</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">cocoatree</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -58,7 +58,7 @@ detect protein sectors from data importation, MSA filtering.</p>
 <h2>Load the dataset<a class="headerlink" href="#load-the-dataset" title="Link to this heading">¶</a></h2>
 <p>We start by importing the dataset. In this case, we can directly load the S1
 serine protease dataset provided in <a class="reference internal" href="../../modules/classes.html#module-cocoatree" title="cocoatree"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree</span></code></a>. To work on your on
-dataset, you can use the <cite>cocoatree.io.load_msa</cite> function.</p>
+dataset, you can use the <code class="xref py py-func docutils literal notranslate"><span class="pre">cocoatree.io.load_msa()</span></code> function.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">serine_dataset</span></a> <span class="o">=</span> <a href="../../modules/generated/cocoatree.datasets.load_S1A_serine_proteases.html#cocoatree.datasets.load_S1A_serine_proteases" title="cocoatree.datasets.load_S1A_serine_proteases" class="sphx-glr-backref-module-cocoatree-datasets sphx-glr-backref-type-py-function"><span class="n">c_data</span><span class="o">.</span><span class="n">load_S1A_serine_proteases</span></a><span class="p">()</span>
 <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">serine_dataset</span></a><span class="p">[</span><span class="s2">&quot;alignment&quot;</span><span class="p">]</span>
 <a href="https://docs.python.org/3/library/stdtypes.html#list" title="builtins.list" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">loaded_seqs_id</span></a> <span class="o">=</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" title="builtins.dict" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">serine_dataset</span></a><span class="p">[</span><span class="s2">&quot;sequence_ids&quot;</span><span class="p">]</span>
@@ -74,19 +74,6 @@ dataset, you can use the <cite>cocoatree.io.load_msa</cite> function.</p>
 </pre></div>
 </div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>computing weight of seq 1/1376
-computing weight of seq 101/1376
-computing weight of seq 201/1376
-computing weight of seq 301/1376
-computing weight of seq 401/1376
-computing weight of seq 501/1376
-computing weight of seq 601/1376
-computing weight of seq 701/1376
-computing weight of seq 801/1376
-computing weight of seq 901/1376
-computing weight of seq 1001/1376
-computing weight of seq 1101/1376
-computing weight of seq 1201/1376
-computing weight of seq 1301/1376
    original_msa_pos  filtered_msa_pos  PC1  IC1  ...  sector_2  PC3  IC3  sector_3
 0                 0               NaN  NaN  NaN  ...     False  NaN  NaN     False
 1                 1               NaN  NaN  NaN  ...     False  NaN  NaN     False
@@ -97,58 +84,31 @@ computing weight of seq 1301/1376
 [5 rows x 11 columns]
 </pre></div>
 </div>
-<p>Select the position of the first sector in the results dataframe.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;sector_1&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<p>Extracting the list of residues (i.e. positions) composing the XCoRs.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;XCoR_1:&#39;</span><span class="p">,</span> <span class="p">[])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;XCoR_2:&#39;</span><span class="p">,</span> <span class="p">[])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;XCoR_3:&#39;</span><span class="p">,</span> <span class="p">[])</span>
 </pre></div>
 </div>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>     original_msa_pos  filtered_msa_pos       PC1  ...       PC3       IC3  sector_3
-130               130              23.0 -0.090217  ...  0.029506  0.045516     False
-133               133              26.0 -0.116480  ...  0.044673  0.059013     False
-214               214              35.0 -0.106719  ... -0.087057 -0.046816     False
-246               246              48.0 -0.130522  ... -0.028971 -0.038197     False
-247               247              49.0 -0.110328  ...  0.038413  0.023443     False
-
-[5 rows x 11 columns]
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>XCoR_1: []
+XCoR_2: []
+XCoR_3: []
 </pre></div>
 </div>
 </section>
-<section id="visualizing-the-sectors-on-the-first-and-second-pc">
-<h2>Visualizing the sectors on the first and second PC<a class="headerlink" href="#visualizing-the-sectors-on-the-first-and-second-pc" title="Link to this heading">¶</a></h2>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting all elements in components</span>
-<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">()</span>
-<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html#matplotlib.axes.Axes.plot" title="matplotlib.axes.Axes.plot" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;PC1&quot;</span><span class="p">],</span>
-        <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;PC2&quot;</span><span class="p">],</span>
-        <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
-
-<span class="c1"># Plotting elements in sectors</span>
-<span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">isec</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color</span></a> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]):</span>
-    <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html#matplotlib.axes.Axes.plot" title="matplotlib.axes.Axes.plot" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;sector_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">isec</span></a><span class="p">],</span> <span class="s2">&quot;PC1&quot;</span><span class="p">],</span>
-            <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;sector_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">isec</span></a><span class="p">],</span> <span class="s2">&quot;PC2&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color</span></a><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sector </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">isec</span></a><span class="p">)</span>
-
-<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_xlabel.html#matplotlib.axes.Axes.set_xlabel" title="matplotlib.axes.Axes.set_xlabel" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span></a><span class="p">(</span><span class="s2">&quot;PC1&quot;</span><span class="p">)</span>
-<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_ylabel.html#matplotlib.axes.Axes.set_ylabel" title="matplotlib.axes.Axes.set_ylabel" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span></a><span class="p">(</span><span class="s2">&quot;PC2&quot;</span><span class="p">)</span>
-
-<a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.legend.html#matplotlib.axes.Axes.legend" title="matplotlib.axes.Axes.legend" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">legend</span></a><span class="p">()</span>
-</pre></div>
-</div>
-<img src="../../_images/sphx_glr_plot_simple_sca_001.png" srcset="../../_images/sphx_glr_plot_simple_sca_001.png" alt="plot simple sca" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend object at 0x7fa0458b2250&gt;
-</pre></div>
-</div>
-</section>
-<section id="visualizing-the-sectors-on-the-first-and-second-ic">
-<h2>Visualizing the sectors on the first and second IC<a class="headerlink" href="#visualizing-the-sectors-on-the-first-and-second-ic" title="Link to this heading">¶</a></h2>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting all elements in components</span>
+<section id="visualizing-xcors-on-independent-components">
+<h2>Visualizing XCoRs on independent components<a class="headerlink" href="#visualizing-xcors-on-independent-components" title="Link to this heading">¶</a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plotting independent components</span>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.html#matplotlib.axes.Axes" title="matplotlib.axes.Axes" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ax</span></a> <span class="o">=</span> <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html#matplotlib.pyplot.subplots" title="matplotlib.pyplot.subplots" class="sphx-glr-backref-module-matplotlib-pyplot sphx-glr-backref-type-py-function"><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span></a><span class="p">()</span>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html#matplotlib.axes.Axes.plot" title="matplotlib.axes.Axes.plot" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;IC1&quot;</span><span class="p">],</span>
         <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="s2">&quot;IC2&quot;</span><span class="p">],</span>
         <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
 
-<span class="c1"># Plotting elements in sectors</span>
+<span class="c1"># Plotting XCoRs elements</span>
 <span class="k">for</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">isec</span></a><span class="p">,</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color</span></a> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]):</span>
     <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.plot.html#matplotlib.axes.Axes.plot" title="matplotlib.axes.Axes.plot" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;sector_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">isec</span></a><span class="p">],</span> <span class="s2">&quot;IC1&quot;</span><span class="p">],</span>
             <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;sector_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">isec</span></a><span class="p">],</span> <span class="s2">&quot;IC2&quot;</span><span class="p">],</span>
-            <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color</span></a><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Sector </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">isec</span></a><span class="p">)</span>
+            <span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">color</span></a><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;XCoR_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <a href="https://docs.python.org/3/library/functions.html#int" title="builtins.int" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">isec</span></a><span class="p">)</span>
 
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_xlabel.html#matplotlib.axes.Axes.set_xlabel" title="matplotlib.axes.Axes.set_xlabel" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span></a><span class="p">(</span><span class="s2">&quot;IC1&quot;</span><span class="p">)</span>
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.set_ylabel.html#matplotlib.axes.Axes.set_ylabel" title="matplotlib.axes.Axes.set_ylabel" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span></a><span class="p">(</span><span class="s2">&quot;IC2&quot;</span><span class="p">)</span>
@@ -156,23 +116,23 @@ computing weight of seq 1301/1376
 <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.legend.html#matplotlib.axes.Axes.legend" title="matplotlib.axes.Axes.legend" class="sphx-glr-backref-module-matplotlib-axes sphx-glr-backref-type-py-method"><span class="n">ax</span><span class="o">.</span><span class="n">legend</span></a><span class="p">()</span>
 </pre></div>
 </div>
-<img src="../../_images/sphx_glr_plot_simple_sca_002.png" srcset="../../_images/sphx_glr_plot_simple_sca_002.png" alt="plot simple sca" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend object at 0x7fa0458e6dd0&gt;
+<img src="../../_images/sphx_glr_plot_minimal_sca_001.png" srcset="../../_images/sphx_glr_plot_minimal_sca_001.png" alt="plot minimal sca" class = "sphx-glr-single-img"/><div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend object at 0x7f0672ab5fd0&gt;
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 2.451 seconds)</p>
-<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-a-quick-start-plot-simple-sca-py">
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 2.411 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-a-quick-start-plot-minimal-sca-py">
 <div class="binder-badge docutils container">
-<a class="reference external image-reference" href="https://mybinder.org/v2/gh/tree-timc/cocoatree/gh-pages?urlpath=lab/tree/notebooks/auto_examples/a_quick_start/plot_simple_sca.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" style="width: 150px;" />
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/tree-timc/cocoatree/gh-pages?urlpath=lab/tree/notebooks/auto_examples/a_quick_start/plot_minimal_sca.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" style="width: 150px;" />
 </a>
 </div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/cc778b4e25fa7e0a7ff7d12f2c6eaf7e/plot_simple_sca.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_simple_sca.ipynb</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/f9b01748da23130065374c1d213375f8/plot_minimal_sca.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_minimal_sca.ipynb</span></code></a></p>
 </div>
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/c7dd3cbba774da6eded00662bb8d58a1/plot_simple_sca.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_simple_sca.py</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/d22001a1f4e34d3e040b7d90cb149df8/plot_minimal_sca.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_minimal_sca.py</span></code></a></p>
 </div>
 <div class="sphx-glr-download sphx-glr-download-zip docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/eca7aa50bbdbc93bdf6604a489ca3a24/plot_simple_sca.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">plot_simple_sca.zip</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/1a96f742e40bbfa5983229b180c2f55f/plot_minimal_sca.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">plot_minimal_sca.zip</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>

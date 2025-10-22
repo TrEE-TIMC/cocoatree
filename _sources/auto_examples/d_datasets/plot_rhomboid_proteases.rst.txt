@@ -35,7 +35,7 @@ Load the dataset
     The loaded MSA has 2767 sequences and 135       positions.
     After filtering, we have 135 remaining positions.
     After filtering, we have 2767 remaining sequences.
-    computing weight of seq 1/2767      computing weight of seq 101/2767            computing weight of seq 201/2767            computing weight of seq 301/2767            computing weight of seq 401/2767            computing weight of seq 501/2767            computing weight of seq 601/2767            computing weight of seq 701/2767            computing weight of seq 801/2767            computing weight of seq 901/2767            computing weight of seq 1001/2767           computing weight of seq 1101/2767           computing weight of seq 1201/2767           computing weight of seq 1301/2767           computing weight of seq 1401/2767           computing weight of seq 1501/2767           computing weight of seq 1601/2767           computing weight of seq 1701/2767           computing weight of seq 1801/2767           computing weight of seq 1901/2767           computing weight of seq 2001/2767           computing weight of seq 2101/2767           computing weight of seq 2201/2767           computing weight of seq 2301/2767           computing weight of seq 2401/2767           computing weight of seq 2501/2767           computing weight of seq 2601/2767           computing weight of seq 2701/2767           Number of effective sequences 1792
+    computing weight of seq 1/2767      Number of effective sequences 1792
 
 
 
@@ -74,7 +74,7 @@ Load the dataset
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.020 seconds)
+   **Total running time of the script:** (0 minutes 1.024 seconds)
 
 
 .. _sphx_glr_download_auto_examples_d_datasets_plot_rhomboid_proteases.py:

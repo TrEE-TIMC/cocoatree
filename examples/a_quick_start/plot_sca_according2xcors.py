@@ -3,7 +3,7 @@
 Perform a minimal SCA analysis and plot SCA-related heatmaps
 ============================================================
 
-This example shows how to generate a SCA co-evolutionary matrix, 
+This example shows how to generate a SCA co-evolutionary matrix,
 reduce it, and sort it according to XCoRs.
 """
 

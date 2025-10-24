@@ -258,7 +258,7 @@ if False:  # need to be revised
     # Map PDB positions on the MSA sequence corresponding to rat's trypsin:
     # seq_id='14719441'
     pdb_mapping = c_msa.map_to_pdb(pdb_seq, pdb_pos, sequences, sequences_id,
-                                   ref_seq_id='14719441')
+                                   pdb_seq_id='14719441')
     # Export lists of the first sector positions and each residue's
     # contribution to the independent component to use for visualization on
     # Pymol.

@@ -24,8 +24,8 @@ seq_id = serine_dataset["sequence_ids"]
 sequences = serine_dataset["alignment"]
 n_pos, n_seq = len(sequences[0]), len(sequences)
 
-# Make the sectors the same object type as what our extract_sectors_pos
-# returns.
+# Make the sectors the same object type as what our
+# :func:`cocoatree.io.extract_sectors` function returns.
 sectors = [
     [str(i) for i in serine_dataset["sector_positions"][key]]
     for key in serine_dataset["sector_positions"].keys()]
@@ -35,7 +35,7 @@ seq_kept, seq_id_kept, pos_kept = filter_sequences(sequences, seq_id)
 
 
 # %%
-# Now, we are going to map all of these onte the same referential: the
+# Now, we are going to map all of these onto the same referential: the
 # original MSA positions.
 #
 # Use the function to obtain the mapping between the original MSA and the

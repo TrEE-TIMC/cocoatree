@@ -101,6 +101,7 @@ def plot_coevo_according2xcors(coevo_matrix, xcors=[], vmin=0, vmax=1e6):
 
 fig, ax = plot_coevo_according2xcors(SCA_matrix, xcors, vmin=0, vmax=2)
 ax.set_title('SCA matrix, sorted according to XCoRs')
+ax.set_xlabel('XCoR positions', fontsize=10)
 
 # %%
 # Removing a global mode (ngm = no global mode),
@@ -112,9 +113,11 @@ SCA_matrix_ngm = c_deconv.remove_global_correlations(SCA_matrix)
 # ------------------------------------------------------------------
 fig, ax = plot_coevo_according2xcors(SCA_matrix_ngm, xcors, vmin=0, vmax=2)
 ax.set_title('SCA matrix without global mode\nsorted according to XCoRs')
+ax.set_xlabel('XCoR positions', fontsize=10)
 
 # %%
 # Adapting the coevolution scale
 # ------------------------------
 fig, ax = plot_coevo_according2xcors(SCA_matrix_ngm, xcors, vmin=0, vmax=1)
 ax.set_title('SCA matrix without global mode\nsorted according to XCoRs')
+ax.set_xlabel('XCoR positions', fontsize=10)

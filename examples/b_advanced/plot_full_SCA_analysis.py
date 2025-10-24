@@ -159,7 +159,7 @@ for k, [k1, k2] in enumerate(pairs):
 #
 # Obtain a list of residues of each sector
 
-sectors = c_deconv.extract_sectors(idpt_components, SCA_matrix)
+sectors = c_deconv.extract_sectors_from_ICs(idpt_components, SCA_matrix)
 
 print('Sector positions on (filtered) sequences:')
 for isec, sec in enumerate(sectors):
@@ -200,13 +200,13 @@ for i in range(n_components):
     line_index += sector_sizes[i]
 
 # %%
-# Do the same but for the SCA matrix where the global correlation mode has
+# Do the same but for the SCA matrix where a global correlation mode has
 # been removed and, hence, such that sectors are better highlighted.
 # See Rivoire et al., PLOSCB, 2016
 
-# removing global model (ngm = no global mode),
-# i.e., removing first principal component
-SCA_matrix_ngm = c_deconv.substract_first_principal_component(SCA_matrix)
+# Removing a global mode (ngm = no global mode),
+# i.e., setting largest eigeinvalue to zero
+SCA_matrix_ngm = c_deconv.remove_global_correlations(SCA_matrix)
 
 # plotting
 fig, ax = plt.subplots(tight_layout=True)

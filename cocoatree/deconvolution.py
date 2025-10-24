@@ -208,7 +208,7 @@ def extract_sectors(coevo_matrix, n_sectors=3):
     Extract residue positions of sectors directly from the coevo_matrix
 
     Parameters
-    ----------    
+    ----------
     coevo_matrix : coevolution matrix
 
     n_sectors : int
@@ -240,7 +240,7 @@ def extract_sectors(coevo_matrix, n_sectors=3):
 
 def remove_global_correlations(coevo_matrix):
     """
-    Remove global correlations by setting the first eigen value 
+    Remove global correlations by setting the first eigen value
     of the coevo matrix to 0
 
     In the sector literature (and data analysis), this corresponds

@@ -21,31 +21,13 @@
 DHFR proteases
 ====================
 
-Load the dataset
+This example shows how the DHFR dataset is organized and how you can use it to
+test cocoatree's features.
 
-.. GENERATED FROM PYTHON SOURCE LINES 8-34
-
-
-
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    Number of sequences 4422
-    The loaded MSA has 4422 sequences and 802       positions.
-    After filtering, we have 156 remaining positions.
-    After filtering, we have 3806 remaining sequences.
-    Number of effective sequences 3332
-
-
-
-
-
-
-|
+.. GENERATED FROM PYTHON SOURCE LINES 9-16
 
 .. code-block:: Python
+
 
     import numpy as np
 
@@ -54,15 +36,82 @@ Load the dataset
     import cocoatree.statistics.position as c_pos
 
 
-    dataset = load_DHFR()
 
-    print("Number of sequences", len(dataset["alignment"]))
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 17-19
+
+Load the dataset
+^^^^^^^^^^^^^^^^
+
+.. GENERATED FROM PYTHON SOURCE LINES 19-22
+
+.. code-block:: Python
+
+    dataset = load_DHFR()
+    print(dataset.keys())
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    dict_keys(['sequence_ids', 'alignment', 'sector_positions', 'pdb_sequence', 'pdb_positions'])
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 23-33
+
+`dataset` is a dictionary with 5 elements:
+  - `sequence_ids`: a list of the sequence identifiers for the MSA
+  - `alignment`: the aligned sequences
+  - `sector_positions`: a Numpy NpzFile of the sectors' positions as found in
+the Kalmer study
+  - `pdb_sequence`: a tuple of the pdb sequence of 3TGI (rat's trypsin)
+  - `pdb_positions`: a list of the named positions found in the PDB
+
+Access the sequence data
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. GENERATED FROM PYTHON SOURCE LINES 33-40
+
+.. code-block:: Python
+
     loaded_seqs = dataset["alignment"]
     loaded_seqs_id = dataset["sequence_ids"]
     n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
 
     print(f"The loaded MSA has {n_loaded_seqs} sequences and {n_loaded_pos} \
           positions.")
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    The loaded MSA has 4422 sequences and 802       positions.
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 41-43
+
+Example of sequence filtering
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. GENERATED FROM PYTHON SOURCE LINES 43-53
+
+.. code-block:: Python
 
     sequences, sequences_id, positions = c_msa.filter_sequences(
         loaded_seqs, loaded_seqs_id, gap_threshold=0.4, seq_threshold=0.2)
@@ -75,9 +124,97 @@ Load the dataset
           np.round(m_eff))
 
 
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    After filtering, we have 156 remaining positions.
+    After filtering, we have 3806 remaining sequences.
+    Number of effective sequences 3332
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 54-56
+
+Access sector information
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. GENERATED FROM PYTHON SOURCE LINES 56-62
+
+.. code-block:: Python
+
+    sectors = dataset["sector_positions"]
+    print("There are", len(sectors), "sectors")
+
+    for sect in sectors:
+        print(sect, "is composed of:", len(sectors[sect]), "positions.")
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    There are 4 sectors
+    arr_0 is composed of: 12 positions.
+    arr_1 is composed of: 19 positions.
+    arr_2 is composed of: 7 positions.
+    arr_3 is composed of: 11 positions.
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 63-65
+
+Access PDB information
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. GENERATED FROM PYTHON SOURCE LINES 65-71
+
+.. code-block:: Python
+
+    pdb_seq = dataset["pdb_sequence"]
+    pdb_pos = dataset["pdb_positions"]
+    print("Start of E. coli's sequence:\n", pdb_seq[:10])
+    print("Named positions of the first ten residues in E. coli's sequence:\n",
+          pdb_pos[:10])
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Start of E. coli's sequence:
+     ('MISLIAALAVDRVIGMENAMPWPPLPADLAWFKRNTLNKPVIMGRHTWESIGRPLPGRKNIILSSQPGTDDRVTWVKSVDEAIAACGDVPEIMVIGGGRVYEQFLPKAQKLYLTHIDAEVEGDTHFPDYEPDDWESVFSEFHDADAQNAHSYCFEILERR',)
+    Named positions of the first ten residues in E. coli's sequence:
+     ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 72-79
+
+References
+----------
+
+.. [1] `Statistical Coupling Analysis Predicts Correlated Motions in
+       Dihydrofolate Reductase
+       <https://pubs.acs.org/doi/10.1021/acs.jpcb.4c04195>`_,
+       Kalmer et al., J. Phys. Chem. 2024
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.979 seconds)
+   **Total running time of the script:** (0 minutes 3.014 seconds)
 
 
 .. _sphx_glr_download_auto_examples_d_datasets_plot_DHFR.py:

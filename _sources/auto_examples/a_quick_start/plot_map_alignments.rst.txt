@@ -60,8 +60,8 @@ MSA, the PDB positions, and the sectors positions.
     sequences = serine_dataset["alignment"]
     n_pos, n_seq = len(sequences[0]), len(sequences)
 
-    # Make the sectors the same object type as what our extract_sectors_pos
-    # returns.
+    # Make the sectors the same object type as what our
+    # :func:`cocoatree.io.extract_sectors` function returns.
     sectors = [
         [str(i) for i in serine_dataset["sector_positions"][key]]
         for key in serine_dataset["sector_positions"].keys()]
@@ -79,7 +79,7 @@ MSA, the PDB positions, and the sectors positions.
 
 .. GENERATED FROM PYTHON SOURCE LINES 38-43
 
-Now, we are going to map all of these onte the same referential: the
+Now, we are going to map all of these onto the same referential: the
 original MSA positions.
 
 Use the function to obtain the mapping between the original MSA and the
@@ -166,7 +166,7 @@ Now print the indices of sectors 1 in the different referentials
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.345 seconds)
+   **Total running time of the script:** (0 minutes 0.338 seconds)
 
 
 .. _sphx_glr_download_auto_examples_a_quick_start_plot_map_alignments.py:

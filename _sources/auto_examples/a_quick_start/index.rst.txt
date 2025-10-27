@@ -10,6 +10,7 @@ In this section, you'll find examples to perform basic coevolution
 analyses using :mod:`cocoatree`
 
 
+
 .. raw:: html
 
     <div class="sphx-glr-thumbnails">

@@ -6,6 +6,8 @@
 
 Datasets
 --------
+In this section you will find descriptions of the three datasets included
+within COCOA-Tree and of how you can access their different objects.
 
 
 
@@ -17,24 +19,7 @@ Datasets
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Load the dataset">
-
-.. only:: html
-
-  .. image:: /auto_examples/d_datasets/images/thumb/sphx_glr_plot_rhomboid_proteases_thumb.png
-    :alt:
-
-  :ref:`sphx_glr_auto_examples_d_datasets_plot_rhomboid_proteases.py`
-
-.. raw:: html
-
-      <div class="sphx-glr-thumbnail-title">Rhomboid proteases</div>
-    </div>
-
-
-.. raw:: html
-
-    <div class="sphx-glr-thumbcontainer" tooltip="Load the dataset">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how the DHFR dataset is organized and how you can use it to test cocoatree&#x27;s features.">
 
 .. only:: html
 
@@ -51,7 +36,24 @@ Datasets
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Load the dataset">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how the Rhomboid dataset is organized and how you can use it to test cocoatree&#x27;s features.">
+
+.. only:: html
+
+  .. image:: /auto_examples/d_datasets/images/thumb/sphx_glr_plot_rhomboid_proteases_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_d_datasets_plot_rhomboid_proteases.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Rhomboid proteases</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how the S1A serine proteases dataset is organized and how you can use it to test cocoatree&#x27;s features.">
 
 .. only:: html
 
@@ -76,7 +78,7 @@ Datasets
 .. toctree::
    :hidden:
 
-   /auto_examples/d_datasets/plot_rhomboid_proteases
    /auto_examples/d_datasets/plot_DHFR
+   /auto_examples/d_datasets/plot_rhomboid_proteases
    /auto_examples/d_datasets/plot_s1A_serine_proteases
 

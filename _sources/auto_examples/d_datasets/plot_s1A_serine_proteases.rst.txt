@@ -21,41 +21,20 @@
 S1A serine proteases
 ====================
 
-Load the dataset
+This example shows how the S1A serine proteases dataset is organized and how
+you can use it to test cocoatree's features.
 
-.. GENERATED FROM PYTHON SOURCE LINES 8-38
+This dataset is actually composed of two MSAs:
+    - the MSA from Halabi et al., (2008)
+    - the MSA from Rivoire et al., (2016)
 
+.. GENERATED FROM PYTHON SOURCE LINES 15-16
 
+Imports
 
-
-.. rst-class:: sphx-glr-script-out
-
- .. code-block:: none
-
-    halabi
-    Number of sequences 1470
-    The loaded MSA has 1470 sequences and 832         positions.
-    After filtering, we have 242 remaining positions.
-    After filtering, we have 1456 remaining sequences.
-    Number of effective sequences 1053
-
-    rivoire
-    Number of sequences 1390
-    The loaded MSA has 1390 sequences and 832         positions.
-    After filtering, we have 243 remaining positions.
-    After filtering, we have 1376 remaining sequences.
-    Number of effective sequences 1019
-
-
-
-
-
-
-
-|
+.. GENERATED FROM PYTHON SOURCE LINES 16-22
 
 .. code-block:: Python
-
 
     import numpy as np
     from cocoatree.datasets import load_S1A_serine_proteases
@@ -64,33 +43,358 @@ Load the dataset
     import cocoatree.statistics.position as c_pos
 
 
-    for paper in ["halabi", "rivoire"]:
-        print(paper)
-        dataset = load_S1A_serine_proteases(paper=paper)
 
-        print("Number of sequences", len(dataset["alignment"]))
-        loaded_seqs = dataset["alignment"]
-        loaded_seqs_id = dataset["sequence_ids"]
-        n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
 
-        print(f"The loaded MSA has {n_loaded_seqs} sequences and {n_loaded_pos} \
-            positions.")
 
-        sequences, sequences_id, positions = c_msa.filter_sequences(
-            loaded_seqs, loaded_seqs_id, gap_threshold=0.4, seq_threshold=0.2)
-        n_pos = len(positions)
-        print(f"After filtering, we have {n_pos} remaining positions.")
-        print(f"After filtering, we have {len(sequences)} remaining sequences.")
 
-        seq_weights, m_eff = c_pos.compute_seq_weights(sequences)
-        print('Number of effective sequences %d' %
-              np.round(m_eff))
-        print()
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 23-26
+
+Halabi dataset
+--------------
+Use `load_S1A_serine_dataset` function to load the Halabi dataset
+
+.. GENERATED FROM PYTHON SOURCE LINES 26-30
+
+.. code-block:: Python
+
+    halabi = load_S1A_serine_proteases(paper='halabi')
+
+    print(halabi.keys())
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    dict_keys(['sequence_ids', 'alignment', 'sector_positions', 'metadata', 'pdb_sequence', 'pdb_positions'])
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 31-43
+
+`halabi` is a dictionary with 6 elements:
+  - `sequence_ids`: a list of the sequence identifiers for the MSA
+  - `alignment`: the aligned sequences
+  - `sector_positions`: a Numpy NpzFile of the sectors' positions as found in
+the Halabi study
+  - `metadata`: a Pandas dataframe containing metadata associated with the
+alignment, such as taxonomic information.
+  - `pdb_sequence`: a tuple of the pdb sequence of 3TGI (rat's trypsin)
+  - `pdb_positions`: a list of the named positions found in the PDB
+
+Access the sequence data
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. GENERATED FROM PYTHON SOURCE LINES 43-54
+
+.. code-block:: Python
+
+    loaded_seqs = halabi["alignment"]
+    loaded_seqs_id = halabi["sequence_ids"]
+    print(loaded_seqs[:5])
+    print(loaded_seqs_id[:5])
+    print()
+    print("Number of sequences:", len(loaded_seqs))
+
+    n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
+    print(f"The loaded MSA has {n_loaded_seqs} sequences and {n_loaded_pos} \
+          positions.")
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    ['----------------------------------------------------------------------------------------------------------------------------------IVGG-------------------------------YTCQEN-----------------------------------------SVPYQVSLNS--------------------GYHFCGGSLIN------DQWVVS------------AAHCYKS-----------------------------RIQVRLGEHNIN-----------------------VLEGNEQFVNAAKIIKHPNFDR------------------------KTLNNDIMLIKLSSP-VKLN-----------------------ARVATV----------------------ALP-----------------SSCAP-AG------------TQCLISGWG-NTLSSG---------------------------------------VNEPD----LL-QCLDAPLLP---------------------------QADCEASYP-----------------GKITDNMVCVGFLEGG---------KDSCQGDSG-GPVVCN----------GELQGIVSWGY-------GCALPD-----NPGVYTKVCN------YVDWIQDTIAAN------------------------------------------------------------------------------------------', '-----------------------------------------------------------------------------------------------------------------------------------VGG-------------------------------TEAQRN-----------------------------------------SWPSQISLQYRSG---------------SSWAHTCGGTLIR------QNWVMT------------AAHCVDRE---------------------------LTFRVVVGEHNLN-----------------------QNDGTEQYVGVQKIVVHPYWNTD----------------------DVAAGYDIALLRLAQS-VTLNSY-----------------------VQLGV----------------------LPRAG----------------TILANN------------SPCYITGWGL-TR-------------------TNG---------------------QLAQ----TL-QQAYLPTVD---------------------------YAICSSSSYW---------------GSTVKNSMVCAGGDGV----------RSGCQGDSG-GPLHCLVN------GQYAVHGVTSFVSR-----LGCNVTR-----KPTVFTRVSA------YISWINNVIASN------------------------------------------------------------------------------------------', '----------------------------------------------------------------------------------------------------------------------------------IVGG-------------------------------RRARPH-----------------------------------------AWPFMVSLQLR-------------------GGHFCGATLIA------PNFVMS------------AAHCVANVN-------------------------VRAVRVVLGAHNLS-----------------------RREPTRQVFAVQRIFEDGYDP-------------------------VNLLNDIVILQLNGS-ATINAN-----------------------VQVAQ----------------------LPAQG----------------RRLGNG------------VQCLAMGWG-LLGRNR----------------------------------------GIAS----VL-QELNVTVV----------------------------TSLCR-------------------------RSNVCTLVRGRQ---------AGVCFGDSG-SPLVCN----------GLIHGIASFVRG------GCASGL-----YPDAFAPVAQ------FVNWIDSIIQ--------------------------------------------------------------------------------------------', '----------------------------------------------------------------------------------------------------------------------------------IIGG-------------------------------TESKPH-----------------------------------------SRPYMAYLEIVTS---------------NGPSKFCGGFLIR------RNFVLT------------AAHCAGR-----------------------------SITVTLGAHNIT-----------------------EEEDTWQKLEVIKQFRHPKYNT------------------------STLHHDIMLLKLKEK-ASLTLA-----------------------VGTLP----------------------FPSQF----------------NFVPPG------------RMCRVAGWGRT---------------------GVLK--------------------PGSD----TL-QEVKLRLMD---------------------------PQACSHFRD------------------FDHNLQLCVGNPRKT---------KSAFKGDSG-GPLLCA----------GVAQGIVSYGRS------DAKP--------PAVFTRISH------YRPWINQILQAN------------------------------------------------------------------------------------------', '----------------------------------------------------------------------------------------------------------------------------------IIGG-------------------------------HEAKPH-----------------------------------------SRPYMAYLQIMDE---------------YSGSKKCGGFLIR------EDFVLT------------AAHCSGS-----------------------------KIQVTLGAHNIK-----------------------EQEKMQQIIPVVKIIPHPAYNS------------------------KTISNDIMLLKLKSK-AKRSSA-----------------------VKPLN----------------------LPRRN----------------VKVKPG------------DVCYVAGWGK-LG-------------------PMG---------------------KYSD----TL-QEVELTVQE---------------------------DQKCESYLKN----------------YFDKANEICAGDPKIK---------RASFRGDSG-GPLVCK----------KVAAGIVSYGQN------DGST--------PRAFTKVST------FLSWIKKTMKKS------------------------------------------------------------------------------------------']
+    ['4139558', '7546312', '230004', '4139720', '10835843']
+
+    Number of sequences: 1470
+    The loaded MSA has 1470 sequences and 832       positions.
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 55-57
+
+Filter the MSA
+^^^^^^^^^^^^^^
+
+.. GENERATED FROM PYTHON SOURCE LINES 57-63
+
+.. code-block:: Python
+
+    sequences, sequences_id, positions = c_msa.filter_sequences(
+        loaded_seqs, loaded_seqs_id, gap_threshold=0.4, seq_threshold=0.2)
+    n_pos = len(positions)
+    print(f"After filtering, we have {n_pos} remaining positions.")
+    print(f"After filtering, we have {len(sequences)} remaining sequences.")
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    After filtering, we have 242 remaining positions.
+    After filtering, we have 1456 remaining sequences.
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 64-66
+
+Compute the number of effective sequences
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. GENERATED FROM PYTHON SOURCE LINES 66-70
+
+.. code-block:: Python
+
+    seq_weights, m_eff = c_pos.compute_seq_weights(sequences)
+    print('Number of effective sequences %d' % np.round(m_eff))
+    print()
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Number of effective sequences 1053
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 71-73
+
+Access the metadata
+^^^^^^^^^^^^^^^^^^^
+
+.. GENERATED FROM PYTHON SOURCE LINES 73-76
+
+.. code-block:: Python
+
+    metadata = halabi["metadata"]
+    print(metadata)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+            Seq_ID  ...         Family
+    0      4139558  ...        Muridae
+    1      7546312  ...         Suidae
+    2       230004  ...      Hominidae
+    3      4139720  ...      Hominidae
+    4     10835843  ...        Muridae
+    ...        ...  ...            ...
+    1465  54641874  ...  Drosophilidae
+    1466  55236641  ...      Culicidae
+    1467  55238595  ...      Culicidae
+    1468  66772117  ...  Drosophilidae
+    1469  24660124  ...  Drosophilidae
+
+    [1470 rows x 14 columns]
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 77-82
+
+The `Seq_ID` column corresponds to the sequence identifiers found in
+`loaded_seqs_id`
+
+Access PDB information
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. GENERATED FROM PYTHON SOURCE LINES 82-88
+
+.. code-block:: Python
+
+    pdb_seq = halabi["pdb_sequence"]
+    pdb_pos = halabi["pdb_positions"]
+    print("Start of 3TGI sequence:\n", pdb_seq[:10])
+    print("Named positions of the first ten residues in 3TGI protein sequence:\n",
+          pdb_pos[:10])
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Start of 3TGI sequence:
+     ('IVGGYTCQENSVPYQVSLNSGYHFCGGSLINDQWVVSAAHCYKSRIQVRLGEHNINVLEGNEQFVNAAKIIKHPNFDRKTLNNDIMLIKLSSPVKLNARVATVALPSSCAPAGTQCLISGWGNTLSSGVNEPDLLQCLDAPLLPQADCEASYPGKITDNMVCVGFLEGGKDSCQGDSGGPVVCNGELQGIVSWGYGCALPDNPGVYTKVCNYVDWIQDTIAAN',)
+    Named positions of the first ten residues in 3TGI protein sequence:
+     ['16', '17', '18', '19', '20', '21', '22', '23', '24', '25']
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 89-91
+
+Access sector information
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. GENERATED FROM PYTHON SOURCE LINES 91-93
+
+.. code-block:: Python
+
+    sectors = halabi["sector_positions"]
+    print(sectors)
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    NpzFile '/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/site-packages/cocoatree/datasets/data/S1A_serine_proteases/halabi_sectors.npz' with keys: sector_1, sector, sector_3
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 94-95
+
+There are three sectors that have been identified in Halabi et al. (2008)
+
+.. GENERATED FROM PYTHON SOURCE LINES 95-98
+
+.. code-block:: Python
+
+    print("The first sector identified in Halabi et al. is composed of the \
+          following positions:", sectors["sector_1"])
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    The first sector identified in Halabi et al. is composed of the       following positions: [ 17 161 172 176 177 180 183 187 188 189 191 192 213 215 216 220 221 226
+     227 228]
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 99-104
+
+To see an example on how to use this dataset for a coevolution analysis, go
+to: :ref:`sphx_glr_auto_examples_plot_full_SCA_analysis.py`
+
+For an example on how to visualize cocoatree's results with this dataset, go
+to : :ref:`sphx_glr_auto_examples_plot_sector_along_tree_and_metadata.py`
+
+.. GENERATED FROM PYTHON SOURCE LINES 107-110
+
+Rivoire dataset
+---------------
+Similarly, you can access the dataset from Rivoire et al. (2016) paper:
+
+.. GENERATED FROM PYTHON SOURCE LINES 110-121
+
+.. code-block:: Python
+
+    rivoire = load_S1A_serine_proteases(paper='rivoire')
+    print(rivoire.keys())
+
+    loaded_seqs = rivoire["alignment"]
+    loaded_seqs_id = rivoire["sequence_ids"]
+    print("Number of sequences:", len(loaded_seqs))
+
+    n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
+    print(f"The loaded MSA has {n_loaded_seqs} sequences and {n_loaded_pos} \
+          positions.")
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    dict_keys(['sequence_ids', 'alignment', 'sector_positions', 'metadata', 'pdb_sequence', 'pdb_positions'])
+    Number of sequences: 1390
+    The loaded MSA has 1390 sequences and 832       positions.
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 122-124
+
+The dataset is organized in the same way as Halabi's, although in this case
+there are 6 sectors:
+
+.. GENERATED FROM PYTHON SOURCE LINES 124-131
+
+.. code-block:: Python
+
+    sectors = rivoire["sector_positions"]
+    print(sorted(sectors))
+
+    for sect in sectors:
+        print(sect, "is composed of:", len(sectors[sect]), "positions.")
+
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    ['sector', 'sector_1', 'sector_3', 'sector_4', 'sector_5', 'sector_6']
+    sector_1 is composed of: 32 positions.
+    sector is composed of: 22 positions.
+    sector_3 is composed of: 20 positions.
+    sector_4 is composed of: 10 positions.
+    sector_5 is composed of: 6 positions.
+    sector_6 is composed of: 7 positions.
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 132-141
+
+References
+----------
+
+.. [1] `Protein Sectors: Evolutionary Units of Three-Dimensional Structure
+       <https://doi-org.insb.bib.cnrs.fr/10.1016/j.cell.2009.07.038>`_,
+       Halabi et al., Cell 2008
+.. [2] `Evolution-Based Functional Decomposition of Proteins
+       <https://doi.org/10.1371/journal.pcbi.1004817>`_,
+       Rivoire et al., PLOS Computational Biology 2016
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.478 seconds)
+   **Total running time of the script:** (0 minutes 0.918 seconds)
 
 
 .. _sphx_glr_download_auto_examples_d_datasets_plot_s1A_serine_proteases.py:

@@ -21,9 +21,64 @@
 Rhomboid proteases
 ====================
 
+This example shows how the Rhomboid dataset is organized and how you can use it
+to test cocoatree's features.
+
+.. GENERATED FROM PYTHON SOURCE LINES 11-12
+
 Load the dataset
 
-.. GENERATED FROM PYTHON SOURCE LINES 8-32
+.. GENERATED FROM PYTHON SOURCE LINES 12-20
+
+.. code-block:: Python
+
+    import numpy as np
+    from cocoatree.datasets import load_rhomboid_proteases
+    import cocoatree.msa as c_msa
+    import cocoatree.statistics.position as c_pos
+
+    dataset = load_rhomboid_proteases()
+    print(dataset.keys())
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    dict_keys(['sequence_ids', 'alignment', 'sector_positions', 'metadata', 'pdb_sequence', 'pdb_positions'])
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 21-33
+
+`dataset` is a dictionary with 6 elements:
+  - `sequence_ids`: a list of the sequence identifiers for the MSA
+  - `alignment`: the aligned sequences
+  - `sector_positions`: a Numpy NpzFile of the sectors' positions as found in
+the Mihaljević and Urban study
+  - `metadata`: a Pandas dataframe containing metadata associated with the
+alignment, such as taxonomic information.
+  - `pdb_sequence`: a tuple of the pdb sequence of E. coli's PDB
+  - `pdb_positions`: a list of the named positions found in the PDB
+
+Access the sequence data
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. GENERATED FROM PYTHON SOURCE LINES 33-40
+
+.. code-block:: Python
+
+    loaded_seqs = dataset["alignment"]
+    loaded_seqs_id = dataset["sequence_ids"]
+    n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
+
+    print(f"The loaded MSA has {n_loaded_seqs} sequences and {n_loaded_pos} \
+          positions.")
+
 
 
 
@@ -33,33 +88,18 @@ Load the dataset
  .. code-block:: none
 
     The loaded MSA has 2767 sequences and 135       positions.
-    After filtering, we have 135 remaining positions.
-    After filtering, we have 2767 remaining sequences.
-    Number of effective sequences 1792
 
 
 
 
+.. GENERATED FROM PYTHON SOURCE LINES 41-43
 
+Example of sequence filtering
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-|
+.. GENERATED FROM PYTHON SOURCE LINES 43-53
 
 .. code-block:: Python
-
-    import numpy as np
-    from cocoatree.datasets import load_rhomboid_proteases
-    import cocoatree.msa as c_msa
-    import cocoatree.statistics.position as c_pos
-
-
-    dataset = load_rhomboid_proteases()
-
-    loaded_seqs = dataset["alignment"]
-    loaded_seqs_id = dataset["sequence_ids"]
-    n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
-
-    print(f"The loaded MSA has {n_loaded_seqs} sequences and {n_loaded_pos} \
-          positions.")
 
     sequences, sequences_id, positions = c_msa.filter_sequences(
         loaded_seqs, loaded_seqs_id, gap_threshold=0.4, seq_threshold=0.2)
@@ -72,9 +112,139 @@ Load the dataset
           np.round(m_eff))
 
 
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    After filtering, we have 135 remaining positions.
+    After filtering, we have 2767 remaining sequences.
+    Number of effective sequences 1792
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 54-56
+
+Access sector information
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. GENERATED FROM PYTHON SOURCE LINES 56-62
+
+.. code-block:: Python
+
+    sectors = dataset["sector_positions"]
+    print("There are", len(sectors), "sectors")
+
+    for sect in sectors:
+        print(sect, "is composed of:", len(sectors[sect]), "positions.")
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    There are 3 sectors
+    sector_1 is composed of: 14 positions.
+    sector_2 is composed of: 10 positions.
+    sector_3 is composed of: 17 positions.
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 63-64
+
+Note that the above sector positions are relative to E. coli's PDB sequence.
+
+.. GENERATED FROM PYTHON SOURCE LINES 66-68
+
+Access metadata
+^^^^^^^^^^^^^^^
+
+.. GENERATED FROM PYTHON SOURCE LINES 68-71
+
+.. code-block:: Python
+
+    metadata = dataset["metadata"]
+    print(metadata)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+                    Seq_ID                     Protein_names  ...  AlphaFoldDB  PDB
+    0         C7N0Y4_SLAHD  Uncharacterized membrane protein  ...      C7N0Y4;  NaN
+    1         F8DCV9_HALXS           Rhomboid family protein  ...      F8DCV9;  NaN
+    2         C7P1C2_HALMD           Rhomboid family protein  ...      C7P1C2;  NaN
+    3     A0A087SLN7_AUXPR            Rhomboid protease GluP  ...  A0A087SLN7;  NaN
+    4     A0A0G0YMT9_9BACT                               NaN  ...          NaN  NaN
+    ...                ...                               ...  ...          ...  ...
+    2760        GLPG_ENT38            Rhomboid protease GlpG  ...       A4WFK8  NaN
+    2761        GLPG_CITK8            Rhomboid protease GlpG  ...       A8AQX4  NaN
+    2762        GLPG_SHIDS            Rhomboid protease GlpG  ...       Q32AN6  NaN
+    2763        GLPG_SALAR            Rhomboid protease GlpG  ...       A9MMA7  NaN
+    2764        GLPG_SALTY            Rhomboid protease GlpG  ...       Q8ZLH5  NaN
+
+    [2765 rows x 19 columns]
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 72-74
+
+Access PDB information
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. GENERATED FROM PYTHON SOURCE LINES 74-81
+
+.. code-block:: Python
+
+    pdb_seq = dataset["pdb_sequence"]
+    pdb_pos = dataset["pdb_positions"]
+    print("Start of E. coli's sequence:\n", pdb_seq[:10])
+    print("Named positions of the first ten residues in E. coli's sequence:\n",
+          pdb_pos[:10])
+
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+    Start of E. coli's sequence:
+     ('ERAGPVTWVMMIACVVVFIAMQILGDQEVMLWLAWPFDPTLKFEFWRYFTHALMHFSLMHILFNLLWWWYLGGAVEKRLGSGKLIVITLISALLSGYVQQKFSGPWFGGLSGVVYALMGYVWLRGERDPQSGIYLQRGLIIFALIWIVAGWFDLFGMSMANGAHIAGLAVGLAMAFVDSLNA',)
+    Named positions of the first ten residues in E. coli's sequence:
+     ['91', '92', '93', '94', '95', '96', '97', '98', '99', '100']
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 82-89
+
+References
+----------
+
+.. [1] `Decoding the Functional Evolution of an Intramembrane Protease
+       Superfamily by Statistical Coupling Analysis
+       <https://doi.org/10.1016/j.str.2020.07.015>`_,
+       Mihaljević and Urban, Structure 2020
+
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.019 seconds)
+   **Total running time of the script:** (0 minutes 1.031 seconds)
 
 
 .. _sphx_glr_download_auto_examples_d_datasets_plot_rhomboid_proteases.py:

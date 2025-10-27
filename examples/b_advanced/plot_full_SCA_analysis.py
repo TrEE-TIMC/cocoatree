@@ -36,7 +36,11 @@ import numpy as np
 #
 # We start by importing the dataset. In this case, we can directly load the S1
 # serine protease dataset provided in :mod:`cocoatree`. To work on your own
-# dataset, you can use the `cocoatree.io.load_msa` function.
+# dataset, you can use :func:`cocoatree.io.load_MSA`.
+#
+# A detailed description of how to access all the objects included in the
+# dataset is available here:
+# :ref:`sphx_glr_auto_examples_d_datasets_plot_S1A_serine_proteases.py`
 
 serine_dataset = c_data.load_S1A_serine_proteases('rivoire')
 loaded_seqs = serine_dataset["alignment"]
@@ -64,10 +68,11 @@ print(f"After filtering, we have {len(sequences)} remaining sequences.")
 # ------------------------------------------------
 #
 # Note that the sequences in the matrix are in the same order as in the MSA.
-# You can use the `cocoatree.visualization.update_tree_ete3_and_return_style`
+# You can use :func:`cocoatree.visualization.update_tree_ete3_and_return_style`
 # function to represent a sequence similarity matrix ordered following a
-# phylogenetic tree (see `Plot sector together with (phylogenetic) tree and
-# metadata <../doc/auto_examples/plot_sector_along_tree_and_metadata.html`_).
+# phylogenetic tree (see
+# :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_sector_seq\
+# _and_coevol.py`).
 
 identity_matrix = c_msa.compute_seq_identity(sequences)
 
@@ -258,7 +263,7 @@ if False:  # need to be revised
     # Map PDB positions on the MSA sequence corresponding to rat's trypsin:
     # seq_id='14719441'
     pdb_mapping = c_msa.map_to_pdb(pdb_seq, pdb_pos, sequences, sequences_id,
-                                   ref_seq_id='14719441')
+                                   pdb_seq_id='14719441')
     # Export lists of the first sector positions and each residue's
     # contribution to the independent component to use for visualization on
     # Pymol.

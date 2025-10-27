@@ -71,7 +71,8 @@ print(f"After filtering, we have {len(sequences)} remaining sequences.")
 # You can use :func:`cocoatree.visualization.update_tree_ete3_and_return_style`
 # function to represent a sequence similarity matrix ordered following a
 # phylogenetic tree (see
-# :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_sector_seq_and_coevol.py`).
+# :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_sector_seq\
+# _and_coevol.py`).
 
 identity_matrix = c_msa.compute_seq_identity(sequences)
 

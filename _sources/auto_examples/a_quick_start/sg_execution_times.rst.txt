@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:02.792** total execution time for 2 files **from auto_examples/a_quick_start**:
+**00:05.548** total execution time for 3 files **from auto_examples/a_quick_start**:
 
 .. container::
 
@@ -32,9 +32,12 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
+   * - :ref:`sphx_glr_auto_examples_a_quick_start_plot_sca_according2xcors.py` (``plot_sca_according2xcors.py``)
+     - 00:02.789
+     - 0.0
    * - :ref:`sphx_glr_auto_examples_a_quick_start_plot_minimal_sca.py` (``plot_minimal_sca.py``)
-     - 00:02.457
+     - 00:02.414
      - 0.0
    * - :ref:`sphx_glr_auto_examples_a_quick_start_plot_map_alignments.py` (``plot_map_alignments.py``)
-     - 00:00.335
+     - 00:00.345
      - 0.0

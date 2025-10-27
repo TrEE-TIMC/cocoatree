@@ -44,17 +44,20 @@
 <h1>cocoatree.deconvolution.extract_sectors<a class="headerlink" href="#cocoatree-deconvolution-extract-sectors" title="Link to this heading">¶</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="cocoatree.deconvolution.extract_sectors">
-<span class="sig-prename descclassname"><span class="pre">cocoatree.deconvolution.</span></span><span class="sig-name descname"><span class="pre">extract_sectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idpt_components</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coevo_matrix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cocoatree/deconvolution.html#extract_sectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cocoatree.deconvolution.extract_sectors" title="Link to this definition">¶</a></dt>
-<dd><p>Extract residue positions of sectors</p>
+<span class="sig-prename descclassname"><span class="pre">cocoatree.deconvolution.</span></span><span class="sig-name descname"><span class="pre">extract_sectors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coevo_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_sectors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cocoatree/deconvolution.html#extract_sectors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cocoatree.deconvolution.extract_sectors" title="Link to this definition">¶</a></dt>
+<dd><p>Extract residue positions of sectors directly from the coevo_matrix</p>
 <section id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
-<p>idpt_components : independent components obtained from an ICA</p>
 <p>coevo_matrix : coevolution matrix</p>
+<dl class="simple">
+<dt>n_sectors<span class="classifier">int</span></dt><dd><p>Number of sectors to return</p>
+</dd>
+</dl>
 </section>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
 <dl class="simple">
-<dt>sectors<span class="classifier">lists of residue positions on the filtered MSA for each of the</span></dt><dd><p>n_components sector</p>
+<dt>sectors<span class="classifier">lists of residue positions on the filtered MSA for each of the</span></dt><dd><p>n_sectors sector</p>
 </dd>
 </dl>
 </section>
@@ -62,9 +65,9 @@
 
 <section id="examples-using-cocoatree-deconvolution-extract-sectors">
 <h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.deconvolution.extract_sectors</span></code><a class="headerlink" href="#examples-using-cocoatree-deconvolution-extract-sectors" title="Link to this heading">¶</a></h2>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete SCA analysis and detect eXtremal Co-evolving Residues (XCoR) from data importation and MSA filtering to the computation of a SCA coevolution matrix, the extraction of principal and independent components, and the representation of coevolution within and between sectors."><img alt="" src="../../_images/sphx_glr_plot_full_SCA_analysis_thumb.png" />
-<p><a class="reference internal" href="../../auto_examples/b_advanced/plot_full_SCA_analysis.html#sphx-glr-auto-examples-b-advanced-plot-full-sca-analysis-py"><span class="std std-ref">Perform full SCA analysis on the S1A serine protease dataset</span></a></p>
-  <div class="sphx-glr-thumbnail-title">Perform full SCA analysis on the S1A serine protease dataset</div>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to generate a SCA co-evolutionary matrix, reduce it, and sort it according to XCoRs."><img alt="" src="../../_images/sphx_glr_plot_sca_according2xcors_thumb.png" />
+<p><a class="reference internal" href="../../auto_examples/a_quick_start/plot_sca_according2xcors.html#sphx-glr-auto-examples-a-quick-start-plot-sca-according2xcors-py"><span class="std std-ref">Perform a minimal SCA analysis and plot SCA-related heatmaps</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Perform a minimal SCA analysis and plot SCA-related heatmaps</div>
 </div></div><div class="sphx-glr-clear"></div></section>
 </section>
 

@@ -389,7 +389,7 @@
 
 <div class="viewcode-block" id="compute_seq_weights">
 <a class="viewcode-back" href="../../modules/generated/cocoatree.msa.compute_seq_weights.html#cocoatree.msa.compute_seq_weights">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">compute_seq_weights</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">verbose_every</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_seq_weights</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">verbose_every</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
                         <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose_parallel</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Compute sequence weights</span>
@@ -434,7 +434,7 @@
     <span class="k">if</span> <span class="n">n_jobs</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">seq_weights</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">iseq</span><span class="p">,</span> <span class="n">seq</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sequences_num</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">iseq</span> <span class="o">%</span> <span class="n">verbose_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">verbose_every</span> <span class="ow">and</span> <span class="n">iseq</span> <span class="o">%</span> <span class="n">verbose_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;computing weight of seq </span><span class="si">%d</span><span class="s1">/</span><span class="si">%d</span><span class="se">\t</span><span class="s1">&#39;</span> <span class="o">%</span>
                       <span class="p">(</span><span class="n">iseq</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequences_num</span><span class="p">)),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="n">sim</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">sn</span><span class="o">.</span><span class="n">DistanceMetric</span><span class="o">.</span><span class="n">get_metric</span><span class="p">(</span>

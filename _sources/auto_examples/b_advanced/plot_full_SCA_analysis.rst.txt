@@ -199,7 +199,7 @@ Compute sequence weights
 
  .. code-block:: none
 
-    computing weight of seq 1/1376      Number of effective sequences 1019
+    Number of effective sequences 1019
 
 
 
@@ -276,7 +276,7 @@ Compute the SCA coevolution matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7f5bc9dc60d0>
+    <matplotlib.colorbar.Colorbar object at 0x7fa2212e3710>
 
 
 
@@ -369,7 +369,7 @@ Obtain a list of residues of each sector
 .. code-block:: Python
 
 
-    sectors = c_deconv.extract_sectors(idpt_components, SCA_matrix)
+    sectors = c_deconv.extract_sectors_from_ICs(idpt_components, SCA_matrix)
 
     print('Sector positions on (filtered) sequences:')
     for isec, sec in enumerate(sectors):
@@ -452,7 +452,7 @@ bottom and from left to right.
 
 .. GENERATED FROM PYTHON SOURCE LINES 203-206
 
-Do the same but for the SCA matrix where the global correlation mode has
+Do the same but for the SCA matrix where a global correlation mode has
 been removed and, hence, such that sectors are better highlighted.
 See Rivoire et al., PLOSCB, 2016
 
@@ -461,9 +461,9 @@ See Rivoire et al., PLOSCB, 2016
 .. code-block:: Python
 
 
-    # removing global model (ngm = no global mode),
-    # i.e., removing first principal component
-    SCA_matrix_ngm = c_deconv.substract_first_principal_component(SCA_matrix)
+    # Removing a global mode (ngm = no global mode),
+    # i.e., setting largest eigeinvalue to zero
+    SCA_matrix_ngm = c_deconv.remove_global_correlations(SCA_matrix)
 
     # plotting
     fig, ax = plt.subplots(tight_layout=True)
@@ -564,7 +564,7 @@ independent component to which the sector is associated.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.184 seconds)
+   **Total running time of the script:** (0 minutes 4.209 seconds)
 
 
 .. _sphx_glr_download_auto_examples_b_advanced_plot_full_SCA_analysis.py:

@@ -37,14 +37,14 @@ Load the dataset
     The loaded MSA has 1470 sequences and 832         positions.
     After filtering, we have 242 remaining positions.
     After filtering, we have 1456 remaining sequences.
-    computing weight of seq 1/1456      Number of effective sequences 1053
+    Number of effective sequences 1053
 
     rivoire
     Number of sequences 1390
     The loaded MSA has 1390 sequences and 832         positions.
     After filtering, we have 243 remaining positions.
     After filtering, we have 1376 remaining sequences.
-    computing weight of seq 1/1376      Number of effective sequences 1019
+    Number of effective sequences 1019
 
 
 
@@ -90,7 +90,7 @@ Load the dataset
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.483 seconds)
+   **Total running time of the script:** (0 minutes 1.478 seconds)
 
 
 .. _sphx_glr_download_auto_examples_d_datasets_plot_s1A_serine_proteases.py:

@@ -110,7 +110,7 @@ def perform_sca(sequences_id, sequences,
         coevol_matrix)
     independent_components = deconvolution.extract_independent_components(
         coevol_matrix, n_components=n_components)
-    sectors = deconvolution.extract_sectors(
+    sectors = deconvolution.extract_sectors_from_ICs(
         independent_components, coevol_matrix)
 
     # Now, map everything into a nice pandas DataFrame

@@ -330,7 +330,7 @@ def compute_seq_identity(sequences):
     return sim_matrix
 
 
-def compute_seq_weights(sequences, threshold=0.8, verbose_every=10000,
+def compute_seq_weights(sequences, threshold=0.8, verbose_every=0,
                         n_jobs=1, verbose_parallel=5):
     """
     Compute sequence weights
@@ -375,7 +375,7 @@ def compute_seq_weights(sequences, threshold=0.8, verbose_every=10000,
     if n_jobs == 1:
         seq_weights = []
         for iseq, seq in enumerate(sequences_num):
-            if iseq % verbose_every == 0:
+            if verbose_every and iseq % verbose_every == 0:
                 print('computing weight of seq %d/%d\t' %
                       (iseq+1, len(sequences_num)), end='\r')
             sim = 1 - sn.DistanceMetric.get_metric(

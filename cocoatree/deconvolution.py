@@ -174,9 +174,9 @@ def extract_principal_components(coevo_matrix):
     return principal_components
 
 
-def extract_sectors(idpt_components, coevo_matrix):
+def extract_sectors_from_ICs(idpt_components, coevo_matrix):
     """
-    Extract residue positions of sectors
+    Extract residue positions of sectors from independent components
 
     Parameters
     ----------
@@ -203,9 +203,45 @@ def extract_sectors(idpt_components, coevo_matrix):
     return sectors
 
 
-def substract_first_principal_component(coevo_matrix):
+def extract_sectors(coevo_matrix, n_sectors=3):
     """
-    Remove global correlations
+    Extract residue positions of sectors directly from the coevo_matrix
+
+    Parameters
+    ----------
+    coevo_matrix : coevolution matrix
+
+    n_sectors : int
+        Number of sectors to return
+
+    Returns
+    -------
+    sectors : lists of residue positions on the filtered MSA for each of the
+        n_sectors sector
+    """
+
+    # extracting indepdent components
+    idpt_components = extract_independent_components(coevo_matrix,
+                                                     n_components=n_sectors)
+
+    Vica = idpt_components.T
+    _, sector_sizes, sorted_pos, _, _, _ = _icList(
+        Vica, len(idpt_components), coevo_matrix)
+
+    sectors = [[sorted_pos[i] for i in range(sector_sizes[0])]]
+    ref_index = sector_sizes[0]
+    for isize in range(1, len(sector_sizes)):
+        sectors.append([sorted_pos[i]
+                        for i in range(ref_index,
+                                       ref_index + sector_sizes[isize])])
+        ref_index += sector_sizes[isize]
+    return sectors
+
+
+def remove_global_correlations(coevo_matrix):
+    """
+    Remove global correlations by setting the first eigen value
+    of the coevo matrix to 0
 
     In the sector literature (and data analysis), this corresponds
     to removing global correlations (from e.g. phylogenetic effects)

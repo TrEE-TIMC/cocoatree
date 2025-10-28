@@ -67,20 +67,21 @@ Load the dataset
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 23-33
+.. GENERATED FROM PYTHON SOURCE LINES 23-34
 
 `dataset` is a dictionary with 5 elements:
   - `sequence_ids`: a list of the sequence identifiers for the MSA
   - `alignment`: the aligned sequences
   - `sector_positions`: a Numpy NpzFile of the sectors' positions as found in
 the Kalmer study
-  - `pdb_sequence`: a tuple of the pdb sequence of 3TGI (rat's trypsin)
+  - `pdb_sequence`: a tuple of the pdb sequence of 3QL3 (wild-type E. coli
+DHFR)
   - `pdb_positions`: a list of the named positions found in the PDB
 
 Access the sequence data
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-40
+.. GENERATED FROM PYTHON SOURCE LINES 34-41
 
 .. code-block:: Python
 
@@ -104,12 +105,12 @@ Access the sequence data
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-43
+.. GENERATED FROM PYTHON SOURCE LINES 42-44
 
 Example of sequence filtering
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-53
+.. GENERATED FROM PYTHON SOURCE LINES 44-54
 
 .. code-block:: Python
 
@@ -138,12 +139,12 @@ Example of sequence filtering
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-56
+.. GENERATED FROM PYTHON SOURCE LINES 55-57
 
 Access sector information
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-62
+.. GENERATED FROM PYTHON SOURCE LINES 57-63
 
 .. code-block:: Python
 
@@ -170,18 +171,18 @@ Access sector information
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-65
+.. GENERATED FROM PYTHON SOURCE LINES 64-66
 
 Access PDB information
 ^^^^^^^^^^^^^^^^^^^^^^
 
-.. GENERATED FROM PYTHON SOURCE LINES 65-71
+.. GENERATED FROM PYTHON SOURCE LINES 66-72
 
 .. code-block:: Python
 
     pdb_seq = dataset["pdb_sequence"]
     pdb_pos = dataset["pdb_positions"]
-    print("Start of E. coli's sequence:\n", pdb_seq[:10])
+    print("Start of E. coli DHFR's sequence:\n", pdb_seq[:10])
     print("Named positions of the first ten residues in E. coli's sequence:\n",
           pdb_pos[:10])
 
@@ -193,7 +194,7 @@ Access PDB information
 
  .. code-block:: none
 
-    Start of E. coli's sequence:
+    Start of E. coli DHFR's sequence:
      ('MISLIAALAVDRVIGMENAMPWPPLPADLAWFKRNTLNKPVIMGRHTWESIGRPLPGRKNIILSSQPGTDDRVTWVKSVDEAIAACGDVPEIMVIGGGRVYEQFLPKAQKLYLTHIDAEVEGDTHFPDYEPDDWESVFSEFHDADAQNAHSYCFEILERR',)
     Named positions of the first ten residues in E. coli's sequence:
      ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
@@ -201,7 +202,7 @@ Access PDB information
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 72-79
+.. GENERATED FROM PYTHON SOURCE LINES 73-80
 
 References
 ----------
@@ -214,7 +215,7 @@ References
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 3.014 seconds)
+   **Total running time of the script:** (0 minutes 2.976 seconds)
 
 
 .. _sphx_glr_download_auto_examples_d_datasets_plot_DHFR.py:

@@ -39,7 +39,7 @@ This example details how to plot a simple tree visualization with cocoatree.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 16-21
+.. GENERATED FROM PYTHON SOURCE LINES 16-24
 
 Load metadata
 -------------
@@ -47,7 +47,10 @@ We use the S1A serine protease dataset that is included in cocoatree
 but you can use your own metadata by importing a csv file as a pandas
 dataframe.
 
-.. GENERATED FROM PYTHON SOURCE LINES 21-25
+For more details on the S1A serine proteases dataset, go to
+:ref:`sphx_glr_auto_examples_d_datasets_plot_s1A_serine_proteases.py`.
+
+.. GENERATED FROM PYTHON SOURCE LINES 24-28
 
 .. code-block:: Python
 
@@ -81,18 +84,18 @@ dataframe.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 26-29
+.. GENERATED FROM PYTHON SOURCE LINES 29-32
 
 Note that the dataframe must have a `Seq_ID` column with identifiers
 that are identical to the ones in the MSA (although no MSA is needed in
 this example), and in the newick tree.
 
-.. GENERATED FROM PYTHON SOURCE LINES 31-33
+.. GENERATED FROM PYTHON SOURCE LINES 34-36
 
 Load tree file
 --------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-37
+.. GENERATED FROM PYTHON SOURCE LINES 36-40
 
 .. code-block:: Python
 
@@ -113,13 +116,13 @@ Load tree file
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-41
+.. GENERATED FROM PYTHON SOURCE LINES 41-44
 
 Plot figure
 -----------
 Create the tree style that will be applied to your tree
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-47
+.. GENERATED FROM PYTHON SOURCE LINES 44-50
 
 .. code-block:: Python
 
@@ -136,11 +139,11 @@ Create the tree style that will be applied to your tree
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 48-49
+.. GENERATED FROM PYTHON SOURCE LINES 51-52
 
 Save the figure:
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-51
+.. GENERATED FROM PYTHON SOURCE LINES 52-54
 
 .. code-block:: Python
 
@@ -164,7 +167,7 @@ Save the figure:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-54
+.. GENERATED FROM PYTHON SOURCE LINES 55-57
 
 You can also use ete3's `tree.show()` method for displaying the figure
 in ete3's interactive GUI.
@@ -172,7 +175,7 @@ in ete3's interactive GUI.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.694 seconds)
+   **Total running time of the script:** (0 minutes 1.597 seconds)
 
 
 .. _sphx_glr_download_auto_examples_c_visualizations_plot_simple_tree.py:

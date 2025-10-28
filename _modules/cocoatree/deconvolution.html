@@ -222,9 +222,11 @@
 
 
 
-<span class="k">def</span><span class="w"> </span><span class="nf">extract_sectors_from_ICs</span><span class="p">(</span><span class="n">idpt_components</span><span class="p">,</span> <span class="n">coevo_matrix</span><span class="p">):</span>
+<div class="viewcode-block" id="extract_xcors_from_ICs">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.deconvolution.extract_xcors_from_ICs.html#cocoatree.deconvolution.extract_xcors_from_ICs">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_xcors_from_ICs</span><span class="p">(</span><span class="n">idpt_components</span><span class="p">,</span> <span class="n">coevo_matrix</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extract residue positions of sectors from independent components</span>
+<span class="sd">    Extract residue positions of XCoRs from independent components</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -234,65 +236,68 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    sectors : lists of residue positions on the filtered MSA for each of the</span>
-<span class="sd">        n_components sector</span>
+<span class="sd">    xcors : lists of residue positions on the filtered MSA for each of the</span>
+<span class="sd">        n_components xcor</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">Vica</span> <span class="o">=</span> <span class="n">idpt_components</span><span class="o">.</span><span class="n">T</span>
-    <span class="n">_</span><span class="p">,</span> <span class="n">sector_sizes</span><span class="p">,</span> <span class="n">sorted_pos</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_icList</span><span class="p">(</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">xcor_sizes</span><span class="p">,</span> <span class="n">sorted_pos</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_icList</span><span class="p">(</span>
         <span class="n">Vica</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">idpt_components</span><span class="p">),</span> <span class="n">coevo_matrix</span><span class="p">)</span>
 
-    <span class="n">sectors</span> <span class="o">=</span> <span class="p">[[</span><span class="n">sorted_pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sector_sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">])]]</span>
-    <span class="n">ref_index</span> <span class="o">=</span> <span class="n">sector_sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">isize</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sector_sizes</span><span class="p">)):</span>
-        <span class="n">sectors</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">sorted_pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ref_index</span><span class="p">,</span>
-                                       <span class="n">ref_index</span> <span class="o">+</span> <span class="n">sector_sizes</span><span class="p">[</span><span class="n">isize</span><span class="p">])])</span>
-        <span class="n">ref_index</span> <span class="o">+=</span> <span class="n">sector_sizes</span><span class="p">[</span><span class="n">isize</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">sectors</span>
+    <span class="n">xcors</span> <span class="o">=</span> <span class="p">[[</span><span class="n">sorted_pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">xcor_sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">])]]</span>
+    <span class="n">ref_index</span> <span class="o">=</span> <span class="n">xcor_sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">isize</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">xcor_sizes</span><span class="p">)):</span>
+        <span class="n">xcors</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">sorted_pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ref_index</span><span class="p">,</span>
+                                     <span class="n">ref_index</span> <span class="o">+</span> <span class="n">xcor_sizes</span><span class="p">[</span><span class="n">isize</span><span class="p">])])</span>
+        <span class="n">ref_index</span> <span class="o">+=</span> <span class="n">xcor_sizes</span><span class="p">[</span><span class="n">isize</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">xcors</span></div>
 
 
-<div class="viewcode-block" id="extract_sectors">
-<a class="viewcode-back" href="../../modules/generated/cocoatree.deconvolution.extract_sectors.html#cocoatree.deconvolution.extract_sectors">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">extract_sectors</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">,</span> <span class="n">n_sectors</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+
+<div class="viewcode-block" id="extract_xcors">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.deconvolution.extract_xcors.html#cocoatree.deconvolution.extract_xcors">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_xcors</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">,</span> <span class="n">n_xcors</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extract residue positions of sectors directly from the coevo_matrix</span>
+<span class="sd">    Extract residue positions of XCoRs directly from the coevo_matrix</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    coevo_matrix : coevolution matrix</span>
 
-<span class="sd">    n_sectors : int</span>
-<span class="sd">        Number of sectors to return</span>
+<span class="sd">    n_xcors : int</span>
+<span class="sd">        Number of XCoRs to return</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    sectors : lists of residue positions on the filtered MSA for each of the</span>
-<span class="sd">        n_sectors sector</span>
+<span class="sd">    xcors : lists of residue positions on the filtered MSA for each of the</span>
+<span class="sd">        n_xcors XCoR</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># extracting indepdent components</span>
     <span class="n">idpt_components</span> <span class="o">=</span> <span class="n">extract_independent_components</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">,</span>
-                                                     <span class="n">n_components</span><span class="o">=</span><span class="n">n_sectors</span><span class="p">)</span>
+                                                     <span class="n">n_components</span><span class="o">=</span><span class="n">n_xcors</span><span class="p">)</span>
 
     <span class="n">Vica</span> <span class="o">=</span> <span class="n">idpt_components</span><span class="o">.</span><span class="n">T</span>
-    <span class="n">_</span><span class="p">,</span> <span class="n">sector_sizes</span><span class="p">,</span> <span class="n">sorted_pos</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_icList</span><span class="p">(</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">xcor_sizes</span><span class="p">,</span> <span class="n">sorted_pos</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_icList</span><span class="p">(</span>
         <span class="n">Vica</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">idpt_components</span><span class="p">),</span> <span class="n">coevo_matrix</span><span class="p">)</span>
 
-    <span class="n">sectors</span> <span class="o">=</span> <span class="p">[[</span><span class="n">sorted_pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sector_sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">])]]</span>
-    <span class="n">ref_index</span> <span class="o">=</span> <span class="n">sector_sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">isize</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sector_sizes</span><span class="p">)):</span>
-        <span class="n">sectors</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">sorted_pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-                        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ref_index</span><span class="p">,</span>
-                                       <span class="n">ref_index</span> <span class="o">+</span> <span class="n">sector_sizes</span><span class="p">[</span><span class="n">isize</span><span class="p">])])</span>
-        <span class="n">ref_index</span> <span class="o">+=</span> <span class="n">sector_sizes</span><span class="p">[</span><span class="n">isize</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">sectors</span></div>
+    <span class="n">xcors</span> <span class="o">=</span> <span class="p">[[</span><span class="n">sorted_pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">xcor_sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">])]]</span>
+    <span class="n">ref_index</span> <span class="o">=</span> <span class="n">xcor_sizes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">isize</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">xcor_sizes</span><span class="p">)):</span>
+        <span class="n">xcors</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">sorted_pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ref_index</span><span class="p">,</span>
+                                     <span class="n">ref_index</span> <span class="o">+</span> <span class="n">xcor_sizes</span><span class="p">[</span><span class="n">isize</span><span class="p">])])</span>
+        <span class="n">ref_index</span> <span class="o">+=</span> <span class="n">xcor_sizes</span><span class="p">[</span><span class="n">isize</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">xcors</span></div>
 
 
 
+<div class="viewcode-block" id="remove_global_correlations">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.deconvolution.remove_global_correlations.html#cocoatree.deconvolution.remove_global_correlations">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">remove_global_correlations</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Remove global correlations by setting the first eigen value</span>
-<span class="sd">    of the coevo matrix to 0</span>
+<span class="sd">    of the coevolution matrix to 0</span>
 
 <span class="sd">    In the sector literature (and data analysis), this corresponds</span>
 <span class="sd">    to removing global correlations (from e.g. phylogenetic effects)</span>
@@ -311,7 +316,8 @@
     <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">coevo_matrix_sub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">multi_dot</span><span class="p">([</span><span class="n">U</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">S</span><span class="p">),</span> <span class="n">Vt</span><span class="p">]),</span> <span class="mi">0</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">coevo_matrix_sub</span>
+    <span class="k">return</span> <span class="n">coevo_matrix_sub</span></div>
+
 </pre></div>
 
             <div class="clearer"></div>

@@ -40,7 +40,7 @@
           <div class="body" role="main">
             
   <h1>Source code for cocoatree.visualization</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Module to visualize phylogenetic trees along with sectors&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;Module to visualize phylogenetic trees along with XCoRs&quot;&quot;&quot;</span>
 
 <span class="c1"># User provided file:</span>
 <span class="c1"># - phylogenetic tree in newick format</span>
@@ -159,8 +159,8 @@
 <a class="viewcode-back" href="../../modules/generated/cocoatree.visualization.update_tree_ete3_and_return_style.html#cocoatree.visualization.update_tree_ete3_and_return_style">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">update_tree_ete3_and_return_style</span><span class="p">(</span>
         <span class="n">tree_ete3</span><span class="p">,</span> <span class="n">df_annot</span><span class="p">,</span>
-        <span class="n">sector_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">sector_seq</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">xcor_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">xcor_seq</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">meta_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">show_leaf_name</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">fig_title</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
@@ -169,14 +169,14 @@
         <span class="n">bootstrap_style</span><span class="o">=</span><span class="p">{},</span>
         <span class="n">tree_scale</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
         <span class="n">metadata_colors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-        <span class="n">t_sector_seq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">t_sector_heatmap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">t_xcor_seq</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">t_xcor_heatmap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">matrix_type</span><span class="o">=</span><span class="s1">&#39;identity&#39;</span><span class="p">,</span>
         <span class="n">colormap</span><span class="o">=</span><span class="s1">&#39;inferno&#39;</span>
         <span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Update ete3 tree with sector info and attributes</span>
-<span class="sd">    and return tree_style for further visualization.</span>
+<span class="sd">    Update ete3 tree with XCoR info and attributes and return tree_style for</span>
+<span class="sd">    further visualization.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -185,10 +185,10 @@
 
 <span class="sd">    annot_file : pandas dataframe of the annotation file</span>
 
-<span class="sd">    sector_id : list of sector identifiers, as imported by io.load_msa()</span>
+<span class="sd">    xcor_id : list of XCoR sequence identifiers, as imported by io.load_msa()</span>
 <span class="sd">            the ids must match with the tree&#39;s leaves id</span>
 
-<span class="sd">    sector_seq : corresponding list of sector sequences to display,</span>
+<span class="sd">    xcor_seq : corresponding list of xcor sequences to display,</span>
 <span class="sd">            as imported by io.load_msa()</span>
 
 <span class="sd">    meta_data : tuple of annotations to display</span>
@@ -221,12 +221,12 @@
 
 <span class="sd">    fig_title : figure title (str)</span>
 
-<span class="sd">    t_sector_seq : boolean,</span>
-<span class="sd">        whether to show the sequences of the sector</span>
+<span class="sd">    t_xcor_seq : boolean,</span>
+<span class="sd">        whether to show the sequences of the XCoR</span>
 
-<span class="sd">    t_sector_heatmap : boolean,</span>
+<span class="sd">    t_xcor_heatmap : boolean,</span>
 <span class="sd">        whether to add a heatmap of the identity or similarity matrix between</span>
-<span class="sd">        sector sequences</span>
+<span class="sd">        XCoR sequences</span>
 
 <span class="sd">    matrix_type : str, default=&#39;identity&#39;</span>
 <span class="sd">        whether to compute pairwise sequence identity (&#39;identity&#39;), similarity</span>
@@ -337,14 +337,14 @@
             <span class="n">col_legend_rectface</span> <span class="o">+=</span> <span class="mi">2</span>
     <span class="n">column_layout</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">meta_data</span><span class="p">)</span> <span class="k">if</span> <span class="n">meta_data</span> <span class="k">else</span> <span class="mi">0</span>
 
-    <span class="k">if</span> <span class="n">t_sector_seq</span><span class="p">:</span>
-        <span class="n">tree_style</span><span class="p">,</span> <span class="n">column_layout</span> <span class="o">=</span> <span class="n">add_sector_sequences_to_tree</span><span class="p">(</span>
-            <span class="n">tree_style</span><span class="p">,</span> <span class="n">tree_ete3</span><span class="p">,</span> <span class="n">sector_id</span><span class="p">,</span>
-            <span class="n">sector_seq</span><span class="p">,</span> <span class="n">column_start</span><span class="o">=</span><span class="n">column_layout</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">t_xcor_seq</span><span class="p">:</span>
+        <span class="n">tree_style</span><span class="p">,</span> <span class="n">column_layout</span> <span class="o">=</span> <span class="n">add_xcor_sequences_to_tree</span><span class="p">(</span>
+            <span class="n">tree_style</span><span class="p">,</span> <span class="n">tree_ete3</span><span class="p">,</span> <span class="n">xcor_id</span><span class="p">,</span>
+            <span class="n">xcor_seq</span><span class="p">,</span> <span class="n">column_start</span><span class="o">=</span><span class="n">column_layout</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">t_sector_heatmap</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">t_xcor_heatmap</span><span class="p">:</span>
         <span class="n">tree_style</span><span class="p">,</span> <span class="n">column_layout</span> <span class="o">=</span> <span class="n">add_heatmap_to_tree</span><span class="p">(</span>
-            <span class="n">tree_style</span><span class="p">,</span> <span class="n">tree_ete3</span><span class="p">,</span> <span class="n">sector_id</span><span class="p">,</span> <span class="n">sector_seq</span><span class="p">,</span>
+            <span class="n">tree_style</span><span class="p">,</span> <span class="n">tree_ete3</span><span class="p">,</span> <span class="n">xcor_id</span><span class="p">,</span> <span class="n">xcor_seq</span><span class="p">,</span>
             <span class="n">matrix_type</span><span class="o">=</span><span class="n">matrix_type</span><span class="p">,</span>
             <span class="n">column_start</span><span class="o">=</span><span class="n">column_layout</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="n">colormap</span><span class="p">)</span>
 
@@ -355,12 +355,12 @@
 
 
 
-<div class="viewcode-block" id="add_sector_sequences_to_tree">
-<a class="viewcode-back" href="../../modules/generated/cocoatree.visualization.add_sector_sequences_to_tree.html#cocoatree.visualization.add_sector_sequences_to_tree">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">add_sector_sequences_to_tree</span><span class="p">(</span><span class="n">tree_style</span><span class="p">,</span> <span class="n">tree_ete3</span><span class="p">,</span> <span class="n">sector_id</span><span class="p">,</span> <span class="n">sector_seq</span><span class="p">,</span>
-                                 <span class="n">column_start</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="add_xcor_sequences_to_tree">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.visualization.add_xcor_sequences_to_tree.html#cocoatree.visualization.add_xcor_sequences_to_tree">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_xcor_sequences_to_tree</span><span class="p">(</span><span class="n">tree_style</span><span class="p">,</span> <span class="n">tree_ete3</span><span class="p">,</span> <span class="n">xcor_id</span><span class="p">,</span> <span class="n">xcor_seq</span><span class="p">,</span>
+                               <span class="n">column_start</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Add sector sequence to ETE3&#39;s tree style</span>
+<span class="sd">    Add XCoR sequence to ETE3&#39;s tree style</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -369,10 +369,10 @@
 <span class="sd">    tree_ete3 : ete3&#39;s tree object,</span>
 <span class="sd">            as imported by io.load_tree_ete3()</span>
 
-<span class="sd">    sector_id : list of sector identifiers, as imported by io.load_msa()</span>
+<span class="sd">    xcor_id : list of XCoR sequence identifiers, as imported by io.load_msa()</span>
 <span class="sd">            the ids must match with the tree&#39;s leaves id</span>
 
-<span class="sd">    sector_seq : corresponding list of sector sequences to display,</span>
+<span class="sd">    xcor_seq : corresponding list of XCoR sequences to display,</span>
 <span class="sd">            as imported by io.load_msa()</span>
 
 <span class="sd">    column_start : int, optional, default : 0</span>
@@ -387,17 +387,17 @@
 <span class="sd">        equal to this value.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">sector_dict</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="n">sector_id</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="nb">str</span><span class="p">(</span><span class="n">sector_seq</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sector_id</span><span class="p">))}</span>
+    <span class="n">xcor_dict</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">xcor_id</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="nb">str</span><span class="p">(</span><span class="n">xcor_seq</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xcor_id</span><span class="p">))}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">layout_SeqMotifFace</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">column_start</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">is_leaf</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">sector_dict</span><span class="p">:</span>
-                <span class="n">seq</span> <span class="o">=</span> <span class="n">sector_dict</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">xcor_dict</span><span class="p">:</span>
+                <span class="n">seq</span> <span class="o">=</span> <span class="n">xcor_dict</span><span class="p">[</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">seq</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">sector_seq</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">seq</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">xcor_seq</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
             <span class="n">seqFace</span> <span class="o">=</span> <span class="n">SeqMotifFace</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span>
-                                   <span class="n">motifs</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sector_seq</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s2">&quot;seq&quot;</span><span class="p">,</span>
+                                   <span class="n">motifs</span><span class="o">=</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">xcor_seq</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s2">&quot;seq&quot;</span><span class="p">,</span>
                                             <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]],</span>
                                    <span class="n">scale_factor</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
             <span class="n">seqFace</span><span class="o">.</span><span class="n">margin_right</span> <span class="o">=</span> <span class="mi">30</span>
@@ -411,7 +411,7 @@
 
 <div class="viewcode-block" id="add_heatmap_to_tree">
 <a class="viewcode-back" href="../../modules/generated/cocoatree.visualization.add_heatmap_to_tree.html#cocoatree.visualization.add_heatmap_to_tree">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">add_heatmap_to_tree</span><span class="p">(</span><span class="n">tree_style</span><span class="p">,</span> <span class="n">tree_ete3</span><span class="p">,</span> <span class="n">sector_id</span><span class="p">,</span> <span class="n">sector_seq</span><span class="p">,</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">add_heatmap_to_tree</span><span class="p">(</span><span class="n">tree_style</span><span class="p">,</span> <span class="n">tree_ete3</span><span class="p">,</span> <span class="n">xcor_id</span><span class="p">,</span> <span class="n">xcor_seq</span><span class="p">,</span>
                         <span class="n">matrix_type</span><span class="o">=</span><span class="s2">&quot;identity&quot;</span><span class="p">,</span>
                         <span class="n">column_start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">colormap</span><span class="o">=</span><span class="s2">&quot;inferno&quot;</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
@@ -424,10 +424,10 @@
 <span class="sd">    tree_ete3 : ete3&#39;s tree object,</span>
 <span class="sd">            as imported by io.load_tree_ete3()</span>
 
-<span class="sd">    sector_id : list of sector identifiers, as imported by io.load_msa()</span>
+<span class="sd">    xcor_id : list of XCoR sequence identifiers, as imported by io.load_msa()</span>
 <span class="sd">            the ids must match with the tree&#39;s leaves id</span>
 
-<span class="sd">    sector_seq : corresponding list of sector sequences to display,</span>
+<span class="sd">    xcor_seq : corresponding list of XCoR sequences to display,</span>
 <span class="sd">            as imported by io.load_msa()</span>
 
 <span class="sd">    matrix_type : str, default=&#39;identity&#39;</span>
@@ -462,7 +462,7 @@
 
     <span class="c1"># Check that sequences in the similarity matrix are ordered as in the</span>
     <span class="c1"># tree leaves and keep only sequences that are present in the tree</span>
-    <span class="n">sequences</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">sector_id</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;seq&quot;</span><span class="p">:</span> <span class="n">sector_seq</span><span class="p">})</span>
+    <span class="n">sequences</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">xcor_id</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;seq&quot;</span><span class="p">:</span> <span class="n">xcor_seq</span><span class="p">})</span>
     <span class="n">reordered_sequences</span> <span class="o">=</span> <span class="n">sequences</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">leaves_id</span><span class="p">,</span> <span class="s2">&quot;seq&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
     <span class="k">if</span> <span class="n">matrix_type</span> <span class="o">==</span> <span class="s1">&#39;identity&#39;</span><span class="p">:</span>

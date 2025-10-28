@@ -26,9 +26,9 @@ This example shows the full process to perform a complete SCA analysis
 and detect **eXtremal Co-evolving Residues (XCoR)** from data importation and
 MSA filtering to the computation of a SCA coevolution matrix, the extraction
 of principal and independent components, and the representation of coevolution
-within and between sectors.
+within and between XCoRs.
 
-Finally, we export fasta files that are necessary for the sector visualization
+Finally, we export fasta files that are necessary for the XCoR visualization
 along a phylogenetic tree.
 
 .. GENERATED FROM PYTHON SOURCE LINES 15-21
@@ -154,7 +154,7 @@ Note that the sequences in the matrix are in the same order as in the MSA.
 You can use :func:`cocoatree.visualization.update_tree_ete3_and_return_style`
 function to represent a sequence similarity matrix ordered following a
 phylogenetic tree (see
-:ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_sector_seq\
+:ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_xcor_seq\
 _and_coevol.py`).
 
 .. GENERATED FROM PYTHON SOURCE LINES 76-87
@@ -281,7 +281,7 @@ Compute the SCA coevolution matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7fab122c3090>
+    <matplotlib.colorbar.Colorbar object at 0x7f2500ab8950>
 
 
 
@@ -364,21 +364,21 @@ Plot components
 
 .. GENERATED FROM PYTHON SOURCE LINES 162-166
 
-Extract sectors
+Extract XCoRs
 ---------------
 
-Obtain a list of residues of each sector
+Obtain a list of residues of each XCoR
 
 .. GENERATED FROM PYTHON SOURCE LINES 166-173
 
 .. code-block:: Python
 
 
-    sectors = c_deconv.extract_sectors_from_ICs(idpt_components, SCA_matrix)
+    xcors = c_deconv.extract_xcors_from_ICs(idpt_components, SCA_matrix)
 
-    print('Sector positions on (filtered) sequences:')
-    for isec, sec in enumerate(sectors):
-        print('sector %d: %s' % (isec+1, sec))
+    print('XCoR positions on (filtered) sequences:')
+    for isec, sec in enumerate(xcors):
+        print('XCoR %d: %s' % (isec+1, sec))
 
 
 
@@ -388,16 +388,16 @@ Obtain a list of residues of each sector
 
  .. code-block:: none
 
-    Sector positions on (filtered) sequences:
-    sector 1: [64, 48, 145, 195, 63, 182, 199, 168, 146, 197, 144, 108, 222, 61, 196, 198, 194, 211, 49, 216, 208, 192, 234, 26, 35, 62, 235, 50, 155, 200, 23, 60, 76, 213, 73, 58, 114, 25]
-    sector 2: [140, 202, 52, 110, 78, 87, 81, 129, 75, 124, 33, 32, 128, 82, 207, 226, 120, 83, 69, 31]
-    sector 3: [225, 190, 212, 223, 180, 183, 184, 220, 224, 193, 172, 210, 142, 176, 160, 177, 217, 219, 161, 227]
-    sector 4: [0, 1, 2, 3, 4, 5, 6, 22, 7, 8, 9, 10, 11, 12, 13, 158, 14]
-    sector 5: [24, 228, 51, 215, 188]
-    sector 6: [97, 100, 98, 101, 95, 91, 107, 126, 102]
-    sector 7: [231, 109, 59, 53, 206, 131, 130]
-    sector 8: [57, 36, 111, 204, 34, 117]
-    sector 9: [46, 39, 37, 38, 156, 152, 41, 201, 149, 148, 143]
+    XCoR positions on (filtered) sequences:
+    XCoR 1: [64, 48, 145, 195, 63, 182, 199, 168, 146, 197, 144, 108, 222, 61, 196, 198, 194, 211, 49, 216, 208, 192, 234, 26, 35, 62, 235, 50, 155, 200, 23, 60, 76, 213, 73, 58, 114, 25]
+    XCoR 2: [140, 202, 52, 110, 78, 87, 81, 129, 75, 124, 33, 32, 128, 82, 207, 226, 120, 83, 69, 31]
+    XCoR 3: [225, 190, 212, 223, 180, 183, 184, 220, 224, 193, 172, 210, 142, 176, 160, 177, 217, 219, 161, 227]
+    XCoR 4: [0, 1, 2, 3, 4, 5, 6, 22, 7, 8, 9, 10, 11, 12, 13, 158, 14]
+    XCoR 5: [24, 228, 51, 215, 188]
+    XCoR 6: [97, 100, 98, 101, 95, 91, 107, 126, 102]
+    XCoR 7: [231, 109, 59, 53, 206, 131, 130]
+    XCoR 8: [57, 36, 111, 204, 34, 117]
+    XCoR 9: [46, 39, 37, 38, 156, 152, 41, 201, 149, 148, 143]
 
 
 
@@ -410,10 +410,10 @@ are ordered following a decreasing contribution to the independent component
 
 .. GENERATED FROM PYTHON SOURCE LINES 179-185
 
-Plot coevolution within and between the sectors
+Plot coevolution within and between the XCoRs
 -----------------------------------------------
 
-Each white square corresponds to a sector, with the residues ordered in
+Each white square corresponds to a XCoR, with the residues ordered in
 decreasing contribution to the independent component associated from top to
 bottom and from left to right.
 
@@ -423,31 +423,31 @@ bottom and from left to right.
 
     fig, ax = plt.subplots(tight_layout=True)
 
-    sector_sizes = [len(sec) for sec in sectors]
-    cumul_sizes = sum(sector_sizes)
-    sorted_pos = [s for sec in sectors for s in sec]
+    xcor_sizes = [len(sec) for sec in xcors]
+    cumul_sizes = sum(xcor_sizes)
+    sorted_pos = [s for sec in xcors for s in sec]
 
     im = ax.imshow(SCA_matrix[np.ix_(sorted_pos, sorted_pos)],
                    vmin=0, vmax=2,
                    interpolation='none', aspect='equal',
                    extent=[0, cumul_sizes, 0, cumul_sizes], cmap='inferno')
-    ax.set_title('SCA matrix, sorted according to sectors')
+    ax.set_title('SCA matrix, sorted according to XCoRs')
     cb = fig.colorbar(im)
     cb.set_label("coevolution level")
 
     line_index = 0
     for i in range(n_components):
-        ax.plot([line_index + sector_sizes[i], line_index + sector_sizes[i]],
+        ax.plot([line_index + xcor_sizes[i], line_index + xcor_sizes[i]],
                 [0, cumul_sizes], 'w', linewidth=2)
         ax.plot([0, cumul_sizes], [cumul_sizes - line_index,
                                    cumul_sizes - line_index], 'w', linewidth=2)
-        line_index += sector_sizes[i]
+        line_index += xcor_sizes[i]
 
 
 
 
 .. image-sg:: /auto_examples/b_advanced/images/sphx_glr_plot_full_SCA_analysis_005.png
-   :alt: SCA matrix, sorted according to sectors
+   :alt: SCA matrix, sorted according to XCoRs
    :srcset: /auto_examples/b_advanced/images/sphx_glr_plot_full_SCA_analysis_005.png
    :class: sphx-glr-single-img
 
@@ -458,7 +458,7 @@ bottom and from left to right.
 .. GENERATED FROM PYTHON SOURCE LINES 208-211
 
 Do the same but for the SCA matrix where a global correlation mode has
-been removed and, hence, such that sectors are better highlighted.
+been removed and, hence, such that XCoRs are better highlighted.
 See Rivoire et al., PLOSCB, 2016
 
 .. GENERATED FROM PYTHON SOURCE LINES 211-236
@@ -474,27 +474,27 @@ See Rivoire et al., PLOSCB, 2016
     fig, ax = plt.subplots(tight_layout=True)
     im = ax.imshow(SCA_matrix_ngm[np.ix_(sorted_pos, sorted_pos)], vmin=0, vmax=1,
                    interpolation='none', aspect='equal',
-                   extent=[0, sum(sector_sizes), 0, sum(sector_sizes)],
+                   extent=[0, sum(xcor_sizes), 0, sum(xcor_sizes)],
                    cmap='inferno')
-    ax.set_title('SCA matrix without global mode, sorted according to sectors')
+    ax.set_title('SCA matrix without global mode, sorted according to XCoRs')
     cb = fig.colorbar(im)
     cb.set_label("coevolution level")
 
     line_index = 0
     for i in range(n_components):
-        ax.plot([line_index + sector_sizes[i], line_index + sector_sizes[i]],
-                [0, sum(sector_sizes)], 'w', linewidth=2)
-        ax.plot([0, sum(sector_sizes)], [sum(sector_sizes) - line_index,
-                                         sum(sector_sizes) - line_index],
+        ax.plot([line_index + xcor_sizes[i], line_index + xcor_sizes[i]],
+                [0, sum(xcor_sizes)], 'w', linewidth=2)
+        ax.plot([0, sum(xcor_sizes)], [sum(xcor_sizes) - line_index,
+                                       sum(xcor_sizes) - line_index],
                 'w', linewidth=2)
-        line_index += sector_sizes[i]
+        line_index += xcor_sizes[i]
 
 
 
 
 
 .. image-sg:: /auto_examples/b_advanced/images/sphx_glr_plot_full_SCA_analysis_006.png
-   :alt: SCA matrix without global mode, sorted according to sectors
+   :alt: SCA matrix without global mode, sorted according to XCoRs
    :srcset: /auto_examples/b_advanced/images/sphx_glr_plot_full_SCA_analysis_006.png
    :class: sphx-glr-single-img
 
@@ -504,29 +504,29 @@ See Rivoire et al., PLOSCB, 2016
 
 .. GENERATED FROM PYTHON SOURCE LINES 237-245
 
-Export sector sequences in fasta format
+Export XCoR sequences in fasta format
 ---------------------------------------
 
 The file can then be used for visualization along a phylogenetic tree
 as implemented in :mod:`cocoatree.visualization`.
 
 Here, the positions are ordered in decreasing contribution to the
-independent component to which the sector is associated.
+independent component to which the XCoR is associated.
 
 .. GENERATED FROM PYTHON SOURCE LINES 245-256
 
 .. code-block:: Python
 
 
-    sector_1_pos = list(positions[sectors[0]])
-    sector_1 = []
+    xcor_1_pos = list(positions[xcors[0]])
+    xcor_1 = []
     for sequence in range(len(sequences_id)):
         seq = ''
-        for pos in sector_1_pos:
+        for pos in xcor_1_pos:
             seq += loaded_seqs[sequence][pos]
-        sector_1.append(seq)
+        xcor_1.append(seq)
 
-    c_io.export_fasta(sector_1, sequences_id, 'sector_1.fasta')
+    c_io.export_fasta(xcor_1, sequences_id, 'xcor_1.fasta')
 
 
 
@@ -549,15 +549,15 @@ independent component to which the sector is associated.
         # seq_id='14719441'
         pdb_mapping = c_msa.map_to_pdb(pdb_seq, pdb_pos, sequences, sequences_id,
                                        pdb_seq_id='14719441')
-        # Export lists of the first sector positions and each residue's
+        # Export lists of the first XCoR positions and each residue's
         # contribution to the independent component to use for visualization on
         # Pymol.
         # The residues are ordered in the list by decreasing contribution score
         # (the first residue in the list is the highest contributing)
-        c_io.export_sector_for_pymol(pdb_mapping, idpt_components.T, axis=0,
-                                     sector_pos=sector_1_pos,
-                                     ics=sectors,
-                                     outpath='color_sector_1_pymol.npy')
+        c_io.export_xcor_for_pymol(pdb_mapping, idpt_components.T, axis=0,
+                                   xcor_pos=xcor_1_pos,
+                                   ics=xcors,
+                                   outpath='color_xcor_1_pymol.npy')
 
 
 
@@ -569,7 +569,7 @@ independent component to which the sector is associated.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.273 seconds)
+   **Total running time of the script:** (0 minutes 4.232 seconds)
 
 
 .. _sphx_glr_download_auto_examples_b_advanced_plot_full_SCA_analysis.py:

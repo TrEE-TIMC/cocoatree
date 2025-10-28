@@ -62,7 +62,7 @@ Load the dataset
 the Mihaljević and Urban study
   - `metadata`: a Pandas dataframe containing metadata associated with the
 alignment, such as taxonomic information.
-  - `pdb_sequence`: a tuple of the pdb sequence of E. coli's PDB
+  - `pdb_sequence`: a tuple of the 2NRF pdb sequence from E. coli
   - `pdb_positions`: a list of the named positions found in the PDB
 
 Access the sequence data
@@ -210,7 +210,7 @@ Access PDB information
 
     pdb_seq = dataset["pdb_sequence"]
     pdb_pos = dataset["pdb_positions"]
-    print("Start of E. coli's sequence:\n", pdb_seq[:10])
+    print("Start of 2NRF E. coli's sequence:\n", pdb_seq[:10])
     print("Named positions of the first ten residues in E. coli's sequence:\n",
           pdb_pos[:10])
 
@@ -223,7 +223,7 @@ Access PDB information
 
  .. code-block:: none
 
-    Start of E. coli's sequence:
+    Start of 2NRF E. coli's sequence:
      ('ERAGPVTWVMMIACVVVFIAMQILGDQEVMLWLAWPFDPTLKFEFWRYFTHALMHFSLMHILFNLLWWWYLGGAVEKRLGSGKLIVITLISALLSGYVQQKFSGPWFGGLSGVVYALMGYVWLRGERDPQSGIYLQRGLIIFALIWIVAGWFDLFGMSMANGAHIAGLAVGLAMAFVDSLNA',)
     Named positions of the first ten residues in E. coli's sequence:
      ['91', '92', '93', '94', '95', '96', '97', '98', '99', '100']
@@ -244,7 +244,7 @@ References
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.031 seconds)
+   **Total running time of the script:** (0 minutes 1.043 seconds)
 
 
 .. _sphx_glr_download_auto_examples_d_datasets_plot_rhomboid_proteases.py:

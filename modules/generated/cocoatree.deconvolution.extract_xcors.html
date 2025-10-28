@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>cocoatree.visualization.add_sector_sequences_to_tree &#8212; cocoatree 0.0 documentation</title>
+    <title>cocoatree.deconvolution.extract_xcors &#8212; cocoatree 0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
     <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
@@ -40,38 +40,36 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="cocoatree-visualization-add-sector-sequences-to-tree">
-<h1>cocoatree.visualization.add_sector_sequences_to_tree<a class="headerlink" href="#cocoatree-visualization-add-sector-sequences-to-tree" title="Link to this heading">¶</a></h1>
+  <section id="cocoatree-deconvolution-extract-xcors">
+<h1>cocoatree.deconvolution.extract_xcors<a class="headerlink" href="#cocoatree-deconvolution-extract-xcors" title="Link to this heading">¶</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="cocoatree.visualization.add_sector_sequences_to_tree">
-<span class="sig-prename descclassname"><span class="pre">cocoatree.visualization.</span></span><span class="sig-name descname"><span class="pre">add_sector_sequences_to_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tree_style</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tree_ete3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sector_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sector_seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cocoatree/visualization.html#add_sector_sequences_to_tree"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cocoatree.visualization.add_sector_sequences_to_tree" title="Link to this definition">¶</a></dt>
-<dd><p>Add sector sequence to ETE3’s tree style</p>
+<dt class="sig sig-object py" id="cocoatree.deconvolution.extract_xcors">
+<span class="sig-prename descclassname"><span class="pre">cocoatree.deconvolution.</span></span><span class="sig-name descname"><span class="pre">extract_xcors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coevo_matrix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_xcors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cocoatree/deconvolution.html#extract_xcors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cocoatree.deconvolution.extract_xcors" title="Link to this definition">¶</a></dt>
+<dd><p>Extract residue positions of XCoRs directly from the coevo_matrix</p>
 <section id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
-<p>tree_style : ETE3’s tree_style object</p>
+<p>coevo_matrix : coevolution matrix</p>
 <dl class="simple">
-<dt>tree_ete3<span class="classifier">ete3’s tree object,</span></dt><dd><p>as imported by io.load_tree_ete3()</p>
-</dd>
-<dt>sector_id<span class="classifier">list of sector identifiers, as imported by io.load_msa()</span></dt><dd><p>the ids must match with the tree’s leaves id</p>
-</dd>
-<dt>sector_seq<span class="classifier">corresponding list of sector sequences to display,</span></dt><dd><p>as imported by io.load_msa()</p>
-</dd>
-<dt>column_start<span class="classifier">int, optional, default</span><span class="classifier">0</span></dt><dd><p>the column on which to start plotting</p>
+<dt>n_xcors<span class="classifier">int</span></dt><dd><p>Number of XCoRs to return</p>
 </dd>
 </dl>
 </section>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
-<p>tree_style : TreeStyle class from ete3</p>
 <dl class="simple">
-<dt>column_end<span class="classifier">int, the number of columns after the tree. If you want to</span></dt><dd><p>plot anything else alongside the tree, the column number should be
-equal to this value.</p>
+<dt>xcors<span class="classifier">lists of residue positions on the filtered MSA for each of the</span></dt><dd><p>n_xcors XCoR</p>
 </dd>
 </dl>
 </section>
 </dd></dl>
 
-<div class="sphx-glr-clear"></div></section>
+<section id="examples-using-cocoatree-deconvolution-extract-xcors">
+<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.deconvolution.extract_xcors</span></code><a class="headerlink" href="#examples-using-cocoatree-deconvolution-extract-xcors" title="Link to this heading">¶</a></h2>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example shows how to generate a SCA co-evolutionary matrix, reduce it, and sort it according to XCoRs."><img alt="" src="../../_images/sphx_glr_plot_sca_according2xcors_thumb.png" />
+<p><a class="reference internal" href="../../auto_examples/a_quick_start/plot_sca_according2xcors.html#sphx-glr-auto-examples-a-quick-start-plot-sca-according2xcors-py"><span class="std std-ref">Perform a minimal SCA analysis and plot SCA-related heatmaps</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Perform a minimal SCA analysis and plot SCA-related heatmaps</div>
+</div></div><div class="sphx-glr-clear"></div></section>
+</section>
 
 
             <div class="clearer"></div>

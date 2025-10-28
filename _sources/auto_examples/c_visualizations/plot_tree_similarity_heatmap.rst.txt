@@ -18,12 +18,12 @@
 .. _sphx_glr_auto_examples_c_visualizations_plot_tree_similarity_heatmap.py:
 
 
-=================================================================
-Plot a similarity heatmap of a sector along the phylogenetic tree
-=================================================================
+===============================================================
+Plot a similarity heatmap of a XCoR along the phylogenetic tree
+===============================================================
 
-Here we present how you can plot a heatmap of sequence similarity
-ordered following a phylogenetic tree.
+Here we present how you can plot a heatmap of sequence similarity ordered
+following a phylogenetic tree.
 
 .. GENERATED FROM PYTHON SOURCE LINES 12-13
 
@@ -87,7 +87,7 @@ Import metadata
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 29-38
+.. GENERATED FROM PYTHON SOURCE LINES 29-41
 
 To use your own metadata file, import a csv file as a pandas dataframe.
 
@@ -97,9 +97,12 @@ can contain qualitative data that will be displayed as categories alongside
 the phylogenetic tree. In this example, we will use the last 3 columns
 'Protein_type', 'Subphylum', and 'Class'.
 
+For more details on the S1A serine proteases dataset, go to
+:ref:`sphx_glr_auto_examples_d_datasets_plot_s1A_serine_proteases.py`.
+
 We will also use a personnalized colormap defined as follows:
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-59
+.. GENERATED FROM PYTHON SOURCE LINES 41-62
 
 .. code-block:: Python
 
@@ -131,14 +134,14 @@ We will also use a personnalized colormap defined as follows:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-64
+.. GENERATED FROM PYTHON SOURCE LINES 63-67
 
 Import tree file
 ----------------
 The file must be in Newick format and can include confidence scores such as
 bootstrap or jack-knife (only one type of confidence score at a time).
 
-.. GENERATED FROM PYTHON SOURCE LINES 64-68
+.. GENERATED FROM PYTHON SOURCE LINES 67-71
 
 .. code-block:: Python
 
@@ -322,22 +325,22 @@ bootstrap or jack-knife (only one type of confidence score at a time).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-74
+.. GENERATED FROM PYTHON SOURCE LINES 72-77
 
-Import sector sequences
------------------------
-Load the sequences you wish to visualize with `cocoatree.io.load_msa()` as
-a fasta file. The sequence names must correspond to `Seq_ID` and to the leaf
-names in the tree file.
+Import XCoR sequences
+---------------------
+Load the sequences you wish to visualize with :func:`cocoatree.io.load_MSA`
+as a fasta file. The sequence names must correspond to `Seq_ID` and to the
+leaf names in the tree file.
 
-.. GENERATED FROM PYTHON SOURCE LINES 74-79
+.. GENERATED FROM PYTHON SOURCE LINES 77-82
 
 .. code-block:: Python
 
-    sector_file = 'data/halabi_sector_1_SCA.fasta'
-    data = load_MSA(sector_file, 'fasta')
-    sector_id = data["sequence_ids"]
-    sector_seq = data["alignment"]
+    xcor_file = 'data/halabi_xcor_1_SCA.fasta'
+    data = load_MSA(xcor_file, 'fasta')
+    xcor_id = data["sequence_ids"]
+    xcor_seq = data["alignment"]
 
 
 
@@ -346,7 +349,7 @@ names in the tree file.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 80-93
+.. GENERATED FROM PYTHON SOURCE LINES 83-96
 
 Plot tree with sequence similarity heatmap
 ------------------------------------------
@@ -356,18 +359,18 @@ Here, we will show various elements:
   - the tree without its leaf names (`show_leaf_name=False`)
   - metadata as colored columns, in order: *Protein_type*, *Subphylum*,
 and *Class*.
-  - sector sequences colored by amino acid physico-chemical properties
-(`t_sector_seq=True`)
-  - a heatmap of pairwise sequence similarity computed on the sector
-sequences (`t_sector_heatmap=True`, `matrix_type='similarity'`) and
+  - XCoR sequences colored by amino acid physico-chemical properties
+(`t_xcor_seq=True`)
+  - a heatmap of pairwise sequence similarity computed on the XCoR
+sequences (`t_xcor_heatmap=True`, `matrix_type='similarity'`) and
 using the `GnBu` colormap (`colormap='GnBu'`).
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-109
+.. GENERATED FROM PYTHON SOURCE LINES 96-112
 
 .. code-block:: Python
 
     tree_style, _ = update_tree_ete3_and_return_style(
-        tree_ete3, df_annot, sector_id, sector_seq,
+        tree_ete3, df_annot, xcor_id, xcor_seq,
         meta_data=('Protein_type', 'Subphylum', 'Class'),
         show_leaf_name=False,
         fig_title='Heatmap of sequence similarity',
@@ -376,8 +379,8 @@ using the `GnBu` colormap (`colormap='GnBu'`).
         bootstrap_style={},
         tree_scale=200,
         metadata_colors=halabi_cmap,
-        t_sector_seq=True,
-        t_sector_heatmap=True,
+        t_xcor_seq=True,
+        t_xcor_heatmap=True,
         matrix_type='similarity',
         colormap='GnBu'
         )
@@ -389,15 +392,15 @@ using the `GnBu` colormap (`colormap='GnBu'`).
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 110-111
+.. GENERATED FROM PYTHON SOURCE LINES 113-114
 
 Save the image file
 
-.. GENERATED FROM PYTHON SOURCE LINES 111-113
+.. GENERATED FROM PYTHON SOURCE LINES 114-116
 
 .. code-block:: Python
 
-    tree_ete3.render("sector_phylogeny.png", tree_style=tree_style)
+    tree_ete3.render("xcor_phylogeny.png", tree_style=tree_style)
 
 
 
@@ -417,26 +420,26 @@ Save the image file
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 114-117
+.. GENERATED FROM PYTHON SOURCE LINES 117-120
 
 As the similarity score that is computed here is not normalized, it
 is difficult to see variations on the heatmap. We will thus use a
 normalized sequence similarity score.
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-123
+.. GENERATED FROM PYTHON SOURCE LINES 122-126
 
 Plot tree with normalized similarity heatmap
 --------------------------------------------
 You first need to reload the tree in order to clean the tree style
 defined above
 
-.. GENERATED FROM PYTHON SOURCE LINES 123-141
+.. GENERATED FROM PYTHON SOURCE LINES 126-144
 
 .. code-block:: Python
 
     tree_ete3 = load_tree_ete3(tree_file)
     tree_style, _ = update_tree_ete3_and_return_style(
-        tree_ete3, df_annot, sector_id, sector_seq,
+        tree_ete3, df_annot, xcor_id, xcor_seq,
         meta_data=('Protein_type', 'Subphylum', 'Class'),
         show_leaf_name=False,
         fig_title='Heatmap of normalized sequence similarity',
@@ -445,12 +448,12 @@ defined above
         bootstrap_style={},
         tree_scale=200,
         metadata_colors=halabi_cmap,
-        t_sector_seq=True,
-        t_sector_heatmap=True,
+        t_xcor_seq=True,
+        t_xcor_heatmap=True,
         matrix_type='norm_similarity',
         colormap='GnBu'
         )
-    tree_ete3.render("sector_phylogeny.png", tree_style=tree_style)
+    tree_ete3.render("xcor_phylogeny.png", tree_style=tree_style)
 
 
 
@@ -470,7 +473,7 @@ defined above
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 142-149
+.. GENERATED FROM PYTHON SOURCE LINES 145-152
 
 Compare similarity and identity matrices
 ----------------------------------------
@@ -480,12 +483,12 @@ sequence similarity.
 Start by filtering and reordering the MSA sequences so that they follow
 the phylogenetic tree
 
-.. GENERATED FROM PYTHON SOURCE LINES 149-153
+.. GENERATED FROM PYTHON SOURCE LINES 152-156
 
 .. code-block:: Python
 
     leaves_id = tree_ete3.get_leaf_names()
-    sequences = pd.DataFrame(index=sector_id, data={"seq": sector_seq})
+    sequences = pd.DataFrame(index=xcor_id, data={"seq": xcor_seq})
     reordered_sequences = sequences.loc[leaves_id, "seq"].values
 
 
@@ -495,11 +498,11 @@ the phylogenetic tree
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 154-155
+.. GENERATED FROM PYTHON SOURCE LINES 157-158
 
 Compute the matrices
 
-.. GENERATED FROM PYTHON SOURCE LINES 155-159
+.. GENERATED FROM PYTHON SOURCE LINES 158-162
 
 .. code-block:: Python
 
@@ -514,11 +517,11 @@ Compute the matrices
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 160-161
+.. GENERATED FROM PYTHON SOURCE LINES 163-164
 
 Plot the heatmaps:
 
-.. GENERATED FROM PYTHON SOURCE LINES 161-183
+.. GENERATED FROM PYTHON SOURCE LINES 164-186
 
 .. code-block:: Python
 
@@ -558,11 +561,11 @@ Plot the heatmaps:
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7fab12133510>
+    <matplotlib.colorbar.Colorbar object at 0x7f2500722b10>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 184-186
+.. GENERATED FROM PYTHON SOURCE LINES 187-189
 
 In this case, there is not much difference between sequence identity and
 sequence similarity.
@@ -570,7 +573,7 @@ sequence similarity.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 7.440 seconds)
+   **Total running time of the script:** (0 minutes 7.376 seconds)
 
 
 .. _sphx_glr_download_auto_examples_c_visualizations_plot_tree_similarity_heatmap.py:

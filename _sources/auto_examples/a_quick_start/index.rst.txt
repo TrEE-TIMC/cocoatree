@@ -36,7 +36,7 @@ analyses using :mod:`cocoatree`
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="In this example, we showcase how to create a pandas.DataFrame to map the original MSA&#x27;s positions with the PDB positions, PDB named position, the MSA filtered positions, and the sectors.">
+    <div class="sphx-glr-thumbcontainer" tooltip="In this example, we showcase how to create a pandas.DataFrame to map the original MSA&#x27;s positions with the PDB positions, PDB named position, the MSA filtered positions, and the eXtremal Co-evolving Residues (XCoRs).">
 
 .. only:: html
 
@@ -47,7 +47,7 @@ analyses using :mod:`cocoatree`
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">Mapping original MSA, filtered MSA, PDB, and sectors</div>
+      <div class="sphx-glr-thumbnail-title">Mapping original MSA, filtered MSA, PDB, and XCoRs</div>
     </div>
 
 

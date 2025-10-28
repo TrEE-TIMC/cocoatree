@@ -39,7 +39,7 @@ The user can provide a dictionnary of colors for metadata.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 15-21
+.. GENERATED FROM PYTHON SOURCE LINES 15-24
 
 Load metadata
 -------------
@@ -48,7 +48,10 @@ can use your own metadata by importing a csv file as a pandas dataframe.
 Note that your dataframe must have a `Seq_ID` column with identifiers that
 are identical to the ones in your MSA and in your newick tree.
 
-.. GENERATED FROM PYTHON SOURCE LINES 21-25
+For more details on the S1A serine proteases dataset, go to
+:ref:`sphx_glr_auto_examples_d_datasets_plot_s1A_serine_proteases.py`.
+
+.. GENERATED FROM PYTHON SOURCE LINES 24-28
 
 .. code-block:: Python
 
@@ -82,14 +85,14 @@ are identical to the ones in your MSA and in your newick tree.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 26-30
+.. GENERATED FROM PYTHON SOURCE LINES 29-33
 
 Define a custom colormap as a dictionary. Each element in the dictionary
 corresponds to a category in the metadata dataframe that you wish to
 display. In this example, we use the columns `Protein_type`, `Subphylum`,
 and `Class`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 30-51
+.. GENERATED FROM PYTHON SOURCE LINES 33-54
 
 .. code-block:: Python
 
@@ -121,7 +124,7 @@ and `Class`.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-60
+.. GENERATED FROM PYTHON SOURCE LINES 55-63
 
 Load sequence data
 ------------------
@@ -130,18 +133,18 @@ a fasta file. The sequence names must correspond to `Seq_ID` and to the leaf
 names in the tree file.
 
 See the Perform full SCA analysis example on how to export a fasta of your
-sectors.
+XCoRs.
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-67
+.. GENERATED FROM PYTHON SOURCE LINES 63-70
 
 .. code-block:: Python
 
-    sector_file = 'data/halabi_sector_1_SCA.fasta'
-    data = load_MSA(sector_file, 'fasta')
-    sector_id = data["sequence_ids"]
-    print(sector_id[:5])
-    sector_seq = data["alignment"]
-    print(sector_seq[:5])
+    xcor_file = 'data/halabi_xcor_1_SCA.fasta'
+    data = load_MSA(xcor_file, 'fasta')
+    xcor_id = data["sequence_ids"]
+    print(xcor_id[:5])
+    xcor_seq = data["alignment"]
+    print(xcor_seq[:5])
 
 
 
@@ -157,12 +160,12 @@ sectors.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 68-70
+.. GENERATED FROM PYTHON SOURCE LINES 71-73
 
 Load tree file
 --------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-74
+.. GENERATED FROM PYTHON SOURCE LINES 73-77
 
 .. code-block:: Python
 
@@ -346,27 +349,27 @@ Load tree file
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-78
+.. GENERATED FROM PYTHON SOURCE LINES 78-81
 
 Plot figure
 -----------
 Create the tree style that will be applied to your tree
 
-.. GENERATED FROM PYTHON SOURCE LINES 78-92
+.. GENERATED FROM PYTHON SOURCE LINES 81-95
 
 .. code-block:: Python
 
     tree_style, column_layout = update_tree_ete3_and_return_style(
         tree_ete3, df_annot,
-        sector_id=sector_id,
-        sector_seq=sector_seq,
+        xcor_id=xcor_id,
+        xcor_seq=xcor_seq,
         meta_data=('Protein_type', 'Subphylum', 'Class'),
         fig_title='Personnalized colormap example',
         metadata_colors=halabi_cmap,
         linewidth=3,
         show_leaf_name=False,
-        t_sector_seq=True,
-        t_sector_heatmap=False,
+        t_xcor_seq=True,
+        t_xcor_heatmap=False,
         colormap='GnBu'
         )
 
@@ -377,15 +380,15 @@ Create the tree style that will be applied to your tree
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 93-94
+.. GENERATED FROM PYTHON SOURCE LINES 96-97
 
 Save the figure:
 
-.. GENERATED FROM PYTHON SOURCE LINES 94-95
+.. GENERATED FROM PYTHON SOURCE LINES 97-98
 
 .. code-block:: Python
 
-    tree_ete3.render("sector_phylogeny_colors.png", tree_style=tree_style)
+    tree_ete3.render("xcor_phylogeny_colors.png", tree_style=tree_style)
 
 
 
@@ -407,7 +410,7 @@ Save the figure:
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.596 seconds)
+   **Total running time of the script:** (0 minutes 1.574 seconds)
 
 
 .. _sphx_glr_download_auto_examples_c_visualizations_plot_tree_metadata_colors.py:

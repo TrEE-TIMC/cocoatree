@@ -27,6 +27,8 @@ from cocoatree.statistics.pairwise import compute_sca_matrix
 # %%
 # Loading the dataset
 # -------------------
+# For more details on the S1A serine proteases dataset, go to
+# :ref:`sphx_glr_auto_examples_d_datasets_plot_s1A_serine_proteases.py`.
 serine_dataset = c_data.load_S1A_serine_proteases()
 loaded_seqs = serine_dataset["alignment"]
 loaded_seqs_id = serine_dataset["sequence_ids"]
@@ -58,7 +60,7 @@ fig.colorbar(im, shrink=0.7)
 # Extracting XCoRs
 # ----------------
 n_xcors = 3
-xcors = c_deconv.extract_sectors(SCA_matrix, n_sectors=n_xcors)
+xcors = c_deconv.extract_xcors(SCA_matrix, n_xcors=n_xcors)
 
 print('XCoR positions on (filtered) sequences:')
 for ixcor, xcor in enumerate(xcors):

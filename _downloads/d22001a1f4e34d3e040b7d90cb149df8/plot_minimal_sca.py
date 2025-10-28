@@ -18,6 +18,9 @@ import matplotlib.pyplot as plt
 # We start by importing the dataset. In this case, we can directly load the S1
 # serine protease dataset provided in :mod:`cocoatree`. To work on your on
 # dataset, you can use the :func:`cocoatree.io.load_msa` function.
+#
+# For more details on the S1A serine proteases dataset, go to
+# :ref:`sphx_glr_auto_examples_d_datasets_plot_s1A_serine_proteases.py`.
 
 serine_dataset = c_data.load_S1A_serine_proteases()
 loaded_seqs = serine_dataset["alignment"]
@@ -53,8 +56,8 @@ ax.plot(results.loc[:, "IC1"],
 
 # Plotting XCoRs elements
 for isec, color in zip([1, 2, 3], ['r', 'g', 'b']):
-    ax.plot(results.loc[results["sector_%d" % isec], "IC1"],
-            results.loc[results["sector_%d" % isec], "IC2"],
+    ax.plot(results.loc[results["xcor_%d" % isec], "IC1"],
+            results.loc[results["xcor_%d" % isec], "IC2"],
             ".", c=color, label="XCoR_%d" % isec)
 
 ax.set_xlabel("IC1")

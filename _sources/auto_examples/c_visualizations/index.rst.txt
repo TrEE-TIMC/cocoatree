@@ -35,18 +35,18 @@ results along with sequence metadata and phylogeny.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="A small example that shows how to plot the sector composition within a tree and to add metadata.">
+    <div class="sphx-glr-thumbcontainer" tooltip="A small example that shows how to plot the XCoR composition within a tree and to add metadata.">
 
 .. only:: html
 
-  .. image:: /auto_examples/c_visualizations/images/thumb/sphx_glr_plot_tree_metadata_sector_seq_and_coevol_thumb.png
+  .. image:: /auto_examples/c_visualizations/images/thumb/sphx_glr_plot_tree_metadata_xcor_seq_and_coevol_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_sector_seq_and_coevol.py`
+  :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_xcor_seq_and_coevol.py`
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">Plot sector together with (phylogenetic) tree and metadata</div>
+      <div class="sphx-glr-thumbnail-title">Plot XCoR together with (phylogenetic) tree and metadata</div>
     </div>
 
 
@@ -80,7 +80,7 @@ results along with sequence metadata and phylogeny.
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">Plot a similarity heatmap of a sector along the phylogenetic tree</div>
+      <div class="sphx-glr-thumbnail-title">Plot a similarity heatmap of a XCoR along the phylogenetic tree</div>
     </div>
 
 
@@ -95,7 +95,7 @@ results along with sequence metadata and phylogeny.
    :hidden:
 
    /auto_examples/c_visualizations/plot_simple_tree
-   /auto_examples/c_visualizations/plot_tree_metadata_sector_seq_and_coevol
+   /auto_examples/c_visualizations/plot_tree_metadata_xcor_seq_and_coevol
    /auto_examples/c_visualizations/plot_tree_metadata_colors
    /auto_examples/c_visualizations/plot_tree_similarity_heatmap
 

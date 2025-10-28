@@ -54,7 +54,7 @@ parameters to better suit your datasets.
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete SCA analysis and detect eXtremal Co-evolving Residues (XCoR) from data importation and MSA filtering to the computation of a SCA coevolution matrix, the extraction of principal and independent components, and the representation of coevolution within and between sectors.">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete SCA analysis and detect eXtremal Co-evolving Residues (XCoR) from data importation and MSA filtering to the computation of a SCA coevolution matrix, the extraction of principal and independent components, and the representation of coevolution within and between XCoRs.">
 
 .. only:: html
 

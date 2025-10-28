@@ -18,13 +18,13 @@
 .. _sphx_glr_auto_examples_a_quick_start_plot_map_alignments.py:
 
 
-====================================================
-Mapping original MSA, filtered MSA, PDB, and sectors
-====================================================
+==================================================
+Mapping original MSA, filtered MSA, PDB, and XCoRs
+==================================================
 
 In this example, we showcase how to create a pandas.DataFrame to map the
 original MSA's positions with the PDB positions, PDB named position, the MSA
-filtered positions, and the sectors.
+filtered positions, and the eXtremal Co-evolving Residues (XCoRs).
 
 .. GENERATED FROM PYTHON SOURCE LINES 10-18
 
@@ -48,9 +48,9 @@ filtered positions, and the sectors.
 .. GENERATED FROM PYTHON SOURCE LINES 19-21
 
 Start by loading the dataset and the different relevant information: the
-MSA, the PDB positions, and the sectors positions.
+MSA, the PDB positions, and the XCoRs positions.
 
-.. GENERATED FROM PYTHON SOURCE LINES 21-37
+.. GENERATED FROM PYTHON SOURCE LINES 21-27
 
 .. code-block:: Python
 
@@ -60,8 +60,22 @@ MSA, the PDB positions, and the sectors positions.
     sequences = serine_dataset["alignment"]
     n_pos, n_seq = len(sequences[0]), len(sequences)
 
-    # Make the sectors the same object type as what our
-    # :func:`cocoatree.io.extract_sectors` function returns.
+
+
+
+
+
+
+
+.. GENERATED FROM PYTHON SOURCE LINES 28-30
+
+Make the sectors the same object type as what our
+:func:`cocoatree.io.extract_xcors` function returns.
+
+.. GENERATED FROM PYTHON SOURCE LINES 30-38
+
+.. code-block:: Python
+
     sectors = [
         [str(i) for i in serine_dataset["sector_positions"][key]]
         for key in serine_dataset["sector_positions"].keys()]
@@ -77,7 +91,7 @@ MSA, the PDB positions, and the sectors positions.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-43
+.. GENERATED FROM PYTHON SOURCE LINES 39-44
 
 Now, we are going to map all of these onto the same referential: the
 original MSA positions.
@@ -85,7 +99,7 @@ original MSA positions.
 Use the function to obtain the mapping between the original MSA and the
 filtered MSA
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-46
+.. GENERATED FROM PYTHON SOURCE LINES 44-47
 
 .. code-block:: Python
 
@@ -99,12 +113,12 @@ filtered MSA
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-49
+.. GENERATED FROM PYTHON SOURCE LINES 48-50
 
-Sectors are in the PDB referential. The sequence corresponding to the PDB is
+XCoRs are in the PDB referential. The sequence corresponding to the PDB is
 the first of the MSA.
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-67
+.. GENERATED FROM PYTHON SOURCE LINES 50-68
 
 .. code-block:: Python
 
@@ -133,11 +147,11 @@ the first of the MSA.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 68-69
+.. GENERATED FROM PYTHON SOURCE LINES 69-70
 
 Now print the indices of sectors 1 in the different referentials
 
-.. GENERATED FROM PYTHON SOURCE LINES 69-71
+.. GENERATED FROM PYTHON SOURCE LINES 70-72
 
 .. code-block:: Python
 
@@ -166,7 +180,7 @@ Now print the indices of sectors 1 in the different referentials
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.338 seconds)
+   **Total running time of the script:** (0 minutes 0.340 seconds)
 
 
 .. _sphx_glr_download_auto_examples_a_quick_start_plot_map_alignments.py:

@@ -98,7 +98,7 @@
 <span class="sd">        - PCk: the projection of the residue onto the kth principal component</span>
 <span class="sd">        - ICk: the projeciton of the residue onto the kth independent</span>
 <span class="sd">          component</span>
-<span class="sd">        - sector_k: wherether the residue is found to be part of sector k</span>
+<span class="sd">        - xcor_k: wherether the residue is found to be part of xcor k</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -154,7 +154,7 @@
         <span class="n">coevol_matrix</span><span class="p">)</span>
     <span class="n">independent_components</span> <span class="o">=</span> <span class="n">deconvolution</span><span class="o">.</span><span class="n">extract_independent_components</span><span class="p">(</span>
         <span class="n">coevol_matrix</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">)</span>
-    <span class="n">sectors</span> <span class="o">=</span> <span class="n">deconvolution</span><span class="o">.</span><span class="n">extract_sectors_from_ICs</span><span class="p">(</span>
+    <span class="n">xcors</span> <span class="o">=</span> <span class="n">deconvolution</span><span class="o">.</span><span class="n">extract_xcors_from_ICs</span><span class="p">(</span>
         <span class="n">independent_components</span><span class="p">,</span> <span class="n">coevol_matrix</span><span class="p">)</span>
 
     <span class="c1"># Now, map everything into a nice pandas DataFrame</span>
@@ -170,14 +170,14 @@
                     <span class="s2">&quot;PC</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">principal_components</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
         <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span>
                     <span class="s2">&quot;IC</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">independent_components</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
-        <span class="n">results</span><span class="p">[</span><span class="s2">&quot;sector_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
+        <span class="n">results</span><span class="p">[</span><span class="s2">&quot;xcor_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
             <span class="n">results</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">],</span>
-            <span class="n">sectors</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+            <span class="n">xcors</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
         <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span>
-                    <span class="s2">&quot;sector_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
+                    <span class="s2">&quot;xcor_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
                         <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span>
                                     <span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">],</span>
-                        <span class="n">sectors</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+                        <span class="n">xcors</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
 
     <span class="k">return</span> <span class="n">coevol_matrix</span><span class="p">,</span> <span class="n">results</span></div>
 

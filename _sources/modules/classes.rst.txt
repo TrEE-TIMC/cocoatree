@@ -54,7 +54,7 @@ Functions
   io.load_tree_ete3
   io.export_fasta
   io.load_pdb
-  io.export_sector_for_pymol
+  io.export_xcor_for_pymol
 
 .. _io_ref:
 
@@ -166,8 +166,9 @@ Functions
 
     deconvolution.extract_independent_components
     deconvolution.extract_principal_components
-    deconvolution.extract_sectors
-    deconvolution.substract_first_principal_component
+    deconvolution.extract_xcors_from_ICs
+    deconvolution.extract_xcors
+    deconvolution.remove_global_correlations
 
 
 .. _deconvolution_ref:
@@ -192,7 +193,7 @@ Functions
     :template: function.rst
 
     visualization.update_tree_ete3_and_return_style
-    visualization.add_sector_sequences_to_tree
+    visualization.add_xcor_sequences_to_tree
     visualization.add_heatmap_to_tree
 
 

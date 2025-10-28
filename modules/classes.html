@@ -85,8 +85,8 @@
 <tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.io.load_pdb.html#cocoatree.io.load_pdb" title="cocoatree.io.load_pdb"><code class="xref py py-obj docutils literal notranslate"><span class="pre">io.load_pdb</span></code></a>(path2pdb, pdb_id, chain)</p></td>
 <td><p>Read in a PDB file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.io.export_sector_for_pymol.html#cocoatree.io.export_sector_for_pymol" title="cocoatree.io.export_sector_for_pymol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">io.export_sector_for_pymol</span></code></a>(mapping, ...)</p></td>
-<td><p>Export sector information for mapping on 3D structure in PyMOL.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.io.export_xcor_for_pymol.html#cocoatree.io.export_xcor_for_pymol" title="cocoatree.io.export_xcor_for_pymol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">io.export_xcor_for_pymol</span></code></a>(mapping, ...)</p></td>
+<td><p>Export XCoR information for mapping on 3D structure in PyMOL.</p></td>
 </tr>
 </tbody>
 </table>
@@ -188,8 +188,14 @@
 <tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.extract_principal_components.html#cocoatree.deconvolution.extract_principal_components" title="cocoatree.deconvolution.extract_principal_components"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.extract_principal_components</span></code></a>(...)</p></td>
 <td><p>Perform principal component decomposition of a coevolution matrix</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.extract_sectors.html#cocoatree.deconvolution.extract_sectors" title="cocoatree.deconvolution.extract_sectors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.extract_sectors</span></code></a>(coevo_matrix)</p></td>
-<td><p>Extract residue positions of sectors directly from the coevo_matrix</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.extract_xcors_from_ICs.html#cocoatree.deconvolution.extract_xcors_from_ICs" title="cocoatree.deconvolution.extract_xcors_from_ICs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.extract_xcors_from_ICs</span></code></a>(...)</p></td>
+<td><p>Extract residue positions of XCoRs from independent components</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.extract_xcors.html#cocoatree.deconvolution.extract_xcors" title="cocoatree.deconvolution.extract_xcors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.extract_xcors</span></code></a>(coevo_matrix[, ...])</p></td>
+<td><p>Extract residue positions of XCoRs directly from the coevo_matrix</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.remove_global_correlations.html#cocoatree.deconvolution.remove_global_correlations" title="cocoatree.deconvolution.remove_global_correlations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.remove_global_correlations</span></code></a>(...)</p></td>
+<td><p>Remove global correlations by setting the first eigen value of the coevolution matrix to 0</p></td>
 </tr>
 </tbody>
 </table>
@@ -197,16 +203,16 @@
 </section>
 <section id="module-cocoatree.visualization">
 <span id="cocoatree-visualization-visualization-with-ete3"></span><span id="deconvolution-ref"></span><h2><a class="reference internal" href="#module-cocoatree.visualization" title="cocoatree.visualization"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.visualization</span></code></a>: Visualization with ete3<a class="headerlink" href="#module-cocoatree.visualization" title="Link to this heading">¶</a></h2>
-<p>Module to visualize phylogenetic trees along with sectors</p>
+<p>Module to visualize phylogenetic trees along with XCoRs</p>
 <section id="id6">
 <h3>Functions<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.visualization.update_tree_ete3_and_return_style.html#cocoatree.visualization.update_tree_ete3_and_return_style" title="cocoatree.visualization.update_tree_ete3_and_return_style"><code class="xref py py-obj docutils literal notranslate"><span class="pre">visualization.update_tree_ete3_and_return_style</span></code></a>(...)</p></td>
-<td><p>Update ete3 tree with sector info and attributes and return tree_style for further visualization.</p></td>
+<td><p>Update ete3 tree with XCoR info and attributes and return tree_style for further visualization.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.visualization.add_sector_sequences_to_tree.html#cocoatree.visualization.add_sector_sequences_to_tree" title="cocoatree.visualization.add_sector_sequences_to_tree"><code class="xref py py-obj docutils literal notranslate"><span class="pre">visualization.add_sector_sequences_to_tree</span></code></a>(...)</p></td>
-<td><p>Add sector sequence to ETE3's tree style</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.visualization.add_xcor_sequences_to_tree.html#cocoatree.visualization.add_xcor_sequences_to_tree" title="cocoatree.visualization.add_xcor_sequences_to_tree"><code class="xref py py-obj docutils literal notranslate"><span class="pre">visualization.add_xcor_sequences_to_tree</span></code></a>(...)</p></td>
+<td><p>Add XCoR sequence to ETE3's tree style</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.visualization.add_heatmap_to_tree.html#cocoatree.visualization.add_heatmap_to_tree" title="cocoatree.visualization.add_heatmap_to_tree"><code class="xref py py-obj docutils literal notranslate"><span class="pre">visualization.add_heatmap_to_tree</span></code></a>(...[, ...])</p></td>
 <td><p>Add heatmap to ETE3's tree style</p></td>

@@ -184,16 +184,16 @@
 
 
 
-<div class="viewcode-block" id="export_sector_for_pymol">
-<a class="viewcode-back" href="../../modules/generated/cocoatree.io.export_sector_for_pymol.html#cocoatree.io.export_sector_for_pymol">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">export_sector_for_pymol</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="n">independent_components</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span>
-                            <span class="n">sector_pos_in_loaded_msa</span><span class="p">,</span>
-                            <span class="n">sector_pos_in_filtered_msa</span><span class="p">,</span>
-                            <span class="n">outpath</span><span class="p">):</span>
+<div class="viewcode-block" id="export_xcor_for_pymol">
+<a class="viewcode-back" href="../../modules/generated/cocoatree.io.export_xcor_for_pymol.html#cocoatree.io.export_xcor_for_pymol">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">export_xcor_for_pymol</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="n">independent_components</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span>
+                          <span class="n">xcor_pos_in_loaded_msa</span><span class="p">,</span>
+                          <span class="n">xcor_pos_in_filtered_msa</span><span class="p">,</span>
+                          <span class="n">outpath</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Export sector information for mapping on 3D structure in PyMOL.</span>
+<span class="sd">    Export XCoR information for mapping on 3D structure in PyMOL.</span>
 
-<span class="sd">    Export numpy arrays of a sector&#39;s residue positions and their contribution</span>
+<span class="sd">    Export numpy arrays of an XCoR&#39;s residue positions and their contribution</span>
 <span class="sd">    for coloring in PyMOL.</span>
 
 <span class="sd">    Parameters</span>
@@ -206,13 +206,13 @@
 <span class="sd">        output of cocoatree.deconvolution.compute_ica() function</span>
 
 <span class="sd">    axis : int,</span>
-<span class="sd">        rank of the independent component associated with the desired sector</span>
+<span class="sd">        rank of the independent component associated with the desired XCoR</span>
 
-<span class="sd">    sector_pos_in_loaded_msa : list,</span>
-<span class="sd">        positions of the sector&#39;s residues in the unfiltered MSA</span>
+<span class="sd">    xcor_pos_in_loaded_msa : list,</span>
+<span class="sd">        positions of the XCoR&#39;s residues in the unfiltered MSA</span>
 
-<span class="sd">    sector_pos_in_filtered_msa : numpy.ndarray,</span>
-<span class="sd">        positions of the sector&#39;s residues in the filtered MSA, output from</span>
+<span class="sd">    xcor_pos_in_filtered_msa : numpy.ndarray,</span>
+<span class="sd">        positions of the XCoR&#39;s residues in the filtered MSA, output from</span>
 <span class="sd">        cocoatree.deconvolution.icList() function</span>
 
 <span class="sd">    outpath : str,</span>
@@ -221,20 +221,20 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    binary file in .npy format containing an array with the positions of the</span>
-<span class="sd">    sector&#39;s residues and an array with their contribution to the independent</span>
+<span class="sd">    XCoR&#39;s residues and an array with their contribution to the independent</span>
 <span class="sd">    component.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">sector_pdb_pos</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">residue</span> <span class="ow">in</span> <span class="n">sector_pos_in_loaded_msa</span><span class="p">:</span>
+    <span class="n">xcor_pdb_pos</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">residue</span> <span class="ow">in</span> <span class="n">xcor_pos_in_loaded_msa</span><span class="p">:</span>
         <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mapping</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">residue</span><span class="p">))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">sector_pdb_pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mapping</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span><span class="p">])</span>
+        <span class="n">xcor_pdb_pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mapping</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">index</span><span class="p">])</span>
 
     <span class="n">ic_contributions</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">residue</span> <span class="ow">in</span> <span class="n">sector_pos_in_filtered_msa</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">residue</span> <span class="ow">in</span> <span class="n">xcor_pos_in_filtered_msa</span><span class="p">:</span>
         <span class="n">ic_contributions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">independent_components</span><span class="p">[</span><span class="n">residue</span><span class="p">,</span> <span class="n">axis</span><span class="p">])</span>
 
-    <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">sector_pdb_pos</span><span class="p">,</span> <span class="n">ic_contributions</span><span class="p">]))</span></div>
+    <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">outpath</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">xcor_pdb_pos</span><span class="p">,</span> <span class="n">ic_contributions</span><span class="p">]))</span></div>
 
 </pre></div>
 

@@ -25,7 +25,8 @@ print(dataset.keys())
 #   - `alignment`: the aligned sequences
 #   - `sector_positions`: a Numpy NpzFile of the sectors' positions as found in
 # the Kalmer study
-#   - `pdb_sequence`: a tuple of the pdb sequence of 3TGI (rat's trypsin)
+#   - `pdb_sequence`: a tuple of the pdb sequence of 3QL3 (wild-type E. coli
+# DHFR)
 #   - `pdb_positions`: a list of the named positions found in the PDB
 #
 # Access the sequence data
@@ -64,7 +65,7 @@ for sect in sectors:
 # ^^^^^^^^^^^^^^^^^^^^^^
 pdb_seq = dataset["pdb_sequence"]
 pdb_pos = dataset["pdb_positions"]
-print("Start of E. coli's sequence:\n", pdb_seq[:10])
+print("Start of E. coli DHFR's sequence:\n", pdb_seq[:10])
 print("Named positions of the first ten residues in E. coli's sequence:\n",
       pdb_pos[:10])
 

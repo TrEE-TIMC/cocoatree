@@ -67,12 +67,14 @@ Necessary imports
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 28-30
+.. GENERATED FROM PYTHON SOURCE LINES 28-32
 
 Loading the dataset
 -------------------
+For more details on the S1A serine proteases dataset, go to
+:ref:`sphx_glr_auto_examples_d_datasets_plot_s1A_serine_proteases.py`.
 
-.. GENERATED FROM PYTHON SOURCE LINES 30-35
+.. GENERATED FROM PYTHON SOURCE LINES 32-37
 
 .. code-block:: Python
 
@@ -88,12 +90,12 @@ Loading the dataset
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-38
+.. GENERATED FROM PYTHON SOURCE LINES 38-40
 
 Filtering the MSA
 -----------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 38-41
+.. GENERATED FROM PYTHON SOURCE LINES 40-43
 
 .. code-block:: Python
 
@@ -107,12 +109,12 @@ Filtering the MSA
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 42-44
+.. GENERATED FROM PYTHON SOURCE LINES 44-46
 
 Computing the SCA matrix
 ------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 44-46
+.. GENERATED FROM PYTHON SOURCE LINES 46-48
 
 .. code-block:: Python
 
@@ -125,12 +127,12 @@ Computing the SCA matrix
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-49
+.. GENERATED FROM PYTHON SOURCE LINES 49-51
 
 Plotting the SCA matrix
 -----------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-57
+.. GENERATED FROM PYTHON SOURCE LINES 51-59
 
 .. code-block:: Python
 
@@ -156,21 +158,21 @@ Plotting the SCA matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7fab12843090>
+    <matplotlib.colorbar.Colorbar object at 0x7f2500cbe790>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 58-60
+.. GENERATED FROM PYTHON SOURCE LINES 60-62
 
 Extracting XCoRs
 ----------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 60-67
+.. GENERATED FROM PYTHON SOURCE LINES 62-69
 
 .. code-block:: Python
 
     n_xcors = 3
-    xcors = c_deconv.extract_sectors(SCA_matrix, n_sectors=n_xcors)
+    xcors = c_deconv.extract_xcors(SCA_matrix, n_xcors=n_xcors)
 
     print('XCoR positions on (filtered) sequences:')
     for ixcor, xcor in enumerate(xcors):
@@ -192,13 +194,13 @@ Extracting XCoRs
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 68-71
+.. GENERATED FROM PYTHON SOURCE LINES 70-73
 
 A plotting function returning a reduced coevo matrix, keeping
 only XCoRs and sorting the residues according to them
 -------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-97
+.. GENERATED FROM PYTHON SOURCE LINES 73-99
 
 .. code-block:: Python
 
@@ -235,12 +237,12 @@ only XCoRs and sorting the residues according to them
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 98-100
+.. GENERATED FROM PYTHON SOURCE LINES 100-102
 
 Plotting the SCA matrix according to the XCoRs
 ----------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 100-106
+.. GENERATED FROM PYTHON SOURCE LINES 102-108
 
 .. code-block:: Python
 
@@ -268,12 +270,12 @@ Plotting the SCA matrix according to the XCoRs
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 107-109
+.. GENERATED FROM PYTHON SOURCE LINES 109-111
 
 Removing a global mode (ngm = no global mode),
 i.e., setting largest eigeinvalue to zero
 
-.. GENERATED FROM PYTHON SOURCE LINES 109-111
+.. GENERATED FROM PYTHON SOURCE LINES 111-113
 
 .. code-block:: Python
 
@@ -286,12 +288,12 @@ i.e., setting largest eigeinvalue to zero
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 112-114
+.. GENERATED FROM PYTHON SOURCE LINES 114-116
 
 Plotting the SCA matrix without global mode according to the XCoRs
 ------------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 114-118
+.. GENERATED FROM PYTHON SOURCE LINES 116-120
 
 .. code-block:: Python
 
@@ -317,12 +319,12 @@ Plotting the SCA matrix without global mode according to the XCoRs
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-121
+.. GENERATED FROM PYTHON SOURCE LINES 121-123
 
 Adapting the coevolution scale
 ------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 121-124
+.. GENERATED FROM PYTHON SOURCE LINES 123-126
 
 .. code-block:: Python
 
@@ -350,7 +352,7 @@ Adapting the coevolution scale
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.824 seconds)
+   **Total running time of the script:** (0 minutes 2.802 seconds)
 
 
 .. _sphx_glr_download_auto_examples_a_quick_start_plot_sca_according2xcors.py:

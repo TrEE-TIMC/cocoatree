@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>cocoatree.io.export_sector_for_pymol &#8212; cocoatree 0.0 documentation</title>
+    <title>cocoatree.io.export_xcor_for_pymol &#8212; cocoatree 0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
     <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
@@ -40,13 +40,13 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <section id="cocoatree-io-export-sector-for-pymol">
-<h1>cocoatree.io.export_sector_for_pymol<a class="headerlink" href="#cocoatree-io-export-sector-for-pymol" title="Link to this heading">¶</a></h1>
+  <section id="cocoatree-io-export-xcor-for-pymol">
+<h1>cocoatree.io.export_xcor_for_pymol<a class="headerlink" href="#cocoatree-io-export-xcor-for-pymol" title="Link to this heading">¶</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="cocoatree.io.export_sector_for_pymol">
-<span class="sig-prename descclassname"><span class="pre">cocoatree.io.</span></span><span class="sig-name descname"><span class="pre">export_sector_for_pymol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">independent_components</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sector_pos_in_loaded_msa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sector_pos_in_filtered_msa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cocoatree/io.html#export_sector_for_pymol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cocoatree.io.export_sector_for_pymol" title="Link to this definition">¶</a></dt>
-<dd><p>Export sector information for mapping on 3D structure in PyMOL.</p>
-<p>Export numpy arrays of a sector’s residue positions and their contribution
+<dt class="sig sig-object py" id="cocoatree.io.export_xcor_for_pymol">
+<span class="sig-prename descclassname"><span class="pre">cocoatree.io.</span></span><span class="sig-name descname"><span class="pre">export_xcor_for_pymol</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">independent_components</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xcor_pos_in_loaded_msa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xcor_pos_in_filtered_msa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cocoatree/io.html#export_xcor_for_pymol"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cocoatree.io.export_xcor_for_pymol" title="Link to this definition">¶</a></dt>
+<dd><p>Export XCoR information for mapping on 3D structure in PyMOL.</p>
+<p>Export numpy arrays of an XCoR’s residue positions and their contribution
 for coloring in PyMOL.</p>
 <section id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h2>
@@ -56,11 +56,11 @@ cocoatree.msa.map_to_pdb() function</p>
 </dd>
 <dt>independent_components<span class="classifier">numpy.ndarray,</span></dt><dd><p>output of cocoatree.deconvolution.compute_ica() function</p>
 </dd>
-<dt>axis<span class="classifier">int,</span></dt><dd><p>rank of the independent component associated with the desired sector</p>
+<dt>axis<span class="classifier">int,</span></dt><dd><p>rank of the independent component associated with the desired XCoR</p>
 </dd>
-<dt>sector_pos_in_loaded_msa<span class="classifier">list,</span></dt><dd><p>positions of the sector’s residues in the unfiltered MSA</p>
+<dt>xcor_pos_in_loaded_msa<span class="classifier">list,</span></dt><dd><p>positions of the XCoR’s residues in the unfiltered MSA</p>
 </dd>
-<dt>sector_pos_in_filtered_msa<span class="classifier">numpy.ndarray,</span></dt><dd><p>positions of the sector’s residues in the filtered MSA, output from
+<dt>xcor_pos_in_filtered_msa<span class="classifier">numpy.ndarray,</span></dt><dd><p>positions of the XCoR’s residues in the filtered MSA, output from
 cocoatree.deconvolution.icList() function</p>
 </dd>
 <dt>outpath<span class="classifier">str,</span></dt><dd><p>path to the output file as a binary in .npy format</p>
@@ -70,14 +70,14 @@ cocoatree.deconvolution.icList() function</p>
 <section id="returns">
 <h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
 <p>binary file in .npy format containing an array with the positions of the
-sector’s residues and an array with their contribution to the independent
+XCoR’s residues and an array with their contribution to the independent
 component.</p>
 </section>
 </dd></dl>
 
-<section id="examples-using-cocoatree-io-export-sector-for-pymol">
-<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.io.export_sector_for_pymol</span></code><a class="headerlink" href="#examples-using-cocoatree-io-export-sector-for-pymol" title="Link to this heading">¶</a></h2>
-<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete SCA analysis and detect eXtremal Co-evolving Residues (XCoR) from data importation and MSA filtering to the computation of a SCA coevolution matrix, the extraction of principal and independent components, and the representation of coevolution within and between sectors."><img alt="" src="../../_images/sphx_glr_plot_full_SCA_analysis_thumb.png" />
+<section id="examples-using-cocoatree-io-export-xcor-for-pymol">
+<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.io.export_xcor_for_pymol</span></code><a class="headerlink" href="#examples-using-cocoatree-io-export-xcor-for-pymol" title="Link to this heading">¶</a></h2>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This example shows the full process to perform a complete SCA analysis and detect eXtremal Co-evolving Residues (XCoR) from data importation and MSA filtering to the computation of a SCA coevolution matrix, the extraction of principal and independent components, and the representation of coevolution within and between XCoRs."><img alt="" src="../../_images/sphx_glr_plot_full_SCA_analysis_thumb.png" />
 <p><a class="reference internal" href="../../auto_examples/b_advanced/plot_full_SCA_analysis.html#sphx-glr-auto-examples-b-advanced-plot-full-sca-analysis-py"><span class="std std-ref">Perform full SCA analysis on the S1A serine protease dataset</span></a></p>
   <div class="sphx-glr-thumbnail-title">Perform full SCA analysis on the S1A serine protease dataset</div>
 </div></div><div class="sphx-glr-clear"></div></section>

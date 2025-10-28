@@ -18,6 +18,9 @@ from cocoatree.visualization import update_tree_ete3_and_return_style
 # We use the S1A serine protease dataset that is included in cocoatree
 # but you can use your own metadata by importing a csv file as a pandas
 # dataframe.
+#
+# For more details on the S1A serine proteases dataset, go to
+# :ref:`sphx_glr_auto_examples_d_datasets_plot_s1A_serine_proteases.py`.
 serine_dataset = load_S1A_serine_proteases('halabi')
 df_annot = serine_dataset["metadata"]
 print(df_annot)

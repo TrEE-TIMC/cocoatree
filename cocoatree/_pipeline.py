@@ -54,7 +54,7 @@ def perform_sca(sequences_id, sequences,
         - PCk: the projection of the residue onto the kth principal component
         - ICk: the projeciton of the residue onto the kth independent
           component
-        - sector_k: wherether the residue is found to be part of sector k
+        - xcor_k: wherether the residue is found to be part of xcor k
 
     """
 
@@ -110,7 +110,7 @@ def perform_sca(sequences_id, sequences,
         coevol_matrix)
     independent_components = deconvolution.extract_independent_components(
         coevol_matrix, n_components=n_components)
-    sectors = deconvolution.extract_sectors_from_ICs(
+    xcors = deconvolution.extract_xcors_from_ICs(
         independent_components, coevol_matrix)
 
     # Now, map everything into a nice pandas DataFrame
@@ -126,13 +126,13 @@ def perform_sca(sequences_id, sequences,
                     "PC%d" % (k+1)] = principal_components[k]
         results.loc[~results["filtered_msa_pos"].isna(),
                     "IC%d" % (k+1)] = independent_components[k]
-        results["sector_%d" % (k+1)] = np.isin(
+        results["xcor_%d" % (k+1)] = np.isin(
             results["filtered_msa_pos"],
-            sectors[k])
+            xcors[k])
         results.loc[~results["filtered_msa_pos"].isna(),
-                    "sector_%d" % (k+1)] = np.isin(
+                    "xcor_%d" % (k+1)] = np.isin(
                         results.loc[~results["filtered_msa_pos"].isna(),
                                     "filtered_msa_pos"],
-                        sectors[k])
+                        xcors[k])
 
     return coevol_matrix, results

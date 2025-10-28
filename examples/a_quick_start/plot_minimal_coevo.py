@@ -63,7 +63,7 @@ fig.colorbar(im, shrink=0.7)
 # Extracting XCoRs
 # ----------------
 n_xcors = 3
-xcors = c_deconv.extract_sectors(SCA_matrix, n_sectors=n_xcors)
+xcors = c_deconv.extract_xcors(SCA_matrix, n_sectors=n_xcors)
 
 print('XCoR positions on (filtered) sequences:')
 for ixcor, xcor in enumerate(xcors):

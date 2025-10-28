@@ -166,8 +166,9 @@ Functions
 
     deconvolution.extract_independent_components
     deconvolution.extract_principal_components
+    deconvolution.extract_sectors_from_ICs
     deconvolution.extract_sectors
-    deconvolution.substract_first_principal_component
+    deconvolution.remove_global_correlations
 
 
 .. _deconvolution_ref:

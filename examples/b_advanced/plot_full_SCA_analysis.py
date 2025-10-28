@@ -228,7 +228,7 @@ for i in range(n_components):
     ax.plot([line_index + xcor_sizes[i], line_index + xcor_sizes[i]],
             [0, sum(xcor_sizes)], 'w', linewidth=2)
     ax.plot([0, sum(xcor_sizes)], [sum(xcor_sizes) - line_index,
-                                     sum(xcor_sizes) - line_index],
+                                   sum(xcor_sizes) - line_index],
             'w', linewidth=2)
     line_index += xcor_sizes[i]
 
@@ -270,8 +270,8 @@ if False:  # need to be revised
     # The residues are ordered in the list by decreasing contribution score
     # (the first residue in the list is the highest contributing)
     c_io.export_xcor_for_pymol(pdb_mapping, idpt_components.T, axis=0,
-                                 xcor_pos=xcor_1_pos,
-                                 ics=xcors,
-                                 outpath='color_xcor_1_pymol.npy')
+                               xcor_pos=xcor_1_pos,
+                               ics=xcors,
+                               outpath='color_xcor_1_pymol.npy')
 
 # %%

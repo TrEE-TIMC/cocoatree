@@ -131,9 +131,9 @@ def load_pdb(path2pdb, pdb_id, chain):
 
 
 def export_xcor_for_pymol(mapping, independent_components, axis,
-                            xcor_pos_in_loaded_msa,
-                            xcor_pos_in_filtered_msa,
-                            outpath):
+                          xcor_pos_in_loaded_msa,
+                          xcor_pos_in_filtered_msa,
+                          outpath):
     """
     Export XCoR information for mapping on 3D structure in PyMOL.
 

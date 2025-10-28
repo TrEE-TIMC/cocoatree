@@ -310,8 +310,8 @@ def update_tree_ete3_and_return_style(
     return tree_style, column_layout
 
 
-def add_sxcor_sequences_to_tree(tree_style, tree_ete3, xcor_id, xcor_seq,
-                                 column_start=0):
+def add_xcor_sequences_to_tree(tree_style, tree_ete3, xcor_id, xcor_seq,
+                               column_start=0):
     """
     Add XCoR sequence to ETE3's tree style
 

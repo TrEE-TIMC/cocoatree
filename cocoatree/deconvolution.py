@@ -197,8 +197,8 @@ def extract_xcors_from_ICs(idpt_components, coevo_matrix):
     ref_index = xcor_sizes[0]
     for isize in range(1, len(xcor_sizes)):
         xcors.append([sorted_pos[i]
-                        for i in range(ref_index,
-                                       ref_index + xcor_sizes[isize])])
+                      for i in range(ref_index,
+                                     ref_index + xcor_sizes[isize])])
         ref_index += xcor_sizes[isize]
     return xcors
 
@@ -232,8 +232,8 @@ def extract_xcors(coevo_matrix, n_xcors=3):
     ref_index = xcor_sizes[0]
     for isize in range(1, len(xcor_sizes)):
         xcors.append([sorted_pos[i]
-                        for i in range(ref_index,
-                                       ref_index + xcor_sizes[isize])])
+                      for i in range(ref_index,
+                                     ref_index + xcor_sizes[isize])])
         ref_index += xcor_sizes[isize]
     return xcors
 

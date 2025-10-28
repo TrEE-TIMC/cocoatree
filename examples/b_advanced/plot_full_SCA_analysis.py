@@ -7,9 +7,9 @@ This example shows the full process to perform a complete SCA analysis
 and detect **eXtremal Co-evolving Residues (XCoR)** from data importation and
 MSA filtering to the computation of a SCA coevolution matrix, the extraction
 of principal and independent components, and the representation of coevolution
-within and between sectors.
+within and between XCoRs.
 
-Finally, we export fasta files that are necessary for the sector visualization
+Finally, we export fasta files that are necessary for the XCoR visualization
 along a phylogenetic tree.
 """
 
@@ -71,7 +71,7 @@ print(f"After filtering, we have {len(sequences)} remaining sequences.")
 # You can use :func:`cocoatree.visualization.update_tree_ete3_and_return_style`
 # function to represent a sequence similarity matrix ordered following a
 # phylogenetic tree (see
-# :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_sector_seq\
+# :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_xcor_seq\
 # _and_coevol.py`).
 
 identity_matrix = c_msa.compute_seq_identity(sequences)
@@ -159,16 +159,16 @@ for k, [k1, k2] in enumerate(pairs):
     ax.set_ylabel("IC %i" % (k2+1), fontsize=16)
 
 # %%
-# Extract sectors
+# Extract XCoRs
 # ---------------
 #
-# Obtain a list of residues of each sector
+# Obtain a list of residues of each XCoR
 
-sectors = c_deconv.extract_sectors_from_ICs(idpt_components, SCA_matrix)
+xcors = c_deconv.extract_xcors_from_ICs(idpt_components, SCA_matrix)
 
-print('Sector positions on (filtered) sequences:')
-for isec, sec in enumerate(sectors):
-    print('sector %d: %s' % (isec+1, sec))
+print('XCoR positions on (filtered) sequences:')
+for isec, sec in enumerate(xcors):
+    print('XCoR %d: %s' % (isec+1, sec))
 
 # %%
 # Note that the residue positions do not follow the order of the sequence but
@@ -176,37 +176,37 @@ for isec, sec in enumerate(sectors):
 # (the first residue of the list has the highest score).
 
 # %%
-# Plot coevolution within and between the sectors
+# Plot coevolution within and between the XCoRs
 # -----------------------------------------------
 #
-# Each white square corresponds to a sector, with the residues ordered in
+# Each white square corresponds to a XCoR, with the residues ordered in
 # decreasing contribution to the independent component associated from top to
 # bottom and from left to right.
 fig, ax = plt.subplots(tight_layout=True)
 
-sector_sizes = [len(sec) for sec in sectors]
-cumul_sizes = sum(sector_sizes)
-sorted_pos = [s for sec in sectors for s in sec]
+xcor_sizes = [len(sec) for sec in xcors]
+cumul_sizes = sum(xcor_sizes)
+sorted_pos = [s for sec in xcors for s in sec]
 
 im = ax.imshow(SCA_matrix[np.ix_(sorted_pos, sorted_pos)],
                vmin=0, vmax=2,
                interpolation='none', aspect='equal',
                extent=[0, cumul_sizes, 0, cumul_sizes], cmap='inferno')
-ax.set_title('SCA matrix, sorted according to sectors')
+ax.set_title('SCA matrix, sorted according to XCoRs')
 cb = fig.colorbar(im)
 cb.set_label("coevolution level")
 
 line_index = 0
 for i in range(n_components):
-    ax.plot([line_index + sector_sizes[i], line_index + sector_sizes[i]],
+    ax.plot([line_index + xcor_sizes[i], line_index + xcor_sizes[i]],
             [0, cumul_sizes], 'w', linewidth=2)
     ax.plot([0, cumul_sizes], [cumul_sizes - line_index,
                                cumul_sizes - line_index], 'w', linewidth=2)
-    line_index += sector_sizes[i]
+    line_index += xcor_sizes[i]
 
 # %%
 # Do the same but for the SCA matrix where a global correlation mode has
-# been removed and, hence, such that sectors are better highlighted.
+# been removed and, hence, such that XCoRs are better highlighted.
 # See Rivoire et al., PLOSCB, 2016
 
 # Removing a global mode (ngm = no global mode),
@@ -217,41 +217,41 @@ SCA_matrix_ngm = c_deconv.remove_global_correlations(SCA_matrix)
 fig, ax = plt.subplots(tight_layout=True)
 im = ax.imshow(SCA_matrix_ngm[np.ix_(sorted_pos, sorted_pos)], vmin=0, vmax=1,
                interpolation='none', aspect='equal',
-               extent=[0, sum(sector_sizes), 0, sum(sector_sizes)],
+               extent=[0, sum(xcor_sizes), 0, sum(xcor_sizes)],
                cmap='inferno')
-ax.set_title('SCA matrix without global mode, sorted according to sectors')
+ax.set_title('SCA matrix without global mode, sorted according to XCoRs')
 cb = fig.colorbar(im)
 cb.set_label("coevolution level")
 
 line_index = 0
 for i in range(n_components):
-    ax.plot([line_index + sector_sizes[i], line_index + sector_sizes[i]],
-            [0, sum(sector_sizes)], 'w', linewidth=2)
-    ax.plot([0, sum(sector_sizes)], [sum(sector_sizes) - line_index,
-                                     sum(sector_sizes) - line_index],
+    ax.plot([line_index + xcor_sizes[i], line_index + xcor_sizes[i]],
+            [0, sum(xcor_sizes)], 'w', linewidth=2)
+    ax.plot([0, sum(xcor_sizes)], [sum(xcor_sizes) - line_index,
+                                   sum(xcor_sizes) - line_index],
             'w', linewidth=2)
-    line_index += sector_sizes[i]
+    line_index += xcor_sizes[i]
 
 
 # %%
-# Export sector sequences in fasta format
+# Export XCoR sequences in fasta format
 # ---------------------------------------
 #
 # The file can then be used for visualization along a phylogenetic tree
 # as implemented in :mod:`cocoatree.visualization`.
 #
 # Here, the positions are ordered in decreasing contribution to the
-# independent component to which the sector is associated.
+# independent component to which the XCoR is associated.
 
-sector_1_pos = list(positions[sectors[0]])
-sector_1 = []
+xcor_1_pos = list(positions[xcors[0]])
+xcor_1 = []
 for sequence in range(len(sequences_id)):
     seq = ''
-    for pos in sector_1_pos:
+    for pos in xcor_1_pos:
         seq += loaded_seqs[sequence][pos]
-    sector_1.append(seq)
+    xcor_1.append(seq)
 
-c_io.export_fasta(sector_1, sequences_id, 'sector_1.fasta')
+c_io.export_fasta(xcor_1, sequences_id, 'xcor_1.fasta')
 
 # %%
 if False:  # need to be revised
@@ -264,14 +264,14 @@ if False:  # need to be revised
     # seq_id='14719441'
     pdb_mapping = c_msa.map_to_pdb(pdb_seq, pdb_pos, sequences, sequences_id,
                                    pdb_seq_id='14719441')
-    # Export lists of the first sector positions and each residue's
+    # Export lists of the first XCoR positions and each residue's
     # contribution to the independent component to use for visualization on
     # Pymol.
     # The residues are ordered in the list by decreasing contribution score
     # (the first residue in the list is the highest contributing)
-    c_io.export_sector_for_pymol(pdb_mapping, idpt_components.T, axis=0,
-                                 sector_pos=sector_1_pos,
-                                 ics=sectors,
-                                 outpath='color_sector_1_pymol.npy')
+    c_io.export_xcor_for_pymol(pdb_mapping, idpt_components.T, axis=0,
+                               xcor_pos=xcor_1_pos,
+                               ics=xcors,
+                               outpath='color_xcor_1_pymol.npy')
 
 # %%

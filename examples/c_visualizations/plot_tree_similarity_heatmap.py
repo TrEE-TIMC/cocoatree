@@ -1,10 +1,10 @@
 """
-=================================================================
-Plot a similarity heatmap of a sector along the phylogenetic tree
-=================================================================
+===============================================================
+Plot a similarity heatmap of a XCoR along the phylogenetic tree
+===============================================================
 
-Here we present how you can plot a heatmap of sequence similarity
-ordered following a phylogenetic tree.
+Here we present how you can plot a heatmap of sequence similarity ordered
+following a phylogenetic tree.
 
 """
 
@@ -33,6 +33,9 @@ print(df_annot)
 # can contain qualitative data that will be displayed as categories alongside
 # the phylogenetic tree. In this example, we will use the last 3 columns
 # 'Protein_type', 'Subphylum', and 'Class'.
+#
+# For more details on the S1A serine proteases dataset, go to
+# :ref:`sphx_glr_auto_examples_d_datasets_plot_s1A_serine_proteases.py`.
 #
 # We will also use a personnalized colormap defined as follows:
 halabi_cmap = {
@@ -66,15 +69,15 @@ tree_ete3 = load_tree_ete3(tree_file)
 print(tree_ete3)
 
 # %%
-# Import sector sequences
-# -----------------------
-# Load the sequences you wish to visualize with `cocoatree.io.load_msa()` as
-# a fasta file. The sequence names must correspond to `Seq_ID` and to the leaf
-# names in the tree file.
-sector_file = 'data/halabi_sector_1_SCA.fasta'
-data = load_MSA(sector_file, 'fasta')
-sector_id = data["sequence_ids"]
-sector_seq = data["alignment"]
+# Import XCoR sequences
+# ---------------------
+# Load the sequences you wish to visualize with :func:`cocoatree.io.load_MSA`
+# as a fasta file. The sequence names must correspond to `Seq_ID` and to the
+# leaf names in the tree file.
+xcor_file = 'data/halabi_xcor_1_SCA.fasta'
+data = load_MSA(xcor_file, 'fasta')
+xcor_id = data["sequence_ids"]
+xcor_seq = data["alignment"]
 
 # %%
 # Plot tree with sequence similarity heatmap
@@ -85,13 +88,13 @@ sector_seq = data["alignment"]
 #   - the tree without its leaf names (`show_leaf_name=False`)
 #   - metadata as colored columns, in order: *Protein_type*, *Subphylum*,
 # and *Class*.
-#   - sector sequences colored by amino acid physico-chemical properties
-# (`t_sector_seq=True`)
-#   - a heatmap of pairwise sequence similarity computed on the sector
-# sequences (`t_sector_heatmap=True`, `matrix_type='similarity'`) and
+#   - XCoR sequences colored by amino acid physico-chemical properties
+# (`t_xcor_seq=True`)
+#   - a heatmap of pairwise sequence similarity computed on the XCoR
+# sequences (`t_xcor_heatmap=True`, `matrix_type='similarity'`) and
 # using the `GnBu` colormap (`colormap='GnBu'`).
 tree_style, _ = update_tree_ete3_and_return_style(
-    tree_ete3, df_annot, sector_id, sector_seq,
+    tree_ete3, df_annot, xcor_id, xcor_seq,
     meta_data=('Protein_type', 'Subphylum', 'Class'),
     show_leaf_name=False,
     fig_title='Heatmap of sequence similarity',
@@ -100,15 +103,15 @@ tree_style, _ = update_tree_ete3_and_return_style(
     bootstrap_style={},
     tree_scale=200,
     metadata_colors=halabi_cmap,
-    t_sector_seq=True,
-    t_sector_heatmap=True,
+    t_xcor_seq=True,
+    t_xcor_heatmap=True,
     matrix_type='similarity',
     colormap='GnBu'
     )
 
 # %%
 # Save the image file
-tree_ete3.render("sector_phylogeny.png", tree_style=tree_style)
+tree_ete3.render("xcor_phylogeny.png", tree_style=tree_style)
 
 # %%
 # As the similarity score that is computed here is not normalized, it
@@ -122,7 +125,7 @@ tree_ete3.render("sector_phylogeny.png", tree_style=tree_style)
 # defined above
 tree_ete3 = load_tree_ete3(tree_file)
 tree_style, _ = update_tree_ete3_and_return_style(
-    tree_ete3, df_annot, sector_id, sector_seq,
+    tree_ete3, df_annot, xcor_id, xcor_seq,
     meta_data=('Protein_type', 'Subphylum', 'Class'),
     show_leaf_name=False,
     fig_title='Heatmap of normalized sequence similarity',
@@ -131,12 +134,12 @@ tree_style, _ = update_tree_ete3_and_return_style(
     bootstrap_style={},
     tree_scale=200,
     metadata_colors=halabi_cmap,
-    t_sector_seq=True,
-    t_sector_heatmap=True,
+    t_xcor_seq=True,
+    t_xcor_heatmap=True,
     matrix_type='norm_similarity',
     colormap='GnBu'
     )
-tree_ete3.render("sector_phylogeny.png", tree_style=tree_style)
+tree_ete3.render("xcor_phylogeny.png", tree_style=tree_style)
 
 # %%
 # Compare similarity and identity matrices
@@ -147,7 +150,7 @@ tree_ete3.render("sector_phylogeny.png", tree_style=tree_style)
 # Start by filtering and reordering the MSA sequences so that they follow
 # the phylogenetic tree
 leaves_id = tree_ete3.get_leaf_names()
-sequences = pd.DataFrame(index=sector_id, data={"seq": sector_seq})
+sequences = pd.DataFrame(index=xcor_id, data={"seq": xcor_seq})
 reordered_sequences = sequences.loc[leaves_id, "seq"].values
 
 # %%

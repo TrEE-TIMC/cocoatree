@@ -25,7 +25,7 @@ print(dataset.keys())
 # the Mihaljević and Urban study
 #   - `metadata`: a Pandas dataframe containing metadata associated with the
 # alignment, such as taxonomic information.
-#   - `pdb_sequence`: a tuple of the pdb sequence of E. coli's PDB
+#   - `pdb_sequence`: a tuple of the 2NRF pdb sequence from E. coli
 #   - `pdb_positions`: a list of the named positions found in the PDB
 #
 # Access the sequence data
@@ -73,7 +73,7 @@ print(metadata)
 # ^^^^^^^^^^^^^^^^^^^^^^
 pdb_seq = dataset["pdb_sequence"]
 pdb_pos = dataset["pdb_positions"]
-print("Start of E. coli's sequence:\n", pdb_seq[:10])
+print("Start of 2NRF E. coli's sequence:\n", pdb_seq[:10])
 print("Named positions of the first ten residues in E. coli's sequence:\n",
       pdb_pos[:10])
 

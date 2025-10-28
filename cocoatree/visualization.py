@@ -1,4 +1,4 @@
-"""Module to visualize phylogenetic trees along with sectors"""
+"""Module to visualize phylogenetic trees along with XCoRs"""
 
 # User provided file:
 # - phylogenetic tree in newick format
@@ -115,8 +115,8 @@ def _get_color_gradient(self):
 
 def update_tree_ete3_and_return_style(
         tree_ete3, df_annot,
-        sector_id=None,
-        sector_seq=None,
+        xcor_id=None,
+        xcor_seq=None,
         meta_data=None,
         show_leaf_name=True,
         fig_title='',
@@ -125,14 +125,14 @@ def update_tree_ete3_and_return_style(
         bootstrap_style={},
         tree_scale=200,
         metadata_colors=None,
-        t_sector_seq=False,
-        t_sector_heatmap=False,
+        t_xcor_seq=False,
+        t_xcor_heatmap=False,
         matrix_type='identity',
         colormap='inferno'
         ):
     """
-    Update ete3 tree with sector info and attributes
-    and return tree_style for further visualization.
+    Update ete3 tree with XCoR info and attributes and return tree_style for
+    further visualization.
 
     Parameters
     ----------
@@ -141,10 +141,10 @@ def update_tree_ete3_and_return_style(
 
     annot_file : pandas dataframe of the annotation file
 
-    sector_id : list of sector identifiers, as imported by io.load_msa()
+    xcor_id : list of XCoR sequence identifiers, as imported by io.load_msa()
             the ids must match with the tree's leaves id
 
-    sector_seq : corresponding list of sector sequences to display,
+    xcor_seq : corresponding list of xcor sequences to display,
             as imported by io.load_msa()
 
     meta_data : tuple of annotations to display
@@ -177,12 +177,12 @@ def update_tree_ete3_and_return_style(
 
     fig_title : figure title (str)
 
-    t_sector_seq : boolean,
-        whether to show the sequences of the sector
+    t_xcor_seq : boolean,
+        whether to show the sequences of the XCoR
 
-    t_sector_heatmap : boolean,
+    t_xcor_heatmap : boolean,
         whether to add a heatmap of the identity or similarity matrix between
-        sector sequences
+        XCoR sequences
 
     matrix_type : str, default='identity'
         whether to compute pairwise sequence identity ('identity'), similarity
@@ -293,14 +293,14 @@ def update_tree_ete3_and_return_style(
             col_legend_rectface += 2
     column_layout += len(meta_data) if meta_data else 0
 
-    if t_sector_seq:
-        tree_style, column_layout = add_sector_sequences_to_tree(
-            tree_style, tree_ete3, sector_id,
-            sector_seq, column_start=column_layout)
+    if t_xcor_seq:
+        tree_style, column_layout = add_xcor_sequences_to_tree(
+            tree_style, tree_ete3, xcor_id,
+            xcor_seq, column_start=column_layout)
 
-    if t_sector_heatmap:
+    if t_xcor_heatmap:
         tree_style, column_layout = add_heatmap_to_tree(
-            tree_style, tree_ete3, sector_id, sector_seq,
+            tree_style, tree_ete3, xcor_id, xcor_seq,
             matrix_type=matrix_type,
             column_start=column_layout, colormap=colormap)
 
@@ -310,10 +310,10 @@ def update_tree_ete3_and_return_style(
     return tree_style, column_layout
 
 
-def add_sector_sequences_to_tree(tree_style, tree_ete3, sector_id, sector_seq,
+def add_sxcor_sequences_to_tree(tree_style, tree_ete3, xcor_id, xcor_seq,
                                  column_start=0):
     """
-    Add sector sequence to ETE3's tree style
+    Add XCoR sequence to ETE3's tree style
 
     Parameters
     ----------
@@ -322,10 +322,10 @@ def add_sector_sequences_to_tree(tree_style, tree_ete3, sector_id, sector_seq,
     tree_ete3 : ete3's tree object,
             as imported by io.load_tree_ete3()
 
-    sector_id : list of sector identifiers, as imported by io.load_msa()
+    xcor_id : list of XCoR sequence identifiers, as imported by io.load_msa()
             the ids must match with the tree's leaves id
 
-    sector_seq : corresponding list of sector sequences to display,
+    xcor_seq : corresponding list of XCoR sequences to display,
             as imported by io.load_msa()
 
     column_start : int, optional, default : 0
@@ -340,17 +340,17 @@ def add_sector_sequences_to_tree(tree_style, tree_ete3, sector_id, sector_seq,
         equal to this value.
 
     """
-    sector_dict = {
-        sector_id[i]: str(sector_seq[i]) for i in range(len(sector_id))}
+    xcor_dict = {
+        xcor_id[i]: str(xcor_seq[i]) for i in range(len(xcor_id))}
 
     def layout_SeqMotifFace(node, column=column_start):
         if node.is_leaf():
-            if node.name in sector_dict:
-                seq = sector_dict[node.name]
+            if node.name in xcor_dict:
+                seq = xcor_dict[node.name]
             else:
-                seq = '-' * len(sector_seq[0])
+                seq = '-' * len(xcor_seq[0])
             seqFace = SeqMotifFace(seq,
-                                   motifs=[[0, len(sector_seq[0]), "seq",
+                                   motifs=[[0, len(xcor_seq[0]), "seq",
                                             20, 20, None, None, None]],
                                    scale_factor=1)
             seqFace.margin_right = 30
@@ -361,7 +361,7 @@ def add_sector_sequences_to_tree(tree_style, tree_ete3, sector_id, sector_seq,
     return tree_style, column_start
 
 
-def add_heatmap_to_tree(tree_style, tree_ete3, sector_id, sector_seq,
+def add_heatmap_to_tree(tree_style, tree_ete3, xcor_id, xcor_seq,
                         matrix_type="identity",
                         column_start=0, width=20, colormap="inferno"):
     """
@@ -374,10 +374,10 @@ def add_heatmap_to_tree(tree_style, tree_ete3, sector_id, sector_seq,
     tree_ete3 : ete3's tree object,
             as imported by io.load_tree_ete3()
 
-    sector_id : list of sector identifiers, as imported by io.load_msa()
+    xcor_id : list of XCoR sequence identifiers, as imported by io.load_msa()
             the ids must match with the tree's leaves id
 
-    sector_seq : corresponding list of sector sequences to display,
+    xcor_seq : corresponding list of XCoR sequences to display,
             as imported by io.load_msa()
 
     matrix_type : str, default='identity'
@@ -412,7 +412,7 @@ def add_heatmap_to_tree(tree_style, tree_ete3, sector_id, sector_seq,
 
     # Check that sequences in the similarity matrix are ordered as in the
     # tree leaves and keep only sequences that are present in the tree
-    sequences = pd.DataFrame(index=sector_id, data={"seq": sector_seq})
+    sequences = pd.DataFrame(index=xcor_id, data={"seq": xcor_seq})
     reordered_sequences = sequences.loc[leaves_id, "seq"].values
 
     if matrix_type == 'identity':

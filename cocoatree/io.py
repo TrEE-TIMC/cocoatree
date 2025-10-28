@@ -130,14 +130,14 @@ def load_pdb(path2pdb, pdb_id, chain):
     return pdb_seq, pdb_pos
 
 
-def export_sector_for_pymol(mapping, independent_components, axis,
-                            sector_pos_in_loaded_msa,
-                            sector_pos_in_filtered_msa,
+def export_xcor_for_pymol(mapping, independent_components, axis,
+                            xcor_pos_in_loaded_msa,
+                            xcor_pos_in_filtered_msa,
                             outpath):
     """
-    Export sector information for mapping on 3D structure in PyMOL.
+    Export XCoR information for mapping on 3D structure in PyMOL.
 
-    Export numpy arrays of a sector's residue positions and their contribution
+    Export numpy arrays of an XCoR's residue positions and their contribution
     for coloring in PyMOL.
 
     Parameters
@@ -150,13 +150,13 @@ def export_sector_for_pymol(mapping, independent_components, axis,
         output of cocoatree.deconvolution.compute_ica() function
 
     axis : int,
-        rank of the independent component associated with the desired sector
+        rank of the independent component associated with the desired XCoR
 
-    sector_pos_in_loaded_msa : list,
-        positions of the sector's residues in the unfiltered MSA
+    xcor_pos_in_loaded_msa : list,
+        positions of the XCoR's residues in the unfiltered MSA
 
-    sector_pos_in_filtered_msa : numpy.ndarray,
-        positions of the sector's residues in the filtered MSA, output from
+    xcor_pos_in_filtered_msa : numpy.ndarray,
+        positions of the XCoR's residues in the filtered MSA, output from
         cocoatree.deconvolution.icList() function
 
     outpath : str,
@@ -165,17 +165,17 @@ def export_sector_for_pymol(mapping, independent_components, axis,
     Returns
     -------
     binary file in .npy format containing an array with the positions of the
-    sector's residues and an array with their contribution to the independent
+    XCoR's residues and an array with their contribution to the independent
     component.
     """
 
-    sector_pdb_pos = []
-    for residue in sector_pos_in_loaded_msa:
+    xcor_pdb_pos = []
+    for residue in xcor_pos_in_loaded_msa:
         index = np.where(mapping[2] == str(residue))[0][0]
-        sector_pdb_pos.append(mapping[1][index])
+        xcor_pdb_pos.append(mapping[1][index])
 
     ic_contributions = []
-    for residue in sector_pos_in_filtered_msa:
+    for residue in xcor_pos_in_filtered_msa:
         ic_contributions.append(independent_components[residue, axis])
 
-    np.save(outpath, np.array([sector_pdb_pos, ic_contributions]))
+    np.save(outpath, np.array([xcor_pdb_pos, ic_contributions]))

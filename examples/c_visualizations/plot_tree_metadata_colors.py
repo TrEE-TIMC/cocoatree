@@ -56,13 +56,13 @@ halabi_cmap = {
 # names in the tree file.
 #
 # See the Perform full SCA analysis example on how to export a fasta of your
-# sectors.
-sector_file = 'data/halabi_sector_1_SCA.fasta'
-data = load_MSA(sector_file, 'fasta')
-sector_id = data["sequence_ids"]
-print(sector_id[:5])
-sector_seq = data["alignment"]
-print(sector_seq[:5])
+# XCoRs.
+xcor_file = 'data/halabi_xcor_1_SCA.fasta'
+data = load_MSA(xcor_file, 'fasta')
+xcor_id = data["sequence_ids"]
+print(xcor_id[:5])
+xcor_seq = data["alignment"]
+print(xcor_seq[:5])
 
 # %%
 # Load tree file
@@ -77,18 +77,18 @@ print(tree_ete3)
 # Create the tree style that will be applied to your tree
 tree_style, column_layout = update_tree_ete3_and_return_style(
     tree_ete3, df_annot,
-    sector_id=sector_id,
-    sector_seq=sector_seq,
+    xcor_id=xcor_id,
+    xcor_seq=xcor_seq,
     meta_data=('Protein_type', 'Subphylum', 'Class'),
     fig_title='Personnalized colormap example',
     metadata_colors=halabi_cmap,
     linewidth=3,
     show_leaf_name=False,
-    t_sector_seq=True,
-    t_sector_heatmap=False,
+    t_xcor_seq=True,
+    t_xcor_heatmap=False,
     colormap='GnBu'
     )
 
 # %%
 # Save the figure:
-tree_ete3.render("sector_phylogeny_colors.png", tree_style=tree_style)
+tree_ete3.render("xcor_phylogeny_colors.png", tree_style=tree_style)

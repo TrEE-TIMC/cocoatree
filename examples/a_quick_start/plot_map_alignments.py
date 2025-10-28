@@ -1,11 +1,11 @@
 """
-====================================================
-Mapping original MSA, filtered MSA, PDB, and sectors
-====================================================
+==================================================
+Mapping original MSA, filtered MSA, PDB, and XCoRs
+==================================================
 
 In this example, we showcase how to create a pandas.DataFrame to map the
 original MSA's positions with the PDB positions, PDB named position, the MSA
-filtered positions, and the sectors.
+filtered positions, and the eXtremal Co-evolving Residues (XCoRs).
 """
 
 import numpy as np
@@ -17,7 +17,7 @@ import pandas as pd
 
 # %%
 # Start by loading the dataset and the different relevant information: the
-# MSA, the PDB positions, and the sectors positions.
+# MSA, the PDB positions, and the XCoRs positions.
 
 serine_dataset = load_S1A_serine_proteases(paper="rivoire")
 seq_id = serine_dataset["sequence_ids"]
@@ -25,7 +25,7 @@ sequences = serine_dataset["alignment"]
 n_pos, n_seq = len(sequences[0]), len(sequences)
 
 # Make the sectors the same object type as what our
-# :func:`cocoatree.io.extract_sectors` function returns.
+# :func:`cocoatree.io.extract_xcors` function returns.
 sectors = [
     [str(i) for i in serine_dataset["sector_positions"][key]]
     for key in serine_dataset["sector_positions"].keys()]

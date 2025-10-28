@@ -22,6 +22,10 @@ df_annot = serine_dataset["metadata"]
 print(df_annot)
 
 # %%
+# For more details on the S1A serine proteases dataset, go to
+# :ref:`sphx_glr_auto_examples_d_datasets_plot_s1A_serine_proteases.py`.
+
+# %%
 # To use your own metadata file, import a csv file as a pandas dataframe.
 #
 # The dataframe must have a 'Seq_ID' column, which corresponds to the sequence
@@ -42,9 +46,9 @@ print(tree_ete3)
 # %%
 # Import XCoR sequences
 # ---------------------
-# Load the sequences you wish to visualize with `cocoatree.io.load_msa()` as
-# a fasta file. The sequence names must correspond to `Seq_ID` and to the leaf
-# names in the tree file.
+# Load the sequences you wish to visualize with :func:`cocoatree.io.load_MSA`
+# as a fasta file. The sequence names must correspond to `Seq_ID` and to the
+# leaf names in the tree file.
 xcor_file = 'data/halabi_xcor_1_SCA.fasta'
 data = load_MSA(xcor_file, 'fasta')
 xcor_id = data["sequence_ids"]
@@ -59,10 +63,11 @@ xcor_seq = data["alignment"]
 #   - the tree with its leaf names (corresponding to `Seq_ID`)
 #   - metadata as colored columns, in order: *Protein_type*, *Subphylum*,
 # and *Class*. The default colormap (`jet`), will be used. See
-# **Specifying metadata colors** example on how to modify it.
+# :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_colors.py`
+# example on how to modify it.
 #   - XCoR sequences colored by amino acid physico-chemical properties
 # (`t_xcor_seq=True`)
-#   - a heatmap of pairwise sequence identity computed on the XCoR \
+#   - a heatmap of pairwise sequence identity computed on the XCoR\
 # sequences (`t_xcor_heatmap=True`) using the `GnBu` colormap
 tree_style, _ = update_tree_ete3_and_return_style(
     tree_ete3, df_annot, xcor_id, xcor_seq,
@@ -78,5 +83,5 @@ tree_style, _ = update_tree_ete3_and_return_style(
 tree_ete3.render("xcor_phylogeny.png", tree_style=tree_style)
 
 # %%
-# You can use ete3's `tree.show()` method for displaying the figure in
-# ete3's interactive GUI.
+# You can use ete3's `tree.show()` method for displaying the figure in ete3's
+# interactive GUI.

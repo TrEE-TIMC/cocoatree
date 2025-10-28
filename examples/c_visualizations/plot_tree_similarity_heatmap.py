@@ -34,6 +34,9 @@ print(df_annot)
 # the phylogenetic tree. In this example, we will use the last 3 columns
 # 'Protein_type', 'Subphylum', and 'Class'.
 #
+# For more details on the S1A serine proteases dataset, go to
+# :ref:`sphx_glr_auto_examples_d_datasets_plot_s1A_serine_proteases.py`.
+#
 # We will also use a personnalized colormap defined as follows:
 halabi_cmap = {
     'vertebrate': '#798e87',
@@ -68,9 +71,9 @@ print(tree_ete3)
 # %%
 # Import XCoR sequences
 # ---------------------
-# Load the sequences you wish to visualize with `cocoatree.io.load_msa()` as
-# a fasta file. The sequence names must correspond to `Seq_ID` and to the leaf
-# names in the tree file.
+# Load the sequences you wish to visualize with :func:`cocoatree.io.load_MSA`
+# as a fasta file. The sequence names must correspond to `Seq_ID` and to the
+# leaf names in the tree file.
 xcor_file = 'data/halabi_xcor_1_SCA.fasta'
 data = load_MSA(xcor_file, 'fasta')
 xcor_id = data["sequence_ids"]

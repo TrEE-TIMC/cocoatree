@@ -18,6 +18,9 @@ from cocoatree.visualization import update_tree_ete3_and_return_style
 # can use your own metadata by importing a csv file as a pandas dataframe.
 # Note that your dataframe must have a `Seq_ID` column with identifiers that
 # are identical to the ones in your MSA and in your newick tree.
+#
+# For more details on the S1A serine proteases dataset, go to
+# :ref:`sphx_glr_auto_examples_d_datasets_plot_s1A_serine_proteases.py`.
 serine_dataset = load_S1A_serine_proteases('halabi')
 df_annot = serine_dataset["metadata"]
 print(df_annot)

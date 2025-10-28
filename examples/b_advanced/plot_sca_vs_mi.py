@@ -25,6 +25,9 @@ import numpy as np
 # ----------------
 #
 # We start by importing the dataset.
+#
+# For more details on the S1A serine proteases dataset, go to
+# :ref:`sphx_glr_auto_examples_d_datasets_plot_s1A_serine_proteases.py`.
 
 serine_dataset = load_S1A_serine_proteases()
 seq_id = serine_dataset["sequence_ids"]

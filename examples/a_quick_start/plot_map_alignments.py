@@ -24,6 +24,7 @@ seq_id = serine_dataset["sequence_ids"]
 sequences = serine_dataset["alignment"]
 n_pos, n_seq = len(sequences[0]), len(sequences)
 
+# %%
 # Make the sectors the same object type as what our
 # :func:`cocoatree.io.extract_xcors` function returns.
 sectors = [
@@ -44,7 +45,7 @@ pos_mapping, _ = map_msa_positions(n_pos, pos_kept)
 
 
 # %%
-# Sectors are in the PDB referential. The sequence corresponding to the PDB is
+# XCoRs are in the PDB referential. The sequence corresponding to the PDB is
 # the first of the MSA.
 is_mapped = np.array([s != "-" for s in sequences[0]])
 pdb_mapping = [int(val) if f else None

@@ -16,11 +16,12 @@ import matplotlib.pyplot as plt
 # ----------------
 #
 # We start by importing the dataset. In this case, we can directly load the S1
-# serine protease dataset provided in :mod:`cocoatree`. To work on your on
-# dataset, you can use the :func:`cocoatree.io.load_msa` function.
+# serine protease dataset provided in :mod:`cocoatree`. To work on your own
+# dataset, you can use the :func:`cocoatree.io.load_MSA` function.
 #
-# For more details on the S1A serine proteases dataset, go to
-# :ref:`sphx_glr_auto_examples_d_datasets_plot_s1A_serine_proteases.py`.
+# .. seealso::
+#       For more details on the S1A serine proteases dataset, go to
+#       :ref:`sphx_glr_auto_examples_d_datasets_plot_s1A_serine_proteases.py`.
 
 serine_dataset = c_data.load_S1A_serine_proteases()
 loaded_seqs = serine_dataset["alignment"]
@@ -31,7 +32,10 @@ n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
 # %%
 # Compute the SCA analysis
 # ------------------------
-#
+# The :func:`cocoatree.perform_sca` function performs a SCA analysis with
+# default parameters as defined in Rivoire et al. (2016) and returns a
+# coevolution matrix as well as a dataframe specifying the compositions of
+# the n_components XCoRs.
 
 coevol_matrix, results = cocoatree.perform_sca(
     loaded_seqs_id, loaded_seqs, n_components=3)
@@ -40,9 +44,9 @@ print(results.head())
 # %%
 # Extracting the list of residues (i.e. positions) composing the XCoRs.
 
-print('XCoR_1:', [])
-print('XCoR_2:', [])
-print('XCoR_3:', [])
+print('XCoR_1:', list(results[results["xcor_1"]]["original_msa_pos"]))
+print('XCoR_2:', list(results[results["xcor_2"]]["original_msa_pos"]))
+print('XCoR_3:', list(results[results["xcor_3"]]["original_msa_pos"]))
 
 # %%
 # Visualizing XCoRs on independent components

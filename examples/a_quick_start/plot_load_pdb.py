@@ -24,8 +24,12 @@ from cocoatree.io import load_pdb
 pdb_seq, pdb_pos = load_pdb('data/3TGI.pdb', pdb_id='3TGI', chain='E')
 
 # %%
-# In order to understand the function's arguments, you need to open the PDB
-# in an editor to check the information included within your file:
+# The ``pdb_id`` argument is the ID that will be used for the structure, in
+# this case, we choose `3TGI`, but it could be `TRYPSIN` or any name that the
+# user finds fitting.
+#
+# In order to understand the function's ``chain`` argument, you need to open
+# the PDB in an editor to check the information included within your file:
 
 """HEADER    COMPLEX (SERINE PROTEASE/INHIBITOR)     15-JUL-98   3TGI              
 TITLE     WILD-TYPE RAT ANIONIC TRYPSIN COMPLEXED WITH BOVINE                   
@@ -53,14 +57,11 @@ SOURCE   9 ORGANISM_TAXID: 9913                          """
 #   - rat trypsin
 #   - bovine pancreatic trypsin inhibitor
 #
-# The ``pdb_id`` argument corresponds to the last element in the `HEADER` line,
-# in this case, `3TGI`.
-#
 # It is necessary to specify which molecule you wish to load by using the
 # ``chain`` argument. In this case, it is ``chain='E'`` for trypsin, and
 # ``chain='I'`` for the trypsin inhibitor.
 #
-# For a comparison, here is the first lines of E. coli dihydrofolate
+# For a comparison, here are the first lines of E. coli dihydrofolate
 # reductase's PDB file (which is the one included in cocoatree's
 # :func:`cocoatree.datasets.load_DHFR`):
 

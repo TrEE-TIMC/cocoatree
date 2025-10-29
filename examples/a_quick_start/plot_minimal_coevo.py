@@ -161,4 +161,3 @@ ax.set_xlabel('IC1')
 ax.set_ylabel('IC2')
 
 ax.legend()
-

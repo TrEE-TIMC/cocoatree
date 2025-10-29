@@ -3,7 +3,7 @@
 Perform a minimal coevo analysis
 ================================
 
-This example generates the same result as 
+This example generates the same result as
 :ref:`sphx_glr_auto_examples_a_quick_start_plot_minimal_coevo.py`, but uses
 the :func:`perforn_sca function, which f=ilters sequences and
 returns the coevolution matrix and its associated objects of

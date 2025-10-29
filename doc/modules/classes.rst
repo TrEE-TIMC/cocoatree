@@ -80,6 +80,7 @@ Functions
 
    datasets.load_S1A_serine_proteases
    datasets.load_rhomboid_proteases
+   datasets.load_DHFR
 
 .. _datasets_ref:
 

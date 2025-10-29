@@ -101,7 +101,7 @@ def load_pdb(path2pdb, pdb_id, chain):
     path2pdb : path to the PDB file
 
     pdb_id : str,
-        identifier of the PDB file
+        the id that will be used for the structure
 
     chain : str,
         name of the chain to read

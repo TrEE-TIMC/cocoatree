@@ -35,7 +35,7 @@ n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
 # %%
 # Performing a SCA analysis
 # -------------------------
-SCA_matrix, df = cocoatree.perform_sca(
+SCA_matrix, SCA_matrix_ngm, df = cocoatree.perform_sca(
     loaded_seqs_id, loaded_seqs, n_components=3)
 
 print('The cocoatree.perform_sca returns the following columns:')

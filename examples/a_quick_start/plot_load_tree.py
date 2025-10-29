@@ -9,7 +9,6 @@ using :func:`cocoatree.io.load_tree_ete3` function.
 
 # %%
 from cocoatree.io import load_tree_ete3
-import pandas as pd
 
 # %%
 # Let's start by creating a simplified tree:

@@ -27,10 +27,12 @@ using the SCA approach. This includes:
 
 - generating a SCA co-evolutionary matrix, reduce it, and sort it according
 to XCoRs,
+
 - showing the position composition of XCoRs,
+
 - plotting the XCoRs using the independent component projections.
 
-.. GENERATED FROM PYTHON SOURCE LINES 14-20
+.. GENERATED FROM PYTHON SOURCE LINES 16-22
 
 .. code-block:: Python
 
@@ -47,11 +49,11 @@ to XCoRs,
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 21-22
+.. GENERATED FROM PYTHON SOURCE LINES 23-24
 
 Necessary imports
 
-.. GENERATED FROM PYTHON SOURCE LINES 22-32
+.. GENERATED FROM PYTHON SOURCE LINES 24-34
 
 .. code-block:: Python
 
@@ -72,12 +74,12 @@ Necessary imports
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 33-35
+.. GENERATED FROM PYTHON SOURCE LINES 35-37
 
 Loading the dataset
 -------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 35-40
+.. GENERATED FROM PYTHON SOURCE LINES 37-42
 
 .. code-block:: Python
 
@@ -93,12 +95,12 @@ Loading the dataset
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 41-43
+.. GENERATED FROM PYTHON SOURCE LINES 43-45
 
 Filtering the MSA
 -----------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-46
+.. GENERATED FROM PYTHON SOURCE LINES 45-48
 
 .. code-block:: Python
 
@@ -112,12 +114,12 @@ Filtering the MSA
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 47-49
+.. GENERATED FROM PYTHON SOURCE LINES 49-51
 
 Computing the SCA matrix
 ------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-51
+.. GENERATED FROM PYTHON SOURCE LINES 51-53
 
 .. code-block:: Python
 
@@ -130,12 +132,12 @@ Computing the SCA matrix
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 52-54
+.. GENERATED FROM PYTHON SOURCE LINES 54-56
 
 Plotting the SCA matrix
 -----------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 54-62
+.. GENERATED FROM PYTHON SOURCE LINES 56-64
 
 .. code-block:: Python
 
@@ -161,16 +163,16 @@ Plotting the SCA matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7faff7db7a10>
+    <matplotlib.colorbar.Colorbar object at 0x7f65f476ffd0>
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 63-65
+.. GENERATED FROM PYTHON SOURCE LINES 65-67
 
 Extracting XCoRs
 ----------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 65-72
+.. GENERATED FROM PYTHON SOURCE LINES 67-74
 
 .. code-block:: Python
 
@@ -197,12 +199,12 @@ Extracting XCoRs
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 73-75
+.. GENERATED FROM PYTHON SOURCE LINES 75-77
 
 A plotting function
 -------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 75-118
+.. GENERATED FROM PYTHON SOURCE LINES 77-120
 
 .. code-block:: Python
 
@@ -256,12 +258,12 @@ A plotting function
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 119-121
+.. GENERATED FROM PYTHON SOURCE LINES 121-123
 
 Plotting the SCA matrix according to the XCoRs
 ----------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 121-127
+.. GENERATED FROM PYTHON SOURCE LINES 123-129
 
 .. code-block:: Python
 
@@ -289,12 +291,12 @@ Plotting the SCA matrix according to the XCoRs
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 128-130
+.. GENERATED FROM PYTHON SOURCE LINES 130-132
 
 Removing a global mode (ngm = no global mode),
 i.e., setting largest eigeinvalue to zero
 
-.. GENERATED FROM PYTHON SOURCE LINES 130-132
+.. GENERATED FROM PYTHON SOURCE LINES 132-134
 
 .. code-block:: Python
 
@@ -307,12 +309,12 @@ i.e., setting largest eigeinvalue to zero
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 133-135
+.. GENERATED FROM PYTHON SOURCE LINES 135-137
 
 Plotting the SCA matrix without global mode according to the XCoRs
 ------------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 135-139
+.. GENERATED FROM PYTHON SOURCE LINES 137-141
 
 .. code-block:: Python
 
@@ -338,12 +340,12 @@ Plotting the SCA matrix without global mode according to the XCoRs
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 140-142
+.. GENERATED FROM PYTHON SOURCE LINES 142-144
 
 Adapting the coevolution scale
 ------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 142-147
+.. GENERATED FROM PYTHON SOURCE LINES 144-149
 
 .. code-block:: Python
 
@@ -370,12 +372,12 @@ Adapting the coevolution scale
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 148-150
+.. GENERATED FROM PYTHON SOURCE LINES 150-152
 
 Visualizing XCoRs on independent components
 -------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 150-169
+.. GENERATED FROM PYTHON SOURCE LINES 152-171
 
 .. code-block:: Python
 
@@ -412,14 +414,14 @@ Visualizing XCoRs on independent components
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7faff793b1d0>
+    <matplotlib.legend.Legend object at 0x7f65f41f21d0>
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.816 seconds)
+   **Total running time of the script:** (0 minutes 2.810 seconds)
 
 
 .. _sphx_glr_download_auto_examples_a_quick_start_plot_01_minimal_coevo.py:

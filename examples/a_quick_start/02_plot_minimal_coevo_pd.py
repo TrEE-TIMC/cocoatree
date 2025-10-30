@@ -1,15 +1,13 @@
 """
-================================
-Perform a minimal coevo analysis
-================================
+============================================================
+A minimal coevo analysis using :func:`cocoatree.perform_sca`
+============================================================
 
-This example shows how to perform a minimal co-evolutionary analysis
-using the SCA approach. This includes:
-
-- generating a SCA co-evolutionary matrix, reduce it, and sort it according
-to XCoRs,
-- showing the position composition of XCoRs,
-- plotting the XCoRs using the independent component projections.
+This example generates the same result as
+:ref:`sphx_glr_auto_examples_a_quick_start_01_plot_minimal_coevo.py`, but uses
+the :func:`cocoatree.perform_sca` function, which filters sequences and
+returns the coevolution matrix and its associated objects of
+interest (PCs, ICs, XCoRs) in Pandas format.
 """
 
 # Author: Margaux Jullien <margaux.jullien@univ-grenoble-alpes.fr>
@@ -22,12 +20,9 @@ to XCoRs,
 import numpy as np
 import matplotlib.pyplot as plt
 
-
+import cocoatree
 import cocoatree.datasets as c_data
-import cocoatree.msa as c_msa
 import cocoatree.deconvolution as c_deconv
-
-from cocoatree.statistics.pairwise import compute_sca_matrix
 
 # %%
 # Loading the dataset
@@ -38,15 +33,13 @@ loaded_seqs_id = serine_dataset["sequence_ids"]
 n_loaded_pos, n_loaded_seqs = len(loaded_seqs[0]), len(loaded_seqs)
 
 # %%
-# Filtering the MSA
-# -----------------
-seq_kept, seq_id_kept, pos_kept = c_msa.filter_sequences(loaded_seqs,
-                                                         loaded_seqs_id)
+# Performing a SCA analysis
+# -------------------------
+SCA_matrix, SCA_matrix_ngm, df = cocoatree.perform_sca(
+    loaded_seqs_id, loaded_seqs, n_components=3)
 
-# %%
-# Computing the SCA matrix
-# ------------------------
-SCA_matrix = compute_sca_matrix(seq_kept)
+print('The cocoatree.perform_sca returns the following columns:')
+print(df.columns.values)
 
 # %%
 # Plotting the SCA matrix
@@ -63,11 +56,19 @@ fig.colorbar(im, shrink=0.7)
 # Extracting XCoRs
 # ----------------
 n_xcors = 3
-xcors = c_deconv.extract_xcors(SCA_matrix, n_xcors=n_xcors)
+xcors = []
+for ixcor in range(1, n_xcors+1):
+    print('XCoR_%d:' % ixcor, end=' ')
+    # extacting the unsorted xcor
+    xcor = df.loc[df['xcor_%d' % ixcor]]['filtered_msa_pos'].values
 
-print('XCoR positions on (filtered) sequences:')
-for ixcor, xcor in enumerate(xcors):
-    print('XCoR_%d: %s' % (ixcor+1, xcor))
+    # sorting xcor according to its ICA value (from largest to smallest)
+    xcor = sorted(xcor, key=lambda x:
+                  -float(df.loc[df['filtered_msa_pos'] == x]
+                         ['IC%d' % ixcor].iloc[0]))
+
+    xcors.append(xcor)
+    print(xcors[-1])
 
 # %%
 # A plotting function returning a reduced coevo matrix, keeping
@@ -143,19 +144,16 @@ ax.set_xlabel('XCoR\'s positions', fontsize=10)
 # Visualizing XCoRs on independent components
 # -------------------------------------------
 
-# extracting independent components
-ICs = c_deconv.extract_independent_components(SCA_matrix,
-                                              n_components=n_xcors)
-
 # plotting IC_1 values versus IC_2 values
 fig, ax = plt.subplots()
-ax.plot(ICs[0], ICs[1], '.k')
+ax.plot(df.loc[:, 'IC1'], df.loc[:, 'IC2'], '.k')
 
 # highlighting XCoR-associated values using a color code
 # red: XCoR_1, green: XCoR_2, blue: XCoR_3
-for ixcor, color in zip([0, 1, 2], ['r', 'g', 'b']):
-    ax.plot(ICs[0][xcors[ixcor]], ICs[1][xcors[ixcor]],
-            '.', c=color, label='XCoR_%d' % (ixcor+1))
+for xcor, color in zip([1, 2, 3], ['r', 'g', 'b']):
+    ax.plot(df.loc[df['xcor_%d' % xcor], 'IC1'],
+            df.loc[df['xcor_%d' % xcor], 'IC2'],
+            '.', c=color, label='XCoR_%d' % xcor)
 
 ax.set_xlabel('IC1')
 ax.set_ylabel('IC2')

@@ -39,6 +39,12 @@ filtered positions, and the eXtremal Co-evolving Residues (XCoRs).
 
 
 
+
+
+
+
+
+
 .. GENERATED FROM PYTHON SOURCE LINES 19-21
 
 Start by loading the dataset and the different relevant information: the
@@ -53,6 +59,12 @@ MSA, the PDB positions, and the XCoRs positions.
     seq_id = serine_dataset["sequence_ids"]
     sequences = serine_dataset["alignment"]
     n_pos, n_seq = len(sequences[0]), len(sequences)
+
+
+
+
+
+
 
 
 .. GENERATED FROM PYTHON SOURCE LINES 28-30
@@ -73,6 +85,12 @@ Make the sectors the same object type as what our
 
 
 
+
+
+
+
+
+
 .. GENERATED FROM PYTHON SOURCE LINES 39-44
 
 Now, we are going to map all of these onto the same referential: the
@@ -86,6 +104,12 @@ filtered MSA
 .. code-block:: Python
 
     pos_mapping, _ = map_msa_positions(n_pos, pos_kept)
+
+
+
+
+
+
 
 
 
@@ -117,6 +141,12 @@ the first of the MSA.
     mapping["sector_3"] = np.isin(mapping["pdb_named_pos"], sectors[2])
 
 
+
+
+
+
+
+
 .. GENERATED FROM PYTHON SOURCE LINES 69-70
 
 Now print the indices of sectors 1 in the different referentials
@@ -127,6 +157,30 @@ Now print the indices of sectors 1 in the different referentials
 
 
     print(mapping.loc[mapping["sector_1"]].head())
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ .. code-block:: none
+
+         original_msa_pos  pdb_pos pdb_named_pos  ...  sector_1  sector_2  sector_3
+    130               130      0.0            16  ...      True     False     False
+    133               133      3.0            19  ...      True     False     False
+    214               214     12.0            28  ...      True     False     False
+    246               246     24.0            42  ...      True     False     False
+    247               247     25.0            43  ...      True     False     False
+
+    [5 rows x 7 columns]
+
+
+
+
+
+.. rst-class:: sphx-glr-timing
+
+   **Total running time of the script:** (0 minutes 0.461 seconds)
 
 
 .. _sphx_glr_download_auto_examples_a_quick_start_03_plot_map_alignments.py:

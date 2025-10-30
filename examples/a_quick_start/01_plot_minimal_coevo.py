@@ -109,7 +109,7 @@ def plot_coevo_according2xcors(coevo_matrix, xcors=[], vmin=0, vmax=1e6):
     ax.set_yticks(ticks)
     ax.set_yticklabels(['XCoR_%d' % ix for ix in range(1, len(xcors)+1)],
                        rotation=90, va='center')
-    
+
     return fig, ax
 
 # %%

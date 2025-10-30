@@ -40,10 +40,10 @@ analyses using :mod:`cocoatree`
 
 .. only:: html
 
-  .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_03_plot_map_alignments_thumb.png
+  .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_plot_03_map_alignments_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_a_quick_start_03_plot_map_alignments.py`
+  :ref:`sphx_glr_auto_examples_a_quick_start_plot_03_map_alignments.py`
 
 .. raw:: html
 
@@ -113,7 +113,7 @@ analyses using :mod:`cocoatree`
    :hidden:
 
    /auto_examples/a_quick_start/04_plot_load_tree
-   /auto_examples/a_quick_start/03_plot_map_alignments
+   /auto_examples/a_quick_start/plot_03_map_alignments
    /auto_examples/a_quick_start/05_plot_load_pdb
    /auto_examples/a_quick_start/plot_01_minimal_coevo
    /auto_examples/a_quick_start/plot_02_minimal_coevo_pd

@@ -62,10 +62,10 @@ analyses using :mod:`cocoatree`
 
 .. only:: html
 
-  .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_03_plot_map_alignments_thumb.png
+  .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_plot_03_map_alignments_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_a_quick_start_03_plot_map_alignments.py`
+  :ref:`sphx_glr_auto_examples_a_quick_start_plot_03_map_alignments.py`
 
 .. raw:: html
 

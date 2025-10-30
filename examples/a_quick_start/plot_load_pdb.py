@@ -6,6 +6,10 @@ Load a PDB structure file
 
 This small example shows how to use :func:`cocoatree.io.load_pdb` to import
 your own PDB structure file.
+
+This function allows you to extract the amino acid sequence associated with the
+PDB file, as well as the residue numbering, which is necessary to specify the
+residues to highlight in PyMOL for example.
 """
 
 # %%
@@ -80,7 +84,7 @@ SOURCE   3 ORGANISM_TAXID: 364106;
 SOURCE   4 STRAIN: UTI89 / UPEC;                                                
 SOURCE   5 GENE: FOLA, UTI89_C0054;                                             
 SOURCE   6 EXPRESSION_SYSTEM: ESCHERICHIA COLI;                                 
-SOURCE   7 EXPRESSION_SYSTEM_TAXID: 562                                         """
+SOURCE   7 EXPRESSION_SYSTEM_TAXID: 562                                    """
 
 # %%
 # In this case, there is only one molecule, which is specified by

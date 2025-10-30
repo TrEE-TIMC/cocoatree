@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:13.898** total execution time for 4 files **from auto_examples/c_visualizations**:
+**00:14.022** total execution time for 4 files **from auto_examples/c_visualizations**:
 
 .. container::
 
@@ -33,14 +33,14 @@ Computation times
      - Time
      - Mem (MB)
    * - :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_similarity_heatmap.py` (``plot_tree_similarity_heatmap.py``)
-     - 00:07.333
+     - 00:07.407
      - 0.0
    * - :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_xcor_seq_and_coevol.py` (``plot_tree_metadata_xcor_seq_and_coevol.py``)
-     - 00:03.401
+     - 00:03.450
      - 0.0
    * - :ref:`sphx_glr_auto_examples_c_visualizations_plot_simple_tree.py` (``plot_simple_tree.py``)
-     - 00:01.587
+     - 00:01.607
      - 0.0
    * - :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_colors.py` (``plot_tree_metadata_colors.py``)
-     - 00:01.577
+     - 00:01.558
      - 0.0

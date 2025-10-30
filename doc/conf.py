@@ -88,6 +88,8 @@ html_static_path = []
 # Sphinx-gallery options
 from sphinx_gallery.sorting import ExplicitOrder, FileNameSortKey
 examples_dirs = ['../examples']
+filename_pattern = r'(\d+_)?plot_'
+within_subsection_order = FileNameSortKey
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/{.major}'.format(sys.version_info), None),
@@ -97,7 +99,6 @@ intersphinx_mapping = {
 }   
 
 sphinx_gallery_conf = {
-    'filename_pattern': r'(\d+_)?plot_',
     'image_scrapers': ("matplotlib", "cocoatree._scraper.png_scraper"),
     'backreferences_dir': "generated/backreferences",
     'doc_module': ("cocoatree", ),

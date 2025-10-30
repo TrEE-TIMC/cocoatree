@@ -76,7 +76,7 @@ for ixcor, xcor in enumerate(xcors):
 
 def plot_coevo_according2xcors(coevo_matrix, xcors=[], vmin=0, vmax=1e6):
     """ A plotting function returning a reduced coevo matrix, keeping
-    only XCoRs and sorting the residues according to them    
+    only XCoRs and sorting the residues according to them
     """
 
     fig, ax = plt.subplots(tight_layout=True)

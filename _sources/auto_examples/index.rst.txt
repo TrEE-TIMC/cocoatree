@@ -45,10 +45,10 @@ analyses using :mod:`cocoatree`
 
 .. only:: html
 
-  .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_04_plot_load_tree_thumb.png
+  .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_plot_04_load_tree_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_a_quick_start_04_plot_load_tree.py`
+  :ref:`sphx_glr_auto_examples_a_quick_start_plot_04_load_tree.py`
 
 .. raw:: html
 

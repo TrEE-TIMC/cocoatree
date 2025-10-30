@@ -42,28 +42,37 @@
             
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p><a class="reference internal" href="#sphx-glr-download-auto-examples-a-quick-start-04-plot-load-tree-py"><span class="std std-ref">Go to the end</span></a>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-a-quick-start-plot-04-load-tree-py"><span class="std std-ref">Go to the end</span></a>
 to download the full example code. or to run this example in your browser via Binder</p>
 </div>
 <section class="sphx-glr-example-title" id="load-a-tree-file">
-<span id="sphx-glr-auto-examples-a-quick-start-04-plot-load-tree-py"></span><h1>Load a tree file<a class="headerlink" href="#load-a-tree-file" title="Link to this heading">¶</a></h1>
+<span id="sphx-glr-auto-examples-a-quick-start-plot-04-load-tree-py"></span><h1>Load a tree file<a class="headerlink" href="#load-a-tree-file" title="Link to this heading">¶</a></h1>
 <p>This is a small example expliciting how to load a tree file in <a class="reference internal" href="../../modules/classes.html#module-cocoatree" title="cocoatree"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree</span></code></a>
 using <a class="reference internal" href="../../modules/generated/cocoatree.io.load_tree_ete3.html#cocoatree.io.load_tree_ete3" title="cocoatree.io.load_tree_ete3"><code class="xref py py-func docutils literal notranslate"><span class="pre">cocoatree.io.load_tree_ete3()</span></code></a> function.</p>
 <div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">cocoatree.io</span><span class="w"> </span><span class="kn">import</span> <a href="../../modules/generated/cocoatree.io.load_tree_ete3.html#cocoatree.io.load_tree_ete3" title="cocoatree.io.load_tree_ete3" class="sphx-glr-backref-module-cocoatree-io sphx-glr-backref-type-py-function"><span class="n">load_tree_ete3</span></a>
 </pre></div>
 </div>
 <p>Let’s start by creating a simplified tree:</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">simple_tree</span> <span class="o">=</span> <span class="s2">&quot;(A:1,(B:1,(C:1,D:1):0.5):0.5);&quot;</span>
-<span class="n">t</span> <span class="o">=</span> <a href="../../modules/generated/cocoatree.io.load_tree_ete3.html#cocoatree.io.load_tree_ete3" title="cocoatree.io.load_tree_ete3" class="sphx-glr-backref-module-cocoatree-io sphx-glr-backref-type-py-function"><span class="n">load_tree_ete3</span></a><span class="p">(</span><span class="n">simple_tree</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">simple_tree</span></a> <span class="o">=</span> <span class="s2">&quot;(A:1,(B:1,(C:1,D:1):0.5):0.5);&quot;</span>
+<span class="n">t</span> <span class="o">=</span> <a href="../../modules/generated/cocoatree.io.load_tree_ete3.html#cocoatree.io.load_tree_ete3" title="cocoatree.io.load_tree_ete3" class="sphx-glr-backref-module-cocoatree-io sphx-glr-backref-type-py-function"><span class="n">load_tree_ete3</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">simple_tree</span></a><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>   /-A
+--|
+  |   /-B
+   \-|
+     |   /-C
+      \-|
+         \-D
 </pre></div>
 </div>
 <p>Here, we have a tree with distances and leaf names. The distances are
 specified after the <code class="docutils literal notranslate"><span class="pre">:</span></code> character and the leaf names are A, B, C, and D.</p>
 <p><a class="reference internal" href="../../modules/generated/cocoatree.io.load_tree_ete3.html#cocoatree.io.load_tree_ete3" title="cocoatree.io.load_tree_ete3"><code class="xref py py-func docutils literal notranslate"><span class="pre">cocoatree.io.load_tree_ete3()</span></code></a> also accepts trees with more information
 such as branch support values encoded as follow:</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">bootstrap_tree</span> <span class="o">=</span> <span class="s2">&quot;(A:1,(B:1,(C:1,D:1)95:0.5)98:0.5);&quot;</span>
-<span class="n">t_boot</span> <span class="o">=</span> <a href="../../modules/generated/cocoatree.io.load_tree_ete3.html#cocoatree.io.load_tree_ete3" title="cocoatree.io.load_tree_ete3" class="sphx-glr-backref-module-cocoatree-io sphx-glr-backref-type-py-function"><span class="n">load_tree_ete3</span></a><span class="p">(</span><span class="n">bootstrap_tree</span><span class="p">)</span>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bootstrap_tree</span></a> <span class="o">=</span> <span class="s2">&quot;(A:1,(B:1,(C:1,D:1)95:0.5)98:0.5);&quot;</span>
+<span class="n">t_boot</span> <span class="o">=</span> <a href="../../modules/generated/cocoatree.io.load_tree_ete3.html#cocoatree.io.load_tree_ete3" title="cocoatree.io.load_tree_ete3" class="sphx-glr-backref-module-cocoatree-io sphx-glr-backref-type-py-function"><span class="n">load_tree_ete3</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bootstrap_tree</span></a><span class="p">)</span>
 </pre></div>
 </div>
 <p>The branch support values are placed following their corresponding closing
@@ -81,19 +90,20 @@ are not accepted.</p>
 a simple tree visualization or <a class="reference internal" href="../c_visualizations/plot_tree_metadata_xcor_seq_and_coevol.html#sphx-glr-auto-examples-c-visualizations-plot-tree-metadata-xcor-seq-and-coevol-py"><span class="std std-ref">Plot XCoR together with (phylogenetic) tree and metadata</span></a> for a more
 complete visualization.</p>
 </div>
-<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-a-quick-start-04-plot-load-tree-py">
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> (0 minutes 0.004 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-a-quick-start-plot-04-load-tree-py">
 <div class="binder-badge docutils container">
-<a class="reference external image-reference" href="https://mybinder.org/v2/gh/tree-timc/cocoatree/gh-pages?urlpath=lab/tree/notebooks/auto_examples/a_quick_start/04_plot_load_tree.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" style="width: 150px;" />
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/tree-timc/cocoatree/gh-pages?urlpath=lab/tree/notebooks/auto_examples/a_quick_start/plot_04_load_tree.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" style="width: 150px;" />
 </a>
 </div>
 <div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/63b3b0deee94fa7d83d3eb95ee365cee/04_plot_load_tree.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">04_plot_load_tree.ipynb</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/c7f6ea098fd48b0059061d2028769f41/plot_04_load_tree.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_04_load_tree.ipynb</span></code></a></p>
 </div>
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/2e71dc0627318e2d274ca72b7cb659c5/04_plot_load_tree.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">04_plot_load_tree.py</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/11c7e96945e7e35f0de4bdc518ce748c/plot_04_load_tree.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_04_load_tree.py</span></code></a></p>
 </div>
 <div class="sphx-glr-download sphx-glr-download-zip docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/553faac657ca763c385d586ebca632ae/04_plot_load_tree.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">04_plot_load_tree.zip</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/6fabab347783d3246181378353fe1091/plot_04_load_tree.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">plot_04_load_tree.zip</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>

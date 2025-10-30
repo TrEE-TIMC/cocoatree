@@ -109,6 +109,23 @@ analyses using :mod:`cocoatree`
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how to perform a minimal co-evolutionary analysis using the SCA approach. This includes:">
+
+.. only:: html
+
+  .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_plot_minimal_coevo_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_a_quick_start_plot_minimal_coevo.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">A minimal coevo analysis</div>
+    </div>
+
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="This example generates the same result as sphx_glr_auto_examples_a_quick_start_01_plot_minimal_coevo.py, but uses the cocoatree.perform_sca function, which filters sequences and returns the coevolution matrix and its associated objects of interest (PCs, ICs, XCoRs) in Pandas format.">
 
 .. only:: html

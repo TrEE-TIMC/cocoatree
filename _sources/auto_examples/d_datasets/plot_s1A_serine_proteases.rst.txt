@@ -300,21 +300,22 @@ There are three sectors that have been identified in Halabi et al. (2008)
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 99-104
+.. GENERATED FROM PYTHON SOURCE LINES 99-105
 
 To see an example on how to use this dataset for a coevolution analysis, go
-to: :ref:`sphx_glr_auto_examples_plot_full_SCA_analysis.py`
+to: :ref:`sphx_glr_auto_examples_b_advanced_plot_full_SCA_analysis.py`
 
 For an example on how to visualize cocoatree's results with this dataset, go
-to : :ref:`sphx_glr_auto_examples_plot_sector_along_tree_and_metadata.py`
+to :
+:ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_xcor_seq_and_coevol.py`
 
-.. GENERATED FROM PYTHON SOURCE LINES 107-110
+.. GENERATED FROM PYTHON SOURCE LINES 108-111
 
 Rivoire dataset
 ---------------
 Similarly, you can access the dataset from Rivoire et al. (2016) paper:
 
-.. GENERATED FROM PYTHON SOURCE LINES 110-121
+.. GENERATED FROM PYTHON SOURCE LINES 111-122
 
 .. code-block:: Python
 
@@ -344,12 +345,12 @@ Similarly, you can access the dataset from Rivoire et al. (2016) paper:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 122-124
+.. GENERATED FROM PYTHON SOURCE LINES 123-125
 
 The dataset is organized in the same way as Halabi's, although in this case
 there are 6 sectors:
 
-.. GENERATED FROM PYTHON SOURCE LINES 124-131
+.. GENERATED FROM PYTHON SOURCE LINES 125-132
 
 .. code-block:: Python
 
@@ -379,7 +380,7 @@ there are 6 sectors:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 132-141
+.. GENERATED FROM PYTHON SOURCE LINES 133-142
 
 References
 ----------
@@ -394,7 +395,7 @@ References
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.936 seconds)
+   **Total running time of the script:** (0 minutes 0.919 seconds)
 
 
 .. _sphx_glr_download_auto_examples_d_datasets_plot_s1A_serine_proteases.py:

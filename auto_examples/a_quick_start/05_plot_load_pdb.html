@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Load a PDB structure file &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="../../_static/documentation_options.js?v=837179f8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  </head><body><div class="navbar related">
+      <a href="../../index.html">
+        
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="../index.html">Gallery</a> </li>
+      <li class="right"><a href="../../modules/classes.html">API</a> | </li>
+      <li class="right"><a href="../../install.html">Installation</a> | </li>
+      <li class="right"><a href="../../index.html">Home</a> | </li>
+      
+    </ul>
+  </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p><a class="reference internal" href="#sphx-glr-download-auto-examples-a-quick-start-05-plot-load-pdb-py"><span class="std std-ref">Go to the end</span></a>
+to download the full example code. or to run this example in your browser via Binder</p>
+</div>
+<section class="sphx-glr-example-title" id="load-a-pdb-structure-file">
+<span id="sphx-glr-auto-examples-a-quick-start-05-plot-load-pdb-py"></span><h1>Load a PDB structure file<a class="headerlink" href="#load-a-pdb-structure-file" title="Link to this heading">¶</a></h1>
+<p>This small example shows how to use <a class="reference internal" href="../../modules/generated/cocoatree.io.load_pdb.html#cocoatree.io.load_pdb" title="cocoatree.io.load_pdb"><code class="xref py py-func docutils literal notranslate"><span class="pre">cocoatree.io.load_pdb()</span></code></a> to import
+your own PDB structure file.</p>
+<p>This function allows you to extract the amino acid sequence associated with the
+PDB file, as well as the residue numbering, which is necessary to specify the
+residues to highlight in PyMOL for example.</p>
+<p>Import necessary packages</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">cocoatree.io</span><span class="w"> </span><span class="kn">import</span> <a href="../../modules/generated/cocoatree.io.load_pdb.html#cocoatree.io.load_pdb" title="cocoatree.io.load_pdb" class="sphx-glr-backref-module-cocoatree-io sphx-glr-backref-type-py-function"><span class="n">load_pdb</span></a>
+
+<span class="c1"># Provide path for thumbnail image</span>
+<span class="c1"># sphinx_gallery_thumbnail_path = &#39;../../doc/images/3TGI.png&#39;</span>
+</pre></div>
+</div>
+<p>We will use the PDB structure of rat trypsin as an example. The file can be
+downloaded at: <a class="reference external" href="https://www.rcsb.org/structure/3TGI">https://www.rcsb.org/structure/3TGI</a>. It is also the structure
+that is included in <a class="reference internal" href="../../modules/generated/cocoatree.datasets.load_S1A_serine_proteases.html#cocoatree.datasets.load_S1A_serine_proteases" title="cocoatree.datasets.load_S1A_serine_proteases"><code class="xref py py-func docutils literal notranslate"><span class="pre">cocoatree.datasets.load_S1A_serine_proteases()</span></code></a>.</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="n">pdb_seq</span><span class="p">,</span> <span class="n">pdb_pos</span> <span class="o">=</span> <a href="../../modules/generated/cocoatree.io.load_pdb.html#cocoatree.io.load_pdb" title="cocoatree.io.load_pdb" class="sphx-glr-backref-module-cocoatree-io sphx-glr-backref-type-py-function"><span class="n">load_pdb</span></a><span class="p">(</span><span class="s1">&#39;data/3TGI.pdb&#39;</span><span class="p">,</span> <span class="n">pdb_id</span><span class="o">=</span><span class="s1">&#39;3TGI&#39;</span><span class="p">,</span> <span class="n">chain</span><span class="o">=</span><span class="s1">&#39;E&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">pdb_id</span></code> argument is the ID that will be used for the structure, in
+this case, we choose <cite>3TGI</cite>, but it could be <cite>TRYPSIN</cite> or any name that the
+user finds fitting.</p>
+<p>In order to understand the function’s <code class="docutils literal notranslate"><span class="pre">chain</span></code> argument, you need to open
+the PDB in an editor to check the information included within your file:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;HEADER    COMPLEX (SERINE PROTEASE/INHIBITOR)     15-JUL-98   3TGI</span>
+<span class="sd">TITLE     WILD-TYPE RAT ANIONIC TRYPSIN COMPLEXED WITH BOVINE</span>
+<span class="sd">TITLE    2 PANCREATIC TRYPSIN INHIBITOR (BPTI)</span>
+<span class="sd">COMPND    MOL_ID: 1;</span>
+<span class="sd">COMPND   2 MOLECULE: TRYPSIN;</span>
+<span class="sd">COMPND   3 CHAIN: E;</span>
+<span class="sd">COMPND   4 EC: 3.4.21.4;</span>
+<span class="sd">COMPND   5 MOL_ID: 2;</span>
+<span class="sd">COMPND   6 MOLECULE: BOVINE PANCREATIC TRYPSIN INHIBITOR;</span>
+<span class="sd">COMPND   7 CHAIN: I;</span>
+<span class="sd">COMPND   8 SYNONYM: BPTI</span>
+<span class="sd">SOURCE    MOL_ID: 1;</span>
+<span class="sd">SOURCE   2 ORGANISM_SCIENTIFIC: RATTUS NORVEGICUS;</span>
+<span class="sd">SOURCE   3 ORGANISM_COMMON: NORWAY RAT;</span>
+<span class="sd">SOURCE   4 ORGANISM_TAXID: 10116;</span>
+<span class="sd">SOURCE   5 ORGAN: PANCREATIC;</span>
+<span class="sd">SOURCE   6 MOL_ID: 2;</span>
+<span class="sd">SOURCE   7 ORGANISM_SCIENTIFIC: BOS TAURUS;</span>
+<span class="sd">SOURCE   8 ORGANISM_COMMON: CATTLE;</span>
+<span class="sd">SOURCE   9 ORGANISM_TAXID: 9913&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>As you can see, there are actually two molecules in the PDB:</dt><dd><ul class="simple">
+<li><p>rat trypsin</p></li>
+<li><p>bovine pancreatic trypsin inhibitor</p></li>
+</ul>
+</dd>
+</dl>
+<p>It is necessary to specify which molecule you wish to load by using the
+<code class="docutils literal notranslate"><span class="pre">chain</span></code> argument. In this case, it is <code class="docutils literal notranslate"><span class="pre">chain='E'</span></code> for trypsin, and
+<code class="docutils literal notranslate"><span class="pre">chain='I'</span></code> for the trypsin inhibitor.</p>
+<p>For a comparison, here are the first lines of E. coli dihydrofolate
+reductase’s PDB file (which is the one included in cocoatree’s
+<a class="reference internal" href="../../modules/generated/cocoatree.datasets.load_DHFR.html#cocoatree.datasets.load_DHFR" title="cocoatree.datasets.load_DHFR"><code class="xref py py-func docutils literal notranslate"><span class="pre">cocoatree.datasets.load_DHFR()</span></code></a>):</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;HEADER    OXIDOREDUCTASE                          02-FEB-11   3QL0</span>
+<span class="sd">TITLE     CRYSTAL STRUCTURE OF N23PP/S148A MUTANT OF E. COLI DIHYDROFOLATE</span>
+<span class="sd">TITLE    2 REDUCTASE</span>
+<span class="sd">COMPND    MOL_ID: 1;</span>
+<span class="sd">COMPND   2 MOLECULE: DIHYDROFOLATE REDUCTASE;</span>
+<span class="sd">COMPND   3 CHAIN: A;</span>
+<span class="sd">COMPND   4 EC: 1.5.1.3;</span>
+<span class="sd">COMPND   5 ENGINEERED: YES;</span>
+<span class="sd">COMPND   6 MUTATION: YES</span>
+<span class="sd">SOURCE    MOL_ID: 1;</span>
+<span class="sd">SOURCE   2 ORGANISM_SCIENTIFIC: ESCHERICHIA COLI;</span>
+<span class="sd">SOURCE   3 ORGANISM_TAXID: 364106;</span>
+<span class="sd">SOURCE   4 STRAIN: UTI89 / UPEC;</span>
+<span class="sd">SOURCE   5 GENE: FOLA, UTI89_C0054;</span>
+<span class="sd">SOURCE   6 EXPRESSION_SYSTEM: ESCHERICHIA COLI;</span>
+<span class="sd">SOURCE   7 EXPRESSION_SYSTEM_TAXID: 562&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<p>In this case, there is only one molecule, which is accessed by specifying
+<code class="docutils literal notranslate"><span class="pre">chain='A'</span></code>.</p>
+<p>You can now access the pdb sequence and the residue numbering:</p>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">pdb_seq</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pdb_pos</span><span class="p">)</span>
+
+<span class="c1"># ..seealso::</span>
+<span class="c1">#       :ref:`sphx_glr_auto_examples_a_quick_start_03_plot_map_alignments.py`</span>
+<span class="c1">#       to see how to perform a mapping of the positions between your MSA and</span>
+<span class="c1">#       the PDB structure.</span>
+</pre></div>
+</div>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-a-quick-start-05-plot-load-pdb-py">
+<div class="binder-badge docutils container">
+<a class="reference external image-reference" href="https://mybinder.org/v2/gh/tree-timc/cocoatree/gh-pages?urlpath=lab/tree/notebooks/auto_examples/a_quick_start/05_plot_load_pdb.ipynb"><img alt="Launch binder" src="../../_images/binder_badge_logo.svg" style="width: 150px;" />
+</a>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/7ad37c668bc10f0fb6a8cec7c3db5481/05_plot_load_pdb.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">05_plot_load_pdb.ipynb</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/4be840da634eb9b1be6d52f0bf04ee0e/05_plot_load_pdb.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">05_plot_load_pdb.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-zip docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/631305ba5827f6016e614a3f71559e11/05_plot_load_pdb.zip"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">zipped:</span> <span class="pre">05_plot_load_pdb.zip</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

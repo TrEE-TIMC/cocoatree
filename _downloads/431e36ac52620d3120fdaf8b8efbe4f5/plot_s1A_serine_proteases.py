@@ -97,10 +97,11 @@ print("The first sector identified in Halabi et al. is composed of the \
 
 # %%
 # To see an example on how to use this dataset for a coevolution analysis, go
-# to: :ref:`sphx_glr_auto_examples_plot_full_SCA_analysis.py`
+# to: :ref:`sphx_glr_auto_examples_b_advanced_plot_full_SCA_analysis.py`
 #
 # For an example on how to visualize cocoatree's results with this dataset, go
-# to : :ref:`sphx_glr_auto_examples_plot_sector_along_tree_and_metadata.py`
+# to :
+# :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_xcor_seq_and_coevol.py`
 
 
 # %%

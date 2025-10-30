@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>cocoatree.datasets.load_DHFR &#8212; cocoatree 0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=2296cfae" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <script src="../../_static/documentation_options.js?v=837179f8"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Lora:400' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  </head><body><div class="navbar related">
+      <a href="../../index.html">
+        
+      </a>
+    <ul class="nav nav-pills nav-stacked">
+      <li class="right"><a href="../../auto_examples/index.html">Gallery</a> </li>
+      <li class="right"><a href="../classes.html">API</a> | </li>
+      <li class="right"><a href="../../install.html">Installation</a> | </li>
+      <li class="right"><a href="../../index.html">Home</a> | </li>
+      
+    </ul>
+  </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="cocoatree-datasets-load-dhfr">
+<h1>cocoatree.datasets.load_DHFR<a class="headerlink" href="#cocoatree-datasets-load-dhfr" title="Link to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="cocoatree.datasets.load_DHFR">
+<span class="sig-prename descclassname"><span class="pre">cocoatree.datasets.</span></span><span class="sig-name descname"><span class="pre">load_DHFR</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/cocoatree/datasets/_base.html#load_DHFR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#cocoatree.datasets.load_DHFR" title="Link to this definition">¶</a></dt>
+<dd><p>load the DHFR dataset</p>
+<p>This dataset comes from Kalmer et al, The Journal of Physical Chemistry B,
+2024 (<a class="reference external" href="https://pubs.acs.org/doi/10.1021/acs.jpcb.4c04195">https://pubs.acs.org/doi/10.1021/acs.jpcb.4c04195</a>)</p>
+<section id="returns">
+<h2>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h2>
+<dl>
+<dt>a dictionnary containing :</dt><dd><ul class="simple">
+<li><p><cite>sequence_ids</cite>: a list of strings corresponding to sequence names</p></li>
+<li><p><cite>alignment</cite>: a list of strings corresponding to sequences. Because it
+is an MSA, all the strings are of same length.</p></li>
+</ul>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>sector_positions</cite>: a dictionnary of arrays containing the residue</p></li>
+</ul>
+<blockquote>
+<div><p>positions associated to each sector as published in the original
+paper.</p>
+</div></blockquote>
+</div></blockquote>
+<ul class="simple">
+<li><p><cite>pdb_sequence</cite>: sequence extracted from E. coli’s PDB structure</p></li>
+<li><p><cite>pdb_positions</cite>: positions extracted from E. coli’s PDB structure</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<section id="examples-using-cocoatree-datasets-load-dhfr">
+<h2>Examples using <code class="docutils literal notranslate"><span class="pre">cocoatree.datasets.load_DHFR</span></code><a class="headerlink" href="#examples-using-cocoatree-datasets-load-dhfr" title="Link to this heading">¶</a></h2>
+<div class="sphx-glr-thumbnails"><div class="sphx-glr-thumbcontainer" tooltip="This small example shows how to use cocoatree.io.load_pdb to import your own PDB structure file."><img alt="" src="../../_images/sphx_glr_plot_load_pdb_thumb.png" />
+<p><a class="reference internal" href="../../auto_examples/a_quick_start/plot_load_pdb.html#sphx-glr-auto-examples-a-quick-start-plot-load-pdb-py"><span class="std std-ref">Load a PDB structure file</span></a></p>
+  <div class="sphx-glr-thumbnail-title">Load a PDB structure file</div>
+</div><div class="sphx-glr-thumbcontainer" tooltip="This example shows how the DHFR dataset is organized and how you can use it to test cocoatree&#x27;s features."><img alt="" src="../../_images/sphx_glr_plot_DHFR_thumb.png" />
+<p><a class="reference internal" href="../../auto_examples/d_datasets/plot_DHFR.html#sphx-glr-auto-examples-d-datasets-plot-dhfr-py"><span class="std std-ref">DHFR proteases</span></a></p>
+  <div class="sphx-glr-thumbnail-title">DHFR proteases</div>
+</div></div><div class="sphx-glr-clear"></div></section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

@@ -19,18 +19,18 @@ analyses using :mod:`cocoatree`
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This example provides a minimal code for identifying sectors -- more precisely, XCoRs :citejullien_cocoatree_2025 -- associated with a MSA.">
+    <div class="sphx-glr-thumbcontainer" tooltip="This is a small example expliciting how to load a tree file in cocoatree using cocoatree.io.load_tree_ete3 function.">
 
 .. only:: html
 
-  .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_plot_minimal_sca_thumb.png
+  .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_plot_load_tree_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_a_quick_start_plot_minimal_sca.py`
+  :ref:`sphx_glr_auto_examples_a_quick_start_plot_load_tree.py`
 
 .. raw:: html
 
-      <div class="sphx-glr-thumbnail-title">A minimal SCA analysis</div>
+      <div class="sphx-glr-thumbnail-title">Load a tree file</div>
     </div>
 
 
@@ -48,6 +48,23 @@ analyses using :mod:`cocoatree`
 .. raw:: html
 
       <div class="sphx-glr-thumbnail-title">Mapping original MSA, filtered MSA, PDB, and XCoRs</div>
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This small example shows how to use cocoatree.io.load_pdb to import your own PDB structure file.">
+
+.. only:: html
+
+  .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_plot_load_pdb_thumb.png
+    :alt:
+
+  :ref:`sphx_glr_auto_examples_a_quick_start_plot_load_pdb.py`
+
+.. raw:: html
+
+      <div class="sphx-glr-thumbnail-title">Load a PDB structure file</div>
     </div>
 
 
@@ -78,7 +95,8 @@ analyses using :mod:`cocoatree`
 .. toctree::
    :hidden:
 
-   /auto_examples/a_quick_start/plot_minimal_sca
+   /auto_examples/a_quick_start/plot_load_tree
    /auto_examples/a_quick_start/plot_map_alignments
+   /auto_examples/a_quick_start/plot_load_pdb
    /auto_examples/a_quick_start/plot_sca_according2xcors
 

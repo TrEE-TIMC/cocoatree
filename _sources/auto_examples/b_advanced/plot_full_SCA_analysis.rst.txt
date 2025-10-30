@@ -281,7 +281,7 @@ Compute the SCA coevolution matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7f2500ab8950>
+    <matplotlib.colorbar.Colorbar object at 0x7f93488cff10>
 
 
 

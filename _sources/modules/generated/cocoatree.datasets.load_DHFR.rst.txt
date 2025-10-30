@@ -1,0 +1,14 @@
+﻿:orphan:
+
+cocoatree.datasets.load_DHFR
+============================
+
+.. currentmodule:: cocoatree.datasets
+
+.. autofunction:: load_DHFR
+
+.. include:: ../../generated/backreferences/cocoatree.datasets.load_DHFR.examples
+
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>

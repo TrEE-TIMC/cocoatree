@@ -51,13 +51,17 @@ def load_tree_ete3(file_path):
     """
     From the loading of a Newick tree, generate a ete3.Tree object
 
+    The Newick file must be of the form: `(A:1,(B:1,(C:1,D:1):0.5):0.5);`
+    or `(A:1,(B:1,(C:1,D:1)95:0.5)98:0.5);` if branch support values are
+    available.
+
     Parameters
     ----------
     file_path : path to the Newick file
 
     Returns
     -------
-    tree_ete3 : `ete3.Tree` object
+    tree_ete3 : ``ete3.Tree`` object
 
     """
     tree_ete3 = Tree(file_path, format=0)
@@ -97,7 +101,7 @@ def load_pdb(path2pdb, pdb_id, chain):
     path2pdb : path to the PDB file
 
     pdb_id : str,
-        identifier of the PDB file
+        the id that will be used for the structure
 
     chain : str,
         name of the chain to read

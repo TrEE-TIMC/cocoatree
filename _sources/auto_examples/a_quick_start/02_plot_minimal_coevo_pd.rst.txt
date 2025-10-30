@@ -135,7 +135,7 @@ A plotting function returning a reduced coevo matrix, keeping
 only XCoRs and sorting the residues according to them
 -------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 77-114
+.. GENERATED FROM PYTHON SOURCE LINES 77-116
 
 .. code-block:: Python
 
@@ -165,24 +165,26 @@ only XCoRs and sorting the residues according to them
                     'w', linewidth=2)
             line_index += xcor_sizes[i]
 
-        xticks = []
+        ticks = []
         for ix in range(len(xcors)):
             shift = np.sum([len(xcors[j]) for j in range(ix)])
-            xticks.append(shift+len(xcors[ix])/2)
+            ticks.append(shift+len(xcors[ix])/2)
 
-        ax.set_xticks(xticks, ['XCoR_%d' % ix for ix in range(1, len(xcors)+1)])
-        ax.set_yticks(xticks, ['XCoR_%d' % ix for ix in range(1, len(xcors)+1)],
-                      rotation=90, va='center')
+        ax.set_xticks(ticks)
+        ax.set_xticklabels(['XCoR_%d' % ix for ix in range(1, len(xcors)+1)])
+        ax.set_yticks(ticks)
+        ax.set_yticklabels(['XCoR_%d' % ix for ix in range(1, len(xcors)+1)],
+                           rotation=90, va='center')
 
         return fig, ax
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 115-117
+.. GENERATED FROM PYTHON SOURCE LINES 117-119
 
 Plotting the SCA matrix according to the XCoRs
 ----------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 117-123
+.. GENERATED FROM PYTHON SOURCE LINES 119-125
 
 .. code-block:: Python
 
@@ -193,24 +195,24 @@ Plotting the SCA matrix according to the XCoRs
     ax.set_xlabel('XCoR\'s positions', fontsize=10)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 124-126
+.. GENERATED FROM PYTHON SOURCE LINES 126-128
 
 Removing a global mode (ngm = no global mode),
 i.e., setting largest eigeinvalue to zero
 
-.. GENERATED FROM PYTHON SOURCE LINES 126-128
+.. GENERATED FROM PYTHON SOURCE LINES 128-130
 
 .. code-block:: Python
 
     SCA_matrix_ngm = c_deconv.remove_global_correlations(SCA_matrix)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 129-131
+.. GENERATED FROM PYTHON SOURCE LINES 131-133
 
 Plotting the SCA matrix without global mode according to the XCoRs
 ------------------------------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 131-135
+.. GENERATED FROM PYTHON SOURCE LINES 133-137
 
 .. code-block:: Python
 
@@ -219,12 +221,12 @@ Plotting the SCA matrix without global mode according to the XCoRs
     ax.set_xlabel('XCoR\'s positions', fontsize=10)
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 136-138
+.. GENERATED FROM PYTHON SOURCE LINES 138-140
 
 Adapting the coevolution scale
 ------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 138-143
+.. GENERATED FROM PYTHON SOURCE LINES 140-145
 
 .. code-block:: Python
 
@@ -234,12 +236,12 @@ Adapting the coevolution scale
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 144-146
+.. GENERATED FROM PYTHON SOURCE LINES 146-148
 
 Visualizing XCoRs on independent components
 -------------------------------------------
 
-.. GENERATED FROM PYTHON SOURCE LINES 146-162
+.. GENERATED FROM PYTHON SOURCE LINES 148-164
 
 .. code-block:: Python
 

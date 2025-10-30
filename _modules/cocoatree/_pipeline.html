@@ -86,9 +86,13 @@
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    coevolution_matrix : np.ndarray (n_filtered_pos, n_filtered_pos)</span>
+<span class="sd">    coevol_matrix : np.ndarray (n_filtered_pos, n_filtered_pos)</span>
+<span class="sd">        coevolution matrix</span>
 
-<span class="sd">    results : pd.DataFrame with the following columns</span>
+<span class="sd">    coevol_matrix_ngm : np.ndarray (n_filtered_pos, n_filtered_pos)</span>
+<span class="sd">        coevolution matrix without global mode (ngm = no global mode)</span>
+
+<span class="sd">    df : pd.DataFrame with the following columns</span>
 
 <span class="sd">        - original_msa_pos : the original MSA position</span>
 <span class="sd">        - filtered_msa_pos : the position in the filtered MSA</span>
@@ -160,26 +164,28 @@
     <span class="c1"># Now, map everything into a nice pandas DataFrame</span>
     <span class="n">pos_mapping</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">msa</span><span class="o">.</span><span class="n">map_msa_positions</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">pos_kept</span><span class="p">)</span>
 
-    <span class="n">results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
         <span class="p">{</span><span class="s2">&quot;original_msa_pos&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sequences</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span>
          <span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">:</span> <span class="n">pos_mapping</span><span class="o">.</span><span class="n">values</span><span class="p">()})</span>
+    <span class="c1"># make filtered_msa_pos stay integer with NaN support</span>
+    <span class="n">df</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;Int64&quot;</span><span class="p">)</span>
 
     <span class="c1"># Add PCA and ICA results</span>
     <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_components</span><span class="p">):</span>
-        <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span>
-                    <span class="s2">&quot;PC</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">principal_components</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
-        <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span>
-                    <span class="s2">&quot;IC</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">independent_components</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
-        <span class="n">results</span><span class="p">[</span><span class="s2">&quot;xcor_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
-            <span class="n">results</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">],</span>
-            <span class="n">xcors</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
-        <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span>
-                    <span class="s2">&quot;xcor_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
-                        <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">results</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span>
-                                    <span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">],</span>
-                        <span class="n">xcors</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span>
+               <span class="s2">&quot;PC</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">principal_components</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span>
+               <span class="s2">&quot;IC</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">independent_components</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">df</span><span class="p">[</span><span class="s2">&quot;xcor_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
+            <span class="n">df</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">],</span> <span class="n">xcors</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span>
+               <span class="s2">&quot;xcor_</span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span>
+                   <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span>
+                          <span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">],</span> <span class="n">xcors</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
 
-    <span class="k">return</span> <span class="n">coevol_matrix</span><span class="p">,</span> <span class="n">results</span></div>
+    <span class="n">coevol_matrix_ngm</span> <span class="o">=</span> <span class="n">deconvolution</span><span class="o">.</span><span class="n">remove_global_correlations</span><span class="p">(</span><span class="n">coevol_matrix</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">coevol_matrix</span><span class="p">,</span> <span class="n">coevol_matrix_ngm</span><span class="p">,</span> <span class="n">df</span></div>
 
 </pre></div>
 

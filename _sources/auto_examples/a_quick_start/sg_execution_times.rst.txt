@@ -6,7 +6,7 @@
 
 Computation times
 =================
-**00:03.314** total execution time for 4 files **from auto_examples/a_quick_start**:
+**00:06.279** total execution time for 5 files **from auto_examples/a_quick_start**:
 
 .. container::
 
@@ -32,14 +32,17 @@ Computation times
    * - Example
      - Time
      - Mem (MB)
-   * - :ref:`sphx_glr_auto_examples_a_quick_start_plot_sca_according2xcors.py` (``plot_sca_according2xcors.py``)
-     - 00:02.856
+   * - :ref:`sphx_glr_auto_examples_a_quick_start_plot_minimal_coevo.py` (``plot_minimal_coevo.py``)
+     - 00:02.941
+     - 0.0
+   * - :ref:`sphx_glr_auto_examples_a_quick_start_plot_minimal_coevo_pd.py` (``plot_minimal_coevo_pd.py``)
+     - 00:02.927
      - 0.0
    * - :ref:`sphx_glr_auto_examples_a_quick_start_plot_map_alignments.py` (``plot_map_alignments.py``)
-     - 00:00.434
+     - 00:00.390
      - 0.0
    * - :ref:`sphx_glr_auto_examples_a_quick_start_plot_load_pdb.py` (``plot_load_pdb.py``)
-     - 00:00.020
+     - 00:00.018
      - 0.0
    * - :ref:`sphx_glr_auto_examples_a_quick_start_plot_load_tree.py` (``plot_load_tree.py``)
      - 00:00.003

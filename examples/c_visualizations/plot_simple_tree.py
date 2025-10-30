@@ -26,21 +26,29 @@ df_annot = serine_dataset["metadata"]
 print(df_annot)
 
 # %%
-# Note that the dataframe must have a `Seq_ID` column with identifiers
-# that are identical to the ones in the MSA (although no MSA is needed in
-# this example), and in the newick tree.
+# .. note::
+#       The dataframe must have a ``Seq_ID`` column with identifiers that are
+#       identical to the ones in the MSA (although no MSA is needed in the
+#       present example), and in the newick tree.::
 
 # %%
 # Load tree file
 # --------------
+# Use :func:`cocoatree.io.load_tree_ete3` dedicated function
 tree_file = 'data/halabi_82_seqs.txt'
 tree_ete3 = load_tree_ete3(tree_file)
-print(tree_file)
+print(tree_ete3)
+
+# %%
+# .. seealso::
+#       Check :ref:`sphx_glr_auto_examples_a_quick_start_plot_load_tree.py`
+#       for details on the Newick format that is accepted.
 
 # %%
 # Plot figure
 # -----------
-# Create the tree style that will be applied to your tree
+# Create the tree style that will be applied to your tree with
+# :func:`cocoatree.visualization.update_tree_ete3_and_return_style`
 tree_style, column_layout = update_tree_ete3_and_return_style(
     tree_ete3, df_annot,
     meta_data=('Protein_type', 'Subphylum', 'Class'),
@@ -52,5 +60,12 @@ tree_style, column_layout = update_tree_ete3_and_return_style(
 tree_ete3.render("simple_tree.png", tree_style=tree_style)
 
 # %%
-# You can also use ete3's `tree.show()` method for displaying the figure
+# You can also use ete3's ``tree.show()`` method for displaying the figure
 # in ete3's interactive GUI.
+
+# %%
+# .. warning::
+#       If you wish to modify the style that has been applied to the
+#       ``tree_ete3`` object, you need to reload the tree in order to clear
+#       out the previous tree style. Otherwise, there will be a
+#       superimposition of tree styles.

@@ -99,15 +99,17 @@ def plot_coevo_according2xcors(coevo_matrix, xcors=[], vmin=0, vmax=1e6):
                 'w', linewidth=2)
         line_index += xcor_sizes[i]
 
-    xticks = []
+    ticks = []
     for ix in range(len(xcors)):
         shift = np.sum([len(xcors[j]) for j in range(ix)])
-        xticks.append(shift+len(xcors[ix])/2)
+        ticks.append(shift+len(xcors[ix])/2)
 
-    ax.set_xticks(xticks, ['XCoR_%d' % ix for ix in range(1, len(xcors)+1)])
-    ax.set_yticks(xticks, ['XCoR_%d' % ix for ix in range(1, len(xcors)+1)],
-                  rotation=90, va='center')
-
+    ax.set_xticks(ticks)
+    ax.set_xticklabels(['XCoR_%d' % ix for ix in range(1, len(xcors)+1)])
+    ax.set_yticks(ticks)
+    ax.set_yticklabels(['XCoR_%d' % ix for ix in range(1, len(xcors)+1)],
+                       rotation=90, va='center')
+    
     return fig, ax
 
 # %%

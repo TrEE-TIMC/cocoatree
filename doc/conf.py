@@ -88,8 +88,12 @@ html_static_path = []
 # Sphinx-gallery options
 from sphinx_gallery.sorting import ExplicitOrder, FileNameSortKey
 examples_dirs = ['../examples']
-filename_pattern = r'(\d+_)?plot_'
-within_subsection_order = FileNameSortKey
+within_subsection_order = ExplicitOrder(['a_quick_start/plot_01_minimal_coevo.py',
+                                         'a_quick_start/plot_02_minimal_coevo_pd.py',
+                                         'a_quick_start/plot_03_map_alignments.py',
+                                         'a_quick_start/plot_04_load_tree.py',
+                                         'a_quick_start/plot_05_load_pdb.py',
+                                         # ... ])
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/{.major}'.format(sys.version_info), None),

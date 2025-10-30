@@ -8,7 +8,9 @@ using the SCA approach. This includes:
 
 - generating a SCA co-evolutionary matrix, reduce it, and sort it according
 to XCoRs,
+
 - showing the position composition of XCoRs,
+
 - plotting the XCoRs using the independent component projections.
 """
 

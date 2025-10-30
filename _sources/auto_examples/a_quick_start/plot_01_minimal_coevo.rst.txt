@@ -161,7 +161,7 @@ Plotting the SCA matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7f3535349690>
+    <matplotlib.colorbar.Colorbar object at 0x7fbbfaf23a10>
 
 
 
@@ -409,14 +409,14 @@ Visualizing XCoRs on independent components
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f3535092310>
+    <matplotlib.legend.Legend object at 0x7fbbf8907190>
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.793 seconds)
+   **Total running time of the script:** (0 minutes 2.796 seconds)
 
 
 .. _sphx_glr_download_auto_examples_a_quick_start_plot_01_minimal_coevo.py:

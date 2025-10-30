@@ -42,9 +42,13 @@ def perform_sca(sequences_id, sequences,
 
     Returns
     -------
-    coevolution_matrix : np.ndarray (n_filtered_pos, n_filtered_pos)
+    coevol_matrix : np.ndarray (n_filtered_pos, n_filtered_pos)
+        coevolution matrix
 
-    results : pd.DataFrame with the following columns
+    coevol_matrix_ngm : np.ndarray (n_filtered_pos, n_filtered_pos)
+        coevolution matrix without global mode (ngm = no global mode)
+
+    df : pd.DataFrame with the following columns
 
         - original_msa_pos : the original MSA position
         - filtered_msa_pos : the position in the filtered MSA
@@ -116,23 +120,25 @@ def perform_sca(sequences_id, sequences,
     # Now, map everything into a nice pandas DataFrame
     pos_mapping, _ = msa.map_msa_positions(len(sequences[0]), pos_kept)
 
-    results = pd.DataFrame(
+    df = pd.DataFrame(
         {"original_msa_pos": np.arange(len(sequences[0]), dtype=int),
          "filtered_msa_pos": pos_mapping.values()})
+    # make filtered_msa_pos stay integer with NaN support
+    df["filtered_msa_pos"] = df["filtered_msa_pos"].astype("Int64")
 
     # Add PCA and ICA results
     for k in range(n_components):
-        results.loc[~results["filtered_msa_pos"].isna(),
-                    "PC%d" % (k+1)] = principal_components[k]
-        results.loc[~results["filtered_msa_pos"].isna(),
-                    "IC%d" % (k+1)] = independent_components[k]
-        results["xcor_%d" % (k+1)] = np.isin(
-            results["filtered_msa_pos"],
-            xcors[k])
-        results.loc[~results["filtered_msa_pos"].isna(),
-                    "xcor_%d" % (k+1)] = np.isin(
-                        results.loc[~results["filtered_msa_pos"].isna(),
-                                    "filtered_msa_pos"],
-                        xcors[k])
+        df.loc[~df["filtered_msa_pos"].isna(),
+               "PC%d" % (k+1)] = principal_components[k]
+        df.loc[~df["filtered_msa_pos"].isna(),
+               "IC%d" % (k+1)] = independent_components[k]
+        df["xcor_%d" % (k+1)] = np.isin(
+            df["filtered_msa_pos"], xcors[k])
+        df.loc[~df["filtered_msa_pos"].isna(),
+               "xcor_%d" % (k+1)] = np.isin(
+                   df.loc[~df["filtered_msa_pos"].isna(),
+                          "filtered_msa_pos"], xcors[k])
 
-    return coevol_matrix, results
+    coevol_matrix_ngm = deconvolution.remove_global_correlations(coevol_matrix)
+
+    return coevol_matrix, coevol_matrix_ngm, df

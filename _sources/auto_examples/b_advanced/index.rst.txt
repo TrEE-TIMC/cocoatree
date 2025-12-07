@@ -27,7 +27,7 @@ parameters to better suit your datasets.
   .. image:: /auto_examples/b_advanced/images/thumb/sphx_glr_plot_sca_with_own_metric_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_b_advanced_plot_sca_with_own_metric.py`
+  :doc:`/auto_examples/b_advanced/plot_sca_with_own_metric`
 
 .. raw:: html
 
@@ -44,7 +44,7 @@ parameters to better suit your datasets.
   .. image:: /auto_examples/b_advanced/images/thumb/sphx_glr_plot_sca_vs_mi_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_b_advanced_plot_sca_vs_mi.py`
+  :doc:`/auto_examples/b_advanced/plot_sca_vs_mi`
 
 .. raw:: html
 
@@ -61,7 +61,7 @@ parameters to better suit your datasets.
   .. image:: /auto_examples/b_advanced/images/thumb/sphx_glr_plot_full_SCA_analysis_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_b_advanced_plot_full_SCA_analysis.py`
+  :doc:`/auto_examples/b_advanced/plot_full_SCA_analysis`
 
 .. raw:: html
 

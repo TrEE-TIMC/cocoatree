@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_b_advanced_plot_sca_with_own_metric.py>`
-        to download the full example code. or to run this example in your browser via Binder
+        to download the full example code or to run this example in your browser via Binder.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -103,7 +103,7 @@ by the scikit-learn library
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 1.305 seconds)
+   **Total running time of the script:** (0 minutes 1.315 seconds)
 
 
 .. _sphx_glr_download_auto_examples_b_advanced_plot_sca_with_own_metric.py:

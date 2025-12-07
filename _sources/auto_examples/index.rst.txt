@@ -48,7 +48,7 @@ analyses using :mod:`cocoatree`
   .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_plot_04_load_tree_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_a_quick_start_plot_04_load_tree.py`
+  :doc:`/auto_examples/a_quick_start/plot_04_load_tree`
 
 .. raw:: html
 
@@ -65,7 +65,7 @@ analyses using :mod:`cocoatree`
   .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_plot_03_map_alignments_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_a_quick_start_plot_03_map_alignments.py`
+  :doc:`/auto_examples/a_quick_start/plot_03_map_alignments`
 
 .. raw:: html
 
@@ -82,7 +82,7 @@ analyses using :mod:`cocoatree`
   .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_plot_05_load_pdb_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_a_quick_start_plot_05_load_pdb.py`
+  :doc:`/auto_examples/a_quick_start/plot_05_load_pdb`
 
 .. raw:: html
 
@@ -99,7 +99,7 @@ analyses using :mod:`cocoatree`
   .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_plot_01_minimal_coevo_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_a_quick_start_plot_01_minimal_coevo.py`
+  :doc:`/auto_examples/a_quick_start/plot_01_minimal_coevo`
 
 .. raw:: html
 
@@ -116,7 +116,7 @@ analyses using :mod:`cocoatree`
   .. image:: /auto_examples/a_quick_start/images/thumb/sphx_glr_plot_02_minimal_coevo_pd_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_a_quick_start_plot_02_minimal_coevo_pd.py`
+  :doc:`/auto_examples/a_quick_start/plot_02_minimal_coevo_pd`
 
 .. raw:: html
 
@@ -155,7 +155,7 @@ parameters to better suit your datasets.
   .. image:: /auto_examples/b_advanced/images/thumb/sphx_glr_plot_sca_with_own_metric_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_b_advanced_plot_sca_with_own_metric.py`
+  :doc:`/auto_examples/b_advanced/plot_sca_with_own_metric`
 
 .. raw:: html
 
@@ -172,7 +172,7 @@ parameters to better suit your datasets.
   .. image:: /auto_examples/b_advanced/images/thumb/sphx_glr_plot_sca_vs_mi_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_b_advanced_plot_sca_vs_mi.py`
+  :doc:`/auto_examples/b_advanced/plot_sca_vs_mi`
 
 .. raw:: html
 
@@ -189,7 +189,7 @@ parameters to better suit your datasets.
   .. image:: /auto_examples/b_advanced/images/thumb/sphx_glr_plot_full_SCA_analysis_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_b_advanced_plot_full_SCA_analysis.py`
+  :doc:`/auto_examples/b_advanced/plot_full_SCA_analysis`
 
 .. raw:: html
 
@@ -226,7 +226,7 @@ results along with sequence metadata and phylogeny.
   .. image:: /auto_examples/c_visualizations/images/thumb/sphx_glr_plot_simple_tree_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_c_visualizations_plot_simple_tree.py`
+  :doc:`/auto_examples/c_visualizations/plot_simple_tree`
 
 .. raw:: html
 
@@ -243,7 +243,7 @@ results along with sequence metadata and phylogeny.
   .. image:: /auto_examples/c_visualizations/images/thumb/sphx_glr_plot_tree_metadata_xcor_seq_and_coevol_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_xcor_seq_and_coevol.py`
+  :doc:`/auto_examples/c_visualizations/plot_tree_metadata_xcor_seq_and_coevol`
 
 .. raw:: html
 
@@ -260,7 +260,7 @@ results along with sequence metadata and phylogeny.
   .. image:: /auto_examples/c_visualizations/images/thumb/sphx_glr_plot_tree_metadata_colors_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_metadata_colors.py`
+  :doc:`/auto_examples/c_visualizations/plot_tree_metadata_colors`
 
 .. raw:: html
 
@@ -277,7 +277,7 @@ results along with sequence metadata and phylogeny.
   .. image:: /auto_examples/c_visualizations/images/thumb/sphx_glr_plot_tree_similarity_heatmap_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_c_visualizations_plot_tree_similarity_heatmap.py`
+  :doc:`/auto_examples/c_visualizations/plot_tree_similarity_heatmap`
 
 .. raw:: html
 
@@ -315,7 +315,7 @@ within COCOA-Tree and of how you can access their different objects.
   .. image:: /auto_examples/d_datasets/images/thumb/sphx_glr_plot_DHFR_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_d_datasets_plot_DHFR.py`
+  :doc:`/auto_examples/d_datasets/plot_DHFR`
 
 .. raw:: html
 
@@ -332,7 +332,7 @@ within COCOA-Tree and of how you can access their different objects.
   .. image:: /auto_examples/d_datasets/images/thumb/sphx_glr_plot_rhomboid_proteases_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_d_datasets_plot_rhomboid_proteases.py`
+  :doc:`/auto_examples/d_datasets/plot_rhomboid_proteases`
 
 .. raw:: html
 
@@ -349,7 +349,7 @@ within COCOA-Tree and of how you can access their different objects.
   .. image:: /auto_examples/d_datasets/images/thumb/sphx_glr_plot_s1A_serine_proteases_thumb.png
     :alt:
 
-  :ref:`sphx_glr_auto_examples_d_datasets_plot_s1A_serine_proteases.py`
+  :doc:`/auto_examples/d_datasets/plot_s1A_serine_proteases`
 
 .. raw:: html
 

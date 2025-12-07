@@ -11,7 +11,7 @@
         :class: sphx-glr-download-link-note
 
         :ref:`Go to the end <sphx_glr_download_auto_examples_a_quick_start_plot_03_map_alignments.py>`
-        to download the full example code. or to run this example in your browser via Binder
+        to download the full example code or to run this example in your browser via Binder.
 
 .. rst-class:: sphx-glr-example-title
 
@@ -180,7 +180,7 @@ Now print the indices of sectors 1 in the different referentials
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 0.379 seconds)
+   **Total running time of the script:** (0 minutes 0.414 seconds)
 
 
 .. _sphx_glr_download_auto_examples_a_quick_start_plot_03_map_alignments.py:

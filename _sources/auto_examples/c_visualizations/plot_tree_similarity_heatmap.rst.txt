@@ -561,7 +561,7 @@ Plot the heatmaps:
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7fb38b8e9f90>
+    <matplotlib.colorbar.Colorbar object at 0x7fbdbb3b4550>
 
 
 
@@ -573,7 +573,7 @@ sequence similarity.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 7.439 seconds)
+   **Total running time of the script:** (0 minutes 7.694 seconds)
 
 
 .. _sphx_glr_download_auto_examples_c_visualizations_plot_tree_similarity_heatmap.py:

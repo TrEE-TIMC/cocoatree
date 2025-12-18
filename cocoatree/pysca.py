@@ -150,7 +150,7 @@ def _icList(Vica, n_component, Cij, p_cut=0.95):
 
     Returns
     -------
-    selected_res : list of cocoatree.deconvolution.Unit,
+    selected_res : list of cocoatree.decomposition.Unit,
         positions of the selected residues for each independent component.
         Beware that if the alignment used for the analysis has been filtered,
         those are the positions on the filtered alignment and not on the

@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 
 import cocoatree
 import cocoatree.datasets as c_data
-import cocoatree.deconvolution as c_deconv
+import cocoatree.decomposition as c_decomp
 
 # %%
 # Loading the dataset
@@ -128,7 +128,7 @@ ax.set_xlabel('XCoR\'s positions', fontsize=10)
 # %%
 # Removing a global mode (ngm = no global mode),
 # i.e., setting largest eigeinvalue to zero
-SCA_matrix_ngm = c_deconv.remove_global_correlations(SCA_matrix)
+SCA_matrix_ngm = c_decomp.remove_global_correlations(SCA_matrix)
 
 # %%
 # Plotting the SCA matrix without global mode according to the XCoRs

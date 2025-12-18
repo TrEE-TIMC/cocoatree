@@ -27,7 +27,7 @@ import matplotlib.pyplot as plt
 
 import cocoatree.datasets as c_data
 import cocoatree.msa as c_msa
-import cocoatree.deconvolution as c_deconv
+import cocoatree.decomposition as c_decomp
 
 from cocoatree.statistics.pairwise import compute_sca_matrix
 
@@ -65,7 +65,7 @@ fig.colorbar(im, shrink=0.7)
 # Extracting XCoRs
 # ----------------
 n_xcors = 3
-xcors = c_deconv.extract_xcors(SCA_matrix, n_xcors=n_xcors)
+xcors = c_decomp.extract_xcors(SCA_matrix, n_xcors=n_xcors)
 
 print('XCoR positions on (filtered) sequences:')
 for ixcor, xcor in enumerate(xcors):
@@ -129,7 +129,7 @@ ax.set_xlabel('XCoR\'s positions', fontsize=10)
 # %%
 # Removing a global mode (ngm = no global mode),
 # i.e., setting largest eigeinvalue to zero
-SCA_matrix_ngm = c_deconv.remove_global_correlations(SCA_matrix)
+SCA_matrix_ngm = c_decomp.remove_global_correlations(SCA_matrix)
 
 # %%
 # Plotting the SCA matrix without global mode according to the XCoRs
@@ -151,7 +151,7 @@ ax.set_xlabel('XCoR\'s positions', fontsize=10)
 # -------------------------------------------
 
 # extracting independent components
-ICs = c_deconv.extract_independent_components(SCA_matrix,
+ICs = c_decomp.extract_independent_components(SCA_matrix,
                                               n_components=n_xcors)
 
 # plotting IC_1 values versus IC_2 values

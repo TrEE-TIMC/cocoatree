@@ -149,7 +149,7 @@ Plotting the SCA matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7f3187c28810>
+    <matplotlib.colorbar.Colorbar object at 0x7fad63c24890>
 
 
 
@@ -404,7 +404,7 @@ Visualizing XCoRs on independent components
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f3187db3950>
+    <matplotlib.legend.Legend object at 0x7fad63c2ab90>
 
 
 

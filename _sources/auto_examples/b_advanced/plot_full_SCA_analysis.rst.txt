@@ -61,7 +61,7 @@ Import necessary
     import cocoatree.msa as c_msa
     import cocoatree.statistics.position as c_pos
     import cocoatree.statistics.pairwise as c_pw
-    import cocoatree.deconvolution as c_deconv
+    import cocoatree.decomposition as c_decomp
 
     import matplotlib.pyplot as plt
     import numpy as np
@@ -281,7 +281,7 @@ Compute the SCA coevolution matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7fbbbb647e10>
+    <matplotlib.colorbar.Colorbar object at 0x7f2b1f044690>
 
 
 
@@ -299,9 +299,9 @@ Extract principal components (PCA analysis) and independent components
 
 
     n_components = 9
-    principal_components = c_deconv.extract_principal_components(
+    principal_components = c_decomp.extract_principal_components(
         SCA_matrix)
-    idpt_components = c_deconv.extract_independent_components(
+    idpt_components = c_decomp.extract_independent_components(
         SCA_matrix,
         n_components=n_components)
 
@@ -374,7 +374,7 @@ Obtain a list of residues of each XCoR
 .. code-block:: Python
 
 
-    xcors = c_deconv.extract_xcors_from_ICs(idpt_components, SCA_matrix)
+    xcors = c_decomp.extract_xcors_from_ICs(idpt_components, SCA_matrix)
 
     print('XCoR positions on (filtered) sequences:')
     for isec, sec in enumerate(xcors):
@@ -468,7 +468,7 @@ See Rivoire et al., PLOSCB, 2016
 
     # Removing a global mode (ngm = no global mode),
     # i.e., setting largest eigeinvalue to zero
-    SCA_matrix_ngm = c_deconv.remove_global_correlations(SCA_matrix)
+    SCA_matrix_ngm = c_decomp.remove_global_correlations(SCA_matrix)
 
     # plotting
     fig, ax = plt.subplots(tight_layout=True)
@@ -569,7 +569,7 @@ independent component to which the XCoR is associated.
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 4.126 seconds)
+   **Total running time of the script:** (0 minutes 4.162 seconds)
 
 
 .. _sphx_glr_download_auto_examples_b_advanced_plot_full_SCA_analysis.py:

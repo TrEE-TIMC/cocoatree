@@ -63,7 +63,7 @@ Necessary imports
 
     import cocoatree.datasets as c_data
     import cocoatree.msa as c_msa
-    import cocoatree.deconvolution as c_deconv
+    import cocoatree.decomposition as c_decomp
 
     from cocoatree.statistics.pairwise import compute_sca_matrix
 
@@ -163,7 +163,7 @@ Plotting the SCA matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7fbbbb78d390>
+    <matplotlib.colorbar.Colorbar object at 0x7f2b1f1edb50>
 
 
 
@@ -177,7 +177,7 @@ Extracting XCoRs
 .. code-block:: Python
 
     n_xcors = 3
-    xcors = c_deconv.extract_xcors(SCA_matrix, n_xcors=n_xcors)
+    xcors = c_decomp.extract_xcors(SCA_matrix, n_xcors=n_xcors)
 
     print('XCoR positions on (filtered) sequences:')
     for ixcor, xcor in enumerate(xcors):
@@ -300,7 +300,7 @@ i.e., setting largest eigeinvalue to zero
 
 .. code-block:: Python
 
-    SCA_matrix_ngm = c_deconv.remove_global_correlations(SCA_matrix)
+    SCA_matrix_ngm = c_decomp.remove_global_correlations(SCA_matrix)
 
 
 
@@ -383,7 +383,7 @@ Visualizing XCoRs on independent components
 
 
     # extracting independent components
-    ICs = c_deconv.extract_independent_components(SCA_matrix,
+    ICs = c_decomp.extract_independent_components(SCA_matrix,
                                                   n_components=n_xcors)
 
     # plotting IC_1 values versus IC_2 values
@@ -414,14 +414,14 @@ Visualizing XCoRs on independent components
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7fbbbbcb0d10>
+    <matplotlib.legend.Legend object at 0x7f2b1efecf50>
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.815 seconds)
+   **Total running time of the script:** (0 minutes 2.765 seconds)
 
 
 .. _sphx_glr_download_auto_examples_a_quick_start_plot_01_minimal_coevo.py:

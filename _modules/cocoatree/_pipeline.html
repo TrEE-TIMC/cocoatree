@@ -42,7 +42,7 @@
   <h1>Source code for cocoatree._pipeline</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">msa</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">statistics</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">deconvolution</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">decomposition</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">__params</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -154,11 +154,11 @@
 
     <span class="c1"># Now, compute deconvolution</span>
 
-    <span class="n">principal_components</span> <span class="o">=</span> <span class="n">deconvolution</span><span class="o">.</span><span class="n">extract_principal_components</span><span class="p">(</span>
+    <span class="n">principal_components</span> <span class="o">=</span> <span class="n">decomposition</span><span class="o">.</span><span class="n">extract_principal_components</span><span class="p">(</span>
         <span class="n">coevol_matrix</span><span class="p">)</span>
-    <span class="n">independent_components</span> <span class="o">=</span> <span class="n">deconvolution</span><span class="o">.</span><span class="n">extract_independent_components</span><span class="p">(</span>
+    <span class="n">independent_components</span> <span class="o">=</span> <span class="n">decomposition</span><span class="o">.</span><span class="n">extract_independent_components</span><span class="p">(</span>
         <span class="n">coevol_matrix</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">)</span>
-    <span class="n">xcors</span> <span class="o">=</span> <span class="n">deconvolution</span><span class="o">.</span><span class="n">extract_xcors_from_ICs</span><span class="p">(</span>
+    <span class="n">xcors</span> <span class="o">=</span> <span class="n">decomposition</span><span class="o">.</span><span class="n">extract_xcors_from_ICs</span><span class="p">(</span>
         <span class="n">independent_components</span><span class="p">,</span> <span class="n">coevol_matrix</span><span class="p">)</span>
 
     <span class="c1"># Now, map everything into a nice pandas DataFrame</span>
@@ -183,7 +183,7 @@
                    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span>
                           <span class="s2">&quot;filtered_msa_pos&quot;</span><span class="p">],</span> <span class="n">xcors</span><span class="p">[</span><span class="n">k</span><span class="p">])</span>
 
-    <span class="n">coevol_matrix_ngm</span> <span class="o">=</span> <span class="n">deconvolution</span><span class="o">.</span><span class="n">remove_global_correlations</span><span class="p">(</span><span class="n">coevol_matrix</span><span class="p">)</span>
+    <span class="n">coevol_matrix_ngm</span> <span class="o">=</span> <span class="n">decomposition</span><span class="o">.</span><span class="n">remove_global_correlations</span><span class="p">(</span><span class="n">coevol_matrix</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">coevol_matrix</span><span class="p">,</span> <span class="n">coevol_matrix_ngm</span><span class="p">,</span> <span class="n">df</span></div>
 

@@ -50,7 +50,7 @@
 <li><p><a class="reference internal" href="#module-cocoatree.datasets" id="id9"><a class="reference internal" href="#module-cocoatree.datasets" title="cocoatree.datasets"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.datasets</span></code></a>: Utilities to load popular datasets.</a></p></li>
 <li><p><a class="reference internal" href="#module-cocoatree.msa" id="id10"><a class="reference internal" href="#module-cocoatree.msa" title="cocoatree.msa"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.msa</span></code></a>: Manipulating multiple sequence alignment and sequences</a></p></li>
 <li><p><a class="reference internal" href="#module-cocoatree.statistics" id="id11"><a class="reference internal" href="#module-cocoatree.statistics" title="cocoatree.statistics"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.statistics</span></code></a>: Computation of position-specific and pairwise statistics</a></p></li>
-<li><p><a class="reference internal" href="#module-cocoatree.deconvolution" id="id12"><a class="reference internal" href="#module-cocoatree.deconvolution" title="cocoatree.deconvolution"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.deconvolution</span></code></a>: Co-evolution matrix deconvolution</a></p></li>
+<li><p><a class="reference internal" href="#module-cocoatree.decomposition" id="id12"><a class="reference internal" href="#module-cocoatree.decomposition" title="cocoatree.decomposition"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.decomposition</span></code></a>: Co-evolution matrix decomposition</a></p></li>
 <li><p><a class="reference internal" href="#module-cocoatree.visualization" id="id13"><a class="reference internal" href="#module-cocoatree.visualization" title="cocoatree.visualization"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.visualization</span></code></a>: Visualization with ete3</a></p></li>
 </ul>
 </nav>
@@ -179,25 +179,25 @@
 </table>
 </section>
 </section>
-<section id="module-cocoatree.deconvolution">
-<span id="cocoatree-deconvolution-co-evolution-matrix-deconvolution"></span><span id="statistics-ref"></span><h2><a class="reference internal" href="#module-cocoatree.deconvolution" title="cocoatree.deconvolution"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.deconvolution</span></code></a>: Co-evolution matrix deconvolution<a class="headerlink" href="#module-cocoatree.deconvolution" title="Link to this heading">¶</a></h2>
+<section id="module-cocoatree.decomposition">
+<span id="cocoatree-decomposition-co-evolution-matrix-decomposition"></span><span id="statistics-ref"></span><h2><a class="reference internal" href="#module-cocoatree.decomposition" title="cocoatree.decomposition"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.decomposition</span></code></a>: Co-evolution matrix decomposition<a class="headerlink" href="#module-cocoatree.decomposition" title="Link to this heading">¶</a></h2>
 <section id="id5">
 <h3>Functions<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.extract_independent_components.html#cocoatree.deconvolution.extract_independent_components" title="cocoatree.deconvolution.extract_independent_components"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.extract_independent_components</span></code></a>(...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.decomposition.extract_independent_components.html#cocoatree.decomposition.extract_independent_components" title="cocoatree.decomposition.extract_independent_components"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decomposition.extract_independent_components</span></code></a>(...)</p></td>
 <td><p>Extract independent components from a coevolution matrix</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.extract_principal_components.html#cocoatree.deconvolution.extract_principal_components" title="cocoatree.deconvolution.extract_principal_components"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.extract_principal_components</span></code></a>(...)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.decomposition.extract_principal_components.html#cocoatree.decomposition.extract_principal_components" title="cocoatree.decomposition.extract_principal_components"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decomposition.extract_principal_components</span></code></a>(...)</p></td>
 <td><p>Perform principal component decomposition of a coevolution matrix</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.extract_xcors_from_ICs.html#cocoatree.deconvolution.extract_xcors_from_ICs" title="cocoatree.deconvolution.extract_xcors_from_ICs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.extract_xcors_from_ICs</span></code></a>(...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.decomposition.extract_xcors_from_ICs.html#cocoatree.decomposition.extract_xcors_from_ICs" title="cocoatree.decomposition.extract_xcors_from_ICs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decomposition.extract_xcors_from_ICs</span></code></a>(...)</p></td>
 <td><p>Extract residue positions of XCoRs from independent components</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.extract_xcors.html#cocoatree.deconvolution.extract_xcors" title="cocoatree.deconvolution.extract_xcors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.extract_xcors</span></code></a>(coevo_matrix[, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/cocoatree.decomposition.extract_xcors.html#cocoatree.decomposition.extract_xcors" title="cocoatree.decomposition.extract_xcors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decomposition.extract_xcors</span></code></a>(coevo_matrix[, ...])</p></td>
 <td><p>Extract residue positions of XCoRs directly from the coevo_matrix</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.deconvolution.remove_global_correlations.html#cocoatree.deconvolution.remove_global_correlations" title="cocoatree.deconvolution.remove_global_correlations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">deconvolution.remove_global_correlations</span></code></a>(...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/cocoatree.decomposition.remove_global_correlations.html#cocoatree.decomposition.remove_global_correlations" title="cocoatree.decomposition.remove_global_correlations"><code class="xref py py-obj docutils literal notranslate"><span class="pre">decomposition.remove_global_correlations</span></code></a>(...)</p></td>
 <td><p>Remove global correlations by setting the first eigen value of the coevolution matrix to 0</p></td>
 </tr>
 </tbody>
@@ -205,7 +205,7 @@
 </section>
 </section>
 <section id="module-cocoatree.visualization">
-<span id="cocoatree-visualization-visualization-with-ete3"></span><span id="deconvolution-ref"></span><h2><a class="reference internal" href="#module-cocoatree.visualization" title="cocoatree.visualization"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.visualization</span></code></a>: Visualization with ete3<a class="headerlink" href="#module-cocoatree.visualization" title="Link to this heading">¶</a></h2>
+<span id="cocoatree-visualization-visualization-with-ete3"></span><span id="decomposition-ref"></span><h2><a class="reference internal" href="#module-cocoatree.visualization" title="cocoatree.visualization"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree.visualization</span></code></a>: Visualization with ete3<a class="headerlink" href="#module-cocoatree.visualization" title="Link to this heading">¶</a></h2>
 <p>Module to visualize phylogenetic trees along with XCoRs</p>
 <section id="id6">
 <h3>Functions<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>

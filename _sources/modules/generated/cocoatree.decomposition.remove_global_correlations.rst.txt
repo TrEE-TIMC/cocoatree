@@ -1,0 +1,14 @@
+﻿:orphan:
+
+cocoatree.decomposition.remove_global_correlations
+==================================================
+
+.. currentmodule:: cocoatree.decomposition
+
+.. autofunction:: remove_global_correlations
+
+.. include:: ../../generated/backreferences/cocoatree.decomposition.remove_global_correlations.examples
+
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>

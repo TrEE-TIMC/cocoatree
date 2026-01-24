@@ -1,0 +1,14 @@
+﻿:orphan:
+
+cocoatree.decomposition.extract_xcors
+=====================================
+
+.. currentmodule:: cocoatree.decomposition
+
+.. autofunction:: extract_xcors
+
+.. include:: ../../generated/backreferences/cocoatree.decomposition.extract_xcors.examples
+
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>

@@ -119,7 +119,7 @@ div.sphinxsidebar a {
 }
 
 div.sphinxsidebar a:hover {
-    color: #d00;
+    color: #4ab38d;
 }
 
 div.sphinxsidebar input {
@@ -131,16 +131,16 @@ div.sphinxsidebar input {
 /* -- body styles --------------------------------------------------------- */
 
 a {
-    color: #900;
+    color: #31775d;
     text-decoration: none;
 }
 
 a:visited {
-    color: #700;
+    color: #31775d;
 }
 
 a:hover {
-    color: #d00;
+    color: #4ab38d;
     text-decoration: underline;
 }
 
@@ -189,14 +189,14 @@ div.body h5 { font-size: 105%; }
 div.body h6 { font-size: 100%; }
 
 a.headerlink {
-    color: #c60f0f;
+    color: #31775d;
     font-size: 0.8em;
     padding: 0 4px 0 4px;
     text-decoration: none;
 }
 
 a.headerlink:hover {
-    background-color: #c60f0f;
+    background-color: #31775d;
     color: #fff;
 }
 

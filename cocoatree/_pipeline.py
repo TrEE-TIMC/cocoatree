@@ -1,6 +1,6 @@
 from . import msa
 from . import statistics
-from . import deconvolution
+from . import decomposition
 from . import __params
 
 import pandas as pd
@@ -110,11 +110,11 @@ def perform_sca(sequences_id, sequences,
 
     # Now, compute deconvolution
 
-    principal_components = deconvolution.extract_principal_components(
+    principal_components = decomposition.extract_principal_components(
         coevol_matrix)
-    independent_components = deconvolution.extract_independent_components(
+    independent_components = decomposition.extract_independent_components(
         coevol_matrix, n_components=n_components)
-    xcors = deconvolution.extract_xcors_from_ICs(
+    xcors = decomposition.extract_xcors_from_ICs(
         independent_components, coevol_matrix)
 
     # Now, map everything into a nice pandas DataFrame
@@ -139,6 +139,6 @@ def perform_sca(sequences_id, sequences,
                    df.loc[~df["filtered_msa_pos"].isna(),
                           "filtered_msa_pos"], xcors[k])
 
-    coevol_matrix_ngm = deconvolution.remove_global_correlations(coevol_matrix)
+    coevol_matrix_ngm = decomposition.remove_global_correlations(coevol_matrix)
 
     return coevol_matrix, coevol_matrix_ngm, df

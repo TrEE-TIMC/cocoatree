@@ -25,7 +25,7 @@ import cocoatree.io as c_io
 import cocoatree.msa as c_msa
 import cocoatree.statistics.position as c_pos
 import cocoatree.statistics.pairwise as c_pw
-import cocoatree.deconvolution as c_deconv
+import cocoatree.decomposition as c_decomp
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -126,9 +126,9 @@ fig.colorbar(im, shrink=0.7)
 # (this can take some time because of randomization)
 
 n_components = 9
-principal_components = c_deconv.extract_principal_components(
+principal_components = c_decomp.extract_principal_components(
     SCA_matrix)
-idpt_components = c_deconv.extract_independent_components(
+idpt_components = c_decomp.extract_independent_components(
     SCA_matrix,
     n_components=n_components)
 
@@ -164,7 +164,7 @@ for k, [k1, k2] in enumerate(pairs):
 #
 # Obtain a list of residues of each XCoR
 
-xcors = c_deconv.extract_xcors_from_ICs(idpt_components, SCA_matrix)
+xcors = c_decomp.extract_xcors_from_ICs(idpt_components, SCA_matrix)
 
 print('XCoR positions on (filtered) sequences:')
 for isec, sec in enumerate(xcors):
@@ -211,7 +211,7 @@ for i in range(n_components):
 
 # Removing a global mode (ngm = no global mode),
 # i.e., setting largest eigeinvalue to zero
-SCA_matrix_ngm = c_deconv.remove_global_correlations(SCA_matrix)
+SCA_matrix_ngm = c_decomp.remove_global_correlations(SCA_matrix)
 
 # plotting
 fig, ax = plt.subplots(tight_layout=True)

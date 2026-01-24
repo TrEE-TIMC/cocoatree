@@ -151,7 +151,7 @@ def export_xcor_for_pymol(mapping, independent_components, axis,
         cocoatree.msa.map_to_pdb() function
 
     independent_components : numpy.ndarray,
-        output of cocoatree.deconvolution.compute_ica() function
+        output of cocoatree.decomposition.compute_ica() function
 
     axis : int,
         rank of the independent component associated with the desired XCoR
@@ -161,7 +161,7 @@ def export_xcor_for_pymol(mapping, independent_components, axis,
 
     xcor_pos_in_filtered_msa : numpy.ndarray,
         positions of the XCoR's residues in the filtered MSA, output from
-        cocoatree.deconvolution.icList() function
+        cocoatree.decomposition.icList() function
 
     outpath : str,
         path to the output file as a binary in .npy format

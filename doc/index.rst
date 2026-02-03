@@ -20,7 +20,7 @@ The library includes several coevolution metrics (and allows users to define the
 
 The software is organized into different modules, detailed below:
 
-.. image:: schemas/draft_fig1_v3.png
+.. image:: schemas/cocoa_orga_v5.png
 	:width: 100%
 
 List of abbreviations

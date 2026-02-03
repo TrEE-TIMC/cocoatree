@@ -4,6 +4,5 @@ from . import statistics  # noqa: F401
 from . import io  # noqa: F401
 from . import decomposition  # noqa: F401
 from ._pipeline import perform_sca  # noqa: F401
+from ._version import __version__   # noqa: F401
 
-
-__version__ = "0.0.0a0.dev0"

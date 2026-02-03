@@ -41,6 +41,6 @@ def my_coevolution_matrix(sequences, seq_weights=None, freq_regul=0.08):
     return pairwise.pairwise_kernels(X)
 
 
-coevol_matrix, results = cocoatree.perform_sca(
+coevol_matrix, coevol_matrix_ngm, results = cocoatree.perform_sca(
     loaded_seqs_id, loaded_seqs, n_components=3,
     coevolution_metric=my_coevolution_matrix)

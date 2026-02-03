@@ -147,10 +147,10 @@ Functions
 .. _statistics_ref:
 
 
-:mod:`cocoatree.deconvolution`: Co-evolution matrix deconvolution
+:mod:`cocoatree.decomposition`: Co-evolution matrix decomposition
 =================================================================
 
-.. automodule:: cocoatree.deconvolution
+.. automodule:: cocoatree.decomposition
   :no-members:
   :no-inherited-members:
 
@@ -165,14 +165,14 @@ Functions
     :toctree: generated/
     :template: function.rst
 
-    deconvolution.extract_independent_components
-    deconvolution.extract_principal_components
-    deconvolution.extract_xcors_from_ICs
-    deconvolution.extract_xcors
-    deconvolution.remove_global_correlations
+    decomposition.extract_independent_components
+    decomposition.extract_principal_components
+    decomposition.extract_xcors_from_ICs
+    decomposition.extract_xcors
+    decomposition.remove_global_correlations
 
 
-.. _deconvolution_ref:
+.. _decomposition_ref:
 
 
 :mod:`cocoatree.visualization`: Visualization with ete3

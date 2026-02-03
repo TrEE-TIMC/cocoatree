@@ -95,6 +95,6 @@ print(pdb_seq)
 print(pdb_pos)
 
 # ..seealso::
-#       :ref:`sphx_glr_auto_examples_a_quick_start_plot_map_alignments.py` to
-#       see how to perform a mapping of the positions between your MSA and the
-#       PDB structure.
+#       :ref:`sphx_glr_auto_examples_a_quick_start_03_plot_map_alignments.py`
+#       to see how to perform a mapping of the positions between your MSA and
+#       the PDB structure.

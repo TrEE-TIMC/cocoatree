@@ -6,7 +6,7 @@ to better understand the coevolution signals.
 It regroups various coevolution metrics and corrections, such as statistical coevolution analysis (SCA) or mutual
 information (MI).
 
-Website: [tree-bioinfo-intra.timc.fr/projects/cocoa/](http://tree-bioinfo-intra.timc.fr/projects/cocoa/index.html)
+Website: [https://tree-timc.github.io/cocoatree/](https://tree-timc.github.io/cocoatree/)
 
 ## Library organization
 
@@ -24,18 +24,10 @@ COCOA-Tree requires:
 - NumPy
 - scikit-learn
 - biopython
-- ete3
+- ete3 (which itself depends on six and pyqt5)
 
 Matplotlib is also required for running the examples.
 
 ### User installation
 
-To install for development purposes, use::
-
-    python setup.py develop
-
-
-All changes in the python module will be repercuted on the installed version
-(in practice the installed version is a symlink towards the package in
-development).
-
+See documentation for full installation guidelines.

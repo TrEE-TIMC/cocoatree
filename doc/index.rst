@@ -48,6 +48,7 @@ If you use COCOA-Tree in a scientific publication, we would appreciate citations
 to the following paper:
 
    COCOA-Tree: Phylogenetic Visualization and Comparative Analysis of Coevolving Residues :cite:p:`jullien_cocoa-tree_2026-1`
+   
    doi: https://doi.org/10.64898/2026.02.05.703816
 
 Bibtex entry::

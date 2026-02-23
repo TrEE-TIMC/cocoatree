@@ -45,8 +45,8 @@
 </div>
 <section id="cocoa-tree-collaborative-coevolution-analysis-toolbox-including-tree-based-vizualisation">
 <h1>COCOA-Tree: COllaborative COevolution Analysis Toolbox including tree-based vizualisation<a class="headerlink" href="#cocoa-tree-collaborative-coevolution-analysis-toolbox-including-tree-based-vizualisation" title="Link to this heading">¶</a></h1>
-<p>COCOA-Tree is a <a class="reference external" href="https://www.python.org">Python</a> library designed to perform coevolution analysis of protein sequence data and to compare the results with phylogenetic trees and metadata. By doing so, it facilitates the investigation of the origins of coevolution patterns, their relationships to phylogeny and functional protein annotation, and ultimately aims to democratize the use and development of so-called <em>protein sectors</em> <span id="id1">[<a class="reference internal" href="#id7" title="Olivier Rivoire, Kimberly A. Reynolds, and Rama Ranganathan. Evolution-Based Functional Decomposition of Proteins. PLOS Computational Biology, 12(6):e1004817, June 2016. doi:10.1371/journal.pcbi.1004817.">RRR16</a>]</span> and <em>specificity-determining positions (SDPs)</em> <span id="id2">[<a class="reference internal" href="#id8" title="David De Juan, Florencio Pazos, and Alfonso Valencia. Emerging methods in protein co-evolution. Nature Reviews Genetics, 14(4):249–261, April 2013. doi:10.1038/nrg3414.">DJPV13</a>]</span>.</p>
-<p>The library includes several coevolution metrics (and allows users to define their own), along with various correction methods, enabling easy comparison between approaches. It also integrates with the molecular visualization software <a class="reference external" href="https://pymol.org">PyMOL</a>, allowing users to map results onto 3D structures, more specifically, extremal co-evolving residues that form the basis of protein sectors <span id="id3">[<a class="reference internal" href="#id9" title="Margaux et al. Tbd. BioRxiv, 1(1):1, 2025. doi:no DOI yet.">eal25</a>]</span>.</p>
+<p>COCOA-Tree is a <a class="reference external" href="https://www.python.org">Python</a> library designed to perform coevolution analysis of protein sequence data and to compare the results with phylogenetic trees and metadata. By doing so, it facilitates the investigation of the origins of coevolution patterns, their relationships to phylogeny and functional protein annotation, and ultimately aims to democratize the use and development of so-called <em>protein sectors</em> <span id="id1">[<a class="reference internal" href="#id8" title="Olivier Rivoire, Kimberly A. Reynolds, and Rama Ranganathan. Evolution-Based Functional Decomposition of Proteins. PLOS Computational Biology, 12(6):e1004817, June 2016. doi:10.1371/journal.pcbi.1004817.">RRR16</a>]</span> and <em>specificity-determining positions (SDPs)</em> <span id="id2">[<a class="reference internal" href="#id9" title="David De Juan, Florencio Pazos, and Alfonso Valencia. Emerging methods in protein co-evolution. Nature Reviews Genetics, 14(4):249–261, April 2013. doi:10.1038/nrg3414.">DJPV13</a>]</span>.</p>
+<p>The library includes several coevolution metrics (and allows users to define their own), along with various correction methods, enabling easy comparison between approaches. It also integrates with the molecular visualization software <a class="reference external" href="https://pymol.org">PyMOL</a>, allowing users to map results onto 3D structures, more specifically, extremal co-evolving residues that form the basis of protein sectors <span id="id3">[]</span>.</p>
 <p>The software is organized into different modules, detailed below:</p>
 <a class="reference internal image-reference" href="_images/cocoa_orga_v5.png"><img alt="_images/cocoa_orga_v5.png" src="_images/cocoa_orga_v5.png" style="width: 100%;" />
 </a>
@@ -55,7 +55,7 @@
 <ul class="simple">
 <li><p>MI: Mutual Information</p></li>
 <li><p>MSA: Multiple Sequence Alignment</p></li>
-<li><p>SCA: Statistical Coupling Analysis, the method underlying the identification of protein sectors <span id="id4">[<a class="reference internal" href="#id6" title="Najeeb Halabi, Olivier Rivoire, Stanislas Leibler, and Rama Ranganathan. Protein Sectors: Evolutionary Units of Three-Dimensional Structure. Cell, 138(4):774–786, August 2009. URL: https://linkinghub.elsevier.com/retrieve/pii/S0092867409009635 (visited on 2023-07-19), doi:10.1016/j.cell.2009.07.038.">HRLR09</a>, <a class="reference internal" href="#id7" title="Olivier Rivoire, Kimberly A. Reynolds, and Rama Ranganathan. Evolution-Based Functional Decomposition of Proteins. PLOS Computational Biology, 12(6):e1004817, June 2016. doi:10.1371/journal.pcbi.1004817.">RRR16</a>]</span></p></li>
+<li><p>SCA: Statistical Coupling Analysis, the method underlying the identification of protein sectors <span id="id4">[<a class="reference internal" href="#id7" title="Najeeb Halabi, Olivier Rivoire, Stanislas Leibler, and Rama Ranganathan. Protein Sectors: Evolutionary Units of Three-Dimensional Structure. Cell, 138(4):774–786, August 2009. URL: https://linkinghub.elsevier.com/retrieve/pii/S0092867409009635 (visited on 2023-07-19), doi:10.1016/j.cell.2009.07.038.">HRLR09</a>, <a class="reference internal" href="#id8" title="Olivier Rivoire, Kimberly A. Reynolds, and Rama Ranganathan. Evolution-Based Functional Decomposition of Proteins. PLOS Computational Biology, 12(6):e1004817, June 2016. doi:10.1371/journal.pcbi.1004817.">RRR16</a>]</span></p></li>
 <li><p>XCoR: eXtremal Co-evolving Residues</p></li>
 </ul>
 </section>
@@ -72,10 +72,17 @@
 <p>If you use COCOA-Tree in a scientific publication, we would appreciate citations
 to the following paper:</p>
 <blockquote>
-<div><p>BEST PAPER EVER</p>
+<div><p>COCOA-Tree: Phylogenetic Visualization and Comparative Analysis of Coevolving Residues <span id="id5">[<a class="reference internal" href="#id10" title="Margaux Jullien, Marion Chauveau, Sophie-Carole Chobert, Emma Bouvet, William Schmitt, Fabien Pierrel, Sophie Abby, Nelle Varoquaux, and Ivan Junier. Cocoa-tree: phylogenetic visualization and comparative analysis of coevolving residues. BioRxiv, 2026. doi:10.64898/2026.02.05.703816.">JCC+26</a>]</span></p>
+<p>doi: <a class="reference external" href="https://doi.org/10.64898/2026.02.05.703816">https://doi.org/10.64898/2026.02.05.703816</a></p>
 </div></blockquote>
 <p>Bibtex entry:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@article</span> <span class="p">{}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@article</span><span class="p">{</span><span class="n">jullien_cocoa</span><span class="o">-</span><span class="n">tree_2026</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+         <span class="n">author</span>  <span class="o">=</span> <span class="p">{</span><span class="n">Jullien</span><span class="p">,</span> <span class="n">Margaux</span> <span class="ow">and</span> <span class="n">Chauveau</span><span class="p">,</span> <span class="n">Marion</span> <span class="ow">and</span> <span class="n">Chobert</span><span class="p">,</span> <span class="n">Sophie</span><span class="o">-</span><span class="n">Carole</span> <span class="ow">and</span> <span class="n">Bouvet</span><span class="p">,</span> <span class="n">Emma</span> <span class="ow">and</span> <span class="n">Schmitt</span><span class="p">,</span> <span class="n">William</span> <span class="ow">and</span> <span class="n">Pierrel</span><span class="p">,</span> <span class="n">Fabien</span> <span class="ow">and</span> <span class="n">Abby</span><span class="p">,</span> <span class="n">Sophie</span> <span class="ow">and</span> <span class="n">Varoquaux</span><span class="p">,</span> <span class="n">Nelle</span> <span class="ow">and</span> <span class="n">Junier</span><span class="p">,</span> <span class="n">Ivan</span><span class="p">},</span>
+         <span class="n">title</span>   <span class="o">=</span> <span class="p">{</span><span class="n">COCOA</span><span class="o">-</span><span class="n">Tree</span><span class="p">:</span> <span class="n">Phylogenetic</span> <span class="n">Visualization</span> <span class="ow">and</span> <span class="n">Comparative</span> <span class="n">Analysis</span> <span class="n">of</span> <span class="n">Coevolving</span> <span class="n">Residues</span><span class="p">},</span>
+         <span class="n">journal</span> <span class="o">=</span> <span class="p">{</span><span class="n">BioRxiv</span><span class="p">},</span>
+         <span class="n">year</span>    <span class="o">=</span> <span class="mi">2026</span><span class="p">,</span>
+         <span class="n">doi</span>     <span class="o">=</span> <span class="p">{</span><span class="mf">10.64898</span><span class="o">/</span><span class="mf">2026.02.05.703816</span><span class="p">},</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </section>
@@ -112,21 +119,21 @@ to the following paper:</p>
 <span class="n">THE</span> <span class="n">POSSIBILITY</span> <span class="n">OF</span> <span class="n">SUCH</span> <span class="n">DAMAGE</span><span class="o">.</span>
 </pre></div>
 </div>
-<div class="docutils container" id="id5">
+<div class="docutils container" id="id6">
 <div role="list" class="citation-list">
-<div class="citation" id="id8" role="doc-biblioentry">
+<div class="citation" id="id9" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">DJPV13</a><span class="fn-bracket">]</span></span>
 <p>David De Juan, Florencio Pazos, and Alfonso Valencia. Emerging methods in protein co-evolution. <em>Nature Reviews Genetics</em>, 14(4):249–261, April 2013. <a class="reference external" href="https://doi.org/10.1038/nrg3414">doi:10.1038/nrg3414</a>.</p>
 </div>
-<div class="citation" id="id9" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">eal25</a><span class="fn-bracket">]</span></span>
-<p>Margaux et al. Tbd. <em>BioRxiv</em>, 1(1):1, 2025. <a class="reference external" href="https://doi.org/no DOI yet">doi:no DOI yet</a>.</p>
-</div>
-<div class="citation" id="id6" role="doc-biblioentry">
+<div class="citation" id="id7" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">HRLR09</a><span class="fn-bracket">]</span></span>
 <p>Najeeb Halabi, Olivier Rivoire, Stanislas Leibler, and Rama Ranganathan. Protein Sectors: Evolutionary Units of Three-Dimensional Structure. <em>Cell</em>, 138(4):774–786, August 2009. URL: <a class="reference external" href="https://linkinghub.elsevier.com/retrieve/pii/S0092867409009635">https://linkinghub.elsevier.com/retrieve/pii/S0092867409009635</a> (visited on 2023-07-19), <a class="reference external" href="https://doi.org/10.1016/j.cell.2009.07.038">doi:10.1016/j.cell.2009.07.038</a>.</p>
 </div>
-<div class="citation" id="id7" role="doc-biblioentry">
+<div class="citation" id="id10" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">JCC+26</a><span class="fn-bracket">]</span></span>
+<p>Margaux Jullien, Marion Chauveau, Sophie-Carole Chobert, Emma Bouvet, William Schmitt, Fabien Pierrel, Sophie Abby, Nelle Varoquaux, and Ivan Junier. Cocoa-tree: phylogenetic visualization and comparative analysis of coevolving residues. <em>BioRxiv</em>, 2026. <a class="reference external" href="https://doi.org/10.64898/2026.02.05.703816">doi:10.64898/2026.02.05.703816</a>.</p>
+</div>
+<div class="citation" id="id8" role="doc-biblioentry">
 <span class="label"><span class="fn-bracket">[</span>RRR16<span class="fn-bracket">]</span></span>
 <span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id4">2</a>)</span>
 <p>Olivier Rivoire, Kimberly A. Reynolds, and Rama Ranganathan. Evolution-Based Functional Decomposition of Proteins. <em>PLOS Computational Biology</em>, 12(6):e1004817, June 2016. <a class="reference external" href="https://doi.org/10.1371/journal.pcbi.1004817">doi:10.1371/journal.pcbi.1004817</a>.</p>

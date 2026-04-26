@@ -11,6 +11,10 @@ in the advanced usage section.
 
 
 
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
 
 .. raw:: html
 
@@ -31,6 +35,10 @@ Cocoatree quick start
 In this section, you'll find examples to perform basic coevolution
 analyses using :mod:`cocoatree`
 
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
 
 
 .. raw:: html
@@ -139,6 +147,10 @@ perform coevolution analyses in detail and enabling you to modify the default
 parameters to better suit your datasets.
 
 
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
 
 .. raw:: html
 
@@ -209,6 +221,10 @@ Visualization
 -------------
 In this section, you will find examples on how to plot COCOA-Tree's coevolution
 results along with sequence metadata and phylogeny. 
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
 
 
 .. raw:: html
@@ -298,6 +314,10 @@ Datasets
 In this section you will find descriptions of the three datasets included
 within COCOA-Tree and of how you can access their different objects.
 
+
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
 
 
 .. raw:: html

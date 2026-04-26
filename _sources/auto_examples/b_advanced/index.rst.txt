@@ -11,6 +11,10 @@ perform coevolution analyses in detail and enabling you to modify the default
 parameters to better suit your datasets.
 
 
+.. raw:: html
+
+  <div id='sg-tag-list' class='sphx-glr-tag-list'></div>
+
 
 .. raw:: html
 

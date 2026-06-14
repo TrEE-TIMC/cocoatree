@@ -153,7 +153,7 @@ Plotting the SCA matrix
  .. code-block:: none
 
 
-    <matplotlib.colorbar.Colorbar object at 0x7f2f5c30d890>
+    <matplotlib.colorbar.Colorbar object at 0x7f0a39e19ed0>
 
 
 
@@ -284,7 +284,7 @@ Plotting the SCA matrix according to the XCoRs
  .. code-block:: none
 
 
-    Text(0.5, 29.000000000000014, "XCoR's positions")
+    Text(0.5, 29.336588541666643, "XCoR's positions")
 
 
 
@@ -333,7 +333,7 @@ Plotting the SCA matrix without global mode according to the XCoRs
  .. code-block:: none
 
 
-    Text(0.5, 29.000000000000014, "XCoR's positions")
+    Text(0.5, 29.3365885416667, "XCoR's positions")
 
 
 
@@ -365,7 +365,7 @@ Adapting the coevolution scale
  .. code-block:: none
 
 
-    Text(0.5, 29.000000000000014, "XCoR's positions")
+    Text(0.5, 29.3365885416667, "XCoR's positions")
 
 
 
@@ -408,14 +408,14 @@ Visualizing XCoRs on independent components
  .. code-block:: none
 
 
-    <matplotlib.legend.Legend object at 0x7f2f5e85ba90>
+    <matplotlib.legend.Legend object at 0x7f0a3a4eddd0>
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** (0 minutes 2.908 seconds)
+   **Total running time of the script:** (0 minutes 2.848 seconds)
 
 
 .. _sphx_glr_download_auto_examples_a_quick_start_plot_02_minimal_coevo_pd.py:

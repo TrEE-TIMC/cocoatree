@@ -57,7 +57,7 @@
                                    <span class="n">learnrate_ICA</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">nb_iterations_ICA</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span>
                                    <span class="n">freq_regul</span><span class="o">=</span><span class="n">__freq_regularization_ref</span><span class="p">,</span>
                                    <span class="n">verbose_random_iter</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Extract independent components from a coevolution matrix</span>
 
 <span class="sd">    The current method is fully applicable to SCA analysis. For other metrics,</span>
@@ -69,11 +69,11 @@
 <span class="sd">        coevolution matrix</span>
 
 <span class="sd">    sequences : list of sequences, optional, default: None</span>
-<span class="sd">        when using pySCA&#39;s strategy to estimate the number of components,</span>
+<span class="sd">        when using pySCA's strategy to estimate the number of components,</span>
 <span class="sd">        sequences needs to be provided.</span>
 
 
-<span class="sd">    method : {None, &quot;pysca&quot;}, default=None</span>
+<span class="sd">    method : {None, "pysca"}, default=None</span>
 <span class="sd">        Methods to use to estimate the number of components to extract. By</span>
 <span class="sd">        default, relies on the number of components provided by the user.</span>
 
@@ -81,13 +81,13 @@
 <span class="sd">        Number of independent components to extract</span>
 
 <span class="sd">    nrandom_pySCA : int, default=10,</span>
-<span class="sd">        Number of MSA randomizations to perform if method=&#39;pySCA&#39;</span>
+<span class="sd">        Number of MSA randomizations to perform if method='pySCA'</span>
 
 <span class="sd">    learnrate_ICA : int, default=0.1,</span>
-<span class="sd">        Learning rate / relaxation parameter used if method=&#39;pySCA&#39;</span>
+<span class="sd">        Learning rate / relaxation parameter used if method='pySCA'</span>
 
 <span class="sd">    nb_iteration_ICA : int, default=100000,</span>
-<span class="sd">        Number of iterations if method=&#39;pySCA&#39;</span>
+<span class="sd">        Number of iterations if method='pySCA'</span>
 
 <span class="sd">    freq_regul : regularization parameter (default=__freq_regularization_ref)</span>
 
@@ -97,14 +97,14 @@
 <span class="sd">    -------</span>
 <span class="sd">    idpt_components : ndarray of shape (n_components, n_pos)</span>
 <span class="sd">        corresponding to a list of independent components</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">if</span> <span class="n">method</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;pySCA&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">'pySCA'</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">sequences</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                    <span class="s2">&quot;Sequences need to be provided to estimate&quot;</span>
-                    <span class="s2">&quot;the number of components automatically&quot;</span><span class="p">)</span>
+                    <span class="s2">"Sequences need to be provided to estimate"</span>
+                    <span class="s2">"the number of components automatically"</span><span class="p">)</span>
 
             <span class="n">n_components</span> <span class="o">=</span> <span class="n">_compute_n_components_as_pySCA</span><span class="p">(</span>
                 <span class="n">sequences</span><span class="p">,</span> <span class="n">coevo_matrix</span><span class="p">,</span>
@@ -112,7 +112,7 @@
                 <span class="n">verbose_random_iter</span><span class="o">=</span><span class="n">verbose_random_iter</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2"> is not a valid method. Options are None, &#39;pySCA&#39;&quot;</span><span class="p">)</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2"> is not a valid method. Options are None, 'pySCA'"</span><span class="p">)</span>
 
     <span class="n">V</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">)</span>
     <span class="n">Vica</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_compute_ica</span><span class="p">(</span><span class="n">V</span><span class="p">,</span> <span class="n">n_components</span><span class="p">,</span>
@@ -130,7 +130,7 @@
                                    <span class="n">nrandom</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
                                    <span class="n">freq_regul</span><span class="o">=</span><span class="n">__freq_regularization_ref</span><span class="p">,</span>
                                    <span class="n">verbose_random_iter</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Compute the number of independent components as in pySCA</span>
 
 <span class="sd">    Given the eigenvalues of the coevolution matrix, and the</span>
@@ -163,7 +163,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    n_components : int</span>
 <span class="sd">        Number of independent components to select</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">if</span> <span class="n">seq_weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">seq_weights</span><span class="p">,</span> <span class="n">m_eff</span> <span class="o">=</span> <span class="n">compute_seq_weights</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
@@ -173,9 +173,9 @@
     <span class="n">second_eigen_values_random</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">irand</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrandom</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">verbose_random_iter</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">/</span><span class="si">%d</span><span class="s1"> randomized msa (to compute number of</span><span class="se">\</span>
-<span class="s1">                  significant components) &#39;</span>
-                  <span class="o">%</span> <span class="p">(</span><span class="n">irand</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">nrandom</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\r</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">%d</span><span class="s1">/</span><span class="si">%d</span><span class="s1"> randomized msa (to compute number of</span><span class="se">\</span>
+<span class="s1">                  significant components) '</span>
+                  <span class="o">%</span> <span class="p">(</span><span class="n">irand</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">nrandom</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s1">'</span><span class="se">\r</span><span class="s1">'</span><span class="p">)</span>
         <span class="n">rand_sequences</span> <span class="o">=</span> <span class="n">_randomize_seqs_conserving_col_compo</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
 
         <span class="n">seq_weights_rand</span><span class="p">,</span> <span class="n">m_eff_rand</span> <span class="o">=</span> <span class="n">compute_seq_weights</span><span class="p">(</span><span class="n">rand_sequences</span><span class="p">)</span>
@@ -203,7 +203,7 @@
 <div class="viewcode-block" id="extract_principal_components">
 <a class="viewcode-back" href="../../modules/generated/cocoatree.decomposition.extract_principal_components.html#cocoatree.decomposition.extract_principal_components">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">extract_principal_components</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Perform principal component decomposition of a coevolution matrix</span>
 
 <span class="sd">    Parameters</span>
@@ -215,7 +215,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    principal_components : np.ndarray (n_pos, n_pos)</span>
 <span class="sd">        Principal components obtained from the PCA of the coevolution matrix</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">principal_components</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">)</span>
 
@@ -226,7 +226,7 @@
 <div class="viewcode-block" id="extract_xcors_from_ICs">
 <a class="viewcode-back" href="../../modules/generated/cocoatree.decomposition.extract_xcors_from_ICs.html#cocoatree.decomposition.extract_xcors_from_ICs">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">extract_xcors_from_ICs</span><span class="p">(</span><span class="n">idpt_components</span><span class="p">,</span> <span class="n">coevo_matrix</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Extract residue positions of XCoRs from independent components</span>
 
 <span class="sd">    Parameters</span>
@@ -239,7 +239,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    xcors : lists of residue positions on the filtered MSA for each of the</span>
 <span class="sd">        n_components xcor</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">Vica</span> <span class="o">=</span> <span class="n">idpt_components</span><span class="o">.</span><span class="n">T</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">xcor_sizes</span><span class="p">,</span> <span class="n">sorted_pos</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">_icList</span><span class="p">(</span>
         <span class="n">Vica</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">idpt_components</span><span class="p">),</span> <span class="n">coevo_matrix</span><span class="p">)</span>
@@ -258,7 +258,7 @@
 <div class="viewcode-block" id="extract_xcors">
 <a class="viewcode-back" href="../../modules/generated/cocoatree.decomposition.extract_xcors.html#cocoatree.decomposition.extract_xcors">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">extract_xcors</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">,</span> <span class="n">n_xcors</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Extract residue positions of XCoRs directly from the coevo_matrix</span>
 
 <span class="sd">    Parameters</span>
@@ -272,7 +272,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    xcors : lists of residue positions on the filtered MSA for each of the</span>
 <span class="sd">        n_xcors XCoR</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="c1"># extracting indepdent components</span>
     <span class="n">idpt_components</span> <span class="o">=</span> <span class="n">extract_independent_components</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">,</span>
@@ -296,7 +296,7 @@
 <div class="viewcode-block" id="remove_global_correlations">
 <a class="viewcode-back" href="../../modules/generated/cocoatree.decomposition.remove_global_correlations.html#cocoatree.decomposition.remove_global_correlations">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">remove_global_correlations</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Remove global correlations by setting the first eigen value</span>
 <span class="sd">    of the coevolution matrix to 0</span>
 
@@ -312,7 +312,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    coevo_matrix_sub : np.ndarray (n_pos, n_pos),</span>
 <span class="sd">        coevolution matrix without global correlations</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">coevo_matrix</span><span class="p">)</span>
     <span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">coevo_matrix_sub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">multi_dot</span><span class="p">([</span><span class="n">U</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">S</span><span class="p">),</span> <span class="n">Vt</span><span class="p">]),</span> <span class="mi">0</span><span class="p">)</span>

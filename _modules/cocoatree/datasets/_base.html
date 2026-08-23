@@ -50,18 +50,18 @@
 
 <div class="viewcode-block" id="load_S1A_serine_proteases">
 <a class="viewcode-back" href="../../../modules/generated/cocoatree.datasets.load_S1A_serine_proteases.html#cocoatree.datasets.load_S1A_serine_proteases">[docs]</a>
-<span class="k">def</span><span class="w"> </span><span class="nf">load_S1A_serine_proteases</span><span class="p">(</span><span class="n">paper</span><span class="o">=</span><span class="s1">&#39;rivoire&#39;</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_S1A_serine_proteases</span><span class="p">(</span><span class="n">paper</span><span class="o">=</span><span class="s1">'rivoire'</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Load the S1A serine protease dataset</span>
 
 <span class="sd">    Halabi dataset: 1470 sequences of length 832; 3 sectors identified</span>
 <span class="sd">    Rivoire dataset : 1390 sequences of length 832 (snake sequences were</span>
-<span class="sd">    removed for the paper&#39;s analysis); 6 sectors identified (including the</span>
+<span class="sd">    removed for the paper's analysis); 6 sectors identified (including the</span>
 <span class="sd">    3 from Halabi et al, 2008)</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    paper: str, either &#39;halabi&#39; or &#39;rivoire&#39;</span>
+<span class="sd">    paper: str, either 'halabi' or 'rivoire'</span>
 <span class="sd">        whether to load the dataset from Halabi et al, Cell, 2008 or from</span>
 <span class="sd">        Rivoire et al, PLoS Comput Biol, 2016</span>
 
@@ -76,61 +76,61 @@
 <span class="sd">        - `sector_positions`: a dictionnary of arrays containing the residue</span>
 <span class="sd">          positions associated to each sector, either in Halabi et al, or in</span>
 <span class="sd">          Rivoire et al.</span>
-<span class="sd">        - `pdb_sequence`: sequence extracted from rat&#39;s trypsin PDB structure</span>
-<span class="sd">        - `pdb_positions`: positions extracted from rat&#39;s trypsin PDB structure</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        - `pdb_sequence`: sequence extracted from rat's trypsin PDB structure</span>
+<span class="sd">        - `pdb_positions`: positions extracted from rat's trypsin PDB structure</span>
+<span class="sd">    """</span>
 
     <span class="n">module_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">paper</span> <span class="o">==</span> <span class="s1">&#39;halabi&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">paper</span> <span class="o">==</span> <span class="s1">'halabi'</span><span class="p">:</span>
         <span class="c1"># Load the alignment used in Halabi et al, 2008</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
             <span class="n">module_path</span><span class="p">,</span>
-            <span class="s2">&quot;data/S1A_serine_proteases/halabi_alignment.fasta&quot;</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">load_MSA</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;fasta&quot;</span><span class="p">)</span>
+            <span class="s2">"data/S1A_serine_proteases/halabi_alignment.fasta"</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">load_MSA</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"fasta"</span><span class="p">)</span>
         <span class="c1"># Load the positions of the 3 sectors identified in Halabi et al, Cell,</span>
         <span class="c1"># 2008</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
             <span class="n">module_path</span><span class="p">,</span>
-            <span class="s2">&quot;data/S1A_serine_proteases/halabi_sectors.npz&quot;</span><span class="p">)</span>
+            <span class="s2">"data/S1A_serine_proteases/halabi_sectors.npz"</span><span class="p">)</span>
         <span class="n">sectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="c1"># Load the metadata</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
             <span class="n">module_path</span><span class="p">,</span>
-            <span class="s2">&quot;data/S1A_serine_proteases/halabi_metadata.csv&quot;</span><span class="p">)</span>
+            <span class="s2">"data/S1A_serine_proteases/halabi_metadata.csv"</span><span class="p">)</span>
         <span class="n">metadata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 
-    <span class="k">elif</span> <span class="n">paper</span> <span class="o">==</span> <span class="s1">&#39;rivoire&#39;</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">paper</span> <span class="o">==</span> <span class="s1">'rivoire'</span><span class="p">:</span>
         <span class="c1"># Load the alignment used in Rivoire et al, 2016</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
             <span class="n">module_path</span><span class="p">,</span>
-            <span class="s2">&quot;data/S1A_serine_proteases/rivoire_alignment.fasta&quot;</span><span class="p">)</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">load_MSA</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;fasta&quot;</span><span class="p">)</span>
+            <span class="s2">"data/S1A_serine_proteases/rivoire_alignment.fasta"</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">load_MSA</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"fasta"</span><span class="p">)</span>
         <span class="c1"># Load the positions of the 6 sectors identified in Rivoire et al, PLoS</span>
         <span class="c1"># Comput Biol, 2016</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
             <span class="n">module_path</span><span class="p">,</span>
-            <span class="s2">&quot;data/S1A_serine_proteases/rivoire_sectors.npz&quot;</span><span class="p">)</span>
+            <span class="s2">"data/S1A_serine_proteases/rivoire_sectors.npz"</span><span class="p">)</span>
         <span class="n">sectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="c1"># Load the metadata</span>
         <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
             <span class="n">module_path</span><span class="p">,</span>
-            <span class="s2">&quot;data/S1A_serine_proteases/rivoire_metadata.csv&quot;</span><span class="p">)</span>
+            <span class="s2">"data/S1A_serine_proteases/rivoire_metadata.csv"</span><span class="p">)</span>
         <span class="n">metadata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid paper: </span><span class="si">{</span><span class="n">paper</span><span class="si">}</span><span class="s2">. Options are &#39;halabi&#39; or </span><span class="se">\</span>
-<span class="s2">                         &#39;rivoire&#39;&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"invalid paper: </span><span class="si">{</span><span class="n">paper</span><span class="si">}</span><span class="s2">. Options are 'halabi' or </span><span class="se">\</span>
+<span class="s2">                         'rivoire'"</span><span class="p">)</span>
 
     <span class="c1"># Load the PDB structure</span>
     <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
         <span class="n">module_path</span><span class="p">,</span>
-        <span class="s2">&quot;data/S1A_serine_proteases/3tgi.pdb&quot;</span><span class="p">)</span>
-    <span class="n">pdb_sequence</span><span class="p">,</span> <span class="n">pdb_positions</span> <span class="o">=</span> <span class="n">load_pdb</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;3TGI&#39;</span><span class="p">,</span> <span class="s1">&#39;E&#39;</span><span class="p">)</span>
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sector_positions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sectors</span>
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;metadata&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata</span>
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pdb_sequence&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_sequence</span><span class="p">,</span>
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pdb_positions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_positions</span>
+        <span class="s2">"data/S1A_serine_proteases/3tgi.pdb"</span><span class="p">)</span>
+    <span class="n">pdb_sequence</span><span class="p">,</span> <span class="n">pdb_positions</span> <span class="o">=</span> <span class="n">load_pdb</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'3TGI'</span><span class="p">,</span> <span class="s1">'E'</span><span class="p">)</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">"sector_positions"</span><span class="p">]</span> <span class="o">=</span> <span class="n">sectors</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">"metadata"</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">"pdb_sequence"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_sequence</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">"pdb_positions"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_positions</span>
 
     <span class="k">return</span> <span class="n">data</span></div>
 
@@ -139,7 +139,7 @@
 <div class="viewcode-block" id="load_rhomboid_proteases">
 <a class="viewcode-back" href="../../../modules/generated/cocoatree.datasets.load_rhomboid_proteases.html#cocoatree.datasets.load_rhomboid_proteases">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_rhomboid_proteases</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Load the rhomboid protease dataset</span>
 
 <span class="sd">    This dataset comes from Mihaljevic &amp; Urban, Cell, 2020</span>
@@ -154,39 +154,39 @@
 <span class="sd">         - `sector_positions`: a dictionnary of arrays containing the residue</span>
 <span class="sd">          positions associated to each sector as published in the original</span>
 <span class="sd">          paper.</span>
-<span class="sd">        - `pdb_sequence`: sequence extracted from E. coli&#39;s PDB structure</span>
-<span class="sd">        - `pdb_positions`: positions extracted from E. coli&#39;s PDB structure</span>
+<span class="sd">        - `pdb_sequence`: sequence extracted from E. coli's PDB structure</span>
+<span class="sd">        - `pdb_positions`: positions extracted from E. coli's PDB structure</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">module_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
     <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
         <span class="n">module_path</span><span class="p">,</span>
-        <span class="s2">&quot;data/rhomboid_proteases/Data_S1_Rhomboid_MSA_short_names.fasta&quot;</span><span class="p">)</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="n">load_MSA</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;fasta&quot;</span><span class="p">)</span>
+        <span class="s2">"data/rhomboid_proteases/Data_S1_Rhomboid_MSA_short_names.fasta"</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">load_MSA</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"fasta"</span><span class="p">)</span>
 
     <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
         <span class="n">module_path</span><span class="p">,</span>
-        <span class="s2">&quot;data/rhomboid_proteases/rhomboid_sectors.npz&quot;</span><span class="p">)</span>
+        <span class="s2">"data/rhomboid_proteases/rhomboid_sectors.npz"</span><span class="p">)</span>
     <span class="n">sectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 
     <span class="c1"># Load the metadata</span>
     <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
         <span class="n">module_path</span><span class="p">,</span>
-        <span class="s2">&quot;data/rhomboid_proteases/rhomboid_metadata_clean.csv&quot;</span><span class="p">)</span>
+        <span class="s2">"data/rhomboid_proteases/rhomboid_metadata_clean.csv"</span><span class="p">)</span>
     <span class="n">metadata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 
     <span class="c1"># Load the PDB structure</span>
     <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
         <span class="n">module_path</span><span class="p">,</span>
-        <span class="s2">&quot;data/rhomboid_proteases/2NRF.pdb&quot;</span><span class="p">)</span>
+        <span class="s2">"data/rhomboid_proteases/2NRF.pdb"</span><span class="p">)</span>
     <span class="c1"># Two chains: A or B</span>
-    <span class="n">pdb_sequence</span><span class="p">,</span> <span class="n">pdb_positions</span> <span class="o">=</span> <span class="n">load_pdb</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;2NRF&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)</span>
+    <span class="n">pdb_sequence</span><span class="p">,</span> <span class="n">pdb_positions</span> <span class="o">=</span> <span class="n">load_pdb</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'2NRF'</span><span class="p">,</span> <span class="s1">'A'</span><span class="p">)</span>
 
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sector_positions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sectors</span>
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;metadata&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata</span>
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pdb_sequence&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_sequence</span><span class="p">,</span>
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pdb_positions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_positions</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">"sector_positions"</span><span class="p">]</span> <span class="o">=</span> <span class="n">sectors</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">"metadata"</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">"pdb_sequence"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_sequence</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">"pdb_positions"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_positions</span>
 
     <span class="k">return</span> <span class="n">data</span></div>
 
@@ -195,7 +195,7 @@
 <div class="viewcode-block" id="load_DHFR">
 <a class="viewcode-back" href="../../../modules/generated/cocoatree.datasets.load_DHFR.html#cocoatree.datasets.load_DHFR">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">load_DHFR</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    load the DHFR dataset</span>
 
 <span class="sd">    This dataset comes from Kalmer et al, The Journal of Physical Chemistry B,</span>
@@ -210,31 +210,31 @@
 <span class="sd">         - `sector_positions`: a dictionnary of arrays containing the residue</span>
 <span class="sd">          positions associated to each sector as published in the original</span>
 <span class="sd">          paper.</span>
-<span class="sd">        - `pdb_sequence`: sequence extracted from E. coli&#39;s PDB structure</span>
-<span class="sd">        - `pdb_positions`: positions extracted from E. coli&#39;s PDB structure</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">        - `pdb_sequence`: sequence extracted from E. coli's PDB structure</span>
+<span class="sd">        - `pdb_positions`: positions extracted from E. coli's PDB structure</span>
+<span class="sd">    """</span>
     <span class="n">module_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
 
     <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
         <span class="n">module_path</span><span class="p">,</span>
-        <span class="s2">&quot;data/DHFR/alignment.faa.gz&quot;</span><span class="p">)</span>
-    <span class="k">with</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;rt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">load_MSA</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;fasta&quot;</span><span class="p">)</span>
+        <span class="s2">"data/DHFR/alignment.faa.gz"</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">gzip</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">"rt"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">load_MSA</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">"fasta"</span><span class="p">)</span>
 
     <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
         <span class="n">module_path</span><span class="p">,</span>
-        <span class="s2">&quot;data/DHFR/DHFR_sectors.npz&quot;</span><span class="p">)</span>
+        <span class="s2">"data/DHFR/DHFR_sectors.npz"</span><span class="p">)</span>
     <span class="n">sectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 
     <span class="c1"># Load the PDB structure</span>
     <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
         <span class="n">module_path</span><span class="p">,</span>
-        <span class="s2">&quot;data/DHFR/3QL0.pdb&quot;</span><span class="p">)</span>
-    <span class="n">pdb_sequence</span><span class="p">,</span> <span class="n">pdb_positions</span> <span class="o">=</span> <span class="n">load_pdb</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;3QL0&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">)</span>
+        <span class="s2">"data/DHFR/3QL0.pdb"</span><span class="p">)</span>
+    <span class="n">pdb_sequence</span><span class="p">,</span> <span class="n">pdb_positions</span> <span class="o">=</span> <span class="n">load_pdb</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'3QL0'</span><span class="p">,</span> <span class="s1">'A'</span><span class="p">)</span>
 
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;sector_positions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sectors</span>
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pdb_sequence&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_sequence</span><span class="p">,</span>
-    <span class="n">data</span><span class="p">[</span><span class="s2">&quot;pdb_positions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_positions</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">"sector_positions"</span><span class="p">]</span> <span class="o">=</span> <span class="n">sectors</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">"pdb_sequence"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_sequence</span><span class="p">,</span>
+    <span class="n">data</span><span class="p">[</span><span class="s2">"pdb_positions"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pdb_positions</span>
 
     <span class="k">return</span> <span class="n">data</span></div>
 

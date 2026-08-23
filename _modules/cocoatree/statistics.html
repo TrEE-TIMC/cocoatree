@@ -52,7 +52,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_all_frequencies</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span>
                             <span class="n">seq_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                             <span class="n">freq_regul</span><span class="o">=</span><span class="n">__freq_regularization_ref</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Compute frequencies on sequences</span>
 
 
@@ -80,7 +80,7 @@
 <span class="sd">    aa_joint_freqs : np.ndarray (nseq, nseq, 21, 21)</span>
 <span class="sd">        An ndarray containing the pairwise joint frequencies of amino acids</span>
 <span class="sd">        for each pair of positions in the list of provided sequences.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="k">if</span> <span class="n">seq_weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">seq_weights</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">msa</span><span class="o">.</span><span class="n">compute_seq_weights</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
 

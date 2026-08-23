@@ -48,7 +48,7 @@
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_compute_aa_freqs</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                       <span class="n">freq_regul</span><span class="o">=</span><span class="n">__freq_regularization_ref</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes frequencies of amino acids at each position of the alignment.</span>
+<span class="w">    </span><span class="sd">"""Computes frequencies of amino acids at each position of the alignment.</span>
 
 <span class="sd">    .. math::</span>
 <span class="sd">        f_i^a = (\\sum_s w_s x_{si}^a + \\lambda/21)/(M_{eff} + \\lambda)</span>
@@ -77,7 +77,7 @@
 <span class="sd">    -------</span>
 <span class="sd">    aa_freq : np.ndarray of shape (Npos, aa_count)</span>
 <span class="sd">            frequency of amino acid *a* at position *i*</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">char</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">row</span><span class="p">]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">sequences</span><span class="p">])</span>
     <span class="n">binary_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">tmp</span> <span class="o">==</span> <span class="n">aa</span> <span class="k">for</span> <span class="n">aa</span> <span class="ow">in</span> <span class="n">lett2num</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
@@ -95,7 +95,7 @@
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_compute_background_freqs</span><span class="p">(</span><span class="n">aa_freqs</span><span class="p">,</span> <span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                               <span class="n">freq_regul</span><span class="o">=</span><span class="n">__freq_regularization_ref</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes (regularized) background frequencies of amino acids</span>
+<span class="w">    </span><span class="sd">"""Computes (regularized) background frequencies of amino acids</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
@@ -118,7 +118,7 @@
 <span class="sd">        at each position; it is computed from the mean frequency of amino acid</span>
 <span class="sd">        *a* in all proteins in the NCBI non-redundant database</span>
 <span class="sd">        (see Rivoire et al., https://dx.plos.org/10.1371/journal.pcbi.1004817)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="c1"># q0 : fraction of gaps in the alignment</span>
     <span class="n">q0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">aa_freqs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
@@ -142,7 +142,7 @@
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_compute_first_order_freqs</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                                <span class="n">freq_regul</span><span class="o">=</span><span class="n">__freq_regularization_ref</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Compute amino acid frequencies at each position and background frequencies</span>
 
 <span class="sd">    Parameters</span>
@@ -165,7 +165,7 @@
 <span class="sd">    proteins in the NCBI non-redundant database.</span>
 
 <span class="sd">    (see Rivoire et al., https://dx.plos.org/10.1371/journal.pcbi.1004817)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="k">if</span> <span class="n">seq_weights</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">seq_weights</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">compute_seq_weights</span><span class="p">(</span><span class="n">sequences</span><span class="p">)</span>
@@ -187,7 +187,7 @@
 <div class="viewcode-block" id="compute_entropy">
 <a class="viewcode-back" href="../../../modules/generated/cocoatree.statistics.position.compute_entropy.html#cocoatree.statistics.position.compute_entropy">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_entropy</span><span class="p">(</span><span class="n">aa_freq</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Computes  Shannon&#39;s entropy for each position in the alignment</span>
+<span class="w">    </span><span class="sd">"""Computes  Shannon's entropy for each position in the alignment</span>
 
 <span class="sd">    .. math::</span>
 
@@ -204,7 +204,7 @@
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
 <span class="sd">    s: array of shape (N_pos)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">s</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">aa_freq</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">aa_freq</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
@@ -216,7 +216,7 @@
 <a class="viewcode-back" href="../../../modules/generated/cocoatree.statistics.position.compute_conservation.html#cocoatree.statistics.position.compute_conservation">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">compute_conservation</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                          <span class="n">freq_regul</span><span class="o">=</span><span class="n">__freq_regularization_ref</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""</span>
 <span class="sd">    Compute the conservation of amino acid at each position.</span>
 
 <span class="sd">    The conservation is computed as the relative entropy (e.g., the</span>
@@ -249,7 +249,7 @@
 <span class="sd">        where each entry corresponds to the conservation at this position in</span>
 <span class="sd">        the sequences.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">aa_freqs</span><span class="p">,</span> <span class="n">bkgd_freqs</span> <span class="o">=</span> <span class="n">_compute_first_order_freqs</span><span class="p">(</span><span class="n">sequences</span><span class="p">,</span> <span class="n">seq_weights</span><span class="p">,</span>
                                                       <span class="n">freq_regul</span><span class="p">)</span>
@@ -261,7 +261,7 @@
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">_compute_rel_entropy</span><span class="p">(</span><span class="n">aa_freqs</span><span class="p">,</span> <span class="n">bkgd_freqs</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Compute the relative entropy</span>
+<span class="w">    </span><span class="sd">"""Compute the relative entropy</span>
 
 <span class="sd">    Also know as the Kullback-Leibler divergence</span>
 
@@ -296,7 +296,7 @@
 <span class="sd">    Di: np.ndarray,</span>
 <span class="sd">        overall conservation of position *i* taking all amino acids into</span>
 <span class="sd">        account</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="n">Dia</span> <span class="o">=</span> <span class="n">aa_freqs</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">aa_freqs</span> <span class="o">/</span> <span class="n">bkgd_freqs</span><span class="p">)</span> <span class="o">+</span> \
         <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">aa_freqs</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">aa_freqs</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">bkgd_freqs</span><span class="p">))</span>

@@ -8,7 +8,7 @@
     <title>Load a tree file &#8212; cocoatree 0.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d7e2fa82" />
     <link rel="stylesheet" type="text/css" href="../../_static/nameko.css?v=61e7c460" />
-    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=fd6457a4" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=c83e6b79" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
@@ -50,15 +50,13 @@ to download the full example code or to run this example in your browser via Bin
 <span id="sphx-glr-auto-examples-a-quick-start-plot-04-load-tree-py"></span><h1>Load a tree file<a class="headerlink" href="#load-a-tree-file" title="Link to this heading">¶</a></h1>
 <p>This is a small example expliciting how to load a tree file in <a class="reference internal" href="../../modules/classes.html#module-cocoatree" title="cocoatree"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cocoatree</span></code></a>
 using <a class="reference internal" href="../../modules/generated/cocoatree.io.load_tree_ete3.html#cocoatree.io.load_tree_ete3" title="cocoatree.io.load_tree_ete3"><code class="xref py py-func docutils literal notranslate"><span class="pre">cocoatree.io.load_tree_ete3()</span></code></a> function.</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">cocoatree.io</span><span class="w"> </span><span class="kn">import</span> <a href="../../modules/generated/cocoatree.io.load_tree_ete3.html#cocoatree.io.load_tree_ete3" title="cocoatree.io.load_tree_ete3" class="sphx-glr-backref-module-cocoatree-io sphx-glr-backref-type-py-function"><span class="n">load_tree_ete3</span></a>
-</pre></div>
-</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span class="kn">from</span><span class="w"> </span><span class="nn">cocoatree</span><span class="nn">.</span><span class="nn">io</span><span class="w"> </span><span class="kn">import</span> <a class="sphx-glr-backref-module-cocoatree-io sphx-glr-backref-type-py-function reference internal" href="../../modules/generated/cocoatree.io.load_tree_ete3.html#cocoatree.io.load_tree_ete3" title="cocoatree.io.load_tree_ete3"><span class="n">load_tree_ete3</span></a><span class="w">
+</span></pre></div></div>
 <p>Let’s start by creating a simplified tree:</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">simple_tree</span></a> <span class="o">=</span> <span class="s2">"(A:1,(B:1,(C:1,D:1):0.5):0.5);"</span>
-<span class="n">t</span> <span class="o">=</span> <a href="../../modules/generated/cocoatree.io.load_tree_ete3.html#cocoatree.io.load_tree_ete3" title="cocoatree.io.load_tree_ete3" class="sphx-glr-backref-module-cocoatree-io sphx-glr-backref-type-py-function"><span class="n">load_tree_ete3</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">simple_tree</span></a><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
-</pre></div>
-</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="str"><span class="n">simple_tree</span></a> <span class="o">=</span> <span class="s2">&quot;</span><span class="s2">(A:1,(B:1,(C:1,D:1):0.5):0.5);</span><span class="s2">&quot;</span><span class="w">
+</span><span class="n">t</span> <span class="o">=</span> <a class="sphx-glr-backref-module-cocoatree-io sphx-glr-backref-type-py-function reference internal" href="../../modules/generated/cocoatree.io.load_tree_ete3.html#cocoatree.io.load_tree_ete3" title="cocoatree.io.load_tree_ete3"><span class="n">load_tree_ete3</span></a><span class="p">(</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="str"><span class="n">simple_tree</span></a><span class="p">)</span><span class="w">
+</span><span class="nb">print</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="w">
+</span></pre></div></div>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>   /-A
 --|
   |   /-B
@@ -72,10 +70,9 @@ using <a class="reference internal" href="../../modules/generated/cocoatree.io.l
 specified after the <code class="docutils literal notranslate"><span class="pre">:</span></code> character and the leaf names are A, B, C, and D.</p>
 <p><a class="reference internal" href="../../modules/generated/cocoatree.io.load_tree_ete3.html#cocoatree.io.load_tree_ete3" title="cocoatree.io.load_tree_ete3"><code class="xref py py-func docutils literal notranslate"><span class="pre">cocoatree.io.load_tree_ete3()</span></code></a> also accepts trees with more information
 such as branch support values encoded as follow:</p>
-<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bootstrap_tree</span></a> <span class="o">=</span> <span class="s2">"(A:1,(B:1,(C:1,D:1)95:0.5)98:0.5);"</span>
-<span class="n">t_boot</span> <span class="o">=</span> <a href="../../modules/generated/cocoatree.io.load_tree_ete3.html#cocoatree.io.load_tree_ete3" title="cocoatree.io.load_tree_ete3" class="sphx-glr-backref-module-cocoatree-io sphx-glr-backref-type-py-function"><span class="n">load_tree_ete3</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">bootstrap_tree</span></a><span class="p">)</span>
-</pre></div>
-</div>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="str"><span class="n">bootstrap_tree</span></a> <span class="o">=</span> <span class="s2">&quot;</span><span class="s2">(A:1,(B:1,(C:1,D:1)95:0.5)98:0.5);</span><span class="s2">&quot;</span><span class="w">
+</span><span class="n">t_boot</span> <span class="o">=</span> <a class="sphx-glr-backref-module-cocoatree-io sphx-glr-backref-type-py-function reference internal" href="../../modules/generated/cocoatree.io.load_tree_ete3.html#cocoatree.io.load_tree_ete3" title="cocoatree.io.load_tree_ete3"><span class="n">load_tree_ete3</span></a><span class="p">(</span><a class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="str"><span class="n">bootstrap_tree</span></a><span class="p">)</span><span class="w">
+</span></pre></div></div>
 <p>The branch support values are placed following their corresponding closing
 bracket.</p>
 <div class="admonition warning">
